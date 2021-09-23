@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:base_project_template/services/dialog_service/shared/i_dialog.dart';
-import 'package:base_project_template/services/dialog_service/shared/dialog_builders.dart';
-import 'package:base_project_template/services/dialog_service/dialogs/exit_dialog/exit_dialog_widget.dart';
+import 'package:yellow_team_fridge/services/dialog_service/shared/dialog_builders.dart';
+import 'package:yellow_team_fridge/services/dialog_service/shared/i_dialog.dart';
 
 /// [ExitDialog] realisation for [IDialog] interface. This [dialog] was using for show to confirm exit from application.
 /// Methods:

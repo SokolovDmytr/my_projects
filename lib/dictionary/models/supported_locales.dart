@@ -1,8 +1,8 @@
-import 'package:base_project_template/dictionary/models/language.dart';
 import 'package:flutter/material.dart';
+import 'package:yellow_team_fridge/dictionary/models/language.dart';
+import 'package:yellow_team_fridge/dictionary/models/supported_language.dart';
+import 'package:yellow_team_fridge/res/locales.dart';
 
-import 'package:base_project_template/dictionary/models/supported_language.dart';
-import 'package:base_project_template/res/locales.dart';
 
 class SupportedLocales {
   List<SupportedLanguage> _supportedLocales;

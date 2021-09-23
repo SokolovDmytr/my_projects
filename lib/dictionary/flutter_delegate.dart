@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
+import 'package:yellow_team_fridge/dictionary/models/language.dart';
+import 'package:yellow_team_fridge/dictionary/models/supported_locales.dart';
 
-import 'package:base_project_template/dictionary/models/language.dart';
-import 'package:base_project_template/dictionary/flutter_dictionary.dart';
-import 'package:base_project_template/dictionary/models/supported_locales.dart';
 
 class FlutterDictionaryDelegate extends LocalizationsDelegate<FlutterDictionary> {
   static List<LocalizationsDelegate<dynamic>> get getLocalizationDelegates {

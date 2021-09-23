@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
-import 'package:base_project_template/res/const.dart';
-import 'package:base_project_template/services/dialog_service/shared/i_dialog.dart';
+import 'package:yellow_team_fridge/res/const.dart';
+import 'package:yellow_team_fridge/services/dialog_service/shared/i_dialog.dart';
 
 /// [DialogService] it is service for control dialogs.
 /// This class it - Singleton, for function using use [DialogService.instance]

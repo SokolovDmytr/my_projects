@@ -1,5 +1,5 @@
-import 'package:base_project_template/res/app_styles/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 
 class AppGradient {
   static LinearGradient get overflowTopWhiteGradient {

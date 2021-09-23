@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:base_project_template/store/application/app_state.dart';
 import 'package:redux/redux.dart';
+import 'package:yellow_team_fridge/store/application/app_state.dart';
 
 ///[MainPageVM] view model for MainPage
 ///[exitDialog] - void function for getting exit dialog function

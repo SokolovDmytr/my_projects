@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:yellow_team_fridge/dictionary/flutter_delegate.dart';
+import 'package:yellow_team_fridge/dictionary/models/language.dart';
+import 'package:yellow_team_fridge/res/const.dart';
+import 'package:yellow_team_fridge/res/locales.dart';
 
-import 'package:base_project_template/res/const.dart';
-
-import 'package:base_project_template/dictionary/models/language.dart';
-import 'package:base_project_template/dictionary/flutter_delegate.dart';
-import 'package:base_project_template/res/locales.dart';
 
 class FlutterDictionary {
   static const String tag = '[FlutterDictionary]';
