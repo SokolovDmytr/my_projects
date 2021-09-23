@@ -55,8 +55,8 @@ class NetworkService {
   ///   - [request]. Will accept object extended from [IBaseRequest]. List of main request types will contains in [RequestBuilders] class.
   Future<BaseHttpResponse> request(IBaseRequest request) async {
     // TODO Add checkInternetConnection
-  //  final BaseHttpResponse checkConnection = await InternetConnectionService.checkInternetConnection();
-  //  if (checkConnection != null) return checkConnection;
+    //  final BaseHttpResponse checkConnection = await InternetConnectionService.checkInternetConnection();
+    //  if (checkConnection != null) return checkConnection;
 
     final http.Response response = await request();
 
@@ -115,8 +115,6 @@ class NetworkService {
     );
   }
 
-
-
   /// This functions will get a error text by error code.
   String _getErrorByCode(int code) {
     for (IBaseError error in _errors) {
@@ -124,7 +122,6 @@ class NetworkService {
         return error.error;
       }
     }
-
     return null;
   }
 }

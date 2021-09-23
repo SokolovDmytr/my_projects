@@ -4,9 +4,6 @@ import 'package:yellow_team_fridge/services/dialog_service/dialog_service.dart';
 import 'package:yellow_team_fridge/store/shared/dialog_state/actions/force_close_dialog_action.dart';
 import 'package:yellow_team_fridge/store/shared/dialog_state/actions/show_dialog_action.dart';
 import 'package:yellow_team_fridge/store/shared/reducer.dart';
-
-
-
 /// Dialog state - it state need for work with dialogs from Epics.
 /// Params:
 ///   - [isDialogDisplayed]. Getter what will get dialog status from [DialogService].
@@ -29,8 +26,10 @@ class DialogState {
   DialogState reducer(dynamic action) {
     return Reducer<DialogState>(
       actions: HashMap.from({
-        ShowDialogAction: (dynamic action) => _showDialogAction(action as ShowDialogAction),
-        ForceCloseDialogAction: (dynamic action) => _forceCloseDialogAction(action as ForceCloseDialogAction),
+        ShowDialogAction: (dynamic action) =>
+            _showDialogAction(action as ShowDialogAction),
+        ForceCloseDialogAction: (dynamic action) =>
+            _forceCloseDialogAction(action as ForceCloseDialogAction),
       }),
     ).updateState(action, this);
   }

@@ -7,5 +7,4 @@ class RouteSelectors {
 //    return () => store.dispatch(gotoMainPageAction);
 //  }
 
-
 }

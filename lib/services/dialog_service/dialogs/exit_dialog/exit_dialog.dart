@@ -11,7 +11,7 @@ class ExitDialog implements IDialog {
   Future<void> _builder(BuildContext context) {
     return DialogBuilders.defaultDialogBuilder(
       context: context,
-    //  widget: ExitDialogWidget(this),
+      //  widget: ExitDialogWidget(this),
     );
   }
 

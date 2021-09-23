@@ -13,7 +13,8 @@ class MainPageVM {
 
   static MainPageVM fromStore(Store<AppState> store) {
     return MainPageVM(
-      /// Another
-    );
+
+        /// Another
+        );
   }
 }

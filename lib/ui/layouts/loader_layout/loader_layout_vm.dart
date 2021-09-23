@@ -15,7 +15,7 @@ class LoaderLayoutVM {
 
   static LoaderLayoutVM fromStore(Store<AppState> store) {
     return LoaderLayoutVM(
-     // loaders: store.state.loaderState.loaders,
-    );
+        // loaders: store.state.loaderState.loaders,
+        );
   }
 }

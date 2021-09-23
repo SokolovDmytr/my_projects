@@ -30,16 +30,17 @@ class Application extends StatelessWidget {
       store: store,
       child: StoreConnector<AppState, AppState>(
         converter: (Store<AppState> store) => store.state,
-      //  onInitialBuild: (AppState state) => InitializeSelectors.startInitialization(store),
+        //  onInitialBuild: (AppState state) => InitializeSelectors.startInitialization(store),
         builder: (BuildContext context, AppState state) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             navigatorKey: NavigatorHolder.navigatorKey,
-           // onGenerateRoute: route.RouteBuilder.onGenerateRoute,
+            // onGenerateRoute: route.RouteBuilder.onGenerateRoute,
             home: MainPage(),
             locale: Locale(Locales.base),
             supportedLocales: FlutterDictionaryDelegate.getSupportedLocales,
-            localizationsDelegates: FlutterDictionaryDelegate.getLocalizationDelegates,
+            localizationsDelegates:
+                FlutterDictionaryDelegate.getLocalizationDelegates,
             builder: (context, child) {
               return MediaQuery(
                 data: MediaQuery.of(context).copyWith(

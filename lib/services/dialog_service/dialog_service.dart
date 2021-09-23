@@ -32,7 +32,8 @@ class DialogService {
   /// And will show message to console if [_isDisplayed] is false.
   void close() {
     if (!_isDisplayed) {
-      logger.e('$tag => <closeDialog> => Error Message: _isDisplayed: $_isDisplayed, Dialog cant be removed.');
+      logger.e(
+          '$tag => <closeDialog> => Error Message: _isDisplayed: $_isDisplayed, Dialog cant be removed.');
       return;
     }
 
@@ -48,13 +49,15 @@ class DialogService {
   void _display(BuilderFunction builder) {
     print('Is displayed $_isDisplayed');
     if (_isDisplayed) {
-      logger.e('$tag => <_display> => Error Message: _isDisplayed: $_isDisplayed, Dialog cant be showed.');
+      logger.e(
+          '$tag => <_display> => Error Message: _isDisplayed: $_isDisplayed, Dialog cant be showed.');
       return;
     }
 
     _isDisplayed = true;
 
-    final BuildContext ctx = NavigatorHolder.navigatorKey.currentState.overlay.context;
+    final BuildContext ctx =
+        NavigatorHolder.navigatorKey.currentState.overlay.context;
 
     builder(ctx).then((_) {
       FocusScope.of(ctx).unfocus();

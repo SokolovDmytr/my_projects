@@ -1,8 +1,8 @@
 import 'dart:collection';
+
 import 'package:flutter/cupertino.dart';
 import 'package:yellow_team_fridge/services/dialog_service/shared/i_loader.dart';
 import 'package:yellow_team_fridge/store/shared/reducer.dart';
-
 
 enum LoaderKey {
   initializationLoading,
@@ -33,10 +33,7 @@ class LoaderState {
 
   LoaderState reducer(dynamic action) {
     return Reducer<LoaderState>(
-      actions: HashMap.from({
-      }),
+      actions: HashMap.from({}),
     ).updateState(action, this);
   }
-
-
 }

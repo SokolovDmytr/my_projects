@@ -19,20 +19,31 @@ class SupportedLocales {
   static SupportedLocales instance = SupportedLocales._();
 
   void changeLocale(String languageCode) {
-    _supportedLocales.firstWhere((SupportedLanguage supLang) => supLang.isSelected)?.discard();
-    _supportedLocales.firstWhere((SupportedLanguage supLang) => supLang.languageCode == languageCode)?.choose();
+    _supportedLocales
+        .firstWhere((SupportedLanguage supLang) => supLang.isSelected)
+        ?.discard();
+    _supportedLocales
+        .firstWhere(
+            (SupportedLanguage supLang) => supLang.languageCode == languageCode)
+        ?.choose();
   }
 
   List<Locale> get getSupportedLocales {
-    return _supportedLocales?.map((SupportedLanguage supLang) => supLang.getLocale)?.toList() ?? <SupportedLanguage>[];
+    return _supportedLocales
+            ?.map((SupportedLanguage supLang) => supLang.getLocale)
+            ?.toList() ??
+        <SupportedLanguage>[];
   }
 
   String get getCurrentLocale {
-    return _supportedLocales?.firstWhere((SupportedLanguage supLang) => supLang.isSelected)?.languageCode ?? Locales.base;
+    return _supportedLocales
+            ?.firstWhere((SupportedLanguage supLang) => supLang.isSelected)
+            ?.languageCode ??
+        Locales.base;
   }
 
   SupportedLanguage getSupportedLanguage(Locale locale) {
-    return _supportedLocales.firstWhere((SupportedLanguage supLang) => supLang.languageCode == locale.languageCode);
+    return _supportedLocales.firstWhere((SupportedLanguage supLang) =>
+        supLang.languageCode == locale.languageCode);
   }
-
 }

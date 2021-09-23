@@ -120,12 +120,14 @@ class FocusService {
         final FocusKey nextKey = getKeyByOrder(nKey.order);
 
         if (nextKey.focusNode.context == null) {
-          logger.d('$tag => <_findNextOrder> => key found without clients => continue');
+          logger.d(
+              '$tag => <_findNextOrder> => key found without clients => continue');
           continue;
         }
 
         if (!nextKey.canBeOpened) {
-          logger.d('$tag => <_findNextOrder> => key found but cant be opened => continue');
+          logger.d(
+              '$tag => <_findNextOrder> => key found but cant be opened => continue');
           continue;
         }
 

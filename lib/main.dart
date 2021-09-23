@@ -28,7 +28,5 @@ void main() {
       NavigationMiddleware<AppState>(),
     ],
   );
-
-
   runApp(Application(store: store));
 }

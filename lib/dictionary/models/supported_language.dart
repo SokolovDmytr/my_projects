@@ -3,7 +3,6 @@ import 'package:yellow_team_fridge/dictionary/models/language.dart';
 
 
 class SupportedLanguage {
-
   final String languageCode;
   final Language language;
   bool _isSelected;
