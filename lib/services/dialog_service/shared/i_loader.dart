@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:base_project_template/services/dialog_service/shared/i_dialog.dart';
-import 'package:base_project_template/store/shared/loader/loader_state.dart';
+import 'package:yellow_team_fridge/services/dialog_service/shared/i_dialog.dart';
+import 'package:yellow_team_fridge/store/shared/loader/loader_state.dart';
 
 class ILoader extends IDialog {
   final bool state;

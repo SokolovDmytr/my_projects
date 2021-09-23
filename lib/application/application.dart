@@ -1,12 +1,12 @@
-import 'package:base_project_template/ui/pages/main_page/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
-import 'package:base_project_template/dictionary/flutter_delegate.dart';
-import 'package:base_project_template/res/keys.dart';
-import 'package:base_project_template/res/locales.dart';
-import 'package:base_project_template/store/application/app_state.dart';
 import 'package:redux/redux.dart';
+import 'package:yellow_team_fridge/dictionary/flutter_delegate.dart';
+import 'package:yellow_team_fridge/res/keys.dart';
+import 'package:yellow_team_fridge/res/locales.dart';
+import 'package:yellow_team_fridge/store/application/app_state.dart';
+import 'package:yellow_team_fridge/ui/pages/main_page/main_page.dart';
 
 /// The [Application] class, in which the creation of [MaterialApp] takes place.
 /// It takes [store] as a parameter, which is initialized in [main].
@@ -30,16 +30,17 @@ class Application extends StatelessWidget {
       store: store,
       child: StoreConnector<AppState, AppState>(
         converter: (Store<AppState> store) => store.state,
-      //  onInitialBuild: (AppState state) => InitializeSelectors.startInitialization(store),
+        //  onInitialBuild: (AppState state) => InitializeSelectors.startInitialization(store),
         builder: (BuildContext context, AppState state) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             navigatorKey: NavigatorHolder.navigatorKey,
-           // onGenerateRoute: route.RouteBuilder.onGenerateRoute,
+            // onGenerateRoute: route.RouteBuilder.onGenerateRoute,
             home: MainPage(),
             locale: Locale(Locales.base),
             supportedLocales: FlutterDictionaryDelegate.getSupportedLocales,
-            localizationsDelegates: FlutterDictionaryDelegate.getLocalizationDelegates,
+            localizationsDelegates:
+                FlutterDictionaryDelegate.getLocalizationDelegates,
             builder: (context, child) {
               return MediaQuery(
                 data: MediaQuery.of(context).copyWith(

@@ -1,8 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
-
-import 'package:base_project_template/res/const.dart';
+import 'package:yellow_team_fridge/res/const.dart';
 
 class Reducer<T> {
   final String tag = '[Reducer<$T>]';

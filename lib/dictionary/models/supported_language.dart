@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'package:base_project_template/dictionary/models/language.dart';
+import 'package:yellow_team_fridge/dictionary/models/language.dart';
 
 class SupportedLanguage {
-
   final String languageCode;
   final Language language;
   bool _isSelected;

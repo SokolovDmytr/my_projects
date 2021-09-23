@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:base_project_template/res/const.dart';
-import 'package:base_project_template/services/focus_service/focus_key.dart';
+import 'package:yellow_team_fridge/res/const.dart';
+import 'package:yellow_team_fridge/services/focus_service/focus_key.dart';
 
 /// This Service help us with fields navigation.
 /// [FocusService] is not a singleton, for using - create a variable on the screen widget.
@@ -120,12 +120,14 @@ class FocusService {
         final FocusKey nextKey = getKeyByOrder(nKey.order);
 
         if (nextKey.focusNode.context == null) {
-          logger.d('$tag => <_findNextOrder> => key found without clients => continue');
+          logger.d(
+              '$tag => <_findNextOrder> => key found without clients => continue');
           continue;
         }
 
         if (!nextKey.canBeOpened) {
-          logger.d('$tag => <_findNextOrder> => key found but cant be opened => continue');
+          logger.d(
+              '$tag => <_findNextOrder> => key found but cant be opened => continue');
           continue;
         }
 

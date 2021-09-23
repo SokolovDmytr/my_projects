@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_epics/redux_epics.dart';
-import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
-
-import 'package:base_project_template/application/application.dart';
-import 'package:base_project_template/store/application/app_state.dart';
+import 'package:yellow_team_fridge/application/application.dart';
+import 'package:yellow_team_fridge/store/application/app_state.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +28,6 @@ void main() {
       NavigationMiddleware<AppState>(),
     ],
   );
-
 
   runApp(Application(store: store));
 }

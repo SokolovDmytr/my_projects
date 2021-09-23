@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:base_project_template/services/dialog_service/dialog_service.dart';
 
 /// Dialog Interface. All Dialogs models in the app should be extended from this interface.
 /// Methods:

@@ -1,4 +1,4 @@
-import 'package:base_project_template/store/shared/base_action.dart';
+import 'package:yellow_team_fridge/store/shared/base_action.dart';
 
 /// Action need it for close any dialogs.
 class ForceCloseDialogAction extends BaseAction {

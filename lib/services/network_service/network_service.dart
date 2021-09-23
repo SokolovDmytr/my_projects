@@ -2,11 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:base_project_template/res/const.dart';
-import 'package:base_project_template/services/network_service/interfaces/i_base_error.dart';
-import 'package:base_project_template/services/network_service/interfaces/i_base_http_error.dart';
-import 'package:base_project_template/services/network_service/interfaces/i_base_request.dart';
-import 'package:base_project_template/services/network_service/shared/request_builders.dart';
+import 'package:yellow_team_fridge/res/const.dart';
+import 'package:yellow_team_fridge/services/network_service/interfaces/i_base_error.dart';
+import 'package:yellow_team_fridge/services/network_service/interfaces/i_base_http_error.dart';
+import 'package:yellow_team_fridge/services/network_service/interfaces/i_base_request.dart';
 
 import 'models/base_http_response.dart';
 import 'res/consts.dart';
@@ -56,8 +55,8 @@ class NetworkService {
   ///   - [request]. Will accept object extended from [IBaseRequest]. List of main request types will contains in [RequestBuilders] class.
   Future<BaseHttpResponse> request(IBaseRequest request) async {
     // TODO Add checkInternetConnection
-  //  final BaseHttpResponse checkConnection = await InternetConnectionService.checkInternetConnection();
-  //  if (checkConnection != null) return checkConnection;
+    //  final BaseHttpResponse checkConnection = await InternetConnectionService.checkInternetConnection();
+    //  if (checkConnection != null) return checkConnection;
 
     final http.Response response = await request();
 
@@ -115,8 +114,6 @@ class NetworkService {
       response: jsonDecode(response.body),
     );
   }
-
-
 
   /// This functions will get a error text by error code.
   String _getErrorByCode(int code) {

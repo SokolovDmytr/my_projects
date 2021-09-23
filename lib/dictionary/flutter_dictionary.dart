@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-
-import 'package:base_project_template/res/const.dart';
-
-import 'package:base_project_template/dictionary/models/language.dart';
-import 'package:base_project_template/dictionary/flutter_delegate.dart';
-import 'package:base_project_template/res/locales.dart';
+import 'package:yellow_team_fridge/dictionary/flutter_delegate.dart';
+import 'package:yellow_team_fridge/dictionary/models/language.dart';
+import 'package:yellow_team_fridge/res/const.dart';
+import 'package:yellow_team_fridge/res/locales.dart';
 
 class FlutterDictionary {
   static const String tag = '[FlutterDictionary]';
 
   FlutterDictionary._privateConstructor({this.locale});
 
-  static final FlutterDictionary _instance = FlutterDictionary._privateConstructor();
+  static final FlutterDictionary _instance =
+      FlutterDictionary._privateConstructor();
 
   static FlutterDictionary get instance => _instance;
 
@@ -23,12 +22,14 @@ class FlutterDictionary {
   void setNewLanguage(String languageCode) {
     logger.d('$tag => setNewLanguage() => locale => $languageCode');
     FlutterDictionaryDelegate.changeLocaleWithLanguageCode(languageCode);
-    language = FlutterDictionaryDelegate.getLanguageByLanguageCode(languageCode);
+    language =
+        FlutterDictionaryDelegate.getLanguageByLanguageCode(languageCode);
   }
 
   void setNewLanguageAndSave(String languageCode) {
     logger.d('$tag => setNewLanguageAndSave() => locale => $languageCode');
-    language = FlutterDictionaryDelegate.getLanguageByLanguageCode(languageCode);
+    language =
+        FlutterDictionaryDelegate.getLanguageByLanguageCode(languageCode);
   }
 
   static const List<String> _rtlLanguages = <String>[
