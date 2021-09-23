@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
-import 'package:base_project_template/res/const.dart';
-import 'package:base_project_template/services/dialog_service/shared/i_dialog.dart';
+import 'package:yellow_team_fridge/res/const.dart';
+import 'package:yellow_team_fridge/services/dialog_service/shared/i_dialog.dart';
 
 /// [DialogService] it is service for control dialogs.
 /// This class it - Singleton, for function using use [DialogService.instance]
@@ -32,7 +32,8 @@ class DialogService {
   /// And will show message to console if [_isDisplayed] is false.
   void close() {
     if (!_isDisplayed) {
-      logger.e('$tag => <closeDialog> => Error Message: _isDisplayed: $_isDisplayed, Dialog cant be removed.');
+      logger.e(
+          '$tag => <closeDialog> => Error Message: _isDisplayed: $_isDisplayed, Dialog cant be removed.');
       return;
     }
 
@@ -48,13 +49,15 @@ class DialogService {
   void _display(BuilderFunction builder) {
     print('Is displayed $_isDisplayed');
     if (_isDisplayed) {
-      logger.e('$tag => <_display> => Error Message: _isDisplayed: $_isDisplayed, Dialog cant be showed.');
+      logger.e(
+          '$tag => <_display> => Error Message: _isDisplayed: $_isDisplayed, Dialog cant be showed.');
       return;
     }
 
     _isDisplayed = true;
 
-    final BuildContext ctx = NavigatorHolder.navigatorKey.currentState.overlay.context;
+    final BuildContext ctx =
+        NavigatorHolder.navigatorKey.currentState.overlay.context;
 
     builder(ctx).then((_) {
       FocusScope.of(ctx).unfocus();

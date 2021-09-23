@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:base_project_template/res/const.dart';
-import 'package:base_project_template/services/network_service/interfaces/i_base_request.dart';
-import 'package:base_project_template/services/network_service/models/delete_request_model.dart';
-import 'package:base_project_template/services/network_service/models/get_request_model.dart';
-import 'package:base_project_template/services/network_service/models/patch_request_model.dart';
-import 'package:base_project_template/services/network_service/models/post_request_model.dart';
-import 'package:base_project_template/services/network_service/models/put_request_model.dart';
-import 'package:base_project_template/services/network_service/network_service.dart';
-import 'package:base_project_template/services/network_service/res/consts.dart';
+import 'package:yellow_team_fridge/res/const.dart';
+import 'package:yellow_team_fridge/services/network_service/interfaces/i_base_request.dart';
+import 'package:yellow_team_fridge/services/network_service/models/delete_request_model.dart';
+import 'package:yellow_team_fridge/services/network_service/models/get_request_model.dart';
+import 'package:yellow_team_fridge/services/network_service/models/patch_request_model.dart';
+import 'package:yellow_team_fridge/services/network_service/models/post_request_model.dart';
+import 'package:yellow_team_fridge/services/network_service/models/put_request_model.dart';
+import 'package:yellow_team_fridge/services/network_service/network_service.dart';
+import 'package:yellow_team_fridge/services/network_service/res/consts.dart';
 
 class RequestBuilders {
   static IBaseRequest get({

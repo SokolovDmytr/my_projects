@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:http/src/response.dart';
-import 'package:base_project_template/services/network_service/interfaces/i_base_request.dart';
+import 'package:yellow_team_fridge/services/network_service/interfaces/i_base_request.dart';
 
 class PutRequestModel implements IBaseRequest {
   final String url;
