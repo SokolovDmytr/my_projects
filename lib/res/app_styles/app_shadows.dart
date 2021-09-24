@@ -12,6 +12,17 @@ class AppShadows {
     ];
   }
 
+  static List<BoxShadow> get buttonOcreShadow {
+    return [
+      BoxShadow(
+        color: AppColors.ocre,
+        spreadRadius: -18.0,
+        blurRadius: 15.0,
+        offset: Offset(0.0, 20.0),
+      ),
+    ];
+  }
+
   static List<BoxShadow> shadowText(Color color) {
     return [
       BoxShadow(

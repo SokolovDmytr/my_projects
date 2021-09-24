@@ -24,14 +24,14 @@ class _MainPageState extends State<MainPage> {
       body: Center(
         child: GlobalButton(
           key: UniqueKey(),
-          width: 312.0,
+          width: 150.0,
           height: 56.0,
           text: 'Log in',
           fontText: AppFonts.normalMediumTextStyle,
           onTap: () {},
           gradient: AppGradient.wheatMarigoldGradient,
           borderColor: AppColors.marigold,
-          shadows: AppShadows.buttonBlackShadow,
+          shadows: AppShadows.buttonOcreShadow,
         ),
       ),
     );
