@@ -12,6 +12,7 @@ class ScreenRecipeLanguage {
   final String similarRecipes;
   final String addedToFavourites;
   final String removedFromFavourites;
+  final String youHave;
 
   ScreenRecipeLanguage({
     @required this.back,
@@ -25,6 +26,7 @@ class ScreenRecipeLanguage {
     @required this.similarRecipes,
     @required this.addedToFavourites,
     @required this.removedFromFavourites,
+    @required this.youHave,
   });
 
   factory ScreenRecipeLanguage.fromJson(Map<String, dynamic> json) {
@@ -40,6 +42,7 @@ class ScreenRecipeLanguage {
       similarRecipes: json['similarRecipes'],
       addedToFavourites: json['addedToFavourites'],
       removedFromFavourites: json['removedFromFavourites'],
+      youHave: json['youHave'],
     );
   }
 
@@ -56,6 +59,7 @@ class ScreenRecipeLanguage {
       'similarRecipes': similarRecipes,
       'addedToFavourites': addedToFavourites,
       'removedFromFavourites': removedFromFavourites,
+      'youHave': youHave,
     };
   }
 }

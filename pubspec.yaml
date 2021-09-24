@@ -61,34 +61,41 @@ flutter_icons:
 
 flutter:
   uses-material-design: true
-
   assets:
-    - assets/svg/loading.svg
-    - assets/svgs/logo.svg
-    - assets/svg/mc_logo.svg
-    - assets/svg/close.svg
-    - assets/svg/back_arrow.svg
-    - assets/svg/handle.svg
-    - assets/svg/another_catalog.svg
-    - assets/svg/home.svg
-    - assets/svg/logout.svg
-    - assets/svg/settings.svg
-    - assets/svg/switch.svg
-    - assets/png/mc_logo.png
+    - assets/png/
+    - assets/gif/
+    - assets/icons/
+    - assets/SFPD/
+    - assets/svg/
+    - assets/svgs/
+    - assets/ubuntu/
+#  assets:
+#    - assets/svg/loading.svg
+#    - assets/svgs/logo.svg
+#    - assets/svg/mc_logo.svg
+#    - assets/svg/close.svg
+#    - assets/svg/back_arrow.svg
+#    - assets/svg/handle.svg
+#    - assets/svg/another_catalog.svg
+#    - assets/svg/home.svg
+#    - assets/svg/logout.svg
+#    - assets/svg/settings.svg
+#    - assets/svg/switch.svg
+#    - assets/png/mc_logo.png
 
-
-  fonts:
-    - family: Ubuntu
-      fonts:
-        - asset: assets/ubuntu/Ubuntu-Bold.ttf
-        - asset: assets/ubuntu/Ubuntu-BoldItalic.ttf
-          style: italic
-        - asset: assets/ubuntu/Ubuntu-Italic.ttf
-          style: italic
-        - asset: assets/ubuntu/Ubuntu-Light.ttf
-        - asset: assets/ubuntu/Ubuntu-LightItalic.ttf
-          style: italic
-        - asset: assets/ubuntu/Ubuntu-Medium.ttf
-        - asset: assets/ubuntu/Ubuntu-MediumItalic.ttf
-          style: italic
-        - asset: assets/ubuntu/Ubuntu-Regular.ttf
+#
+#  fonts:
+#    - family: Ubuntu
+#      fonts:
+#        - asset: assets/ubuntu/Ubuntu-Bold.ttf
+#        - asset: assets/ubuntu/Ubuntu-BoldItalic.ttf
+#          style: italic
+#        - asset: assets/ubuntu/Ubuntu-Italic.ttf
+#          style: italic
+#        - asset: assets/ubuntu/Ubuntu-Light.ttf
+#        - asset: assets/ubuntu/Ubuntu-LightItalic.ttf
+#          style: italic
+#        - asset: assets/ubuntu/Ubuntu-Medium.ttf
+#        - asset: assets/ubuntu/Ubuntu-MediumItalic.ttf
+#          style: italic
+#        - asset: assets/ubuntu/Ubuntu-Regular.ttf

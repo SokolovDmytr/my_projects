@@ -13,12 +13,12 @@ class AppFonts{
     );
   }
 
-  TextStyle get normalBlackTextStyle{
+ static TextStyle get normalBlackTextStyle{
     return GoogleFonts.roboto(
       fontSize: 24.0,
       color: AppColors.black,
       fontWeight: FontWeight.bold,
-      height: 30.0,
+      // height: 30.0,
     );
   }
 

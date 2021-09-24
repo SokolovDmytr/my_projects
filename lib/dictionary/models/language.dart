@@ -4,7 +4,7 @@ import 'package:yellow_team_fridge/dictionary/dictionary_classes/bottom_navigati
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/favorites_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/main_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/notification_page_language.dart';
-import 'package:yellow_team_fridge/dictionary/dictionary_classes/onboarding_screen_language.dart';
+import 'package:yellow_team_fridge/dictionary/dictionary_classes/on_boarding_screen_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/recipes_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/screen_recipe_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/settings_page_language.dart';

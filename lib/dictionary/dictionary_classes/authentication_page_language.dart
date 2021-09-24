@@ -9,6 +9,8 @@ class AuthenticationPageLanguage {
   final String buttonSend;
   final String signUp;
   final String signIn;
+  final String signInGoogle;
+  final String signInApple;
   final String textFieldPassword;
   final String textFieldConfirmPassword;
   final String buttonShow;
@@ -27,6 +29,8 @@ class AuthenticationPageLanguage {
     @required this.buttonSend,
     @required this.signUp,
     @required this.signIn,
+    @required this.signInApple,
+    @required this.signInGoogle,
     @required this.textFieldPassword,
     @required this.textFieldConfirmPassword,
     @required this.buttonShow,
@@ -55,6 +59,8 @@ class AuthenticationPageLanguage {
       textFieldEmail: json['textFieldEmail'],
       textFieldPassword: json['textFieldPassword'],
       welcome: json['welcome'],
+      signInApple: json['signInApple'],
+      signInGoogle: json['signInGoogle'],
     );
   }
 
@@ -76,6 +82,8 @@ class AuthenticationPageLanguage {
       'textFieldEmail': textFieldEmail,
       'textFieldPassword': textFieldPassword,
       'welcome': welcome,
+      'signInApple':signInApple,
+      'signInGoogle':signInGoogle,
     };
   }
 }
