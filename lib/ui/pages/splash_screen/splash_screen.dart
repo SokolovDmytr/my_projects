@@ -14,15 +14,16 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin{
+class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
   double _widthScreen;
+
   @override
   void initState() {
     super.initState();
 
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.dark,
         statusBarColor: AppColors.wheat,
       ),
     );
@@ -32,41 +33,44 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    if(_widthScreen == null){
+    if (_widthScreen == null) {
       _widthScreen = MediaQuery.of(context).size.width;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppColors.wheat,
-      child: Stack(
-        alignment: Alignment.topCenter,
-        children: [
-          Container(
-            margin: const EdgeInsets.fromLTRB(67.0, 93.0, 67.0, 210.0),
-            child: Image.asset(
-              ImageAssets.splashScreenFridge,
+    return Scaffold(
+      body: Container(
+        color: AppColors.wheat,
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            Container(),
+            Container(
+              margin: const EdgeInsets.fromLTRB(67.0, 93.0, 67.0, 210.0),
+              child: Image.asset(
+                ImageAssets.splashScreenFridge,
+              ),
             ),
-          ),
-          Positioned(
-            bottom: 0.0,
-            width: _widthScreen,
-            child: Container(
-              margin: const EdgeInsets.only(left: 48.0, right: 48.0, bottom: 172.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(4.0),
-                child: LinearProgressIndicator(
-                  value: widget.value,
-                  minHeight: 8.0,
-                  backgroundColor: AppColors.white,
-                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.marigold),
+            Positioned(
+              bottom: 0.0,
+              width: _widthScreen,
+              child: Container(
+                margin: const EdgeInsets.only(left: 48.0, right: 48.0, bottom: 172.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(4.0),
+                  child: LinearProgressIndicator(
+                    value: widget.value,
+                    minHeight: 8.0,
+                    backgroundColor: AppColors.white,
+                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.marigold),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

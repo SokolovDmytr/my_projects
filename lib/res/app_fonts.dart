@@ -4,33 +4,33 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 
-class AppFonts{
-  TextStyle get bigLetterTextStyle{
+class AppFonts {
+  static TextStyle get bigLetterTextStyle {
     return GoogleFonts.roboto(
       fontSize: 34.0,
       color: AppColors.blackTwo,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w700,
     );
   }
 
-  TextStyle get normalBlackTextStyle{
+  static TextStyle get normalBlackTextStyle {
     return GoogleFonts.roboto(
       fontSize: 24.0,
       color: AppColors.black,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w700,
       height: 30.0,
     );
   }
 
-  TextStyle get normalBlackTwoTextStyle{
+  static TextStyle get normalBlackTwoTextStyle {
     return GoogleFonts.roboto(
       fontSize: 24.0,
       color: AppColors.blackTwo,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w700,
     );
   }
 
-  TextStyle get normalMediumTextStyle{
+  static TextStyle get normalMediumTextStyle {
     return GoogleFonts.roboto(
       fontSize: 24.0,
       color: AppColors.white,
@@ -38,7 +38,7 @@ class AppFonts{
     );
   }
 
-  TextStyle get normalLightTextStyle{
+  static TextStyle get normalLightTextStyle {
     return GoogleFonts.roboto(
       fontSize: 24.0,
       color: AppColors.blackTwo,
@@ -46,7 +46,7 @@ class AppFonts{
     );
   }
 
-  TextStyle get mediumTextStyle{
+  static TextStyle get mediumTextStyle {
     return GoogleFonts.roboto(
       fontSize: 20.0,
       color: AppColors.blackTwo,
@@ -54,7 +54,7 @@ class AppFonts{
     );
   }
 
-  TextStyle get medium16TextStyle{
+  static TextStyle get medium16TextStyle {
     return GoogleFonts.roboto(
       fontSize: 16.0,
       color: AppColors.black,
@@ -63,7 +63,7 @@ class AppFonts{
     );
   }
 
-  TextStyle get medium16blackTwoTextStyle{
+  static TextStyle get medium16blackTwoTextStyle {
     return GoogleFonts.roboto(
       fontSize: 16.0,
       color: AppColors.blackTwo,
@@ -72,16 +72,16 @@ class AppFonts{
     );
   }
 
-  TextStyle get smallBoldBlackTwoTextStyle{
+  static TextStyle get smallBoldBlackTwoTextStyle {
     return GoogleFonts.roboto(
       fontSize: 12.0,
       color: AppColors.blackTwo,
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w700,
       height: 16.0,
     );
   }
 
-  TextStyle get smallTextStyle{
+  static TextStyle get smallTextStyle {
     return GoogleFonts.roboto(
       fontSize: 12.0,
       color: AppColors.black,
@@ -89,7 +89,7 @@ class AppFonts{
     );
   }
 
-  TextStyle get smallBlack20TextStyle{
+  static TextStyle get smallBlack20TextStyle {
     return GoogleFonts.roboto(
       fontSize: 12.0,
       color: AppColors.black20,
@@ -97,7 +97,7 @@ class AppFonts{
     );
   }
 
-  TextStyle get smallBlackTwoTextStyle{
+  static TextStyle get smallBlackTwoTextStyle {
     return GoogleFonts.roboto(
       fontSize: 12.0,
       color: AppColors.blackTwo,
