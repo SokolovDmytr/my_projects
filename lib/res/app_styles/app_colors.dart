@@ -35,6 +35,7 @@ class AppColors {
   static const Color black0 =  Color(0x00000000);
   static const Color blackTwo =  Color(0xFF000000);
   static const Color wheat =  Color(0xFFFFDE81);
+  static const Color transparent = Color(0x00FFFFFF);
 
   static const Color kWhite = Color(0xFFFFFFFF);
   static const Color kBlack = Color(0xFF16191D);

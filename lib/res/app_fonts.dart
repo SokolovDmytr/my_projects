@@ -18,7 +18,6 @@ class AppFonts {
       fontSize: 24.0,
       color: AppColors.black,
       fontWeight: FontWeight.w700,
-      height: 30.0,
     );
   }
 
@@ -59,7 +58,6 @@ class AppFonts {
       fontSize: 16.0,
       color: AppColors.black,
       fontWeight: FontWeight.w400,
-      height: 24.0,
     );
   }
 
@@ -68,7 +66,6 @@ class AppFonts {
       fontSize: 16.0,
       color: AppColors.blackTwo,
       fontWeight: FontWeight.w400,
-      height: 24.0,
     );
   }
 
@@ -77,7 +74,6 @@ class AppFonts {
       fontSize: 12.0,
       color: AppColors.blackTwo,
       fontWeight: FontWeight.w700,
-      height: 16.0,
     );
   }
 

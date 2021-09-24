@@ -30,6 +30,7 @@ class ImageAssets {
   static const String favoritesBottomBarIcon = 'assets/png/favorites_bottom_bar_icon.png';
   static const String homeBottomBarIcon = 'assets/png/home_bottom_bar_icon.png';
   static const String settingsBottomBarIcon = 'assets/png/settings_bottom_bar_icon.png';
+  static const String backArrow = 'assets/png/back_arrow.png';
 
   static const String loadingGif = 'assets/gif/loading.gif';
 
