@@ -6,7 +6,7 @@ import 'package:yellow_team_fridge/dictionary/flutter_delegate.dart';
 import 'package:yellow_team_fridge/res/keys.dart';
 import 'package:yellow_team_fridge/res/locales.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
-import 'package:yellow_team_fridge/ui/pages/main_page/main_page.dart';
+import 'package:yellow_team_fridge/ui/pages/splash_screen/splash_screen.dart';
 
 /// The [Application] class, in which the creation of [MaterialApp] takes place.
 /// It takes [store] as a parameter, which is initialized in [main].
@@ -36,11 +36,12 @@ class Application extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             navigatorKey: NavigatorHolder.navigatorKey,
             // onGenerateRoute: route.RouteBuilder.onGenerateRoute,
-            home: MainPage(),
+            home: SplashScreen(
+              key: UniqueKey(),
+            ),
             locale: Locale(Locales.base),
             supportedLocales: FlutterDictionaryDelegate.getSupportedLocales,
-            localizationsDelegates:
-                FlutterDictionaryDelegate.getLocalizationDelegates,
+            localizationsDelegates: FlutterDictionaryDelegate.getLocalizationDelegates,
             builder: (context, child) {
               return MediaQuery(
                 data: MediaQuery.of(context).copyWith(
