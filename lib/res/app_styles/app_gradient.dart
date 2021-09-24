@@ -13,6 +13,17 @@ class AppGradient {
     );
   }
 
+  static LinearGradient get marigolWheatdGradient{
+    return LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          AppColors.marigold,
+          AppColors.wheat,
+        ]
+    );
+  }
+
   static LinearGradient get overflowTopWhiteGradient {
     return LinearGradient(
       begin: Alignment.topCenter,

@@ -2,9 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 
 class AppShadows {
+  static List<BoxShadow> get buttonBlackShadow {
+    return [
+      BoxShadow(
+        color: AppColors.black80,
+        blurRadius: 5,
+        offset: Offset(0.0, 2.0),
+      ),
+    ];
+  }
+
+  static List<BoxShadow> get buttonOcreShadow {
+    return [
+      BoxShadow(
+        color: AppColors.ocre,
+        spreadRadius: -18.0,
+        blurRadius: 15.0,
+        offset: Offset(0.0, 20.0),
+      ),
+    ];
+  }
+
   static List<BoxShadow> shadowText(Color color) {
     return [
-      BoxShadow(color: color, spreadRadius: 1.0, blurRadius: 4),
+      BoxShadow(
+        color: color,
+        spreadRadius: 1.0,
+        blurRadius: 4,
+      ),
     ];
   }
 
