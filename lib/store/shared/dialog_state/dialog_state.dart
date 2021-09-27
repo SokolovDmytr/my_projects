@@ -13,7 +13,7 @@ import 'package:yellow_team_fridge/store/shared/reducer.dart';
 class DialogState {
   DialogState();
 
-  bool get isDialogDisplayed => DialogService.instance.isDisplayed;
+  //bool get isDialogDisplayed => DialogService.instance.isDisplayed;
 
   factory DialogState.initial() {
     return DialogState();
@@ -35,7 +35,7 @@ class DialogState {
   }
 
   DialogState _forceCloseDialogAction(ForceCloseDialogAction action) {
-    DialogService.instance.close();
+    //DialogService.instance.close();
     return this;
   }
 

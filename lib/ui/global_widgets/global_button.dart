@@ -62,7 +62,7 @@ class _GlobalButtonState extends State<GlobalButton> {
           boxShadow: widget._shadows,
           borderRadius: BorderRadius.circular(widget._borderRadius),
           border: Border.all(
-            color: widget._borderColor == null ? widget._color : widget._borderColor,
+            color: widget._borderColor ?? widget._color,
           ),
         ),
         alignment: Alignment.center,

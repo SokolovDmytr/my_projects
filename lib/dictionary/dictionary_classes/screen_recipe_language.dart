@@ -10,8 +10,6 @@ class ScreenRecipeLanguage {
   final String grams;
   final String cooking;
   final String similarRecipes;
-  final String addedToFavourites;
-  final String removedFromFavourites;
   final String youHave;
 
   ScreenRecipeLanguage({
@@ -24,8 +22,6 @@ class ScreenRecipeLanguage {
     @required this.grams,
     @required this.cooking,
     @required this.similarRecipes,
-    @required this.addedToFavourites,
-    @required this.removedFromFavourites,
     @required this.youHave,
   });
 
@@ -40,8 +36,6 @@ class ScreenRecipeLanguage {
       grams: json['grams'],
       cooking: json['cooking'],
       similarRecipes: json['similarRecipes'],
-      addedToFavourites: json['addedToFavourites'],
-      removedFromFavourites: json['removedFromFavourites'],
       youHave: json['youHave'],
     );
   }
@@ -57,8 +51,6 @@ class ScreenRecipeLanguage {
       'grams': grams,
       'cooking': cooking,
       'similarRecipes': similarRecipes,
-      'addedToFavourites': addedToFavourites,
-      'removedFromFavourites': removedFromFavourites,
       'youHave': youHave,
     };
   }

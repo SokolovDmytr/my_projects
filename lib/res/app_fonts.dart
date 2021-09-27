@@ -37,6 +37,14 @@ class AppFonts {
     );
   }
 
+  static TextStyle get normalMediumMariGoldTextStyle {
+    return GoogleFonts.roboto(
+      fontSize: 24.0,
+      color: AppColors.marigold,
+      fontWeight: FontWeight.w500,
+    );
+  }
+
   static TextStyle get normalLightTextStyle {
     return GoogleFonts.roboto(
       fontSize: 24.0,

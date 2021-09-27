@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
-import 'package:yellow_team_fridge/res/app_routes.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
-import 'package:yellow_team_fridge/store/application/app_state.dart';
-import 'package:yellow_team_fridge/store/shared/route_state/route_selectors.dart';
+import 'package:yellow_team_fridge/services/dialog_service/dialogs/delete_dialog/delete_dialog_widget.dart';
+import 'package:yellow_team_fridge/services/dialog_service/dialogs/delete_dialog/delete_dialog.dart';
+import 'package:yellow_team_fridge/services/dialog_service/dialogs/error_dialog/error_dialog.dart';
+import 'package:yellow_team_fridge/services/dialog_service/dialogs/error_dialog/error_dialog_widget.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/custom_app_bar.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 
@@ -35,10 +35,9 @@ class _MainPageState extends State<MainPage> {
       body: Center(
         child: GlobalButton(
           onTap: () {
-            RouteSelectors.pushNamed(
-              store: StoreProvider.of<AppState>(context),
-              route: AppRoutes.auth,
-            );
+            ErrorDialog(
+              child: ErrorDialogWidget(),
+            ).show();
           },
           gradient: AppGradient.wheatMarigoldGradient,
           key: Key('123'),

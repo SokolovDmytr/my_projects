@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/authentication_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/bottom_navigation_bar_language.dart';
+import 'package:yellow_team_fridge/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/favorites_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/main_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/notification_page_language.dart';
@@ -19,6 +20,7 @@ class Language {
   final RecipesPageLanguage recipesPageLanguage;
   final ScreenRecipeLanguage screenRecipeLanguage;
   final SettingsPageLanguage settingsPageLanguage;
+  final DialogLanguage dialogLanguage;
 
   Language({
     @required this.authenticationPageLanguage,
@@ -30,5 +32,6 @@ class Language {
     @required this.recipesPageLanguage,
     @required this.screenRecipeLanguage,
     @required this.settingsPageLanguage,
+    @required this.dialogLanguage,
   });
 }

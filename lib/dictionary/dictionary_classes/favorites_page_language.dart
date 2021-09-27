@@ -4,8 +4,6 @@ class FavouritesPageLanguage {
   final String back;
   final String listEmpty;
   final String favourites;
-  final String removedPopUp;
-  final String serverBugPopUp;
   final String cal;
   final String basic;
   final String min;
@@ -19,8 +17,6 @@ class FavouritesPageLanguage {
     @required this.cal,
     @required this.basic,
     @required this.favourites,
-    @required this.removedPopUp,
-    @required this.serverBugPopUp,
   });
 
   factory FavouritesPageLanguage.fromJson(Map<String, dynamic> json) {
@@ -30,8 +26,6 @@ class FavouritesPageLanguage {
       cal: json['cal'],
       basic: json['basic'],
       favourites: json['favourites'],
-      removedPopUp: json['removedPopUp'],
-      serverBugPopUp: json['serverBugPopUp'],
       listEmpty: json['listEmpty'],
       youDoNotHave: json['youDoNotHave'],
     );
@@ -44,8 +38,6 @@ class FavouritesPageLanguage {
       'cal': cal,
       'basic': basic,
       'favourites': favourites,
-      'removedPopUp': removedPopUp,
-      'serverBugPopUp': serverBugPopUp,
       'listEmpty': listEmpty,
       'youDoNotHave':youDoNotHave,
     };

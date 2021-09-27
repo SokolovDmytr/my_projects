@@ -1,5 +1,6 @@
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/authentication_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/bottom_navigation_bar_language.dart';
+import 'package:yellow_team_fridge/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/favorites_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/main_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/notification_page_language.dart';
@@ -18,14 +19,11 @@ Language en = Language(
     signIn: 'SignIn',
     registerGoogle: 'Register with Google',
     registerApple: 'Register with Apple',
-    newVersionText: '',
-    newVersion: 'A new version is available',
     logIn: 'LogIn',
     enterEmail: 'Enter your email',
     buttonShow: 'Show',
     buttonSend: 'Send',
     buttonForgotPassword: 'Forgot your password?',
-    buttonOk: 'Ok',
     textFieldEmail: 'Email',
     signInGoogle: 'SignIn with Google',
     signInApple: 'SignIn with Apple',
@@ -43,8 +41,6 @@ Language en = Language(
     cal: 'cal',
     min: 'min',
     back: 'Back',
-    serverBugPopUp: 'There`s been a bug on the server, please wait',
-    removedPopUp: 'This recipe was removed from the favourites',
   ),
   mainPageLanguage: MainPageLanguage(
     buttonOk: 'Ok',
@@ -59,11 +55,16 @@ Language en = Language(
     back: 'Back',
     notification: 'Notification',
     version: 'Version',
-    versionDescriptionFive: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    versionDescriptionFour: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    versionDescriptionOne: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    versionDescriptionThree: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    versionDescriptionTwo: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    versionDescriptionFive:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    versionDescriptionFour:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    versionDescriptionOne:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    versionDescriptionThree:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    versionDescriptionTwo:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
   ),
   onBoardingScreenLanguage: OnBoardingScreenLanguage(
     buttonStart: 'Start',
@@ -88,8 +89,6 @@ Language en = Language(
     cal: 'cal',
     min: 'min',
     back: 'Back',
-    removedFromFavourites: 'This recipe was removed from the favourites',
-    addedToFavourites: 'This recipe added to favourites',
     similarRecipes: 'Similar recipes',
     cooking: 'Cooking',
     grams: 'grams',
@@ -103,8 +102,25 @@ Language en = Language(
     settings: 'Settings',
     buttonNo: 'No',
     youSureWantToExit: 'Are you sure you want to quit the application Empty Fridge?',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     aboutCompany: 'About company',
     language: 'Language',
+  ),
+  dialogLanguage: DialogLanguage(
+    loginPopUpTitle: 'A new version is available',
+    loginPopUpNewVersionText: '',
+    loginPopUpButtonText: 'Ok',
+    logOutPopUpTitle: 'Are you sure you want to quit the application',
+    logOutPopUpAppName: 'Empty Fridge',
+    logOutPopUpButtonNoText: 'No',
+    logOutPopUpButtonYesText: 'Yes',
+    favoritesRemovedPopUpText: 'This recipe was removed from the favourites',
+    popUpConnectionError: 'There`s been a bug on the server, please wait',
+    recipePopUpAddedText: 'This recipe added to favourites',
+    deletePopUpTitle: 'Do you want delete ',
+    deletePopUpButtonOkText: 'Ok',
+    deletePopUpButtonCancelText: 'Cancel',
+    defaultErrorText: 'Error',
   ),
 );
