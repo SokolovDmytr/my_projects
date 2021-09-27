@@ -3,16 +3,15 @@ import 'package:yellow_team_fridge/dictionary/data/en.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
-import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 
-class DeleteDialogWidget extends StatelessWidget {
+class SuccessDialogWidget extends StatelessWidget {
   final String text;
   final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
-  DeleteDialogWidget({
-    @required this.text,
+  SuccessDialogWidget({
+    this.text,
     Key key,
   }) : super(key: key);
 
@@ -23,7 +22,7 @@ class DeleteDialogWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
       ),
       insetPadding: const EdgeInsets.symmetric(horizontal: 15.0),
-      child: Container(
+      child: SizedBox(
         height: 273.0,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,7 +36,7 @@ class DeleteDialogWidget extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: Text(
-                '${language.deletePopUpTitle} ${text}?',
+                '${language.defaultSuccessText}\n${text ?? ''}',
                 style: AppFonts.normalBlackTwoTextStyle,
                 softWrap: true,
                 maxLines: 2,
@@ -51,29 +50,16 @@ class DeleteDialogWidget extends StatelessWidget {
                 37.0,
                 50.0,
               ),
-              child: Row(
-                textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GlobalButton(
-                    key: Key('cancel'),
-                    width: 127.0,
-                    height: 56.0,
-                    text: language.deletePopUpButtonCancelText,
-                    fontText: AppFonts.normalMediumTextStyle,
-                    onTap: () {},
-                    gradient: AppGradient.wheatMarigoldGradient,
-                  ),
-                  GlobalButton(
-                    key: Key('ok'),
-                    width: 127.0,
-                    height: 56.0,
-                    text: language.deletePopUpButtonOkText,
-                    fontText: AppFonts.normalMediumMariGoldTextStyle,
-                    onTap: () {},
-                    borderColor: AppColors.wheat,
-                  ),
-                ],
+              child: GlobalButton(
+                key: Key('ok'),
+                width: 127.0,
+                height: 56.0,
+                text: language.deletePopUpButtonOkText,
+                fontText: AppFonts.normalMediumTextStyle,
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                gradient: AppGradient.wheatMarigoldGradient,
               ),
             )
           ],

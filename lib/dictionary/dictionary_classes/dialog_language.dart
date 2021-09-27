@@ -21,6 +21,7 @@ class DialogLanguage {
   String deletePopUpButtonCancelText;
 
   String defaultErrorText;
+  String defaultSuccessText;
 
   DialogLanguage({
     @required this.loginPopUpTitle,
@@ -37,6 +38,7 @@ class DialogLanguage {
     @required this.deletePopUpButtonOkText,
     @required this.deletePopUpButtonCancelText,
     @required this.defaultErrorText,
+    @required this.defaultSuccessText,
   });
 
   factory DialogLanguage.fromJson(Map<String, dynamic> json) {
@@ -55,25 +57,27 @@ class DialogLanguage {
       deletePopUpButtonOkText: json['deletePopUpButtonOkText'],
       deletePopUpButtonCancelText: json['deletePopUpButtonDeleteText'],
       defaultErrorText: json['defaultErrorText'],
+        defaultSuccessText: json['defaultSuccessText'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'loginPopUpTitle': this.loginPopUpTitle,
-      'loginPopUpNewVersionText': this.loginPopUpNewVersionText,
-      'loginPopUpButtonText': this.loginPopUpButtonText,
-      'logOutPopUpTitle': this.logOutPopUpTitle,
-      'logOutPopUpAppName': this.logOutPopUpAppName,
-      'logOutPopUpButtonNoText': this.logOutPopUpButtonNoText,
-      'logOutPopUpButtonYesText': this.logOutPopUpButtonYesText,
-      'favoritesRemovedPopUpText': this.favoritesRemovedPopUpText,
-      'popUpConnectionError': this.popUpConnectionError,
-      'recipePopUpAddedText': this.recipePopUpAddedText,
-      'deletePopUpTitle': this.deletePopUpTitle,
-      'deletePopUpButtonOkText': this.deletePopUpButtonOkText,
-      'deletePopUpButtonDeleteText': this.deletePopUpButtonCancelText,
-      'defaultErrorText': this.defaultErrorText,
+      'loginPopUpTitle': loginPopUpTitle,
+      'loginPopUpNewVersionText': loginPopUpNewVersionText,
+      'loginPopUpButtonText': loginPopUpButtonText,
+      'logOutPopUpTitle': logOutPopUpTitle,
+      'logOutPopUpAppName': logOutPopUpAppName,
+      'logOutPopUpButtonNoText': logOutPopUpButtonNoText,
+      'logOutPopUpButtonYesText': logOutPopUpButtonYesText,
+      'favoritesRemovedPopUpText': favoritesRemovedPopUpText,
+      'popUpConnectionError': popUpConnectionError,
+      'recipePopUpAddedText': recipePopUpAddedText,
+      'deletePopUpTitle': deletePopUpTitle,
+      'deletePopUpButtonOkText': deletePopUpButtonOkText,
+      'deletePopUpButtonDeleteText': deletePopUpButtonCancelText,
+      'defaultErrorText': defaultErrorText,
+      'defaultSuccessText': defaultSuccessText,
     };
   }
 }

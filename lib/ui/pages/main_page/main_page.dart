@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:yellow_team_fridge/dictionary/data/en.dart';
+import 'package:yellow_team_fridge/dictionary/dictionary_classes/dialog_language.dart';
+import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
-import 'package:yellow_team_fridge/services/dialog_service/dialogs/delete_dialog/delete_dialog_widget.dart';
-import 'package:yellow_team_fridge/services/dialog_service/dialogs/delete_dialog/delete_dialog.dart';
-import 'package:yellow_team_fridge/services/dialog_service/dialogs/error_dialog/error_dialog.dart';
-import 'package:yellow_team_fridge/services/dialog_service/dialogs/error_dialog/error_dialog_widget.dart';
+import 'package:yellow_team_fridge/services/dialog_service/dialogs/success_dialog/success_dialog.dart';
+import 'package:yellow_team_fridge/services/dialog_service/dialogs/success_dialog/success_dialog_widget.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/custom_app_bar.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 
 class MainPage extends StatefulWidget {
-  MainPage() : super(key: Key('MainPage'));
+  MainPage()
+      : super(
+          key: Key('MainPage'),
+        );
 
   @override
   _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
+  final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+
   @override
   void initState() {
     super.initState();
@@ -35,8 +41,8 @@ class _MainPageState extends State<MainPage> {
       body: Center(
         child: GlobalButton(
           onTap: () {
-            ErrorDialog(
-              child: ErrorDialogWidget(),
+            SuccessDialog(
+              child: SuccessDialogWidget(),
             ).show();
           },
           gradient: AppGradient.wheatMarigoldGradient,

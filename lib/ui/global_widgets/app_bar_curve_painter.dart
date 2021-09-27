@@ -4,10 +4,9 @@ import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 class AppBarCurveCurvepainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    Path path = Path();
-    Paint paint = Paint();
+    final Path path = Path();
+    final Paint paint = Paint();
 
-    path = Path();
     path.lineTo(0, size.height * 0.35);
 
     path.quadraticBezierTo(

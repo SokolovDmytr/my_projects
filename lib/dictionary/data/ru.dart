@@ -122,5 +122,6 @@ Language ru = Language(
     deletePopUpButtonOkText: 'Ок',
     deletePopUpButtonCancelText: 'Отмена',
     defaultErrorText: 'Ошибка',
+    defaultSuccessText: 'Успех',
   ),
 );

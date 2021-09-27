@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:yellow_team_fridge/dictionary/data/en.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
-import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
-import 'package:yellow_team_fridge/store/application/app_state.dart';
-import 'package:yellow_team_fridge/store/shared/route_state/route_selectors.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 
 class ErrorDialogWidget extends StatelessWidget {

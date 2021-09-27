@@ -40,7 +40,7 @@ class DialogState {
   }
 
   DialogState _showDialogAction(ShowDialogAction action) {
-    DialogService.instance.show(action.dialog);
+    DialogService.instance.show(dialog: action.dialog);
     return this;
   }
 }

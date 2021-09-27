@@ -6,9 +6,7 @@ import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/image_assets.dart';
 
 class SplashScreen extends StatefulWidget {
-  final double value = 0.3;
-
-  const SplashScreen({Key key}) : super(key: key);
+    const SplashScreen({Key key}) : super(key: key);
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -59,7 +57,6 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(4.0),
                   child: LinearProgressIndicator(
-                    value: widget.value,
                     minHeight: 8.0,
                     backgroundColor: AppColors.white,
                     valueColor: AlwaysStoppedAnimation<Color>(AppColors.marigold),

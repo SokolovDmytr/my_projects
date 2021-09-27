@@ -66,6 +66,7 @@ class AppFonts {
       fontSize: 16.0,
       color: AppColors.black,
       fontWeight: FontWeight.w400,
+      height: 1.5,
     );
   }
 

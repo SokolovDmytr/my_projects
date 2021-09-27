@@ -13,7 +13,6 @@ class GlobalButton extends StatefulWidget {
   final Color _color;
   final Image _icon;
   final List<BoxShadow> _shadows;
-  final Color _shadowColor;
   final Color _borderColor;
   final double _borderRadius;
 
@@ -28,7 +27,6 @@ class GlobalButton extends StatefulWidget {
     LinearGradient gradient,
     Color borderColor,
     List<BoxShadow> shadows,
-    Color shadowColor,
     Color color = AppColors.white,
     double borderRadius = 10.0,
   })  : _width = width,
@@ -40,7 +38,6 @@ class GlobalButton extends StatefulWidget {
         _color = color,
         _icon = icon,
         _shadows = shadows,
-        _shadowColor = shadowColor,
         _borderColor = borderColor,
         _borderRadius = borderRadius,
         super(key: key);

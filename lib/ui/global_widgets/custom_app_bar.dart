@@ -19,12 +19,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   const CustomAppBar({
     @required Size preferredSize,
+    @required this.isMainStyleAppBar,
+
     this.title,
     this.color,
     this.gradient,
     this.textButton,
     this.onTapBack,
-    @required this.isMainStyleAppBar,
     Key key,
   })  : _preferredSize = preferredSize,
         super(key: key);
@@ -61,7 +62,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     margin: const EdgeInsets.only(bottom: 13.0),
                     child: InkWell(
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
                         children: [
                           Container(
                             margin: const EdgeInsets.only(right: 8.0),

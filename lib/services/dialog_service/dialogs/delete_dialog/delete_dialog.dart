@@ -10,6 +10,6 @@ class DeleteDialog implements IDialog {
 
   @override
   void show() {
-    DialogService.instance.show(this);
+    DialogService.instance.show(dialog: this);
   }
 }

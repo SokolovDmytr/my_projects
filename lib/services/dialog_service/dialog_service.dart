@@ -12,8 +12,8 @@ class DialogService {
 
   static DialogService get instance => _instance;
 
-  void show(IDialog dialog) {
-    BuildContext ctx = RouteService.instance.navigatorKey.currentState.context;
+  void show({@required IDialog dialog}) {
+    final BuildContext ctx = RouteService.instance.navigatorKey.currentState.context;
 
     showDialog(
       context: ctx,

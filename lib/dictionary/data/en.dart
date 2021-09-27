@@ -122,5 +122,6 @@ Language en = Language(
     deletePopUpButtonOkText: 'Ok',
     deletePopUpButtonCancelText: 'Cancel',
     defaultErrorText: 'Error',
+    defaultSuccessText: 'Success',
   ),
 );

@@ -36,7 +36,7 @@ class RouteState {
   }
 
   RouteState _navigateReplace(NavigateReplaceAction action) {
-    List<String> result = List<String>.from(routes);
+    final List<String> result = List<String>.from(routes);
     if (result.isNotEmpty) {
       result.removeLast();
     }
@@ -46,14 +46,14 @@ class RouteState {
   }
 
   RouteState _navigatePush(NavigatePushNamedAction action) {
-    List<String> result = List<String>.from(routes);
+    final List<String> result = List<String>.from(routes);
     result.add(action.route);
 
     return RouteState(routes: result);
   }
 
   RouteState _navigatePop(NavigatePopAction action) {
-    List<String> result = List<String>.from(routes);
+    final List<String> result = List<String>.from(routes);
     if (result.isNotEmpty) {
       result.removeLast();
     }
@@ -72,7 +72,7 @@ class RouteState {
       i = 0;
     }
 
-    List<String> result = routes.sublist(0, i);
+    final List<String> result = routes.sublist(0, i);
     result.add(action.route);
 
     return RouteState(routes: result);
