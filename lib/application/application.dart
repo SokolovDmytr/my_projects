@@ -4,9 +4,8 @@ import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:redux/redux.dart';
 import 'package:yellow_team_fridge/dictionary/flutter_delegate.dart';
 import 'package:yellow_team_fridge/res/keys.dart';
-import 'package:yellow_team_fridge/res/locales.dart';
+import 'package:yellow_team_fridge/services/route_service.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
-import 'package:yellow_team_fridge/ui/pages/on_boarding_screen/on_boarding_screen.dart';
 import 'package:yellow_team_fridge/ui/pages/main_page/main_page.dart';
 import 'package:yellow_team_fridge/ui/pages/splash_screen/splash_screen.dart';
 
@@ -36,12 +35,13 @@ class Application extends StatelessWidget {
         builder: (BuildContext context, AppState state) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            navigatorKey: NavigatorHolder.navigatorKey,
+            navigatorKey: RouteService.instance.navigatorKey,
             // onGenerateRoute: route.RouteBuilder.onGenerateRoute,
             home: MainPage(),
-            locale: Locale(Locales.base),
+            locale: Locale(FlutterDictionaryDelegate.getCurrentLocale),
             supportedLocales: FlutterDictionaryDelegate.getSupportedLocales,
             localizationsDelegates: FlutterDictionaryDelegate.getLocalizationDelegates,
+            onGenerateRoute: (RouteSettings settings) => RouteService.instance.onGenerateRoute(settings: settings),
             builder: (context, child) {
               return MediaQuery(
                 data: MediaQuery.of(context).copyWith(

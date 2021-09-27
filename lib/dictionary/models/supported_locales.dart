@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:yellow_team_fridge/dictionary/data/en.dart';
+import 'package:yellow_team_fridge/dictionary/data/he.dart';
+import 'package:yellow_team_fridge/dictionary/data/ru.dart';
 import 'package:yellow_team_fridge/dictionary/models/language.dart';
 import 'package:yellow_team_fridge/dictionary/models/supported_language.dart';
 import 'package:yellow_team_fridge/res/locales.dart';
@@ -11,7 +14,15 @@ class SupportedLocales {
     _supportedLocales = <SupportedLanguage>[
       SupportedLanguage(
         languageCode: Locales.en,
-        language: Language(),
+        language: en,
+      )..choose(),
+      SupportedLanguage(
+        languageCode: Locales.he,
+        language: he,
+      )..choose(),
+      SupportedLanguage(
+        languageCode: Locales.ru,
+        language: ru,
       )..choose(),
     ];
   }

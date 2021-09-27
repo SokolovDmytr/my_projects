@@ -33,9 +33,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    if (_widthScreen == null) {
-      _widthScreen = MediaQuery.of(context).size.width;
-    }
+    _widthScreen = _widthScreen ?? MediaQuery.of(context).size.width;
   }
 
   @override
