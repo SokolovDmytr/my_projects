@@ -14,7 +14,7 @@ class ILoader extends IDialog {
   });
 
   Widget get widget {
-    return Container();
+    return child;
   }
 
   @override

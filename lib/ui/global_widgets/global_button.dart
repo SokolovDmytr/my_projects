@@ -20,11 +20,11 @@ class GlobalButton extends StatefulWidget {
 
   const GlobalButton({
     @required Key key,
-    @required double width,
-    @required double height,
     @required String text,
     @required TextStyle fontText,
     @required Function onTap,
+    double width = 312.0,
+    double height = 56.0,
     Image icon,
     LinearGradient gradient,
     Color borderColor,

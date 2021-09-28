@@ -23,6 +23,17 @@ class AppShadows {
     ];
   }
 
+  static List<BoxShadow> get recipeElementShadow {
+    return [
+      BoxShadow(
+        color: AppColors.black25,
+        blurRadius: 10.0,
+        offset: Offset(0.0, 3.0),
+      ),
+    ];
+  }
+
+
   static List<BoxShadow> shadowText(Color color) {
     return [
       BoxShadow(

@@ -89,6 +89,15 @@ class AppFonts {
     );
   }
 
+  static TextStyle get medium16Height24WhiteTextStyle {
+    return GoogleFonts.roboto(
+      fontSize: 16.0,
+      color: AppColors.white,
+      fontWeight: FontWeight.w400,
+      height: 1.5,
+    );
+  }
+
   static TextStyle get medium16Height26TextStyle {
     return GoogleFonts.roboto(
       fontSize: 16.0,

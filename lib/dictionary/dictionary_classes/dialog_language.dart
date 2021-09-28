@@ -23,6 +23,8 @@ class DialogLanguage {
   String defaultErrorText;
   String defaultSuccessText;
 
+  String loadingText;
+
   DialogLanguage({
     @required this.loginPopUpTitle,
     @required this.loginPopUpNewVersionText,
@@ -39,6 +41,7 @@ class DialogLanguage {
     @required this.deletePopUpButtonCancelText,
     @required this.defaultErrorText,
     @required this.defaultSuccessText,
+    @required this.loadingText,
   });
 
   factory DialogLanguage.fromJson(Map<String, dynamic> json) {
@@ -57,7 +60,8 @@ class DialogLanguage {
       deletePopUpButtonOkText: json['deletePopUpButtonOkText'],
       deletePopUpButtonCancelText: json['deletePopUpButtonDeleteText'],
       defaultErrorText: json['defaultErrorText'],
-        defaultSuccessText: json['defaultSuccessText'],
+      defaultSuccessText: json['defaultSuccessText'],
+      loadingText: json['loadingText'],
     );
   }
 
@@ -78,6 +82,7 @@ class DialogLanguage {
       'deletePopUpButtonDeleteText': deletePopUpButtonCancelText,
       'defaultErrorText': defaultErrorText,
       'defaultSuccessText': defaultSuccessText,
+      'loadingText': loadingText,
     };
   }
 }
