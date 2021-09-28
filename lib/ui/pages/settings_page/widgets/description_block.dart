@@ -28,7 +28,7 @@ class DescriptionBlock extends StatelessWidget {
         ),
         Text(
           _language.description,
-          style: AppFonts.medium16TextStyle,
+          style: AppFonts.medium16Height24TextStyle,
         ),
       ],
     );

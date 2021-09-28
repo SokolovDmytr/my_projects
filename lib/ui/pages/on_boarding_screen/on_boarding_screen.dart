@@ -16,7 +16,7 @@ class OnBoardingScreen extends StatefulWidget {
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   List<T> map<T>(List list, Function handler) {
-    List<T> result = [];
+    final List<T> result = [];
     for (var i = 0; i < list.length; i++) {
       result.add(handler(i, list[i]));
     }

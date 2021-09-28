@@ -69,7 +69,7 @@ class _LanguageBlockState extends State<LanguageBlock> {
                       duration: Duration(milliseconds: 400),
                       child: Text(
                         SupportedLocales.instance.getSupportedLocales[index].toString().toUpperCase(),
-                        style: AppFonts.medium16TextStyle,
+                        style: AppFonts.medium16Height24TextStyle,
                       ),
                     ),
                   ),

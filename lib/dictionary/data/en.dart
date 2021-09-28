@@ -1,5 +1,6 @@
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/authentication_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/bottom_navigation_bar_language.dart';
+import 'package:yellow_team_fridge/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/favorites_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/main_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/notification_page_language.dart';
@@ -8,6 +9,7 @@ import 'package:yellow_team_fridge/dictionary/dictionary_classes/recipes_page_la
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/screen_recipe_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/settings_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/models/language.dart';
+import 'package:yellow_team_fridge/res/const.dart';
 
 Language en = Language(
   authenticationPageLanguage: AuthenticationPageLanguage(
@@ -18,14 +20,11 @@ Language en = Language(
     signIn: 'SignIn',
     registerGoogle: 'Register with Google',
     registerApple: 'Register with Apple',
-    newVersionText: '',
-    newVersion: 'A new version is available',
     logIn: 'LogIn',
     enterEmail: 'Enter your email',
     buttonShow: 'Show',
     buttonSend: 'Send',
     buttonForgotPassword: 'Forgot your password?',
-    buttonOk: 'Ok',
     textFieldEmail: 'Email',
     signInGoogle: 'SignIn with Google',
     signInApple: 'SignIn with Apple',
@@ -43,8 +42,6 @@ Language en = Language(
     cal: 'cal',
     min: 'min',
     back: 'Back',
-    serverBugPopUp: 'There`s been a bug on the server, please wait',
-    removedPopUp: 'This recipe was removed from the favourites',
   ),
   mainPageLanguage: MainPageLanguage(
     buttonOk: 'Ok',
@@ -93,8 +90,6 @@ Language en = Language(
     cal: 'cal',
     min: 'min',
     back: 'Back',
-    removedFromFavourites: 'This recipe was removed from the favourites',
-    addedToFavourites: 'This recipe added to favourites',
     similarRecipes: 'Similar recipes',
     cooking: 'Cooking',
     grams: 'grams',
@@ -114,5 +109,22 @@ Language en = Language(
     language: 'Language',
     notification: 'Notification',
     logOut: 'Log out',
+  ),
+  dialogLanguage: DialogLanguage(
+    loginPopUpTitle: 'A new version is available',
+    loginPopUpNewVersionText: placeholder_text,
+    loginPopUpButtonText: 'Ok',
+    logOutPopUpTitle: 'Are you sure you want to quit the application ',
+    logOutPopUpAppName: 'Empty Fridge ',
+    logOutPopUpButtonNoText: 'No',
+    logOutPopUpButtonYesText: 'Yes',
+    favoritesRemovedPopUpText: 'This recipe was removed from the favourites',
+    serverErrorText: 'There`s been a bug on the server, please wait',
+    recipePopUpAddedText: 'This recipe added to favourites',
+    deletePopUpTitle: 'Do you want delete ',
+    deletePopUpButtonOkText: 'Ok',
+    deletePopUpButtonCancelText: 'Cancel',
+    defaultErrorText: 'Error',
+    defaultSuccessText: 'Success',
   ),
 );

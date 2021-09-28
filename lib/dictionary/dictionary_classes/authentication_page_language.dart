@@ -14,9 +14,6 @@ class AuthenticationPageLanguage {
   final String textFieldPassword;
   final String textFieldConfirmPassword;
   final String buttonShow;
-  final String newVersion;
-  final String newVersionText;
-  final String buttonOk;
   final String buttonForgotPassword;
   final String logIn;
 
@@ -34,23 +31,17 @@ class AuthenticationPageLanguage {
     @required this.textFieldPassword,
     @required this.textFieldConfirmPassword,
     @required this.buttonShow,
-    @required this.newVersion,
-    @required this.newVersionText,
-    @required this.buttonOk,
     @required this.buttonForgotPassword,
     @required this.logIn,
   });
 
   factory AuthenticationPageLanguage.fromJson(Map<String, dynamic> json) {
     return AuthenticationPageLanguage(
-      buttonOk: json['buttonOk'],
       buttonForgotPassword: json['buttonForgotPassword'],
       buttonSend: json['buttonSend'],
       buttonShow: json['buttonShow'],
       enterEmail: json['enterEmail'],
       logIn: json['logIn'],
-      newVersion: json['newVersion'],
-      newVersionText: json['newVersionText'],
       registerApple: json['registerApple'],
       registerGoogle: json['registerGoogle'],
       signIn: json['signIn'],
@@ -66,14 +57,12 @@ class AuthenticationPageLanguage {
 
   Map<String, dynamic> toJson() {
     return {
-      'buttonOk': buttonOk,
+
       'buttonForgotPassword': buttonForgotPassword,
       'buttonSend': buttonSend,
       'buttonShow': buttonShow,
       'enterEmail': enterEmail,
       'logIn': logIn,
-      'newVersion': newVersion,
-      'newVersionText': newVersionText,
       'registerApple': registerApple,
       'registerGoogle': registerGoogle,
       'signIn': signIn,
