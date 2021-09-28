@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yellow_team_fridge/dictionary/data/en.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/dialog_language.dart';
@@ -5,14 +6,13 @@ import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
+import 'package:yellow_team_fridge/res/const.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 
-class DeleteDialogWidget extends StatelessWidget {
-  final String text;
+class QuitAppDialogWidget extends StatelessWidget {
   final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
-  DeleteDialogWidget({
-    @required this.text,
+  QuitAppDialogWidget({
     Key key,
   }) : super(key: key);
 
@@ -47,20 +47,33 @@ class DeleteDialogWidget extends StatelessWidget {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(
-                left: 40.0,
-                right: 40.0,
-                bottom: 30.0,
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                '${language.deletePopUpTitle} ${text}?',
-                style: AppFonts.normalBlackTwoTextStyle,
-                softWrap: true,
-                maxLines: 2,
-                textAlign: TextAlign.center,
-              ),
-            ),
+                margin: const EdgeInsets.only(
+                  left: 42.0,
+                  right: 42.0,
+                  bottom: 30.0,
+                ),
+                alignment: Alignment.center,
+                child: RichText(
+                  maxLines: 3,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: language.logOutPopUpTitle,
+                        style: AppFonts.normalBlackTwoTextStyle,
+                      ),
+                      TextSpan(
+                        text: language.logOutPopUpAppName,
+                        style: AppFonts.normalMariGoldTextStyle,
+                      ),
+                      TextSpan(
+                        text: question_mark,
+                        style: AppFonts.normalBlackTwoTextStyle,
+                      ),
+                    ],
+                  ),
+                )),
             Container(
               margin: const EdgeInsets.fromLTRB(
                 37.0,
@@ -73,22 +86,22 @@ class DeleteDialogWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GlobalButton(
-                    key: Key('cancel'),
+                    key: Key('no'),
                     width: 127.0,
                     height: 56.0,
-                    text: language.deletePopUpButtonCancelText,
+                    text: language.logOutPopUpButtonNoText,
                     fontText: AppFonts.normalMediumTextStyle,
                     onTap: () {},
                     gradient: AppGradient.wheatMarigoldGradient,
                   ),
                   GlobalButton(
-                    key: Key('ok'),
+                    key: Key('yes'),
                     width: 127.0,
                     height: 56.0,
-                    text: language.deletePopUpButtonOkText,
+                    text: language.logOutPopUpButtonYesText,
                     fontText: AppFonts.normalMediumMariGoldTextStyle,
                     onTap: () {},
-                    borderColor: AppColors.wheat,
+                    borderGradient: AppGradient.wheatMarigoldGradient,
                   ),
                 ],
               ),

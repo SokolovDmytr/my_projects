@@ -9,6 +9,7 @@ import 'package:yellow_team_fridge/dictionary/dictionary_classes/recipes_page_la
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/screen_recipe_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/settings_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/models/language.dart';
+import 'package:yellow_team_fridge/res/const.dart';
 
 Language he = Language(
   authenticationPageLanguage: AuthenticationPageLanguage(
@@ -109,14 +110,14 @@ Language he = Language(
   ),
   dialogLanguage: DialogLanguage(
     loginPopUpTitle: 'קיימת גרסה חדשה',
-    loginPopUpNewVersionText: '',
+    loginPopUpNewVersionText: placeholder_text,
     loginPopUpButtonText: 'בסדר',
-    logOutPopUpTitle: 'האם אתה בטוח שברצונך לסגור את היישום',
-    logOutPopUpAppName: 'Empty Fridge',
+    logOutPopUpTitle: ' האם אתה בטוח שברצונך לסגור את היישום',
+    logOutPopUpAppName: 'Empty Fridge ',
     logOutPopUpButtonNoText: 'לא',
     logOutPopUpButtonYesText: 'כן',
     favoritesRemovedPopUpText: 'מתכון זה הוסר מהמועדפים',
-    popUpConnectionError: 'אירעה באג בשרת, אנא המתן',
+    serverErrorText: 'אירעה באג בשרת, אנא המתן',
     recipePopUpAddedText: 'המתכון הזה נוסף למועדפים',
     deletePopUpTitle: 'האם אתה רוצה למחוק',
     deletePopUpButtonOkText: 'בסדר',

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:yellow_team_fridge/dictionary/data/en.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/dialog_language.dart';
@@ -5,14 +6,14 @@ import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
+import 'package:yellow_team_fridge/res/app_styles/app_shadows.dart';
+import 'package:yellow_team_fridge/res/const.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 
-class DeleteDialogWidget extends StatelessWidget {
-  final String text;
+class NewVersionDialogWidget extends StatelessWidget {
   final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
-  DeleteDialogWidget({
-    @required this.text,
+  NewVersionDialogWidget({
     Key key,
   }) : super(key: key);
 
@@ -24,7 +25,7 @@ class DeleteDialogWidget extends StatelessWidget {
       ),
       insetPadding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: Container(
-        height: 273.0,
+        height: 340.0,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -47,50 +48,55 @@ class DeleteDialogWidget extends StatelessWidget {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(
-                left: 40.0,
-                right: 40.0,
-                bottom: 30.0,
+              margin: const EdgeInsets.symmetric(
+                horizontal: 50.0,
               ),
               alignment: Alignment.center,
-              child: Text(
-                '${language.deletePopUpTitle} ${text}?',
-                style: AppFonts.normalBlackTwoTextStyle,
+              child: RichText(
                 softWrap: true,
                 maxLines: 2,
                 textAlign: TextAlign.center,
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: language.loginPopUpTitle,
+                      style: AppFonts.normalBlackTwoTextStyle,
+                    ),
+                    WidgetSpan(
+                      child: Icon(CupertinoIcons.rocket, size: 24.0,),
+                    ),
+                  ],
+                ),
               ),
             ),
             Container(
-              margin: const EdgeInsets.fromLTRB(
-                37.0,
-                0.0,
-                37.0,
-                50.0,
+              alignment: Alignment.center,
+              margin: const EdgeInsets.fromLTRB(42.0, 15.0, 42.0, 21.0),
+              child: Text(
+                placeholder_text,
+                textAlign: TextAlign.center,
+                maxLines: 4,
+                softWrap: true,
+                style: AppFonts.medium16Height26TextStyle,
               ),
-              child: Row(
-                textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GlobalButton(
-                    key: Key('cancel'),
-                    width: 127.0,
-                    height: 56.0,
-                    text: language.deletePopUpButtonCancelText,
-                    fontText: AppFonts.normalMediumTextStyle,
-                    onTap: () {},
-                    gradient: AppGradient.wheatMarigoldGradient,
-                  ),
-                  GlobalButton(
-                    key: Key('ok'),
-                    width: 127.0,
-                    height: 56.0,
-                    text: language.deletePopUpButtonOkText,
-                    fontText: AppFonts.normalMediumMariGoldTextStyle,
-                    onTap: () {},
-                    borderColor: AppColors.wheat,
-                  ),
-                ],
+            ),
+            Container(
+              margin: const EdgeInsets.only(
+                left: 16.0,
+                right: 16.0,
+                bottom: 42.0,
+              ),
+              child: GlobalButton(
+                key: Key('ok'),
+                width: 312.0,
+                height: 56.0,
+                text: language.loginPopUpButtonText,
+                fontText: AppFonts.normalMediumMariGoldTextStyle,
+                gradient: AppGradient.wheatMarigoldGradient,
+                shadows: AppShadows.buttonOcreShadow,
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
               ),
             )
           ],

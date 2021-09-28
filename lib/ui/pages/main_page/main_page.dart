@@ -4,8 +4,8 @@ import 'package:yellow_team_fridge/dictionary/dictionary_classes/dialog_language
 import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
-import 'package:yellow_team_fridge/services/dialog_service/dialogs/success_dialog/success_dialog.dart';
-import 'package:yellow_team_fridge/services/dialog_service/dialogs/success_dialog/success_dialog_widget.dart';
+import 'package:yellow_team_fridge/services/dialog_service/dialogs/new_version_dialog/new_version_dialog.dart';
+import 'package:yellow_team_fridge/services/dialog_service/dialogs/new_version_dialog/new_version_dialog_widget.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/custom_app_bar.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 
@@ -41,8 +41,8 @@ class _MainPageState extends State<MainPage> {
       body: Center(
         child: GlobalButton(
           onTap: () {
-            SuccessDialog(
-              child: SuccessDialogWidget(),
+            NewVersionDialog(
+              child: NewVersionDialogWidget(),
             ).show();
           },
           gradient: AppGradient.wheatMarigoldGradient,

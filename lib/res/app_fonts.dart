@@ -26,6 +26,16 @@ class AppFonts {
       fontSize: 24.0,
       color: AppColors.blackTwo,
       fontWeight: FontWeight.w700,
+      height: 1.25,
+    );
+  }
+
+  static TextStyle get normalMariGoldTextStyle {
+    return GoogleFonts.roboto(
+      fontSize: 24.0,
+      color: AppColors.marigold,
+      fontWeight: FontWeight.w700,
+      height: 1.25,
     );
   }
 
@@ -61,12 +71,21 @@ class AppFonts {
     );
   }
 
-  static TextStyle get medium16TextStyle {
+  static TextStyle get medium16Height24TextStyle {
     return GoogleFonts.roboto(
       fontSize: 16.0,
       color: AppColors.black,
       fontWeight: FontWeight.w400,
       height: 1.5,
+    );
+  }
+
+  static TextStyle get medium16Height26TextStyle {
+    return GoogleFonts.roboto(
+      fontSize: 16.0,
+      color: AppColors.black,
+      fontWeight: FontWeight.w400,
+      height: 1.625,
     );
   }
 

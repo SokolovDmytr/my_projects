@@ -12,7 +12,7 @@ class DialogLanguage {
 
   String favoritesRemovedPopUpText;
 
-  String popUpConnectionError;
+  String serverErrorText;
 
   String recipePopUpAddedText;
 
@@ -32,7 +32,7 @@ class DialogLanguage {
     @required this.logOutPopUpButtonNoText,
     @required this.logOutPopUpButtonYesText,
     @required this.favoritesRemovedPopUpText,
-    @required this.popUpConnectionError,
+    @required this.serverErrorText,
     @required this.recipePopUpAddedText,
     @required this.deletePopUpTitle,
     @required this.deletePopUpButtonOkText,
@@ -51,7 +51,7 @@ class DialogLanguage {
       logOutPopUpButtonNoText: json['logOutPopUpButtonNoText'],
       logOutPopUpButtonYesText: json['logOutPopUpButtonYesText'],
       favoritesRemovedPopUpText: json['favoritesRemovedPopUpText'],
-      popUpConnectionError: json['popUpConnectionError'],
+      serverErrorText: json['serverErrorText'],
       recipePopUpAddedText: json['recipePopUpAddedText'],
       deletePopUpTitle: json['deletePopUpTitle'],
       deletePopUpButtonOkText: json['deletePopUpButtonOkText'],
@@ -71,7 +71,7 @@ class DialogLanguage {
       'logOutPopUpButtonNoText': logOutPopUpButtonNoText,
       'logOutPopUpButtonYesText': logOutPopUpButtonYesText,
       'favoritesRemovedPopUpText': favoritesRemovedPopUpText,
-      'popUpConnectionError': popUpConnectionError,
+      'serverErrorText': serverErrorText,
       'recipePopUpAddedText': recipePopUpAddedText,
       'deletePopUpTitle': deletePopUpTitle,
       'deletePopUpButtonOkText': deletePopUpButtonOkText,

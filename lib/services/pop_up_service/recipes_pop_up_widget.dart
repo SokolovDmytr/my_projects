@@ -22,7 +22,7 @@ class RecipesPopUpWidget extends StatelessWidget {
           text,
           maxLines: 2,
           softWrap: true,
-          style: AppFonts.medium16TextStyle,
+          style: AppFonts.medium16Height24TextStyle,
           textAlign: TextAlign.center,
         ),
       ),

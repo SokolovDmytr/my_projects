@@ -85,7 +85,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                             width: 60.0,
                             child: Text(
                               textButton,
-                              style: AppFonts.medium16TextStyle,
+                              style: AppFonts.medium16Height24TextStyle,
                               maxLines: 1,
                             ),
                           ),

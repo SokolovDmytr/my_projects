@@ -9,6 +9,7 @@ import 'package:yellow_team_fridge/dictionary/dictionary_classes/recipes_page_la
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/screen_recipe_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/settings_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/models/language.dart';
+import 'package:yellow_team_fridge/res/const.dart';
 
 Language en = Language(
   authenticationPageLanguage: AuthenticationPageLanguage(
@@ -109,14 +110,14 @@ Language en = Language(
   ),
   dialogLanguage: DialogLanguage(
     loginPopUpTitle: 'A new version is available',
-    loginPopUpNewVersionText: '',
+    loginPopUpNewVersionText: placeholder_text,
     loginPopUpButtonText: 'Ok',
-    logOutPopUpTitle: 'Are you sure you want to quit the application',
-    logOutPopUpAppName: 'Empty Fridge',
+    logOutPopUpTitle: 'Are you sure you want to quit the application ',
+    logOutPopUpAppName: 'Empty Fridge ',
     logOutPopUpButtonNoText: 'No',
     logOutPopUpButtonYesText: 'Yes',
     favoritesRemovedPopUpText: 'This recipe was removed from the favourites',
-    popUpConnectionError: 'There`s been a bug on the server, please wait',
+    serverErrorText: 'There`s been a bug on the server, please wait',
     recipePopUpAddedText: 'This recipe added to favourites',
     deletePopUpTitle: 'Do you want delete ',
     deletePopUpButtonOkText: 'Ok',

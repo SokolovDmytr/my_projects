@@ -9,6 +9,7 @@ import 'package:yellow_team_fridge/dictionary/dictionary_classes/recipes_page_la
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/screen_recipe_language.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/settings_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/models/language.dart';
+import 'package:yellow_team_fridge/res/const.dart';
 
 Language ru = Language(
   authenticationPageLanguage: AuthenticationPageLanguage(
@@ -109,14 +110,14 @@ Language ru = Language(
   ),
   dialogLanguage: DialogLanguage(
     loginPopUpTitle: 'Доступна новая версия',
-    loginPopUpNewVersionText: '',
+    loginPopUpNewVersionText: placeholder_text,
     loginPopUpButtonText: 'Ok',
-    logOutPopUpTitle: 'Вы уверены, что хотите выйти из приложения',
-    logOutPopUpAppName: 'Empty Fridge',
+    logOutPopUpTitle: 'Вы уверены, что хотите выйти из приложения ',
+    logOutPopUpAppName: 'Empty Fridge ',
     logOutPopUpButtonNoText: 'Нет',
     logOutPopUpButtonYesText: 'Да',
     favoritesRemovedPopUpText: 'Этот рецепт удален из избранного',
-    popUpConnectionError: 'На сервере произошла ошибка, подождите',
+    serverErrorText: 'На сервере произошла ошибка, подождите',
     recipePopUpAddedText: 'Рецепт добавлен в избранное',
     deletePopUpTitle: 'Вы хотите удалить ',
     deletePopUpButtonOkText: 'Ок',
