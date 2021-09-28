@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:yellow_team_fridge/res/const.dart';
@@ -113,6 +114,10 @@ class NetworkService {
     return BaseHttpResponse(
       response: jsonDecode(response.body),
     );
+  }
+
+  Future<bool> _checkInternetConnection() async {
+    return await DataConnectionChecker().hasConnection;
   }
 
   /// This functions will get a error text by error code.

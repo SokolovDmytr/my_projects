@@ -9,6 +9,8 @@ class SettingsPageLanguage {
   final String youSureWantToExit;
   final String buttonOk;
   final String buttonNo;
+  final String notification;
+  final String logOut;
 
   SettingsPageLanguage({
     @required this.youSureWantToExit,
@@ -19,6 +21,8 @@ class SettingsPageLanguage {
     @required this.description,
     @required this.buttonNo,
     @required this.buttonOk,
+    @required this.notification,
+    @required this.logOut,
   });
 
   factory SettingsPageLanguage.fromJson(Map<String, dynamic> json) {
@@ -31,6 +35,8 @@ class SettingsPageLanguage {
       youSureWantToExit: json['youSureWantToExit'],
       buttonOk: json['buttonOk'],
       buttonNo: json['buttonNo'],
+      notification: json['notification'],
+      logOut: json['logOut'],
     );
   }
 
@@ -44,6 +50,8 @@ class SettingsPageLanguage {
       'youSureWantToExit': youSureWantToExit,
       'buttonOk': buttonOk,
       'buttonNo': buttonNo,
+      'notification': notification,
+      'logOut': logOut,
     };
   }
 }

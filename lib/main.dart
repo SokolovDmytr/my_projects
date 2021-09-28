@@ -24,8 +24,8 @@ void main() {
     AppState.getReducer,
     initialState: AppState.initial(),
     middleware: [
-      EpicMiddleware(AppState.getAppEpic),
-      NavigationMiddleware<AppState>(),
+      // EpicMiddleware(AppState.getAppEpic),
+      // NavigationMiddleware<AppState>(),
     ],
   );
   runApp(Application(store: store));

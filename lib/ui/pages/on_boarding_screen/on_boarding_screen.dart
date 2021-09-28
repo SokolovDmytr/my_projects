@@ -33,7 +33,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           body: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 92.0),
+                padding: const EdgeInsets.only(top: 84.0, left: 50.0, right: 50.0),
                 child: CarouselSlider.builder(
                   carouselController: vm.buttonCarouselController,
                   itemCount: OnBoardingScreenData.hintsText.length,
@@ -45,6 +45,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           child: Text(
                             OnBoardingScreenData.hintsText[indexCurrent],
                             style: AppFonts.normalBlackTextStyle,
+                            textAlign: TextAlign.center,
                           ),
                         ),
                         Image.asset(OnBoardingScreenData.hintsPictures[indexCurrent]),
@@ -52,7 +53,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     );
                   },
                   options: CarouselOptions(
-                    height: 500.0,
+                    height: 450.0,
                     viewportFraction: 1.0,
                   ),
                 ),
@@ -79,13 +80,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 ),
               ),
               InkWell(
-                onTap: vm.currentIndexDots > 3 ? vm.startUsage : vm.nextSlide,
+                onTap: vm.currentIndexDots == 4 ? {vm.startUsage} : vm.nextSlide,
                 child: Container(
                   color: AppColors.red,
                   height: 50.0,
                   width: 200.0,
                 ),
-              )
+              ),
             ],
           ),
         ),

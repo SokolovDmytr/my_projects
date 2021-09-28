@@ -46,23 +46,27 @@ class OnBoardingScreenState {
   }
 
   OnBoardingScreenState _startAction() {
-    Navigator.of(context).pop();
+    buttonCarouselController.animateToPage(1,
+      // buttonCarouselController.nextPage(
+      duration: Duration(milliseconds: 300),
+    );
+    // Navigator.of(context).pop();
     return OnBoardingScreenState(
       currentIndexDots: 0,
       buttonCarouselController: buttonCarouselController,
-      // context: context,
+      context: context,
     );
   }
 
   OnBoardingScreenState _nextAction() {
-    print('aaaa');
-    buttonCarouselController.nextPage(
+    buttonCarouselController.animateToPage(currentIndexDots + 1,
+    // buttonCarouselController.nextPage(
       duration: Duration(milliseconds: 300),
     );
     return OnBoardingScreenState(
       currentIndexDots: currentIndexDots + 1,
       buttonCarouselController: buttonCarouselController,
-      // context: context,
+      context: context,
     );
   }
 }

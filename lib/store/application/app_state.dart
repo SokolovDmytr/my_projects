@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:redux_epics/redux_epics.dart';
+import 'package:yellow_team_fridge/store/language_state/language_state.dart';
 import 'package:yellow_team_fridge/store/on_boarding_screen_state/on_boarding_screen_state.dart';
 
 /// Class [AppState], is the main [state] application.
@@ -10,15 +11,18 @@ import 'package:yellow_team_fridge/store/on_boarding_screen_state/on_boarding_sc
 /// The third [loaderState] is required to loading.
 class AppState {
   final OnBoardingScreenState onBoardingScreenState;
+  final LanguageState languageState;
 
   AppState({
     @required this.onBoardingScreenState,
+    @required this.languageState,
   });
 
   ///All states are initialized in the [initial] function.
   factory AppState.initial() {
     return AppState(
       onBoardingScreenState: OnBoardingScreenState.initial(),
+      languageState: LanguageState.initial(),
     );
   }
 
@@ -26,6 +30,7 @@ class AppState {
   static AppState getReducer(AppState state, dynamic action) {
     return AppState(
       onBoardingScreenState: state.onBoardingScreenState.reducer(action),
+      languageState: state.languageState.reducer(action),
     );
   }
 

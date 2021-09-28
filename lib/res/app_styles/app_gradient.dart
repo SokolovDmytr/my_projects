@@ -13,7 +13,7 @@ class AppGradient {
     );
   }
 
-  static LinearGradient get marigolWheatdGradient{
+  static LinearGradient get marigoldWheatGradient{
     return LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
