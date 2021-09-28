@@ -26,8 +26,9 @@ const String CREATE_BY_LINK = 'https://appvesto.com/';
 //region [Main strings]
 const String TITLE = 'My catalog';
 const String EXAMPLE_ID = '1234';
-const String empty_string = '';
-const String question_mark = '?';
+const String emptyString = '';
+const String questionMark = '?';
+const String coma = ',';
 
 //endregion
 

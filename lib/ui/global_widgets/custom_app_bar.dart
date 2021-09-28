@@ -65,7 +65,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
                         children: [
                           Container(
-                            margin: const EdgeInsets.only(right: 8.0),
+                            margin: FlutterDictionary.instance.isRTL ? const EdgeInsets.only(left: 8.0) : const EdgeInsets.only(right: 8.0),
                             child: FlutterDictionary.instance.isRTL
                                 ? Transform.rotate(
                                     angle: math.pi,
@@ -94,14 +94,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       onTap: onTapBack,
                     ),
                   ),
-                  Container(
+                  title == null ? const SizedBox() : Container(
                     width: 140.0,
-                    margin: const EdgeInsets.only(bottom: 7.0),
+                    margin: const EdgeInsets.only(bottom: 10.0),
                     child: RichText(
+                      textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       text: TextSpan(
                         text: title,
-                        style: AppFonts.normalBlackTextStyle,
+                        style: AppFonts.normalBlackHeight30TextStyle,
                       ),
                     ),
                   )

@@ -33,9 +33,7 @@ class ServerErrorPopUpWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            Container(
-              child: Icon(Icons.error, color: AppColors.pastelRed, size: 33.0,),
-            ),
+            Icon(Icons.error, color: AppColors.pastelRed, size: 33.0,),
           ],
         ),
       ),
