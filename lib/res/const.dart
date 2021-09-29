@@ -72,3 +72,9 @@ class FileTypes {
   static const VIDEO_TYPE = 'VIDEO';
   static const PDF_TYPE = 'PDF';
 }
+
+enum AppBarType {
+  home,
+  simple,
+  screenRecipe,
+}

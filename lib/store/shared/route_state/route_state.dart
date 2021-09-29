@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:yellow_team_fridge/res/app_routes.dart';
 import 'package:yellow_team_fridge/store/shared/reducer.dart';
 import 'package:yellow_team_fridge/store/shared/route_state/actions/navigate_pop_action.dart';
 import 'package:yellow_team_fridge/store/shared/route_state/actions/navigate_push_named_action.dart';
@@ -10,15 +11,19 @@ import 'package:yellow_team_fridge/store/shared/route_state/actions/navigate_rep
 class RouteState {
   final List<String> routes;
 
-  RouteState({@required this.routes});
+  RouteState({
+    @required this.routes,
+  });
 
   factory RouteState.initial() {
     return RouteState(
-      routes: ['/'],
+      routes: [AppRoutes.homePage],
     );
   }
 
-  RouteState copyWith(List<String> inputRoute,) {
+  RouteState copyWith(
+    List<String> inputRoute,
+  ) {
     return RouteState(
       routes: inputRoute ?? routes,
     );
@@ -61,14 +66,14 @@ class RouteState {
     return RouteState(routes: result);
   }
 
-  RouteState _navigatePushNamedAndRemoveUntil(NavigatePushNamedAndRemoveUntilAction action){
+  RouteState _navigatePushNamedAndRemoveUntil(NavigatePushNamedAndRemoveUntilAction action) {
     int i;
-    for(i = routes.length - 1; i > 0; i--){
-      if(routes[i] == action.routeNamePredicate){
+    for (i = routes.length - 1; i > 0; i--) {
+      if (routes[i] == action.routeNamePredicate) {
         break;
       }
     }
-    if(i < 0){
+    if (i < 0) {
       i = 0;
     }
 

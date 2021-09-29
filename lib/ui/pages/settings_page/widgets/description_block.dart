@@ -21,7 +21,7 @@ class DescriptionBlock extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 152.0,
+            horizontal: 100.0,
             vertical: 10.0,
           ),
           child: Image.asset(ImageAssets.appVestoLogo),

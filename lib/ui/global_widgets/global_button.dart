@@ -17,17 +17,19 @@ class GlobalButton extends StatefulWidget {
   final Color _borderColor;
   final LinearGradient _borderGradient;
   final double _borderRadius;
+  final EdgeInsets _padding;
 
   const GlobalButton({
     @required Key key,
-    @required double width,
-    @required double height,
     @required String text,
     @required TextStyle fontText,
     @required Function onTap,
+    double width = 312.0,
+    double height = 56.0,
     Image icon,
     LinearGradient gradient,
     Color borderColor,
+    EdgeInsets padding,
     LinearGradient borderGradient,
     List<BoxShadow> shadows,
     Color color = AppColors.white,
@@ -44,6 +46,7 @@ class GlobalButton extends StatefulWidget {
         _borderColor = borderColor,
         _borderGradient = borderGradient,
         _borderRadius = borderRadius,
+        _padding = padding,
         super(key: key);
 
   @override
@@ -54,51 +57,58 @@ class _GlobalButtonState extends State<GlobalButton> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Container(
-            width: widget._width,
-            height: widget._height,
-            decoration: BoxDecoration(
-              color: widget._borderColor ?? widget._color,
-              gradient: widget._borderGradient,
-              boxShadow: widget._shadows,
-              borderRadius: BorderRadius.circular(widget._borderRadius),
+      child: Padding(
+        padding: widget._padding ?? const EdgeInsets.all(0.0),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              width: widget._width,
+              height: widget._height,
+              decoration: BoxDecoration(
+                color: widget._borderColor ?? widget._color,
+                gradient: widget._borderGradient,
+                boxShadow: widget._shadows,
+                borderRadius: BorderRadius.circular(widget._borderRadius),
+              ),
             ),
-          ),
-          Container(
-            width: widget._borderColor == null ? widget._width : widget._width - 2.0,
-            height: widget._borderColor == null ? widget._height : widget._height - 2.0,
-            decoration: BoxDecoration(
-              color: widget._color,
-              gradient: widget._gradient,
-              borderRadius: BorderRadius.circular(widget._borderRadius),
-            ),
-            alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                widget._icon == null
-                    ? const SizedBox()
-                    : Container(
-                        width: 20.0,
-                        height: 20.0,
-                        margin: const EdgeInsets.only(right: 55.0),
-                        child: widget._icon,
-                      ),
-                RichText(
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: false,
-                  text: TextSpan(
-                    text: widget._text,
-                    style: widget._fontText,
+            Container(
+              width: widget._padding == null
+                  ? widget._borderColor == null
+                      ? widget._width
+                      : widget._width - 2.0
+                  : 0.0,
+              height: widget._borderColor == null ? widget._height : widget._height - 2.0,
+              decoration: BoxDecoration(
+                color: widget._color,
+                gradient: widget._gradient,
+                borderRadius: BorderRadius.circular(widget._borderRadius),
+              ),
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  widget._icon == null
+                      ? const SizedBox()
+                      : Container(
+                          width: 20.0,
+                          height: 20.0,
+                          margin: const EdgeInsets.only(right: 55.0),
+                          child: widget._icon,
+                        ),
+                  RichText(
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
+                    text: TextSpan(
+                      text: widget._text,
+                      style: widget._fontText,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       onTap: widget._onTap,
     );

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:yellow_team_fridge/res/app_routes.dart';
+import 'package:yellow_team_fridge/ui/pages/favourites_page/favourites_page.dart';
 import 'package:yellow_team_fridge/ui/pages/main_page/main_page.dart';
+import 'package:yellow_team_fridge/ui/pages/notification_page/notification_page.dart';
+import 'package:yellow_team_fridge/ui/pages/settings_page/settings_page.dart';
 import 'package:yellow_team_fridge/ui/pages/unknow_page/unknow_page.dart';
 
 class RouteService {
@@ -20,10 +23,25 @@ class RouteService {
     @required RouteSettings settings,
   }) {
     switch (settings.name) {
-      case AppRoutes.home:
+      case AppRoutes.cursedPage:
         return _defaultRoute(
           settings: settings,
           page: MainPage(),
+        );
+      case AppRoutes.settings:
+        return _defaultRoute(
+          settings: settings,
+          page: SettingsPage(),
+        );
+      case AppRoutes.notification:
+        return _defaultRoute(
+          settings: settings,
+          page: NotificationPage(),
+        );
+      case AppRoutes.favorites:
+        return _defaultRoute(
+          settings: settings,
+          page: FavouritesPage(),
         );
       default:
         return _defaultRoute(

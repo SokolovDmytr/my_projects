@@ -29,14 +29,13 @@ class LanguageState {
   LanguageState reducer(dynamic action) {
     return Reducer<LanguageState>(
       actions: HashMap.from({
-        SetLanguageAction: (dynamic action) => _setLanguage(action),
+        SetLanguageAction: (dynamic action) => _setLanguage(action.languageCode),
       }),
     ).updateState(action, this);
   }
 
-  LanguageState _setLanguage(dynamic action) {
-    FlutterDictionary.instance.setNewLanguage(action.languageCode);
-
+  LanguageState _setLanguage(String languageCode) {
+    FlutterDictionary.instance.setNewLanguage(languageCode);
     return LanguageState(
       language: FlutterDictionaryDelegate.getCurrentLocale,
     );

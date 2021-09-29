@@ -18,6 +18,6 @@ class OnBoardingScreenSelectors {
   }
 
   static void Function() startUsage(Store<AppState> store) {
-    return () => store.dispatch(StartAction());
+    return () => store.dispatch(StartAction(store: store));
   }
 }

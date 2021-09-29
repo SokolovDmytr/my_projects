@@ -2,11 +2,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:yellow_team_fridge/res/app_duration.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/image_assets.dart';
+import 'package:yellow_team_fridge/ui/pages/on_boarding_screen/on_boarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
-    const SplashScreen({Key key}) : super(key: key);
+  const SplashScreen({Key key}) : super(key: key);
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -36,6 +38,15 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(
+      AppDuration.defaultDurationForSplashScreen,
+      () => Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => OnBoardingScreen(),
+        ),
+      ),
+    );
     return Scaffold(
       body: Container(
         color: AppColors.wheat,
