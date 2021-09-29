@@ -1,4 +1,3 @@
-
 /// [ImageAssets] This class contains constant values with asset images used in application.
 /// [LOADING] - loader used in application
 class ImageAssets {
@@ -47,4 +46,8 @@ class ImageAssets {
   static const String settingsIcon = 'assets/svg/settingsIcon.svg';
   static const String surprizeIcon = 'assets/svg/surprizeIcon.svg';
   static const String switchIcon = 'assets/svg/switchIcon.svg';
+
+  static const String bottomBarHome = 'assets/png/home@3x.png';
+  static const String bottomBarSettings = 'assets/png/settings@3x.png';
+  static const String bottomBarFavourites = 'assets/png/favourites@3x.png';
 }

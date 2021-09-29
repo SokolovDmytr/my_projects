@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
+import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_shadows.dart';
 
 class AppFonts {
@@ -154,6 +155,25 @@ class AppFonts {
       fontSize: 12.0,
       color: AppColors.blackTwo,
       fontWeight: FontWeight.w400,
+    );
+  }
+
+  static TextStyle get smallTextStyleOpacity {
+    return GoogleFonts.roboto(
+      fontSize: 12.0,
+      color: AppColors.black.withOpacity(0.2),
+      fontWeight: FontWeight.w400,
+    );
+  }
+
+  static TextStyle get smallTextStyleWheatMarigoldGradient {
+    return GoogleFonts.roboto(
+      fontSize: 12.0,
+      fontWeight: FontWeight.w400,
+      foreground: Paint()
+        ..shader = AppGradient.wheatMarigoldGradient.createShader(
+          Rect.fromLTWH(0.0, 0.0, 200.0, 70.0),
+        ),
     );
   }
 }

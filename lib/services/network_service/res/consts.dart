@@ -27,7 +27,7 @@ class HttpRoute{
 }
 
 //delete
-const String tmp_token = 'e9be2431-fb8c-4067-bcb9-22fae44b9b37';
+const String tmp_token = '7f762aaf-2a1b-43ff-b594-50c91b8f8870';
 
 const String no_internet_connection = 'No Internet Connection';
 

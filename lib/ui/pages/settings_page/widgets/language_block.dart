@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:yellow_team_fridge/application/application_vm.dart';
 import 'package:yellow_team_fridge/dictionary/data/en.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/settings_page_language.dart';
-import 'package:yellow_team_fridge/dictionary/flutter_delegate.dart';
 import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/dictionary/models/supported_locales.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
+import 'package:yellow_team_fridge/store/language_state/language_vm.dart';
 
 class LanguageBlock extends StatefulWidget {
   LanguageBlock() : super(key: Key('LanguageBlock'));
@@ -23,8 +22,8 @@ class _LanguageBlockState extends State<LanguageBlock> {
     final SettingsPageLanguage _language =
         FlutterDictionary.instance.language?.settingsPageLanguage ?? en.settingsPageLanguage;
     return StoreConnector(
-      converter: ApplicationViewModel.init,
-      builder: (BuildContext context, ApplicationViewModel vm) => Padding(
+      converter: LanguageViewModel.init,
+      builder: (BuildContext context, LanguageViewModel vm) => Padding(
         padding: const EdgeInsets.only(bottom: 30.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -49,24 +48,22 @@ class _LanguageBlockState extends State<LanguageBlock> {
                     onTap: () {
                       vm.setLanguage(SupportedLocales.instance.getSupportedLocales[index].toString());
                     },
-                    child: AnimatedContainer(
+                    child: Container(
                       alignment: Alignment.center,
                       height: 40.0,
                       width: 62.0,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color: FlutterDictionaryDelegate.getCurrentLocale.toString() ==
-                                  SupportedLocales.instance.getSupportedLocales.toString()
+                          color: SupportedLocales.instance.getSupportedLocales[index].toString() == vm.language
                               ? AppColors.marigold
                               : AppColors.black.withOpacity(0.2),
                         ),
-                        color: FlutterDictionaryDelegate.getCurrentLocale.toString() ==
-                                SupportedLocales.instance.getSupportedLocales.toString()
-                            ? AppColors.wheat20
+                        color: SupportedLocales.instance.getSupportedLocales[index].toString() == vm.language
+                            ? AppColors.wheat20.withOpacity(0.2)
                             : AppColors.white,
                       ),
-                      duration: Duration(milliseconds: 400),
+                      // duration: Duration(milliseconds: 400),
                       child: Text(
                         SupportedLocales.instance.getSupportedLocales[index].toString().toUpperCase(),
                         style: AppFonts.medium16Height24TextStyle,

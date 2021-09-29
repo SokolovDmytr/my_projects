@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:redux_epics/redux_epics.dart';
+import 'package:yellow_team_fridge/store/bottom_bar_state/bottom_bar_state.dart';
 import 'package:yellow_team_fridge/store/favorite_state/favorite_epics.dart';
 import 'package:yellow_team_fridge/store/favorite_state/favorite_state.dart';
 import 'package:yellow_team_fridge/store/language_state/language_state.dart';
@@ -16,12 +17,14 @@ class AppState {
   final RouteState routeState;
   final OnBoardingScreenState onBoardingScreenState;
   final LanguageState languageState;
+  final BottomBarState bottomBarState;
   final FavoriteState favoriteState;
 
   AppState({
     @required this.onBoardingScreenState,
     @required this.languageState,
     @required this.routeState,
+    @required this.bottomBarState,
     @required this.favoriteState,
   });
 
@@ -32,6 +35,7 @@ class AppState {
       languageState: LanguageState.initial(),
       routeState: RouteState.initial(),
       favoriteState: FavoriteState.initial(),
+      bottomBarState: BottomBarState.initial(),
     );
   }
 
@@ -42,6 +46,7 @@ class AppState {
       languageState: state.languageState.reducer(action),
       routeState: state.routeState.reducer(action),
       favoriteState: state.favoriteState.reducer(action),
+      bottomBarState: state.bottomBarState.reducer(action),
     );
   }
 

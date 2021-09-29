@@ -9,7 +9,8 @@ class AppGradient {
       colors: [
         AppColors.wheat,
         AppColors.marigold,
-      ]
+      ],
+      tileMode: TileMode.mirror,
     );
   }
 

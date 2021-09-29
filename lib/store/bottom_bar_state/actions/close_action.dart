@@ -1,0 +1,3 @@
+class CloseAction {
+  CloseAction();
+}

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:redux/redux.dart';
-import 'package:yellow_team_fridge/application/application_vm.dart';
+import 'package:yellow_team_fridge/store/language_state/language_vm.dart';
 import 'package:yellow_team_fridge/dictionary/flutter_delegate.dart';
 import 'package:yellow_team_fridge/res/keys.dart';
 import 'package:yellow_team_fridge/services/route_service.dart';
@@ -34,14 +34,14 @@ class Application extends StatelessWidget {
         converter: (Store<AppState> store) => store.state,
         //  onInitialBuild: (AppState state) => InitializeSelectors.startInitialization(store),
         builder: (BuildContext context, AppState state) {
-          return StoreConnector<AppState, ApplicationViewModel>(
-            converter: ApplicationViewModel.init,
-            builder: (BuildContext context, ApplicationViewModel vm) => MaterialApp(
+          return StoreConnector<AppState, LanguageViewModel>(
+            converter: LanguageViewModel.init,
+            builder: (BuildContext context, LanguageViewModel vm) => MaterialApp(
               debugShowCheckedModeBanner: false,
               navigatorKey: RouteService.instance.navigatorKey,
               onGenerateRoute: (RouteSettings settings) => RouteService.instance.onGenerateRoute(settings: settings),
-              home: MainPage(),
-              locale: Locale(store.state.languageState.language),
+              home: SplashScreen(),
+              locale: Locale(vm.language),
               supportedLocales: FlutterDictionaryDelegate.getSupportedLocales,
               localizationsDelegates: FlutterDictionaryDelegate.getLocalizationDelegates,
               builder: (context, child) {

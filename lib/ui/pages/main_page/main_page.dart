@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:yellow_team_fridge/res/app_routes.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
-import 'package:yellow_team_fridge/ui/global_widgets/custom_app_bar.dart';
-import 'package:yellow_team_fridge/ui/pages/favorites_page/widgets/recipes_list.dart';
+import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
+import 'package:yellow_team_fridge/res/const.dart';
+import 'package:yellow_team_fridge/ui/layouts/pages_layout/pages_layout.dart';
 
 class MainPage extends StatefulWidget {
   MainPage() : super(key: Key('MainPage'));
@@ -13,15 +16,18 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        color: AppColors.wheat,
-        textButton: 'Back',
-        isMainStyleAppBar: true,
-        preferredSize: Size.fromHeight(88.0),
-        key: UniqueKey(),
+    return AnnotatedRegion(
+      value: SystemUiOverlayStyle(
+        statusBarColor: AppColors.transparent,
       ),
-      body: RecipesList(),
+      child: PagesLayout(
+        appBarType: AppBarType.home,
+        gradient: AppGradient.marigoldWheatGradient,
+        isMainStyleAppBar: false,
+        currentPage: AppRoutes.cursedPage,
+        key: UniqueKey(),
+        body: Container(),
+      ),
     );
   }
 }
