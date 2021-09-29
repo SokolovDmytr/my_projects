@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:redux_epics/redux_epics.dart';
+import 'package:yellow_team_fridge/store/favorite_state/favorite_epics.dart';
+import 'package:yellow_team_fridge/store/favorite_state/favorite_state.dart';
 import 'package:yellow_team_fridge/store/language_state/language_state.dart';
 import 'package:yellow_team_fridge/store/on_boarding_screen_state/on_boarding_screen_state.dart';
-import 'package:yellow_team_fridge/store/recipes/recipes_state.dart';
 import 'package:yellow_team_fridge/store/shared/route_state/route_state.dart';
 
 /// Class [AppState], is the main [state] application.
@@ -15,13 +16,13 @@ class AppState {
   final RouteState routeState;
   final OnBoardingScreenState onBoardingScreenState;
   final LanguageState languageState;
-  final RecipesState recipesState;
+  final FavoriteState favoriteState;
 
   AppState({
     @required this.onBoardingScreenState,
     @required this.languageState,
     @required this.routeState,
-    @required this.recipesState,
+    @required this.favoriteState,
   });
 
   ///All states are initialized in the [initial] function.
@@ -30,7 +31,7 @@ class AppState {
       onBoardingScreenState: OnBoardingScreenState.initial(),
       languageState: LanguageState.initial(),
       routeState: RouteState.initial(),
-      recipesState: RecipesState.initial(),
+      favoriteState: FavoriteState.initial(),
     );
   }
 
@@ -40,10 +41,12 @@ class AppState {
       onBoardingScreenState: state.onBoardingScreenState.reducer(action),
       languageState: state.languageState.reducer(action),
       routeState: state.routeState.reducer(action),
-      recipesState: state.recipesState.reducer(action),
+      favoriteState: state.favoriteState.reducer(action),
     );
   }
 
   ///In [getAppEpic], call the main epic.
-  static final getAppEpic = combineEpics<AppState>([]);
+  static final getAppEpic = combineEpics<AppState>([
+    FavoriteEpics.indexEpic,
+  ]);
 }

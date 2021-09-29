@@ -28,7 +28,6 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    widget.recipe.image ?? Image.asset(ImageAssets.favoriteChef);
     return AnimatedSize(
       duration: AppDuration.recipeOpenDuration,
       vsync: this,
@@ -41,6 +40,14 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
             color: (widget.recipe.ingredients == null || widget.recipe.ingredients.isEmpty) ? AppColors.white : AppColors.pastelRed,
           ),
         ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child: Container(
+            height: 128.0,
+            width: 128.0,
+            child: widget.recipe.image == null ? Image.asset(ImageAssets.favoriteChef) : Image.network(widget.recipe.image),
+          ),
+        )
       ),
     );
   }

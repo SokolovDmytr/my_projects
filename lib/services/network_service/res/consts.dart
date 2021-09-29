@@ -3,6 +3,9 @@ enum HttpType {
   httpPost,
 }
 
+const int noConnectionStatusCode = -1;
+const String baseUrl = 'http://104.236.36.62:8082';
+
 const Map<String, String> parameterKeys = {
   'firstName': 'firstName',
   'email': 'email',
@@ -16,6 +19,13 @@ const Map<String, String> parameterKeys = {
   'str': 'str',
   'refreshToken': 'refreshToken',
 };
+
+class HttpRoute{
+  static const favorite = '/getFavorites';
+}
+
+//delete
+const String tmp_token = '8eed0fcd-5767-479d-9a9a-db4cd9f06208';
 
 const String no_internet_connection = 'No Internet Connection';
 

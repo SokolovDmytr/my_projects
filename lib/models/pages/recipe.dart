@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:yellow_team_fridge/models/pages/ingredient.dart';
 
 class Recipe {
-  String image;
-  String name;
-  int calories;
-  int timeCooking;
-  String complexity;
-  List<String> ingredients;
+  final int i;
+  final String name;
+  final String image;
+  final String calories;
+  final int time;
+  final String level;
+  final List<Ingredient> ingredients;
 
-  Recipe({
-    this.image,
+  const Recipe({
+    @required this.i,
     @required this.name,
+    @required this.image,
     @required this.calories,
-    @required this.timeCooking,
-    this.complexity,
-    this.ingredients,
+    @required this.time,
+    @required this.level,
+    @required this.ingredients,
   });
-
-  List<String> getIngredients() => ingredients;
 }

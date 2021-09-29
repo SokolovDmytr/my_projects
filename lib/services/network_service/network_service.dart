@@ -7,6 +7,7 @@ import 'package:yellow_team_fridge/res/const.dart';
 import 'package:yellow_team_fridge/services/network_service/interfaces/i_base_request.dart';
 import 'package:yellow_team_fridge/services/network_service/interfaces/i_parameter.dart';
 import 'package:yellow_team_fridge/services/network_service/models/base_http_response.dart';
+import 'package:yellow_team_fridge/services/network_service/models/no_connection_http_error.dart';
 import 'package:yellow_team_fridge/services/network_service/res/consts.dart';
 import 'package:yellow_team_fridge/services/network_service/shared/request_builders.dart';
 
@@ -42,7 +43,7 @@ class NetworkService {
   void init({
     @required String baseUrl,
   }) {
-    baseUrl = baseUrl;
+    this.baseUrl = baseUrl;
   }
 
   Future<BaseHttpResponse> request({
@@ -53,7 +54,14 @@ class NetworkService {
     String token,
   }) async {
     final bool isConnection = await _checkInternetConnection();
-    if (isConnection == false) return null;
+    if (isConnection == false) {
+      return BaseHttpResponse(
+        error: NoConnectionHttpError(
+          error: 'No connection',
+          statusCode: noConnectionStatusCode,
+        ),
+      );
+    }
 
     IBaseRequest request;
     switch (type) {
@@ -65,12 +73,22 @@ class NetworkService {
         break;
     }
 
-    final http.Response response = await request();
+    http.Response response;
+    try {
+      response = await request();
+    } catch (error) {
+      print(error);
+    }
+
+    print('Response status code ${response.statusCode}');
+    if (response.statusCode >= 400) {
+      return null;
+    }
 
     logger.d(response.body);
 
     return BaseHttpResponse(
-      response: jsonDecode(response.body),
+      response: json.decode(response.body),
     );
   }
 
