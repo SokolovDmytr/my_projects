@@ -69,7 +69,7 @@ class CustomNavigationBottomBar extends StatelessWidget {
             child: page == currentPage
                 ? Text(
                     text,
-                    style: AppFonts.smallTextStyleGradient,
+                    style: AppFonts.smallTextStyleWheatMarigoldGradient,
                   )
                 : Text(
                     text,

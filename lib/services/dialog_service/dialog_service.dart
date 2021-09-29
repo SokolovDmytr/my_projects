@@ -17,7 +17,7 @@ class DialogService {
 
     showDialog(
       context: ctx,
-      barrierDismissible: true,
+      barrierDismissible: false,
       barrierColor: AppColors.black.withOpacity(0.7),
       builder: (BuildContext _) => dialog.child,
     );

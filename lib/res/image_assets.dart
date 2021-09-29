@@ -48,6 +48,6 @@ class ImageAssets {
   static const String switchIcon = 'assets/svg/switchIcon.svg';
 
   static const String bottomBarHome = 'assets/png/home@3x.png';
-  static const String bottomBarSettings = 'assets/png/favourites@3x.png';
-  static const String bottomBarFavourites = 'assets/png/settings@3x.png';
+  static const String bottomBarSettings = 'assets/png/settings@3x.png';
+  static const String bottomBarFavourites = 'assets/png/favourites@3x.png';
 }

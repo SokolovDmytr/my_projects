@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
+import 'package:yellow_team_fridge/res/app_styles/app_shadows.dart';
 
 class AppFonts {
   static TextStyle get bigLetterTextStyle {
@@ -19,6 +20,15 @@ class AppFonts {
       fontSize: 24.0,
       color: AppColors.black,
       fontWeight: FontWeight.w700,
+    );
+  }
+
+  static TextStyle get normalBlackHeight30TextStyle {
+    return GoogleFonts.roboto(
+      fontSize: 24.0,
+      color: AppColors.black,
+      fontWeight: FontWeight.w700,
+      height: 1.25,
     );
   }
 
@@ -72,10 +82,28 @@ class AppFonts {
     );
   }
 
+  static TextStyle get mediumShadowBlackTextStyle {
+    return GoogleFonts.roboto(
+      fontSize: 20.0,
+      color: AppColors.black,
+      fontWeight: FontWeight.w400,
+      shadows: AppShadows.shadowText(color: AppColors.black30),
+    );
+  }
+
   static TextStyle get medium16Height24TextStyle {
     return GoogleFonts.roboto(
       fontSize: 16.0,
       color: AppColors.black,
+      fontWeight: FontWeight.w400,
+      height: 1.5,
+    );
+  }
+
+  static TextStyle get medium16Height24WhiteTextStyle {
+    return GoogleFonts.roboto(
+      fontSize: 16.0,
+      color: AppColors.white,
       fontWeight: FontWeight.w400,
       height: 1.5,
     );
@@ -138,7 +166,7 @@ class AppFonts {
     );
   }
 
-  static TextStyle get smallTextStyleGradient {
+  static TextStyle get smallTextStyleWheatMarigoldGradient {
     return GoogleFonts.roboto(
       fontSize: 12.0,
       fontWeight: FontWeight.w400,

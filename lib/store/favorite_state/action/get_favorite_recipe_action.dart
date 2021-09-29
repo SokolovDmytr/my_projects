@@ -1,0 +1,3 @@
+class GetFavoriteRecipeAction{
+  GetFavoriteRecipeAction();
+}

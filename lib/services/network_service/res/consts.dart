@@ -1,10 +1,40 @@
+enum HttpType {
+  httpGet,
+  httpPost,
+}
+
+const int noConnectionStatusCode = -1;
+const String baseUrl = 'http://104.236.36.62:8082';
+
+const Map<String, String> parameterKeys = {
+  'firstName': 'firstName',
+  'email': 'email',
+  'password': 'password',
+  'token': 'token',
+  'code': 'code',
+  'id': 'id',
+  'locale': 'locale',
+  'ids': 'ids',
+  'googleToken': 'googleToken',
+  'str': 'str',
+  'refreshToken': 'refreshToken',
+};
+
+class HttpRoute{
+  static const favorite = '/getFavorites';
+  static const login = '/login';
+}
+
+//delete
+const String tmp_token = '7f762aaf-2a1b-43ff-b594-50c91b8f8870';
+
+const String no_internet_connection = 'No Internet Connection';
+
 const int HTTP_OK = 200;
 const int HTTP_MAX_OK = 299;
 const int HTTP_UNPROCESSABLE = 422;
 
 const int BAD_GATEWAY_STATUS_CODE = 502;
-
-const String NO_INTERNET_CONNECTION = 'No Internet Connection';
 const String DATA = 'data';
 
 const String ACCEPT = 'accept';

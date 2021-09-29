@@ -126,5 +126,6 @@ Language he = Language(
     deletePopUpButtonCancelText: 'לְבַטֵל',
     defaultErrorText: 'שְׁגִיאָה',
     defaultSuccessText: 'הַצלָחָה',
+    loadingText: 'טוען...',
   ),
 );

@@ -68,7 +68,7 @@ class QuitAppDialogWidget extends StatelessWidget {
                         style: AppFonts.normalMariGoldTextStyle,
                       ),
                       TextSpan(
-                        text: question_mark,
+                        text: questionMark,
                         style: AppFonts.normalBlackTwoTextStyle,
                       ),
                     ],

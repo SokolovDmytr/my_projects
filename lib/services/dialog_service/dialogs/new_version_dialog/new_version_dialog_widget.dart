@@ -53,7 +53,6 @@ class NewVersionDialogWidget extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: RichText(
-                softWrap: true,
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 text: TextSpan(

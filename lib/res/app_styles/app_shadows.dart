@@ -23,15 +23,29 @@ class AppShadows {
     ];
   }
 
-  static List<BoxShadow> shadowText(Color color) {
+  static List<BoxShadow> get recipeElementShadow {
     return [
       BoxShadow(
-        color: color,
-        spreadRadius: 1.0,
-        blurRadius: 4,
+        color: AppColors.black25,
+        blurRadius: 10.0,
+        offset: Offset(0.0, 3.0),
       ),
     ];
   }
+
+
+  static List<BoxShadow> shadowText({@required Color color}) {
+    return [
+      BoxShadow(
+        color: color,
+        blurRadius: 4.0,
+        offset: Offset(0.0, 3.0),
+      ),
+    ];
+  }
+
+
+
 
   static List<BoxShadow> emptyShadow() {
     return [

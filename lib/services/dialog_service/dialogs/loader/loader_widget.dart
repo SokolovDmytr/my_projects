@@ -4,36 +4,36 @@ import 'package:yellow_team_fridge/dictionary/dictionary_classes/dialog_language
 import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
+import 'package:yellow_team_fridge/res/image_assets.dart';
 
-class ServerErrorPopUpWidget extends StatelessWidget {
+class LoaderWidget extends StatelessWidget {
   final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
-  ServerErrorPopUpWidget({Key key}) : super(key: key);
+  LoaderWidget({
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      elevation: 10.0,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 74.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
+      elevation: 0.0,
+      backgroundColor: AppColors.transparent,
       child: Container(
-        height: 133.0,
+        height: 85.0,
         child: Column(
           children: [
+            Image.asset(
+              ImageAssets.loadingGif,
+              height: 45.0,
+              width: 45.0,
+            ),
             Container(
-              margin: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 11.0),
-              alignment: Alignment.center,
+              margin: const EdgeInsets.only(top: 16.0),
               child: Text(
-                language.serverErrorText,
-                maxLines: 2,
-                softWrap: true,
-                style: AppFonts.medium16Height24TextStyle,
-                textAlign: TextAlign.center,
+                language.loadingText,
+                style: AppFonts.medium16Height24WhiteTextStyle,
               ),
             ),
-            Icon(Icons.error, color: AppColors.pastelRed, size: 33.0,),
           ],
         ),
       ),

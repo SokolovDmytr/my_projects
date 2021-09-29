@@ -6,6 +6,7 @@ import 'package:yellow_team_fridge/res/app_routes.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/const.dart';
 import 'package:yellow_team_fridge/ui/layouts/pages_layout/pages_layout.dart';
+import 'package:yellow_team_fridge/ui/pages/favourites_page/widgets/recipes_list.dart';
 
 class FavouritesPage extends StatelessWidget {
   const FavouritesPage({Key key}) : super(key: key);
@@ -20,11 +21,7 @@ class FavouritesPage extends StatelessWidget {
       color: AppColors.wheat,
       title: _language.favourites,
       currentPage: AppRoutes.favorites,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [],
-        ),
-      ),
+      body: RecipesList(),
     );
   }
 }

@@ -4,12 +4,12 @@ import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:yellow_team_fridge/res/const.dart';
-import 'package:yellow_team_fridge/services/network_service/interfaces/i_base_error.dart';
-import 'package:yellow_team_fridge/services/network_service/interfaces/i_base_http_error.dart';
 import 'package:yellow_team_fridge/services/network_service/interfaces/i_base_request.dart';
+import 'package:yellow_team_fridge/services/network_service/interfaces/i_parameter.dart';
 import 'package:yellow_team_fridge/services/network_service/models/base_http_response.dart';
+import 'package:yellow_team_fridge/services/network_service/models/no_connection_http_error.dart';
 import 'package:yellow_team_fridge/services/network_service/res/consts.dart';
-
+import 'package:yellow_team_fridge/services/network_service/shared/request_builders.dart';
 
 /// [NetworkService] it is Service for get data from server.
 /// In our architecture we does use this service from [Request] classes from [network/requests/] folder.
@@ -37,96 +37,81 @@ class NetworkService {
   /// All request builders use this variable for build request but also have a param [url].
   String baseUrl;
 
-  /// Basic errors. This list does using by [_getErrorByCode] and [_getCheckedForErrorResponse] for check errors.
-  List<IBaseError> _errors = [];
-
   /// This function will update a [baseUrl]. Not required for use.
   void overrideBaseUrl(String url) => baseUrl = baseUrl;
 
   void init({
     @required String baseUrl,
-    @required List<IBaseError> errors,
   }) {
-    baseUrl = baseUrl;
-    _errors = errors;
+    this.baseUrl = baseUrl;
   }
 
-  /// Main function of [NetworkService]. This function will use for get data from server.
-  /// params:
-  ///   - [request]. Will accept object extended from [IBaseRequest]. List of main request types will contains in [RequestBuilders] class.
-  Future<BaseHttpResponse> request(IBaseRequest request) async {
-    // TODO Add checkInternetConnection
-    //  final BaseHttpResponse checkConnection = await InternetConnectionService.checkInternetConnection();
-    //  if (checkConnection != null) return checkConnection;
-
-    final http.Response response = await request();
-
-    logger.d(response.body);
-
-    return _getCheckedForErrorResponse(response);
-  }
-
-  /// This function will check a response for main errors.
-  /// params:
-  ///   - [response]. This params we will get from [http.get] or etc functions.
-  BaseHttpResponse _getCheckedForErrorResponse(http.Response response) {
-    if (response.statusCode < HTTP_OK || response.statusCode > HTTP_MAX_OK) {
+  Future<BaseHttpResponse> _request({
+    @required HttpType type,
+    @required String route,
+    @required Map<String, dynamic> body,
+    @required Map<String, String> params,
+    String token,
+  }) async {
+    final bool isConnection = await _checkInternetConnection();
+    if (isConnection == false) {
       return BaseHttpResponse(
-        error: IBaseHttpError(
-          error: response?.reasonPhrase,
-          statusCode: response?.statusCode,
+        error: NoConnectionHttpError(
+          error: 'No connection',
+          statusCode: noConnectionStatusCode,
         ),
       );
     }
 
-    if (response.statusCode == HTTP_UNPROCESSABLE) {
-      try {
-        final Map<String, dynamic> responseBody = jsonDecode(response.body);
-
-        final int code = responseBody[DATA];
-        final String error = _getErrorByCode(code);
-
-        if (error == null) {
-          return BaseHttpResponse(
-            error: IBaseHttpError(
-              error: response?.reasonPhrase,
-              statusCode: response?.statusCode,
-            ),
-          );
-        }
-
-        return BaseHttpResponse(
-          error: IBaseHttpError(
-            error: error,
-            statusCode: code,
-          ),
-        );
-      } catch (e) {
-        return BaseHttpResponse(
-          error: IBaseHttpError(
-            error: response?.reasonPhrase,
-            statusCode: response?.statusCode,
-          ),
-        );
-      }
+    IBaseRequest request;
+    switch (type) {
+      case HttpType.httpGet:
+        request = RequestBuilders.get(functionName: route, params: params, token: token);
+        break;
+      case HttpType.httpPost:
+        request = RequestBuilders.post(functionName: route, params: params, body: body, token: token);
+        break;
     }
 
+    http.Response response;
+    try {
+      response = await request();
+    } catch (error) {
+      print(error);
+    }
+
+    print('Response status code ${response.statusCode}');
+    if (response.statusCode >= 400) {
+      return BaseHttpResponse(
+        error: NoConnectionHttpError(
+          error: response.body,
+          statusCode: response.statusCode,
+        ),
+      );
+    }
+
+    logger.d(response.body);
+
     return BaseHttpResponse(
-      response: jsonDecode(response.body),
+      response: json.decode(response.body),
+    );
+  }
+
+  Future<BaseHttpResponse> requestWithParams({
+    @required HttpType type,
+    @required String route,
+    @required IParameter parameter,
+    String token,
+  }) {
+    return _request(
+      type: type,
+      route: route,
+      body: null,
+      params: parameter.getParams(),
     );
   }
 
   Future<bool> _checkInternetConnection() async {
     return await DataConnectionChecker().hasConnection;
-  }
-
-  /// This functions will get a error text by error code.
-  String _getErrorByCode(int code) {
-    for (IBaseError error in _errors) {
-      if (error.statusCode == code) {
-        return error.error;
-      }
-    }
-    return null;
   }
 }
