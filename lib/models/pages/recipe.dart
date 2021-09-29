@@ -5,7 +5,7 @@ class Recipe {
   final int i;
   final String name;
   final String image;
-  final String calories;
+  final double calories;
   final int time;
   final String level;
   final List<Ingredient> ingredients;

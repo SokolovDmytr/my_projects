@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
+import 'package:yellow_team_fridge/res/app_styles/app_shadows.dart';
 
 class AppFonts {
   static TextStyle get bigLetterTextStyle {
@@ -77,6 +78,15 @@ class AppFonts {
       fontSize: 20.0,
       color: AppColors.blackTwo,
       fontWeight: FontWeight.w400,
+    );
+  }
+
+  static TextStyle get mediumShadowBlackTextStyle {
+    return GoogleFonts.roboto(
+      fontSize: 20.0,
+      color: AppColors.black,
+      fontWeight: FontWeight.w400,
+      shadows: AppShadows.shadowText(color: AppColors.black30),
     );
   }
 

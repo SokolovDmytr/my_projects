@@ -20,7 +20,7 @@ class RecipeParser {
           Recipe(
             i: item['i'],
             name: item['name'],
-            calories: item['image'],
+            calories: item['calories'],
             time: item['time'],
             level: item['level'],
             image: item['image'],

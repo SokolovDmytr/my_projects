@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class DeleteFavoriteRecipeAction {
-  int i;
+  final int i;
 
-  DeleteFavoriteRecipeAction({
+  const DeleteFavoriteRecipeAction({
     @required this.i,
   });
 }

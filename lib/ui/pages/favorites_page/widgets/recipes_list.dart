@@ -13,11 +13,14 @@ class RecipesList extends StatelessWidget {
       converter: RecipesListViewModel.init,
       onInitialBuild: (RecipesListViewModel vm) => vm.getFavoriteRecipeList(),
       builder: (BuildContext ctx, RecipesListViewModel viewModel) {
+        print('rebuild');
         return ListView.builder(
           itemCount: viewModel.recipes.length,
           itemBuilder: (BuildContext _, int index) {
             return RecipeElement(
               recipe: viewModel.recipes[index],
+              isOpen: viewModel.recipes[index].i.toString() == viewModel.openCardId,
+              openCard: viewModel.openCard,
             );
           },
         );

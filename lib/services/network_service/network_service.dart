@@ -46,7 +46,7 @@ class NetworkService {
     this.baseUrl = baseUrl;
   }
 
-  Future<BaseHttpResponse> request({
+  Future<BaseHttpResponse> _request({
     @required HttpType type,
     @required String route,
     @required Map<String, dynamic> body,
@@ -82,7 +82,12 @@ class NetworkService {
 
     print('Response status code ${response.statusCode}');
     if (response.statusCode >= 400) {
-      return null;
+      return BaseHttpResponse(
+        error: NoConnectionHttpError(
+          error: response.body,
+          statusCode: response.statusCode,
+        ),
+      );
     }
 
     logger.d(response.body);
@@ -98,7 +103,7 @@ class NetworkService {
     @required IParameter parameter,
     String token,
   }) {
-    return request(
+    return _request(
       type: type,
       route: route,
       body: null,
