@@ -15,7 +15,7 @@ class AddFavoriteParams implements IParameter {
   Map<String, String> getParams() {
     return {
       parameterKeys['token']: token,
-      parameterKeys['id']: id,
+      parameterKeys['recipeId']: id,
     };
   }
 }
