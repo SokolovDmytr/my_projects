@@ -27,6 +27,16 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
         statusBarColor: AppColors.wheat,
       ),
     );
+
+    Future.delayed(
+      AppDuration.defaultDurationForSplashScreen,
+          () => Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => OnBoardingScreen(),
+        ),
+      ),
+    );
   }
 
   @override
@@ -38,15 +48,6 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(
-      AppDuration.defaultDurationForSplashScreen,
-      () => Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => OnBoardingScreen(),
-        ),
-      ),
-    );
     return Scaffold(
       body: Container(
         color: AppColors.wheat,

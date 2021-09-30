@@ -105,7 +105,7 @@ class CustomNavigationBottomBar extends StatelessWidget {
                     text: _language.home,
                     isHome: true,
                     function: vm.goToHomePage,
-                    page: AppRoutes.cursedPage,
+                    page: AppRoutes.homePage,
                     currentPage: currentPage,
                   ),
                   _getBottomBarElement(

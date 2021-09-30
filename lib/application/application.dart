@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:redux/redux.dart';
-import 'package:yellow_team_fridge/store/language_state/language_vm.dart';
 import 'package:yellow_team_fridge/dictionary/flutter_delegate.dart';
 import 'package:yellow_team_fridge/res/keys.dart';
 import 'package:yellow_team_fridge/services/route_service.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
-import 'package:yellow_team_fridge/ui/pages/main_page/main_page.dart';
+import 'package:yellow_team_fridge/store/language_state/language_vm.dart';
 import 'package:yellow_team_fridge/ui/pages/splash_screen/splash_screen.dart';
 
 /// The [Application] class, in which the creation of [MaterialApp] takes place.

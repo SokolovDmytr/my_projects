@@ -13,6 +13,7 @@ const Map<String, String> parameterKeys = {
   'token': 'token',
   'code': 'code',
   'id': 'id',
+  'recipeId': 'i',
   'locale': 'locale',
   'ids': 'ids',
   'googleToken': 'googleToken',

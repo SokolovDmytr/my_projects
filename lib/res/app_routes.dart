@@ -6,7 +6,5 @@ class AppRoutes{
   static const notification = '/notification';
   static const foods = '/foods';
   static const auth = '/auth';
-  static const tempHome = '/';
   static const onBoardingScreen = '/onBoardingScreen';
-  static const cursedPage = '/cursedPage';
 }

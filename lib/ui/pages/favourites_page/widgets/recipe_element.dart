@@ -8,7 +8,6 @@ import 'package:yellow_team_fridge/res/app_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_shadows.dart';
 import 'package:yellow_team_fridge/res/image_assets.dart';
-import 'package:yellow_team_fridge/services/route_service.dart';
 
 class RecipeElement extends StatefulWidget {
   final Recipe recipe;
@@ -20,7 +19,7 @@ class RecipeElement extends StatefulWidget {
     @required this.isOpen,
     @required this.openCard,
     Key key,
-  })  :  super(key: key);
+  }) : super(key: key);
 
   @override
   _RecipeElementState createState() => _RecipeElementState();

@@ -37,12 +37,12 @@ class BottomBarState {
   }
 
   BottomBarState _navigateHome(Store<AppState> store) {
-    RouteSelectors.pushNamed(store: store, route: AppRoutes.cursedPage);
+    RouteSelectors.pushNamed(store: store, route: AppRoutes.homePage);
     return BottomBarState();
   }
 
   BottomBarState _navigateSettings(Store<AppState> store) {
-    RouteSelectors.pushNamed(store: store, route: AppRoutes.settings);
+    RouteSelectors.pushNamed(store: store, route: AppRoutes.settings,);
     return BottomBarState();
   }
 

@@ -24,7 +24,7 @@ class _MainPageState extends State<MainPage> {
         appBarType: AppBarType.home,
         gradient: AppGradient.marigoldWheatGradient,
         isMainStyleAppBar: false,
-        currentPage: AppRoutes.cursedPage,
+        currentPage: AppRoutes.homePage,
         key: UniqueKey(),
         body: Container(),
       ),
