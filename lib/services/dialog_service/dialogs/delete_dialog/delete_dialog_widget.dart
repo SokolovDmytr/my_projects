@@ -5,14 +5,17 @@ import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
+import 'package:yellow_team_fridge/services/dialog_service/dialog_service.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 
 class DeleteDialogWidget extends StatelessWidget {
   final String text;
+  final Function onTapDelete;
   final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
   DeleteDialogWidget({
     @required this.text,
+    @required this.onTapDelete,
     Key key,
   }) : super(key: key);
 
@@ -42,7 +45,7 @@ class DeleteDialogWidget extends StatelessWidget {
                   size: 24.0,
                 ),
                 onTap: () {
-                  Navigator.of(context).pop();
+                  DialogService.instance.close();
                 },
               ),
             ),
@@ -78,7 +81,9 @@ class DeleteDialogWidget extends StatelessWidget {
                     height: 56.0,
                     text: language.deletePopUpButtonCancelText,
                     fontText: AppFonts.normalMediumTextStyle,
-                    onTap: () {},
+                    onTap: () {
+                      DialogService.instance.close();
+                    },
                     gradient: AppGradient.wheatMarigoldGradient,
                   ),
                   GlobalButton(
@@ -87,7 +92,10 @@ class DeleteDialogWidget extends StatelessWidget {
                     height: 56.0,
                     text: language.deletePopUpButtonOkText,
                     fontText: AppFonts.normalMediumMariGoldTextStyle,
-                    onTap: () {},
+                    onTap: () {
+                      onTapDelete.call();
+                      DialogService.instance.close();
+                    },
                     borderColor: AppColors.wheat,
                   ),
                 ],

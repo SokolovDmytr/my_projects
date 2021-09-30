@@ -7,12 +7,15 @@ import 'package:yellow_team_fridge/res/app_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
 import 'package:yellow_team_fridge/res/const.dart';
+import 'package:yellow_team_fridge/services/dialog_service/dialog_service.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 
 class QuitAppDialogWidget extends StatelessWidget {
+  final Function onTapYes;
   final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
   QuitAppDialogWidget({
+    @required this.onTapYes,
     Key key,
   }) : super(key: key);
 
@@ -42,7 +45,7 @@ class QuitAppDialogWidget extends StatelessWidget {
                   size: 24.0,
                 ),
                 onTap: () {
-                  Navigator.of(context).pop();
+                  DialogService.instance.close();
                 },
               ),
             ),
@@ -91,7 +94,9 @@ class QuitAppDialogWidget extends StatelessWidget {
                     height: 56.0,
                     text: language.logOutPopUpButtonNoText,
                     fontText: AppFonts.normalMediumTextStyle,
-                    onTap: () {},
+                    onTap: () {
+                      DialogService.instance.close();
+                    },
                     gradient: AppGradient.wheatMarigoldGradient,
                   ),
                   GlobalButton(
@@ -100,7 +105,10 @@ class QuitAppDialogWidget extends StatelessWidget {
                     height: 56.0,
                     text: language.logOutPopUpButtonYesText,
                     fontText: AppFonts.normalMediumMariGoldTextStyle,
-                    onTap: () {},
+                    onTap: () {
+                      onTapYes.call();
+                      DialogService.instance.close();
+                    },
                     borderGradient: AppGradient.wheatMarigoldGradient,
                   ),
                 ],
