@@ -10,6 +10,7 @@ import 'package:yellow_team_fridge/res/app_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_shadows.dart';
+import 'package:yellow_team_fridge/res/image_assets.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 import 'package:yellow_team_fridge/ui/pages/on_boarding_screen/on_boarding_screen_vm.dart';
@@ -43,74 +44,76 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         builder: (BuildContext context, OnBoardingScreenViewModel vm) => SafeArea(
           child: Scaffold(
             backgroundColor: AppColors.white,
-            body: Stack(
-              children: [
-                vm.currentIndexDots == 3 ? Image.asset('assets/png/surprize.png') : SizedBox(),
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 84.0, left: 50.0, right: 50.0),
-                      child: CarouselSlider.builder(
-                        carouselController: vm.buttonCarouselController,
-                        itemCount: OnBoardingScreenData.hintsText.length,
-                        itemBuilder: (context, indexCurrent) {
-                          return Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 60.0),
-                                child: Text(
-                                  OnBoardingScreenData.hintsText[indexCurrent],
-                                  style: AppFonts.normalBlackTextStyle,
-                                  textAlign: TextAlign.center,
+            body: SingleChildScrollView(
+              child: Stack(
+                children: [
+                  vm.currentIndexDots == 3 ? Image.asset(ImageAssets.confetti) : SizedBox(),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 84.0, left: 50.0, right: 50.0),
+                        child: CarouselSlider.builder(
+                          carouselController: vm.buttonCarouselController,
+                          itemCount: OnBoardingScreenData.hintsText.length,
+                          itemBuilder: (context, indexCurrent) {
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 60.0),
+                                  child: Text(
+                                    OnBoardingScreenData.hintsText[indexCurrent],
+                                    style: AppFonts.normalBlackTextStyle,
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
-                              ),
-                              Image.asset(OnBoardingScreenData.hintsPictures[indexCurrent]),
-                            ],
-                          );
-                        },
-                        options: CarouselOptions(
-                          height: 450.0,
-                          viewportFraction: 1.0,
-                          scrollPhysics: NeverScrollableScrollPhysics(),
+                                Image.asset(OnBoardingScreenData.hintsPictures[indexCurrent]),
+                              ],
+                            );
+                          },
+                          options: CarouselOptions(
+                            height: 450.0,
+                            viewportFraction: 1.0,
+                            scrollPhysics: NeverScrollableScrollPhysics(),
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 32.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: map<Widget>(OnBoardingScreenData.hintsText, (index, url) {
-                          return Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
-                            child: Container(
-                              width: 10.0,
-                              height: 10.0,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: vm.currentIndexDots == index ? AppColors.marigold : AppColors.wheat,
-                                  ),
-                                  color: vm.currentIndexDots == index ? AppColors.marigold : AppColors.white),
-                            ),
-                          );
-                        }),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 32.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: map<Widget>(OnBoardingScreenData.hintsText, (index, url) {
+                            return Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Container(
+                                width: 10.0,
+                                height: 10.0,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: vm.currentIndexDots == index ? AppColors.marigold : AppColors.wheat,
+                                    ),
+                                    color: vm.currentIndexDots == index ? AppColors.marigold : AppColors.white),
+                              ),
+                            );
+                          }),
+                        ),
                       ),
-                    ),
-                    GlobalButton(
-                      key: Key('onBoardingButton${vm.currentIndexDots}'),
-                      text: vm.currentIndexDots == 3 ? _language.buttonStart : _language.buttonNext,
-                      fontText: AppFonts.normalMediumTextStyle,
-                      // padding: const EdgeInsets.symmetric(horizontal: 31.5),
-                      onTap: () {
-                        vm.currentIndexDots == 3 ? vm.startUsage() : vm.nextSlide();
-                      },
-                      // color: AppColors.black,
-                      gradient: AppGradient.wheatMarigoldGradient,
-                      shadows: AppShadows.buttonOcreShadow,
-                    ),
-                  ],
-                ),
-              ],
+                      GlobalButton(
+                        key: Key('onBoardingButton${vm.currentIndexDots}'),
+                        text: vm.currentIndexDots == 3 ? _language.buttonStart : _language.buttonNext,
+                        fontText: AppFonts.normalMediumTextStyle,
+                        // padding: const EdgeInsets.symmetric(horizontal: 31.5),
+                        onTap: () {
+                          vm.currentIndexDots == 3 ? vm.startUsage() : vm.nextSlide();
+                        },
+                        // color: AppColors.black,
+                        gradient: AppGradient.wheatMarigoldGradient,
+                        shadows: AppShadows.buttonOcreShadow,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

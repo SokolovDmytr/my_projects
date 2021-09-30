@@ -176,4 +176,12 @@ class AppFonts {
         ),
     );
   }
+
+  static TextStyle get size16RegPinkishGrey {
+    return GoogleFonts.roboto(
+      fontSize: 16.0,
+      color: AppColors.pinkishGrey,
+      fontWeight: FontWeight.w400,
+    );
+  }
 }
