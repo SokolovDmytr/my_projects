@@ -20,32 +20,30 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, LanguageViewModel>(
-      converter: LanguageViewModel.init,
-      builder: (BuildContext context, LanguageViewModel vm) {
-        final SettingsPageLanguage _language =
-            FlutterDictionary.instance.language?.settingsPageLanguage ?? en.settingsPageLanguage;
-        
-        return PagesLayout(
-          appBarType: AppBarType.simple,
-          isMainStyleAppBar: true,
-          title: _language.settings,
-          gradient: AppGradient.wheatMarigoldGradient,
-          currentPage: AppRoutes.settings,
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 90.0,
-                ),
-                LogOutBlock(),
-                LanguageBlock(),
-                NotificationBlock(),
-                DescriptionBlock(),
-              ],
+        converter: LanguageViewModel.init,
+        builder: (BuildContext context, LanguageViewModel vm) {
+          final SettingsPageLanguage _language =
+              FlutterDictionary.instance.language?.settingsPageLanguage ?? en.settingsPageLanguage;
+          return PagesLayout(
+            appBarType: AppBarType.simple,
+            isMainStyleAppBar: true,
+            title: _language.settings,
+            gradient: AppGradient.wheatMarigoldGradient,
+            currentPage: AppRoutes.settings,
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 90.0,
+                  ),
+                  LogOutBlock(),
+                  LanguageBlock(),
+                  NotificationBlock(),
+                  DescriptionBlock(),
+                ],
+              ),
             ),
-          ),
-        );
-      }
-    );
+          );
+        });
   }
 }

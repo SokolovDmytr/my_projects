@@ -33,7 +33,6 @@ class AppShadows {
     ];
   }
 
-
   static List<BoxShadow> shadowText({@required Color color}) {
     return [
       BoxShadow(
@@ -44,8 +43,15 @@ class AppShadows {
     ];
   }
 
-
-
+  static List<BoxShadow> get textFieldShadow {
+    return [
+      BoxShadow(
+        color: AppColors.black80,
+        blurRadius: 5.0,
+        offset: Offset(0.0, 2.0),
+      ),
+    ];
+  }
 
   static List<BoxShadow> emptyShadow() {
     return [

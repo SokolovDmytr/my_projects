@@ -1,0 +1,3 @@
+class RegisterAction {
+  RegisterAction();
+}

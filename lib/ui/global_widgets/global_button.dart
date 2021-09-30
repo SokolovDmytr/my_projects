@@ -24,7 +24,7 @@ class GlobalButton extends StatefulWidget {
     @required String text,
     @required TextStyle fontText,
     @required Function onTap,
-    double width = 312.0,
+    double width,
     double height = 56.0,
     Image icon,
     LinearGradient gradient,
@@ -56,9 +56,9 @@ class GlobalButton extends StatefulWidget {
 class _GlobalButtonState extends State<GlobalButton> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      child: Padding(
-        padding: widget._padding ?? const EdgeInsets.all(0.0),
+    return Container(
+      margin: widget._padding ?? const EdgeInsets.all(0.0),
+      child: InkWell(
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -73,11 +73,6 @@ class _GlobalButtonState extends State<GlobalButton> {
               ),
             ),
             Container(
-              width: widget._padding == null
-                  ? widget._borderColor == null
-                      ? widget._width
-                      : widget._width - 2.0
-                  : 0.0,
               height: widget._borderColor == null ? widget._height : widget._height - 2.0,
               decoration: BoxDecoration(
                 color: widget._color,
@@ -109,8 +104,8 @@ class _GlobalButtonState extends State<GlobalButton> {
             ),
           ],
         ),
+        onTap: widget._onTap,
       ),
-      onTap: widget._onTap,
     );
   }
 }

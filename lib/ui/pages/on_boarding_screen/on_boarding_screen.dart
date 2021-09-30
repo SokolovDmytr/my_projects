@@ -102,7 +102,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         key: Key('onBoardingButton${vm.currentIndexDots}'),
                         text: vm.currentIndexDots == 3 ? _language.buttonStart : _language.buttonNext,
                         fontText: AppFonts.normalMediumTextStyle,
-                        // padding: const EdgeInsets.symmetric(horizontal: 31.5),
+                        padding: const EdgeInsets.symmetric(horizontal: 31.0),
                         onTap: () {
                           vm.currentIndexDots == 3 ? vm.startUsage() : vm.nextSlide();
                         },

@@ -184,4 +184,28 @@ class AppFonts {
       fontWeight: FontWeight.w400,
     );
   }
+
+  static TextStyle get size16RegMarigold {
+    return GoogleFonts.roboto(
+      fontSize: 16.0,
+      color: AppColors.marigold,
+      fontWeight: FontWeight.w400,
+    );
+  }
+
+  static TextStyle get size16SemiBoldMarigold {
+    return GoogleFonts.roboto(
+      fontSize: 16.0,
+      color: AppColors.marigold,
+      fontWeight: FontWeight.w600,
+    );
+  }
+
+  static TextStyle get size16MediumPinkishGrey {
+    return GoogleFonts.roboto(
+      fontSize: 16.0,
+      color: AppColors.pinkishGrey,
+      fontWeight: FontWeight.w500,
+    );
+  }
 }
