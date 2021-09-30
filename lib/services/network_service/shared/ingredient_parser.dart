@@ -8,10 +8,14 @@ class IngredientParser {
     final List<Ingredient> ingredients = [];
 
     if (data != null) {
-      for (var item in data) {
-        ingredients.add(
-          Ingredient(i: item['i'], description: item['count'], count: item['description']),
-        );
+      try {
+        for (var item in data) {
+          ingredients.add(
+            Ingredient(i: item['i'], description: item['count'], count: item['description']),
+          );
+        }
+      } catch (error) {
+        print(error);
       }
     }
 
@@ -23,14 +27,18 @@ class IngredientParser {
   }) {
     final List<Ingredient> ingredients = [];
 
-    for (var item in data) {
-      ingredients.add(
-        Ingredient(
-          id: item['i'],
-          name: item['name'],
-          image: item['image'],
-        ),
-      );
+    try {
+      for (var item in data) {
+        ingredients.add(
+          Ingredient(
+            id: item['i'],
+            name: item['name'],
+            image: item['image'],
+          ),
+        );
+      }
+    } catch (error) {
+      print(error);
     }
 
     return ingredients;

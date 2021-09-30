@@ -56,8 +56,12 @@ class HomePageState {
   }
 
   HomePageState _addIngredient(AddIngredientAction action) {
-    return copyWith(
-      inputIngredients: ingredients..add(action.ingredient),
-    );
+    if (ingredients.where((element) => element.id == action.ingredient.id).isEmpty) {
+      return copyWith(
+        inputIngredients: ingredients..add(action.ingredient),
+      );
+    } else {
+      return this;
+    }
   }
 }

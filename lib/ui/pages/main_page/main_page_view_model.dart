@@ -6,17 +6,31 @@ import 'package:yellow_team_fridge/store/home_page_state/home_page_selector.dart
 
 class MainPageViewModel {
   final List<Ingredient> ingredients;
+  final List<Ingredient> tempIngredients;
   final Function(String name) getIngredientsWithName;
+  final Function(Ingredient ingredient) addIngredient;
 
   const MainPageViewModel({
     @required this.ingredients,
+    @required this.tempIngredients,
     @required this.getIngredientsWithName,
+    @required this.addIngredient,
   });
 
-  static MainPageViewModel init(Store<AppState> store,) {
+  static MainPageViewModel init(
+    Store<AppState> store,
+  ) {
     return MainPageViewModel(
       ingredients: store.state.homePageState.ingredients,
-      getIngredientsWithName: (String name) => HomePageSelector.getIngredientsWithName(store: store, name: name,),
+      tempIngredients: store.state.homePageState.tempIngredients,
+      getIngredientsWithName: (String name) => HomePageSelector.getIngredientsWithName(
+        store: store,
+        name: name,
+      ),
+      addIngredient: (Ingredient ingredient) => HomePageSelector.addIngredient(
+        store: store,
+        ingredient: ingredient,
+      ),
     );
   }
 }

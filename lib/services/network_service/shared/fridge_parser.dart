@@ -18,7 +18,7 @@ class FridgeParser {
     _ingredientParser = IngredientParser();
   }
 
-  List<dynamic> parse({
+  dynamic parse({
     @required Type exampleObject,
     @required BaseHttpResponse response,
   }) {
