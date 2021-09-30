@@ -1,7 +1,6 @@
 import 'dart:collection';
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:yellow_team_fridge/res/app_routes.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
@@ -46,7 +45,7 @@ class OnBoardingScreenState {
   }
 
   OnBoardingScreenState _startAction(Store<AppState> store) {
-    RouteSelectors.pushNamed(store: store, route: AppRoutes.cursedPage);
+    RouteSelectors.pushNamed(store: store, route: AppRoutes.homePage);
     return OnBoardingScreenState();
   }
 
