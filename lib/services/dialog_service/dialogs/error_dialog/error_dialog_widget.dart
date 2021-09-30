@@ -4,6 +4,7 @@ import 'package:yellow_team_fridge/dictionary/dictionary_classes/dialog_language
 import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
+import 'package:yellow_team_fridge/services/dialog_service/dialog_service.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 
 class ErrorDialogWidget extends StatelessWidget {
@@ -57,7 +58,7 @@ class ErrorDialogWidget extends StatelessWidget {
                 text: language.deletePopUpButtonOkText,
                 fontText: AppFonts.normalMediumTextStyle,
                 onTap: () {
-                  Navigator.of(context).pop();
+                  DialogService.instance.close();
                 },
                 gradient: AppGradient.wheatMarigoldGradient,
               ),

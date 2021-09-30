@@ -3,6 +3,8 @@ import 'package:redux_epics/redux_epics.dart';
 import 'package:yellow_team_fridge/store/bottom_bar_state/bottom_bar_state.dart';
 import 'package:yellow_team_fridge/store/favorite_state/favorite_epics.dart';
 import 'package:yellow_team_fridge/store/favorite_state/favorite_state.dart';
+import 'package:yellow_team_fridge/store/home_page_state/home_page_epics.dart';
+import 'package:yellow_team_fridge/store/home_page_state/home_page_state.dart';
 import 'package:yellow_team_fridge/store/language_state/language_state.dart';
 import 'package:yellow_team_fridge/store/on_boarding_screen_state/on_boarding_screen_state.dart';
 import 'package:yellow_team_fridge/store/shared/route_state/route_state.dart';
@@ -14,6 +16,7 @@ import 'package:yellow_team_fridge/store/shared/route_state/route_state.dart';
 /// Second [storageState], the primary state, stores all information from all states.
 /// The third [loaderState] is required to loading.
 class AppState {
+  final HomePageState homePageState;
   final RouteState routeState;
   final OnBoardingScreenState onBoardingScreenState;
   final LanguageState languageState;
@@ -21,6 +24,7 @@ class AppState {
   final FavoriteState favoriteState;
 
   AppState({
+    @required this.homePageState,
     @required this.onBoardingScreenState,
     @required this.languageState,
     @required this.routeState,
@@ -31,6 +35,7 @@ class AppState {
   ///All states are initialized in the [initial] function.
   factory AppState.initial() {
     return AppState(
+      homePageState: HomePageState.initial(),
       onBoardingScreenState: OnBoardingScreenState.initial(),
       languageState: LanguageState.initial(),
       routeState: RouteState.initial(),
@@ -42,6 +47,7 @@ class AppState {
   ///The [getReducer] function is the main Reducer in which you call Reducer, all other states.
   static AppState getReducer(AppState state, dynamic action) {
     return AppState(
+      homePageState: state.homePageState.reducer(action),
       onBoardingScreenState: state.onBoardingScreenState.reducer(action),
       languageState: state.languageState.reducer(action),
       routeState: state.routeState.reducer(action),
@@ -53,5 +59,6 @@ class AppState {
   ///In [getAppEpic], call the main epic.
   static final getAppEpic = combineEpics<AppState>([
     FavoriteEpics.indexEpic,
+    HomePageEpics.indexEpic,
   ]);
 }

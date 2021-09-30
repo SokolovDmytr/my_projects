@@ -42,14 +42,15 @@ class LoaderState {
     ).updateState(action, this);
   }
 
-  LoaderState _startLoadIndicator(StartLoadingAction action){
+  LoaderState _startLoadIndicator(StartLoadingAction action) {
     loaders.add(action.loader);
     loaders.last.show();
     return LoaderState(loaders: loaders);
-
   }
 
-  LoaderState _stopLoadIndicator(StopLoadingAction action){
-    return LoaderState(loaders: loaders);
+  LoaderState _stopLoadIndicator(StopLoadingAction action) {
+    return LoaderState(
+      loaders: loaders..removeWhere((element) => element.loaderKey == action.loaderKey),
+    );
   }
 }

@@ -8,12 +8,15 @@ import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_shadows.dart';
 import 'package:yellow_team_fridge/res/const.dart';
+import 'package:yellow_team_fridge/services/dialog_service/dialog_service.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 
 class NewVersionDialogWidget extends StatelessWidget {
+  final Function onTapOk;
   final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
   NewVersionDialogWidget({
+    @required this.onTapOk,
     Key key,
   }) : super(key: key);
 
@@ -43,7 +46,7 @@ class NewVersionDialogWidget extends StatelessWidget {
                   size: 24.0,
                 ),
                 onTap: () {
-                  Navigator.of(context).pop();
+                  DialogService.instance.close();
                 },
               ),
             ),
@@ -94,7 +97,8 @@ class NewVersionDialogWidget extends StatelessWidget {
                 gradient: AppGradient.wheatMarigoldGradient,
                 shadows: AppShadows.buttonOcreShadow,
                 onTap: () {
-                  Navigator.of(context).pop();
+                  onTapOk.call();
+                  DialogService.instance.close();
                 },
               ),
             )

@@ -22,12 +22,13 @@ const Map<String, String> parameterKeys = {
 };
 
 class HttpRoute{
-  static const favorite = '/getFavorites';
+  static const getFavorite = '/getFavorites';
   static const login = '/login';
+  static const getIngredients = '/getIngredients';
 }
 
 //delete
-const String tmp_token = '7f762aaf-2a1b-43ff-b594-50c91b8f8870';
+const String tmp_token = '9fbaa05d-3d81-49cf-9ae1-0044b190af4a';
 
 const String no_internet_connection = 'No Internet Connection';
 
