@@ -7,6 +7,7 @@ class ImageAssets {
   static const String dino = 'assets/png/dino.png';
   static const String fridgeLogo = 'assets/png/ef_logo.png';
   static const String favoriteChef = 'assets/png/favorite_chef.png';
+  static const String favoriteChefArrow = 'assets/png/favorite_chef_arrow.png';
   static const String fridge = 'assets/png/fridge.png';
   static const String googleLogo = 'assets/png/google_logo.png';
   static const String appVestoLogo = 'assets/png/logo.png';
@@ -30,9 +31,7 @@ class ImageAssets {
   static const String homeBottomBarIcon = 'assets/png/home_bottom_bar_icon.png';
   static const String settingsBottomBarIcon = 'assets/png/settings_bottom_bar_icon.png';
   static const String backArrow = 'assets/png/back_arrow.png';
-
   static const String loadingGif = 'assets/gif/loading.gif';
-
   static const String anotherCatalogIcon = 'assets/svg/another_catalog.svg';
   static const String backArrowIcon = 'assets/svg/back_arrow.svg';
   static const String closeIcon = 'assets/svg/close.svg';
@@ -46,7 +45,6 @@ class ImageAssets {
   static const String settingsIcon = 'assets/svg/settingsIcon.svg';
   static const String surprizeIcon = 'assets/svg/surprizeIcon.svg';
   static const String switchIcon = 'assets/svg/switchIcon.svg';
-
   static const String bottomBarHome = 'assets/png/home@3x.png';
   static const String bottomBarSettings = 'assets/png/settings@3x.png';
   static const String bottomBarFavourites = 'assets/png/favourites@3x.png';

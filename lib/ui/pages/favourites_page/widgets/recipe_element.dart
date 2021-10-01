@@ -28,56 +28,6 @@ class RecipeElement extends StatefulWidget {
 class _RecipeElementState extends State<RecipeElement> with TickerProviderStateMixin {
   final FavouritesPageLanguage language = FlutterDictionary.instance.language?.favouritesPageLanguage ?? en.favouritesPageLanguage;
 
-  Widget _getImage() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10.0),
-      child: Container(
-        height: 128.0,
-        width: widget.isOpen ? double.infinity : 128.0,
-        child: widget.recipe.image == null
-            ? Image.asset(
-                ImageAssets.favoriteChef,
-              )
-            : Image.network(
-                widget.recipe.image,
-                fit: widget.isOpen ? BoxFit.contain : BoxFit.fitHeight,
-              ),
-      ),
-    );
-  }
-
-  Widget _getParameterOfRecipeWidget({@required String imageAssets, String text, String value}) {
-    return Container(
-      height: 20.0,
-      width: 80.0,
-      child: Row(
-        textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
-        children: [
-          Image.asset(imageAssets),
-          Container(
-            margin: const EdgeInsets.only(
-              left: 4.0,
-              right: 4.0,
-            ),
-            child: RichText(
-              overflow: TextOverflow.ellipsis,
-              text: TextSpan(
-                text: value,
-                style: AppFonts.smallTextStyle,
-              ),
-            ),
-          ),
-          text == null
-              ? const SizedBox()
-              : Text(
-                  text,
-                  style: AppFonts.smallTextStyle,
-                ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return AnimatedSize(
@@ -174,6 +124,56 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                   ],
                 ),
         ),
+      ),
+    );
+  }
+
+  Widget _getImage() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10.0),
+      child: SizedBox(
+        height: 128.0,
+        width: widget.isOpen ? double.infinity : 128.0,
+        child: widget.recipe.image == null
+            ? Image.asset(
+                ImageAssets.favoriteChef,
+              )
+            : Image.network(
+                widget.recipe.image,
+                fit: widget.isOpen ? BoxFit.contain : BoxFit.fitHeight,
+              ),
+      ),
+    );
+  }
+
+  Widget _getParameterOfRecipeWidget({@required String imageAssets, String text, String value}) {
+    return SizedBox(
+      height: 20.0,
+      width: 80.0,
+      child: Row(
+        textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
+        children: [
+          Image.asset(imageAssets),
+          Container(
+            margin: const EdgeInsets.only(
+              left: 4.0,
+              right: 4.0,
+            ),
+            child: RichText(
+              overflow: TextOverflow.ellipsis,
+              text: TextSpan(
+                text: value,
+                style: AppFonts.smallTextStyle,
+              ),
+            ),
+          ),
+          text == null
+              ? const SizedBox()
+              : Text(
+                  text,
+                  style: AppFonts.smallTextStyle,
+                ),
+        ],
       ),
     );
   }

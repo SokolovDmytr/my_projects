@@ -5,7 +5,7 @@ import 'package:yellow_team_fridge/store/application/app_state.dart';
 class NavigateFavouritesAction {
   final Store<AppState> store;
 
-  NavigateFavouritesAction({
+  const NavigateFavouritesAction({
     @required this.store,
   });
 }

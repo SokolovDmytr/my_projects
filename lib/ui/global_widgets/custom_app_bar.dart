@@ -20,7 +20,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     @required Size preferredSize,
     @required this.isMainStyleAppBar,
-
     this.title,
     this.color,
     this.gradient,
@@ -81,7 +80,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                                     height: 18.0,
                                   ),
                           ),
-                          Container(
+                          SizedBox(
                             width: 60.0,
                             child: Text(
                               textButton,
@@ -94,23 +93,25 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       onTap: onTapBack,
                     ),
                   ),
-                  title == null ? const SizedBox() : Container(
-                    width: 140.0,
-                    margin: const EdgeInsets.only(bottom: 10.0),
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      text: TextSpan(
-                        text: title,
-                        style: AppFonts.normalBlackHeight30TextStyle,
-                      ),
-                    ),
-                  )
+                  title == null
+                      ? const SizedBox()
+                      : Container(
+                          width: 140.0,
+                          margin: const EdgeInsets.only(bottom: 10.0),
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            text: TextSpan(
+                              text: title,
+                              style: AppFonts.normalBlackHeight30TextStyle,
+                            ),
+                          ),
+                        )
                 ],
               ),
             ),
           )
-        : Container(
+        : SizedBox(
             height: _preferredSize.height,
             child: Stack(
               children: [
@@ -123,7 +124,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   angle: math.pi,
                   child: CustomPaint(
                     child: Container(),
-                    painter: AppBarCurveCurvepainter(),
+                    painter: AppBarCurvePainter(),
                   ),
                 ),
               ],

@@ -28,14 +28,13 @@ class _CustomSwitchState extends State<CustomSwitch> with SingleTickerProviderSt
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: MILLISECONDS_300,
+      duration: milliseconds300,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final AuthenticationPageLanguage _language =
-        FlutterDictionary.instance.language?.authenticationPageLanguage ?? en.authenticationPageLanguage;
+    final AuthenticationPageLanguage _language = FlutterDictionary.instance.language?.authenticationPageLanguage ?? en.authenticationPageLanguage;
     return AnimatedBuilder(
       animation: _animationController,
       builder: (context, child) {

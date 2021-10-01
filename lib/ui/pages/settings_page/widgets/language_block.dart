@@ -53,7 +53,7 @@ class _LanguageBlockState extends State<LanguageBlock> {
                       height: 40.0,
                       width: 62.0,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(10.0),
                         border: Border.all(
                           color: SupportedLocales.instance.getSupportedLocales[index].toString() == vm.language
                               ? AppColors.marigold
@@ -63,7 +63,6 @@ class _LanguageBlockState extends State<LanguageBlock> {
                             ? AppColors.wheat20.withOpacity(0.2)
                             : AppColors.white,
                       ),
-                      // duration: Duration(milliseconds: 400),
                       child: Text(
                         SupportedLocales.instance.getSupportedLocales[index].toString().toUpperCase(),
                         style: AppFonts.medium16Height24TextStyle,

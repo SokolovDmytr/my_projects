@@ -15,26 +15,4 @@ class OnBoardingScreenLanguage {
     @required this.buttonNext,
     @required this.buttonStart,
   });
-
-  factory OnBoardingScreenLanguage.fromJson(Map<String, dynamic> json) {
-    return OnBoardingScreenLanguage(
-      onBoardingScreenOne: json['onBoardingScreenOne'],
-      onBoardingScreenTwo: json['onBoardingScreenTwo'],
-      onBoardingScreenThree: json['onBoardingScreenThree'],
-      onBoardingScreenFour: json['onBoardingScreenFour'],
-      buttonNext: json['buttonNext'],
-      buttonStart: json['buttonStart'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'onBoardingScreenOne': onBoardingScreenOne,
-      'onBoardingScreenTwo': onBoardingScreenTwo,
-      'onBoardingScreenThree': onBoardingScreenThree,
-      'onBoardingScreenFour': onBoardingScreenFour,
-      'buttonNext': buttonNext,
-      'buttonStart': buttonStart,
-    };
-  }
 }

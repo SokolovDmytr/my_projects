@@ -20,7 +20,7 @@ class _NotificationPageState extends State<NotificationPage> {
   Widget build(BuildContext context) {
     final NotificationPageLanguage _language =
         FlutterDictionary.instance.language?.notificationPageLanguage ?? en.notificationPageLanguage;
-    return PagesLayout(
+    return MainLayout(
       appBarType: AppBarType.simple,
       isMainStyleAppBar: true,
       title: _language.notification,

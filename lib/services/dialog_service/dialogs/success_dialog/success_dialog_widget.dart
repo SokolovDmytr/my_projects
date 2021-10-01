@@ -4,6 +4,7 @@ import 'package:yellow_team_fridge/dictionary/dictionary_classes/dialog_language
 import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
+import 'package:yellow_team_fridge/res/const.dart';
 import 'package:yellow_team_fridge/services/dialog_service/dialog_service.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 
@@ -37,7 +38,7 @@ class SuccessDialogWidget extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: Text(
-                '${language.defaultSuccessText}\n${text ?? ''}',
+                '${language.defaultSuccessText}\n${text ?? emptyString}',
                 style: AppFonts.normalBlackTwoTextStyle,
                 softWrap: true,
                 maxLines: 2,

@@ -13,7 +13,8 @@ import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 
 class NewVersionDialogWidget extends StatelessWidget {
   final Function onTapOk;
-  final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+  final DialogLanguage language =
+      FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
   NewVersionDialogWidget({
     @required this.onTapOk,
@@ -27,13 +28,15 @@ class NewVersionDialogWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
       ),
       insetPadding: const EdgeInsets.symmetric(horizontal: 15.0),
-      child: Container(
+      child: SizedBox(
         height: 340.0,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              alignment: FlutterDictionary.instance.isRTL ? Alignment.topLeft : Alignment.topRight,
+              alignment: FlutterDictionary.instance.isRTL
+                  ? Alignment.topLeft
+                  : Alignment.topRight,
               margin: const EdgeInsets.only(
                 top: 18.0,
                 right: 18.0,
@@ -65,7 +68,10 @@ class NewVersionDialogWidget extends StatelessWidget {
                       style: AppFonts.normalBlackTwoTextStyle,
                     ),
                     WidgetSpan(
-                      child: Icon(CupertinoIcons.rocket, size: 24.0,),
+                      child: Icon(
+                        CupertinoIcons.rocket,
+                        size: 24.0,
+                      ),
                     ),
                   ],
                 ),
@@ -73,7 +79,12 @@ class NewVersionDialogWidget extends StatelessWidget {
             ),
             Container(
               alignment: Alignment.center,
-              margin: const EdgeInsets.fromLTRB(42.0, 15.0, 42.0, 21.0),
+              margin: const EdgeInsets.fromLTRB(
+                42.0,
+                15.0,
+                42.0,
+                21.0,
+              ),
               child: Text(
                 placeholder_text,
                 textAlign: TextAlign.center,

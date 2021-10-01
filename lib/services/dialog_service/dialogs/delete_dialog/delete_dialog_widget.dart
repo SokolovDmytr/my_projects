@@ -26,7 +26,7 @@ class DeleteDialogWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
       ),
       insetPadding: const EdgeInsets.symmetric(horizontal: 15.0),
-      child: Container(
+      child: SizedBox(
         height: 273.0,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

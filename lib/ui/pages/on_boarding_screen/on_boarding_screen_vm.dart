@@ -10,7 +10,7 @@ class OnBoardingScreenViewModel {
   final void Function() nextSlide;
   final void Function() startUsage;
 
-  OnBoardingScreenViewModel({
+  const OnBoardingScreenViewModel({
     @required this.currentIndexDots,
     @required this.buttonCarouselController,
     @required this.startUsage,

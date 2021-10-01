@@ -5,49 +5,36 @@ import 'package:flutter/material.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 
 class GlobalButton extends StatefulWidget {
-  final double _width;
-  final double _height;
-  final String _text;
-  final TextStyle _fontText;
-  final Function _onTap;
-  final LinearGradient _gradient;
-  final Color _color;
-  final Image _icon;
-  final List<BoxShadow> _shadows;
-  final Color _borderColor;
-  final LinearGradient _borderGradient;
-  final double _borderRadius;
-  final EdgeInsets _padding;
+  final double width;
+  final double height;
+  final String text;
+  final TextStyle fontText;
+  final Function onTap;
+  final LinearGradient gradient;
+  final Color color;
+  final Image icon;
+  final List<BoxShadow> shadows;
+  final Color borderColor;
+  final LinearGradient borderGradient;
+  final double borderRadius;
+  final EdgeInsets padding;
 
   const GlobalButton({
     @required Key key,
-    @required String text,
-    @required TextStyle fontText,
-    @required Function onTap,
-    double width,
-    double height = 56.0,
-    Image icon,
-    LinearGradient gradient,
-    Color borderColor,
-    EdgeInsets padding,
-    LinearGradient borderGradient,
-    List<BoxShadow> shadows,
-    Color color = AppColors.white,
-    double borderRadius = 10.0,
-  })  : _width = width,
-        _height = height,
-        _text = text,
-        _fontText = fontText,
-        _onTap = onTap,
-        _gradient = gradient,
-        _color = color,
-        _icon = icon,
-        _shadows = shadows,
-        _borderColor = borderColor,
-        _borderGradient = borderGradient,
-        _borderRadius = borderRadius,
-        _padding = padding,
-        super(key: key);
+    @required this.text,
+    @required this.fontText,
+    @required this.onTap,
+    this.width,
+    this.height,
+    this.icon,
+    this.gradient,
+    this.borderColor,
+    this.padding,
+    this.borderGradient,
+    this.shadows,
+    this.color = AppColors.white,
+    this.borderRadius = 10.0,
+  }) : super(key: key);
 
   @override
   _GlobalButtonState createState() => _GlobalButtonState();
@@ -56,47 +43,52 @@ class GlobalButton extends StatefulWidget {
 class _GlobalButtonState extends State<GlobalButton> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: widget._padding ?? const EdgeInsets.all(0.0),
-      child: InkWell(
+    return InkWell(
+      child: Padding(
+        padding: widget.padding ?? const EdgeInsets.all(0.0),
         child: Stack(
           alignment: Alignment.center,
           children: [
             Container(
-              width: widget._width,
-              height: widget._height,
+              width: widget.width,
+              height: widget.height,
               decoration: BoxDecoration(
-                color: widget._borderColor ?? widget._color,
-                gradient: widget._borderGradient,
-                boxShadow: widget._shadows,
-                borderRadius: BorderRadius.circular(widget._borderRadius),
+                color: widget.borderColor ?? widget.color,
+                gradient: widget.borderGradient,
+                boxShadow: widget.shadows,
+                borderRadius: BorderRadius.circular(widget.borderRadius),
               ),
             ),
             Container(
-              height: widget._borderColor == null ? widget._height : widget._height - 2.0,
+              width: widget.padding == null
+                  ? 0.0
+                  : widget.borderColor == null
+                      ? widget.width
+                      : widget.width - 2.0,
+              height: widget.borderColor == null ? widget.height : widget.height - 2.0,
               decoration: BoxDecoration(
-                color: widget._color,
-                gradient: widget._gradient,
-                borderRadius: BorderRadius.circular(widget._borderRadius),
+                color: widget.color,
+                gradient: widget.gradient,
+                borderRadius: BorderRadius.circular(widget.borderRadius),
               ),
               alignment: Alignment.center,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  widget._icon == null
+                  widget.icon == null
                       ? const SizedBox()
                       : Container(
                           width: 20.0,
                           height: 20.0,
                           margin: const EdgeInsets.only(right: 55.0),
-                          child: widget._icon,
+                          child: widget.icon,
                         ),
                   RichText(
                     overflow: TextOverflow.ellipsis,
                     softWrap: false,
                     text: TextSpan(
-                      text: widget._text,
-                      style: widget._fontText,
+                      text: widget.text,
+                      style: widget.fontText,
                     ),
                   ),
                 ],
@@ -104,8 +96,8 @@ class _GlobalButtonState extends State<GlobalButton> {
             ),
           ],
         ),
-        onTap: widget._onTap,
       ),
+      onTap: widget.onTap,
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:yellow_team_fridge/res/app_routes.dart';
+import 'package:yellow_team_fridge/services/route_service/app_routes.dart';
 import 'package:yellow_team_fridge/store/shared/reducer.dart';
 import 'package:yellow_team_fridge/store/shared/route_state/actions/update_list_routes.dart';
 

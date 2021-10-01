@@ -5,16 +5,21 @@ import 'package:yellow_team_fridge/store/bottom_bar_state/actions/navigate_home_
 import 'package:yellow_team_fridge/store/bottom_bar_state/actions/navigate_settings_action.dart';
 
 class BottomBarSelectors {
-
   static void Function() goToHomePage(Store<AppState> store) {
-    return () => store.dispatch(NavigateHomeAction(store: store));
+    return () => store.dispatch(
+          NavigateHomeAction(store: store),
+        );
   }
 
   static void Function() goToFavouritesPage(Store<AppState> store) {
-    return () => store.dispatch(NavigateFavouritesAction(store: store));
+    return () => store.dispatch(
+          NavigateFavouritesAction(store: store),
+        );
   }
 
   static void Function() goToSettingsPage(Store<AppState> store) {
-    return () => store.dispatch(NavigateSettingsAction(store: store));
+    return () => store.dispatch(
+          NavigateSettingsAction(store: store),
+        );
   }
 }

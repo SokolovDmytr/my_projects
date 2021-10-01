@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yellow_team_fridge/res/app_duration.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 
@@ -27,7 +28,7 @@ class _VersionOptionState extends State<VersionOption> with SingleTickerProvider
       padding: const EdgeInsets.only(top: 29.0),
       child: AnimatedSize(
         vsync: this,
-        duration: Duration(milliseconds: 400),
+        duration: AppDuration.notificationPageOpenBlockDuration,
         child: Column(
           children: [
             Padding(

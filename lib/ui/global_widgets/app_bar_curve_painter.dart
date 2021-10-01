@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 
-class AppBarCurveCurvepainter extends CustomPainter {
+class AppBarCurvePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Path path = Path();

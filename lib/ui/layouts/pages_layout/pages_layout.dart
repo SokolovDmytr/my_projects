@@ -7,7 +7,7 @@ import 'package:yellow_team_fridge/res/const.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/bottom_navigation_bar/navigation_bottom_bar.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/custom_app_bar.dart';
 
-class PagesLayout extends StatelessWidget {
+class MainLayout extends StatelessWidget {
   final AppBarType appBarType;
   final Widget body;
   final String title;
@@ -17,7 +17,7 @@ class PagesLayout extends StatelessWidget {
   final bool isMainStyleAppBar;
   final Function onTapBack;
 
-  const PagesLayout({
+  const MainLayout({
     @required this.appBarType,
     @required this.body,
     this.currentPage,
@@ -48,6 +48,7 @@ class PagesLayout extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.white,
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         preferredSize: size,
         isMainStyleAppBar: isMainStyleAppBar,

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:yellow_team_fridge/res/app_routes.dart';
+import 'package:yellow_team_fridge/services/route_service/app_routes.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
 import 'package:yellow_team_fridge/ui/pages/favourites_page/favourites_page.dart';
 import 'package:yellow_team_fridge/ui/pages/main_page/main_page.dart';
 import 'package:yellow_team_fridge/ui/pages/notification_page/notification_page.dart';
+import 'package:yellow_team_fridge/ui/pages/on_boarding_screen/on_boarding_screen.dart';
 import 'package:yellow_team_fridge/ui/pages/settings_page/settings_page.dart';
-import 'package:yellow_team_fridge/ui/pages/unknow_page/unknow_page.dart';
 
 class RouteService {
   // region [Initialize]
@@ -21,14 +21,12 @@ class RouteService {
   final navigatorKey = GlobalKey<NavigatorState>();
 
   String getCurrentRoute() {
-    return (StoreProvider
-        .of(navigatorKey.currentContext)
-        .state as AppState).routeState.routes.last;
+    return (StoreProvider.of(navigatorKey.currentContext).state as AppState).routeState.routes.last;
   }
 
-  String getPrevRoute(){
-    int length = (StoreProvider.of(navigatorKey.currentContext).state as AppState).routeState.routes.length;
-    if(length == 1){
+  String getPrevRoute() {
+    final int length = (StoreProvider.of(navigatorKey.currentContext).state as AppState).routeState.routes.length;
+    if (length == 1) {
       return null;
     }
 
@@ -60,10 +58,15 @@ class RouteService {
           settings: settings,
           page: FavouritesPage(),
         );
+      case AppRoutes.onBoardingScreen:
+        return _defaultRoute(
+          settings: null,
+          page: OnBoardingScreen(),
+        );
       default:
         return _defaultRoute(
           settings: settings,
-          page: UnknownPage(),
+          page: MainPage(),
         );
     }
   }

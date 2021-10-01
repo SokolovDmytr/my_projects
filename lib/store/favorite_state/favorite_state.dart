@@ -22,10 +22,13 @@ class FavoriteState {
     );
   }
 
-  FavoriteState copyWith({List<Recipe> inputRecipes, String id,}) {
+  FavoriteState copyWith({
+    List<Recipe> inputRecipes,
+    String id,
+  }) {
     return FavoriteState(
-        recipes: inputRecipes ?? recipes,
-        openCardId: id ?? openCardId
+      recipes: inputRecipes ?? recipes,
+      openCardId: id ?? openCardId,
     );
   }
 
@@ -44,8 +47,9 @@ class FavoriteState {
     return copyWith(inputRecipes: action.recipes);
   }
 
-  FavoriteState _openCard({@required OpenCardAction action,}) {
+  FavoriteState _openCard({
+    @required OpenCardAction action,
+  }) {
     return copyWith(id: action.id);
   }
-
 }
