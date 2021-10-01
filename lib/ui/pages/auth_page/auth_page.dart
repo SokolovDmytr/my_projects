@@ -25,9 +25,9 @@ class _AuthPageState extends State<AuthPage> {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: AppColors.white,
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: SingleChildScrollView(
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Column(
                 children: [
                   Padding(

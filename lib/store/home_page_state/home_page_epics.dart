@@ -34,7 +34,7 @@ class HomePageEpics {
         );
 
         if (response.error == null) {
-          final List<Ingredient> ingredients = FridgeParser.instance.parse(
+          final List<Ingredient> ingredients = FridgeParser.instance.parseList(
             exampleObject: Ingredient,
             response: response,
           );

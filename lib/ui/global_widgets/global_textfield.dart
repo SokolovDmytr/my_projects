@@ -14,6 +14,7 @@ class GlobalTextField extends StatefulWidget {
   final bool needPrefix;
   final bool needSuffix;
   final EdgeInsets padding;
+  final TextEditingController controller;
 
   const GlobalTextField({
     @required this.needSuffix,
@@ -23,6 +24,7 @@ class GlobalTextField extends StatefulWidget {
     this.padding,
     this.hintText,
     this.hintStyle,
+    this.controller,
     Key key,
   }) : super(key: key);
 
@@ -44,12 +46,18 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: TextFormField(
+        controller: widget.controller,
         decoration: InputDecoration(
+          // isCollapsed: true,
+          isDense: true,
+          prefixIconConstraints: BoxConstraints(
+            maxHeight: widget.needPrefix ? 18.0 : 0.0,
+            minWidth: 16.0,
+          ),
           prefixIcon: widget.needPrefix
               ? Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 9.0,
-                    vertical: 10.0,
                   ),
                   child: Icon(
                     Icons.search_sharp,
@@ -58,9 +66,8 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
                 )
               : SizedBox(),
           contentPadding: const EdgeInsets.only(
-            top: 10.0,
-            bottom: 10.0,
-            left: 16.0,
+            top: 15.0,
+            bottom: 8.0,
           ),
           suffix: widget.needSuffix
               ? widget.needLoader

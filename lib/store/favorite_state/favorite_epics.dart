@@ -33,7 +33,7 @@ class FavoriteEpics {
         );
 
         if (response.error == null) {
-          final List<Recipe> recipes = FridgeParser.instance.parse(
+          final List<Recipe> recipes = FridgeParser.instance.parseList(
             exampleObject: Recipe,
             response: response,
           );

@@ -22,7 +22,7 @@ class FridgeParser {
     _tokenParser = TokenParser();
   }
 
-  dynamic parse({
+  List<dynamic> parseList({
     @required Type exampleObject,
     @required BaseHttpResponse response,
   }) {
@@ -36,8 +36,16 @@ class FridgeParser {
         data: response.response,
       );
     }
-     if (exampleObject == Token) {
-       return _tokenParser.parse(token: response.response);
-     }
+  }
+
+  dynamic parseEntity({
+    @required Type exampleObject,
+    @required BaseHttpResponse response,
+  }) {
+    if (exampleObject == Token) {
+      return _tokenParser.parse(
+        token: response.response,
+      );
+    }
   }
 }

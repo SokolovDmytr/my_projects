@@ -4,7 +4,7 @@ class Token {
   final String token;
   final String refreshToken;
   final String ttlToken;
-  final String createDate;
+  final DateTime createDate;
 
   const Token({
     @required this.token,

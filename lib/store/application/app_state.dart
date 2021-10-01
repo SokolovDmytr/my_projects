@@ -8,6 +8,8 @@ import 'package:yellow_team_fridge/store/home_page_state/home_page_state.dart';
 import 'package:yellow_team_fridge/store/language_state/language_state.dart';
 import 'package:yellow_team_fridge/store/on_boarding_screen_state/on_boarding_screen_state.dart';
 import 'package:yellow_team_fridge/store/shared/route_state/route_state.dart';
+import 'package:yellow_team_fridge/store/token_state/token_epics.dart';
+import 'package:yellow_team_fridge/store/token_state/token_state.dart';
 
 /// Class [AppState], is the main [state] application.
 /// It keeps 3, smaller states.
@@ -22,6 +24,7 @@ class AppState {
   final LanguageState languageState;
   final BottomBarState bottomBarState;
   final FavoriteState favoriteState;
+  final TokenState tokenState;
 
   AppState({
     @required this.homePageState,
@@ -30,6 +33,7 @@ class AppState {
     @required this.routeState,
     @required this.bottomBarState,
     @required this.favoriteState,
+    @required this.tokenState,
   });
 
   ///All states are initialized in the [initial] function.
@@ -41,6 +45,7 @@ class AppState {
       routeState: RouteState.initial(),
       favoriteState: FavoriteState.initial(),
       bottomBarState: BottomBarState.initial(),
+      tokenState: TokenState.initial(),
     );
   }
 
@@ -53,6 +58,7 @@ class AppState {
       routeState: state.routeState.reducer(action),
       favoriteState: state.favoriteState.reducer(action),
       bottomBarState: state.bottomBarState.reducer(action),
+      tokenState: state.tokenState.reducer(action),
     );
   }
 
@@ -60,5 +66,6 @@ class AppState {
   static final getAppEpic = combineEpics<AppState>([
     FavoriteEpics.indexEpic,
     HomePageEpics.indexEpic,
+    TokenEpics.indexEpic,
   ]);
 }
