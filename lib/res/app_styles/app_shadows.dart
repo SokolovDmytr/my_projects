@@ -52,12 +52,11 @@ class AppShadows {
       ),
     ];
   }
-  static List<BoxShadow> blurShadow() {
-    return [
-      BoxShadow(
-        blurRadius: 4.0,
-        color: AppColors.black25,
-      )
-    ];
+
+  static Shadow get blurShadow {
+    return Shadow(
+      blurRadius: 4.0,
+      color: AppColors.black25,
+    );
   }
 }

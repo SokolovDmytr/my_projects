@@ -48,6 +48,7 @@ class MainLayout extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.white,
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         preferredSize: size,
         isMainStyleAppBar: isMainStyleAppBar,

@@ -79,3 +79,5 @@ enum AppBarType {
   simple,
   screenRecipe,
 }
+
+const double baseHeightOfIngredientElement = 65.0;

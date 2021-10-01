@@ -7,6 +7,7 @@ class ImageAssets {
   static const String dino = 'assets/png/dino.png';
   static const String fridgeLogo = 'assets/png/ef_logo.png';
   static const String favoriteChef = 'assets/png/favorite_chef.png';
+  static const String favoriteChefArrow = 'assets/png/favorite_chef_arrow.png';
   static const String fridge = 'assets/png/fridge.png';
   static const String googleLogo = 'assets/png/google_logo.png';
   static const String appVestoLogo = 'assets/png/logo.png';
