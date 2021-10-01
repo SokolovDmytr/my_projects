@@ -147,23 +147,26 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
   }
 
   Widget _getParameterOfRecipeWidget({@required String imageAssets, String text, String value}) {
-    return SizedBox(
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 2.0),
       height: 20.0,
-      width: 80.0,
+      width: 85.0,
       child: Row(
         textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(imageAssets),
-          Container(
-            margin: const EdgeInsets.only(
-              left: 4.0,
-              right: 4.0,
-            ),
-            child: RichText(
-              overflow: TextOverflow.ellipsis,
-              text: TextSpan(
-                text: value,
+          Flexible(
+            child: Container(
+              margin: const EdgeInsets.only(
+                left: 4.0,
+                right: 4.0,
+              ),
+              child: Text(
+                value,
                 style: AppFonts.smallTextStyle,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
               ),
             ),
           ),

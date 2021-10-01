@@ -9,12 +9,14 @@ class MainPageViewModel {
   final List<Ingredient> tempIngredients;
   final Function(String name) getIngredientsWithName;
   final Function(Ingredient ingredient) addIngredient;
+  final Function(String id) deleteIngredient;
 
   const MainPageViewModel({
     @required this.ingredients,
     @required this.tempIngredients,
     @required this.getIngredientsWithName,
     @required this.addIngredient,
+    @required this.deleteIngredient,
   });
 
   static MainPageViewModel init(
@@ -31,6 +33,7 @@ class MainPageViewModel {
         store: store,
         ingredient: ingredient,
       ),
+      deleteIngredient: (String id) => HomePageSelector.deleteIngredient(store: store, id: id)
     );
   }
 }

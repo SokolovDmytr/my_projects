@@ -15,6 +15,8 @@ class GlobalTextField extends StatefulWidget {
   final bool needSuffix;
   final EdgeInsets padding;
   final TextEditingController controller;
+  final Function(String text) onChanged;
+  final FocusNode focusNode;
 
   const GlobalTextField({
     @required this.needSuffix,
@@ -25,6 +27,8 @@ class GlobalTextField extends StatefulWidget {
     this.hintText,
     this.hintStyle,
     this.controller,
+    this.onChanged,
+    this.focusNode,
     Key key,
   }) : super(key: key);
 
@@ -47,6 +51,8 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
       ),
       child: TextFormField(
         controller: widget.controller,
+        focusNode: widget.focusNode ?? FocusNode(),
+        onChanged: widget.onChanged,
         decoration: InputDecoration(
           // isCollapsed: true,
           isDense: true,

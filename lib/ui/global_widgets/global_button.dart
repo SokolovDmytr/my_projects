@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 
 class GlobalButton extends StatefulWidget {
@@ -45,7 +46,7 @@ class _GlobalButtonState extends State<GlobalButton> {
   Widget build(BuildContext context) {
     return InkWell(
       child: Padding(
-        padding: widget.padding ?? const EdgeInsets.all(0.0),
+        padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 10.0),
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -80,15 +81,18 @@ class _GlobalButtonState extends State<GlobalButton> {
                       : Container(
                           width: 20.0,
                           height: 20.0,
-                          margin: const EdgeInsets.only(right: 55.0),
+                          margin: EdgeInsets.only(right: FlutterDictionary.instance.isRTL ? 0.0 : 50.0,
+                          left: FlutterDictionary.instance.isRTL ? 50.0 : 0.0,),
                           child: widget.icon,
                         ),
-                  RichText(
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: false,
-                    text: TextSpan(
-                      text: widget.text,
-                      style: widget.fontText,
+                  Flexible(
+                    child: RichText(
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      text: TextSpan(
+                        text: widget.text,
+                        style: widget.fontText,
+                      ),
                     ),
                   ),
                 ],

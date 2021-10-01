@@ -22,6 +22,7 @@ class HomePageEpics {
   ) {
     return actions.whereType<GetIngredientsWithStringAction>().switchMap(
       (action) async* {
+
         NetworkService.instance.init(baseUrl: baseUrl);
         final BaseHttpResponse response = await NetworkService.instance.requestWithParams(
           type: HttpType.httpGet,

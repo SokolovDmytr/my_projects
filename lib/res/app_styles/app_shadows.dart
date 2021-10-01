@@ -55,7 +55,7 @@ class AppShadows {
 
   static Shadow get blurShadow {
     return Shadow(
-      blurRadius: 4.0,
+      blurRadius: 2.0,
       color: AppColors.black25,
     );
   }

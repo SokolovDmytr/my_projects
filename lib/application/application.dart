@@ -7,6 +7,7 @@ import 'package:yellow_team_fridge/res/keys.dart';
 import 'package:yellow_team_fridge/services/route_service/route_service.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
 import 'package:yellow_team_fridge/store/language_state/language_vm.dart';
+import 'package:yellow_team_fridge/ui/pages/main_page/main_page.dart';
 import 'package:yellow_team_fridge/ui/pages/splash_screen/splash_screen.dart';
 
 /// The [Application] class, in which the creation of [MaterialApp] takes place.
@@ -39,7 +40,7 @@ class Application extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               navigatorKey: RouteService.instance.navigatorKey,
               onGenerateRoute: (RouteSettings settings) => RouteService.instance.onGenerateRoute(settings: settings),
-              home: SplashScreen(),
+              home: MainPage(),
               locale: Locale(vm.language),
               supportedLocales: FlutterDictionaryDelegate.getSupportedLocales,
               localizationsDelegates: FlutterDictionaryDelegate.getLocalizationDelegates,

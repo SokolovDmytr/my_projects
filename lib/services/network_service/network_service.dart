@@ -77,10 +77,10 @@ class NetworkService {
     try {
       response = await request();
     } catch (error) {
-      print(error);
+      logger.d(error);
     }
 
-    print('Response status code ${response.statusCode}');
+    logger.d('Response status code ${response.statusCode}');
     if (response.statusCode >= 400) {
       return BaseHttpResponse(
         error: NoConnectionHttpError(
@@ -89,8 +89,6 @@ class NetworkService {
         ),
       );
     }
-
-    logger.d(response.body);
 
     return BaseHttpResponse(
       response: json.decode(response.body),

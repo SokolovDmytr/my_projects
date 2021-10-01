@@ -80,4 +80,5 @@ enum AppBarType {
   screenRecipe,
 }
 
-const double baseHeightOfIngredientElement = 65.0;
+const double baseHeightOfIngredientElement = 55.0;
+const double minSwipeDistance = 25.0;

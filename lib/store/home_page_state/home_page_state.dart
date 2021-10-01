@@ -39,6 +39,7 @@ class HomePageState {
         SaveTempIngredientsAction: (dynamic action) => _saveTempIngredients(action),
         DeleteIngredientAction: (dynamic action) => _deleteIngredient(action),
         AddIngredientAction: (dynamic action) => _addIngredient(action),
+        DeleteIngredientAction: (dynamic action) => _clearTempIngredientList(),
       }),
     ).updateState(action, this);
   }
@@ -63,5 +64,9 @@ class HomePageState {
     } else {
       return this;
     }
+  }
+
+  HomePageState _clearTempIngredientList(){
+    return copyWith(inputTempIngredients: []);
   }
 }
