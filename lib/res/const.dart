@@ -11,7 +11,7 @@ final Logger logger = Logger(
 const Duration seconds1 = Duration(seconds: 1);
 
 const Duration milliseconds200 = Duration(milliseconds: 200);
-const Duration milliseconds00 = Duration(milliseconds: 300);
+const Duration milliseconds300 = Duration(milliseconds: 300);
 const Duration milliseconds400 = Duration(milliseconds: 400);
 const Duration milliseconds500 = Duration(milliseconds: 500);
 const Duration milliseconds700 = Duration(milliseconds: 700);

@@ -107,6 +107,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         onTap: () {
                           vm.currentIndexDots == 3 ? vm.startUsage() : vm.nextSlide();
                         },
+                        // color: AppColors.black,
                         gradient: AppGradient.wheatMarigoldGradient,
                         shadows: AppShadows.buttonOcreShadow,
                       ),
