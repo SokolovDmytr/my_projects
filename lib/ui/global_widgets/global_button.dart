@@ -43,9 +43,9 @@ class GlobalButton extends StatefulWidget {
 class _GlobalButtonState extends State<GlobalButton> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      child: Padding(
-        padding: widget.padding ?? const EdgeInsets.all(0.0),
+    return Padding(
+      padding: widget.padding ?? const EdgeInsets.all(0.0),
+      child: InkWell(
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -96,8 +96,8 @@ class _GlobalButtonState extends State<GlobalButton> {
             ),
           ],
         ),
+        onTap: widget.onTap,
       ),
-      onTap: widget.onTap,
     );
   }
 }

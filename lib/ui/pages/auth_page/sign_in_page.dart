@@ -12,13 +12,39 @@ import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_textfield.dart';
 import 'package:yellow_team_fridge/ui/pages/auth_page/auth_page_vm.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
   const SignInPage({Key key}) : super(key: key);
 
   @override
+  _SignInPageState createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final FocusNode emailFocus = FocusNode();
+  final FocusNode passwordFocus = FocusNode();
+
+  @override
+  void initState() {
+    emailController.addListener(() {});
+    passwordController.addListener(() {});
+    emailFocus.addListener(() {});
+    passwordFocus.addListener(() {});
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    emailFocus.dispose();
+    passwordFocus.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
     final AuthenticationPageLanguage _language =
         FlutterDictionary.instance.language?.authenticationPageLanguage ?? en.authenticationPageLanguage;
     return StoreConnector<AppState, AuthPageViewModel>(
@@ -38,6 +64,12 @@ class SignInPage extends StatelessWidget {
             needPrefix: false,
             needShowButton: false,
             controller: emailController,
+            focusNode: emailFocus,
+            onSubmitted: (_) {
+              if (passwordController.text.isEmpty) {
+                FocusScope.of(context).requestFocus(passwordFocus);
+              }
+            },
           ),
           GlobalTextField(
             padding: const EdgeInsets.only(top: 16.0),
@@ -48,6 +80,12 @@ class SignInPage extends StatelessWidget {
             needPrefix: false,
             needShowButton: true,
             controller: passwordController,
+            focusNode: passwordFocus,
+            onSubmitted: (_) {
+              if (emailController.text.isEmpty) {
+                FocusScope.of(context).requestFocus(emailFocus);
+              }
+            },
           ),
           GlobalButton(
             icon: Image.asset(ImageAssets.googleLogo),
@@ -72,6 +110,7 @@ class SignInPage extends StatelessWidget {
           GlobalButton(
             padding: const EdgeInsets.only(right: 16.0, left: 16.0, top: 30.0),
             key: Key('LogIn'),
+            height: 56.0,
             text: _language.logIn,
             fontText: AppFonts.normalMediumTextStyle,
             onTap: () => vm.logIn(emailController.text, passwordController.text),
