@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
-import 'package:yellow_team_fridge/services/route_service.dart';
+import 'file:///C:/max/yellow_team_fridge/lib/services/route_service/route_service.dart';
 
 class PopUpService {
   static const tag = '[PopUpService]';

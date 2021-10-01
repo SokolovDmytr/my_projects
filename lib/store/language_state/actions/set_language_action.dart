@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
 class SetLanguageAction {
-  String languageCode;
+ final String languageCode;
 
-  SetLanguageAction({
+  const SetLanguageAction({
     @required this.languageCode,
   });
 }

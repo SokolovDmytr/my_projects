@@ -49,35 +49,34 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: AppColors.wheat,
-        child: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            Container(),
-            Container(
-              margin: const EdgeInsets.fromLTRB(67.0, 93.0, 67.0, 210.0),
-              child: Image.asset(
-                ImageAssets.splashScreenFridge,
-              ),
+      body: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+         Container(
+           color: AppColors.wheat,
+         ),
+          Container(
+            margin: const EdgeInsets.fromLTRB(67.0, 93.0, 67.0, 210.0),
+            child: Image.asset(
+              ImageAssets.splashScreenFridge,
             ),
-            Positioned(
-              bottom: 0.0,
-              width: _widthScreen,
-              child: Container(
-                margin: const EdgeInsets.only(left: 48.0, right: 48.0, bottom: 172.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(4.0),
-                  child: LinearProgressIndicator(
-                    minHeight: 8.0,
-                    backgroundColor: AppColors.white,
-                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.marigold),
-                  ),
+          ),
+          Positioned(
+            bottom: 0.0,
+            width: _widthScreen,
+            child: Container(
+              margin: const EdgeInsets.only(left: 48.0, right: 48.0, bottom: 172.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(4.0),
+                child: LinearProgressIndicator(
+                  minHeight: 8.0,
+                  backgroundColor: AppColors.white,
+                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.marigold),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

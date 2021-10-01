@@ -2,7 +2,8 @@ import 'dart:collection';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:redux/redux.dart';
-import 'package:yellow_team_fridge/res/app_routes.dart';
+import 'package:yellow_team_fridge/res/app_duration.dart';
+import 'file:///C:/max/yellow_team_fridge/lib/services/route_service/app_routes.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
 import 'package:yellow_team_fridge/store/on_boarding_screen_state/actions/next_action.dart';
 import 'package:yellow_team_fridge/store/on_boarding_screen_state/actions/start_action.dart';
@@ -52,7 +53,7 @@ class OnBoardingScreenState {
   OnBoardingScreenState _nextAction() {
     buttonCarouselController.animateToPage(
       currentIndexDots + 1,
-      duration: Duration(milliseconds: 300),
+      duration: AppDuration.onboardingScreenDuration,
     );
     return OnBoardingScreenState(
       currentIndexDots: currentIndexDots + 1,

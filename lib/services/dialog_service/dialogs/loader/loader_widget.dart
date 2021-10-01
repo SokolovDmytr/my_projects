@@ -18,7 +18,7 @@ class LoaderWidget extends StatelessWidget {
     return Dialog(
       elevation: 0.0,
       backgroundColor: AppColors.transparent,
-      child: Container(
+      child: SizedBox(
         height: 85.0,
         child: Column(
           children: [

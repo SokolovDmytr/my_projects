@@ -27,7 +27,6 @@ class _AuthPageState extends State<AuthPage> {
                   fallbackHeight: 50.0,
                 ),
                 Text('Sign Up'),
-
               ],
             ),
           ),

@@ -18,28 +18,4 @@ class MainPageLanguage {
     @required this.buttonDelete,
     @required this.buttonOk,
   });
-
-  factory MainPageLanguage.fromJson(Map<String, dynamic> json) {
-    return MainPageLanguage(
-      buttonDelete: json['buttonDelete'],
-      buttonOk: json['buttonOk'],
-      buttonWatchRecipes: json['buttonWatchRecipes'],
-      chooseTextField: json['chooseTextField'],
-      clearAll: json['clearAll'],
-      notFound: json['notFound'],
-      swipeTutorial: json['swipeTutorial'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'buttonDelete': buttonDelete,
-      'buttonOk': buttonOk,
-      'buttonWatchRecipes': buttonWatchRecipes,
-      'chooseTextField': chooseTextField,
-      'clearAll': clearAll,
-      'notFound': notFound,
-      'swipeTutorial': swipeTutorial,
-    };
-  }
 }

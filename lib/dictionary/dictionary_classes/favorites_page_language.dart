@@ -18,28 +18,4 @@ class FavouritesPageLanguage {
     @required this.basic,
     @required this.favourites,
   });
-
-  factory FavouritesPageLanguage.fromJson(Map<String, dynamic> json) {
-    return FavouritesPageLanguage(
-      back: json['back'],
-      min: json['min'],
-      cal: json['cal'],
-      basic: json['basic'],
-      favourites: json['favourites'],
-      listEmpty: json['listEmpty'],
-      youDoNotHave: json['youDoNotHave'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'back': back,
-      'min': min,
-      'cal': cal,
-      'basic': basic,
-      'favourites': favourites,
-      'listEmpty': listEmpty,
-      'youDoNotHave':youDoNotHave,
-    };
-  }
 }

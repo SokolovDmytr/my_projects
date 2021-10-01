@@ -4,7 +4,10 @@ import 'package:yellow_team_fridge/res/app_fonts.dart';
 class RecipesPopUpWidget extends StatelessWidget {
   final String text;
 
-  const RecipesPopUpWidget({@required this.text, Key key}) : super(key: key);
+  const RecipesPopUpWidget({
+    @required this.text,
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

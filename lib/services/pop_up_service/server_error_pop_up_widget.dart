@@ -6,7 +6,8 @@ import 'package:yellow_team_fridge/res/app_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 
 class ServerErrorPopUpWidget extends StatelessWidget {
-  final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+  final DialogLanguage language =
+      FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
   ServerErrorPopUpWidget({Key key}) : super(key: key);
 
@@ -18,7 +19,7 @@ class ServerErrorPopUpWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
-      child: Container(
+      child: SizedBox(
         height: 133.0,
         child: Column(
           children: [
@@ -33,7 +34,11 @@ class ServerErrorPopUpWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            Icon(Icons.error, color: AppColors.pastelRed, size: 33.0,),
+            Icon(
+              Icons.error,
+              color: AppColors.pastelRed,
+              size: 33.0,
+            ),
           ],
         ),
       ),

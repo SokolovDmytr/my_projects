@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
-import 'package:yellow_team_fridge/services/route_service.dart';
+import 'file:///C:/max/yellow_team_fridge/lib/services/route_service/route_service.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
 import 'package:yellow_team_fridge/store/shared/route_state/actions/navigate_pop_action.dart';
 import 'package:yellow_team_fridge/store/shared/route_state/actions/navigate_push_named_action.dart';

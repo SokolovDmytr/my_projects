@@ -5,7 +5,7 @@ import 'package:yellow_team_fridge/store/application/app_state.dart';
 class NavigateHomeAction {
   final Store<AppState> store;
 
-  NavigateHomeAction({
+  const NavigateHomeAction({
     @required this.store,
   });
 }

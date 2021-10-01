@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:yellow_team_fridge/dictionary/data/en.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/settings_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
-import 'package:yellow_team_fridge/res/app_routes.dart';
+import 'file:///C:/max/yellow_team_fridge/lib/services/route_service/app_routes.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
 import 'package:yellow_team_fridge/res/const.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
@@ -25,7 +25,7 @@ class SettingsPage extends StatelessWidget {
         final SettingsPageLanguage _language =
             FlutterDictionary.instance.language?.settingsPageLanguage ?? en.settingsPageLanguage;
         
-        return PagesLayout(
+        return MainLayout(
           appBarType: AppBarType.simple,
           isMainStyleAppBar: true,
           title: _language.settings,
@@ -34,7 +34,7 @@ class SettingsPage extends StatelessWidget {
           body: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 90.0,
                 ),
                 LogOutBlock(),

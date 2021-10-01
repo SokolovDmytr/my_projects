@@ -4,25 +4,18 @@ class DialogLanguage {
   String loginPopUpTitle;
   String loginPopUpNewVersionText;
   String loginPopUpButtonText;
-
   String logOutPopUpTitle;
   String logOutPopUpAppName;
   String logOutPopUpButtonNoText;
   String logOutPopUpButtonYesText;
-
   String favoritesRemovedPopUpText;
-
   String serverErrorText;
-
   String recipePopUpAddedText;
-
   String deletePopUpTitle;
   String deletePopUpButtonOkText;
   String deletePopUpButtonCancelText;
-
   String defaultErrorText;
   String defaultSuccessText;
-
   String loadingText;
 
   DialogLanguage({
@@ -43,46 +36,4 @@ class DialogLanguage {
     @required this.defaultSuccessText,
     @required this.loadingText,
   });
-
-  factory DialogLanguage.fromJson(Map<String, dynamic> json) {
-    return DialogLanguage(
-      loginPopUpTitle: json['loginPopUpTitle'],
-      loginPopUpNewVersionText: json['loginPopUpNewVersionText'],
-      loginPopUpButtonText: json['loginPopUpButtonText'],
-      logOutPopUpTitle: json['logOutPopUpTitle'],
-      logOutPopUpAppName: json['logOutPopUpAppName'],
-      logOutPopUpButtonNoText: json['logOutPopUpButtonNoText'],
-      logOutPopUpButtonYesText: json['logOutPopUpButtonYesText'],
-      favoritesRemovedPopUpText: json['favoritesRemovedPopUpText'],
-      serverErrorText: json['serverErrorText'],
-      recipePopUpAddedText: json['recipePopUpAddedText'],
-      deletePopUpTitle: json['deletePopUpTitle'],
-      deletePopUpButtonOkText: json['deletePopUpButtonOkText'],
-      deletePopUpButtonCancelText: json['deletePopUpButtonDeleteText'],
-      defaultErrorText: json['defaultErrorText'],
-      defaultSuccessText: json['defaultSuccessText'],
-      loadingText: json['loadingText'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'loginPopUpTitle': loginPopUpTitle,
-      'loginPopUpNewVersionText': loginPopUpNewVersionText,
-      'loginPopUpButtonText': loginPopUpButtonText,
-      'logOutPopUpTitle': logOutPopUpTitle,
-      'logOutPopUpAppName': logOutPopUpAppName,
-      'logOutPopUpButtonNoText': logOutPopUpButtonNoText,
-      'logOutPopUpButtonYesText': logOutPopUpButtonYesText,
-      'favoritesRemovedPopUpText': favoritesRemovedPopUpText,
-      'serverErrorText': serverErrorText,
-      'recipePopUpAddedText': recipePopUpAddedText,
-      'deletePopUpTitle': deletePopUpTitle,
-      'deletePopUpButtonOkText': deletePopUpButtonOkText,
-      'deletePopUpButtonDeleteText': deletePopUpButtonCancelText,
-      'defaultErrorText': defaultErrorText,
-      'defaultSuccessText': defaultSuccessText,
-      'loadingText': loadingText,
-    };
-  }
 }

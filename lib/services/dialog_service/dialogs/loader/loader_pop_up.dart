@@ -6,8 +6,11 @@ import 'package:yellow_team_fridge/store/shared/loader/loader_state.dart';
 class LoaderPopUp implements ILoader {
   @override
   Widget child;
+  @override
   bool state;
+  @override
   LoaderKey loaderKey;
+  @override
   String title;
 
   LoaderPopUp({
@@ -16,6 +19,7 @@ class LoaderPopUp implements ILoader {
     @required this.title,
     @required this.child,
   });
+
   @override
   void show() {
     DialogService.instance.show(dialog: this);
@@ -23,5 +27,4 @@ class LoaderPopUp implements ILoader {
 
   @override
   Widget get widget => child;
-
 }

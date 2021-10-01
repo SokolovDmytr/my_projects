@@ -4,7 +4,7 @@ import 'package:flutter_redux_navigation/flutter_redux_navigation.dart';
 import 'package:redux/redux.dart';
 import 'package:yellow_team_fridge/dictionary/flutter_delegate.dart';
 import 'package:yellow_team_fridge/res/keys.dart';
-import 'package:yellow_team_fridge/services/route_service.dart';
+import 'file:///C:/max/yellow_team_fridge/lib/services/route_service/route_service.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
 import 'package:yellow_team_fridge/store/language_state/language_vm.dart';
 import 'package:yellow_team_fridge/ui/pages/splash_screen/splash_screen.dart';

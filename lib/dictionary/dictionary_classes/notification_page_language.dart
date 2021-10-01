@@ -20,30 +20,4 @@ class NotificationPageLanguage {
     @required this.versionDescriptionFour,
     @required this.versionDescriptionFive,
   });
-
-  factory NotificationPageLanguage.fromJson(Map<String, dynamic> json) {
-    return NotificationPageLanguage(
-      back: json['back'],
-      notification: json['notification'],
-      version: json['version'],
-      versionDescriptionOne: json['versionDescriptionOne'],
-      versionDescriptionTwo: json['versionDescriptionTwo'],
-      versionDescriptionThree: json['versionDescriptionThree'],
-      versionDescriptionFour: json['versionDescriptionFour'],
-      versionDescriptionFive: json['versionDescriptionFive'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'back': back,
-      'notification': notification,
-      'version': version,
-      'versionDescriptionOne': versionDescriptionOne,
-      'versionDescriptionTwo': versionDescriptionTwo,
-      'versionDescriptionThree': versionDescriptionThree,
-      'versionDescriptionFour': versionDescriptionFour,
-      'versionDescriptionFive': versionDescriptionFive,
-    };
-  }
 }
