@@ -34,9 +34,9 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
       duration: AppDuration.recipeOpenDuration,
       vsync: this,
       child: InkWell(
-        onTap: () {
-          widget.openCard.call(widget.recipe.i.toString());
-        },
+        // onTap: () {
+        //   widget.openCard.call(widget.recipe.i.toString());
+        // },
         child: Container(
           height: widget.isOpen ? 150.0 : 128.0,
           margin: const EdgeInsets.symmetric(vertical: 8.0),

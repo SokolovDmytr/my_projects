@@ -18,11 +18,14 @@ class RecipesList extends StatelessWidget {
           itemCount: viewModel.recipes.length,
           itemBuilder: (BuildContext _, int index) {
             return InkWell(
-              onTap: ()  => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => ScreenRecipePage(recipe: viewModel.recipes[index],))),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ScreenRecipePage(
+                        recipe: viewModel.recipes[index],
+                      ))),
               child: RecipeElement(
                 recipe: viewModel.recipes[index],
-                isOpen: viewModel.recipes[index].i.toString() == viewModel.openCardId,
+                isOpen: viewModel.recipes[index].i.toString() ==
+                    viewModel.openCardId,
                 openCard: viewModel.openCard,
               ),
             );

@@ -24,6 +24,7 @@ class RecipeParser {
             time: item['time'],
             level: item['level'],
             image: item['image'],
+            steps: item['steps'],
             ingredients: ingredients,
           ),
         );

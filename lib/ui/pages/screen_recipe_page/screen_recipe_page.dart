@@ -8,6 +8,7 @@ import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
 import 'package:yellow_team_fridge/res/image_assets.dart';
 import 'package:yellow_team_fridge/ui/pages/screen_recipe_page/widgets/congratulation_block.dart';
+import 'package:yellow_team_fridge/ui/pages/screen_recipe_page/widgets/cooking_block.dart';
 
 class ScreenRecipePage extends StatefulWidget {
   final Recipe recipe;
@@ -78,9 +79,7 @@ class _ScreenRecipePageState extends State<ScreenRecipePage>
                   height = constraints.biggest.height;
                   return Stack(
                     children: [
-                      SizedBox(
-                        height: 312.0,
-                      ),
+                      SizedBox(height: 312.0),
                       Container(
                         decoration: BoxDecoration(
                           gradient: height == 80.0
@@ -88,10 +87,12 @@ class _ScreenRecipePageState extends State<ScreenRecipePage>
                               : AppGradient.black30black0,
                         ),
                         child: FlexibleSpaceBar(
-                          background: Image.asset(ImageAssets.chefYellow),
-                          // recipe.image == null
-                          //     ? Image.asset(ImageAssets.chefYellow)
-                          //     : Image.network(recipe.image),
+                          background: widget.recipe.image == null
+                              ? Image.asset(ImageAssets.chefYellow)
+                              : Image.network(
+                                  widget.recipe.image,
+                                  fit: BoxFit.fill,
+                                ),
                           title: Text(
                             '$height',
                             style: TextStyle(color: AppColors.black),
@@ -127,15 +128,19 @@ class _ScreenRecipePageState extends State<ScreenRecipePage>
                       topRight: Radius.circular(10.0),
                     ),
                   ),
-                  child: Column(
-                    children: [
-                      CongratulationBlock(),
-                      CongratulationBlock(),
-                      CongratulationBlock(),
-                      CongratulationBlock(),
-                      CongratulationBlock(),
-                      CongratulationBlock(),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                    child: Column(
+                      children: [
+                        CookingBlock(recipe: widget.recipe),
+                        CongratulationBlock(),
+                        CongratulationBlock(),
+                        CongratulationBlock(),
+                        CongratulationBlock(),
+                        CongratulationBlock(),
+                        CongratulationBlock(),
+                      ],
+                    ),
                   ),
                 ),
                 childCount: 1,

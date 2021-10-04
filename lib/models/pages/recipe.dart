@@ -9,7 +9,7 @@ class Recipe {
   final int time;
   final String level;
   final List<Ingredient> ingredients;
-  final List<String> steps;
+  final List<dynamic> steps;
 
   const Recipe({
     @required this.i,
