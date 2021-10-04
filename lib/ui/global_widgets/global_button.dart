@@ -18,7 +18,6 @@ class GlobalButton extends StatefulWidget {
   final Color borderColor;
   final LinearGradient borderGradient;
   final double borderRadius;
-  final EdgeInsets padding;
 
   const GlobalButton({
     @required Key key,
@@ -30,7 +29,6 @@ class GlobalButton extends StatefulWidget {
     this.icon,
     this.gradient,
     this.borderColor,
-    this.padding,
     this.borderGradient,
     this.shadows,
     this.color = AppColors.white,
@@ -45,63 +43,58 @@ class _GlobalButtonState extends State<GlobalButton> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      child: Padding(
-        padding: widget.padding ?? const EdgeInsets.symmetric(horizontal: 10.0),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              width: widget.width,
-              height: widget.height,
-              decoration: BoxDecoration(
-                color: widget.borderColor ?? widget.color,
-                gradient: widget.borderGradient,
-                boxShadow: widget.shadows,
-                borderRadius: BorderRadius.circular(widget.borderRadius),
-              ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            width: widget.width,
+            height: widget.height,
+            decoration: BoxDecoration(
+              color: widget.borderColor ?? widget.color,
+              gradient: widget.borderGradient,
+              boxShadow: widget.shadows,
+              borderRadius: BorderRadius.circular(widget.borderRadius),
             ),
-            Container(
-              width: widget.padding == null
-                  ? widget.borderColor == null
-                      ? widget.width
-                      : widget.width - 2.0
-                  : widget.width,
-              height: widget.borderColor == null ? widget.height : widget.height - 2.0,
-              decoration: BoxDecoration(
-                color: widget.color,
-                gradient: widget.gradient,
-                borderRadius: BorderRadius.circular(widget.borderRadius),
-              ),
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  widget.icon == null
-                      ? const SizedBox()
-                      : Container(
-                          width: 20.0,
-                          height: 20.0,
-                          margin: EdgeInsets.only(
-                            right: FlutterDictionary.instance.isRTL ? 0.0 : 50.0,
-                            left: FlutterDictionary.instance.isRTL ? 50.0 : 0.0,
-                          ),
-                          child: widget.icon,
-                        ),
-                  Flexible(
-                    child: RichText(
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: false,
-                      text: TextSpan(
-                        text: widget.text,
-                        style: widget.fontText,
-                      ),
+          ),
+          Container(
+            width: widget.borderColor == null
+                ? widget.width
+                : widget.width - 2.0,
+            height: widget.borderColor == null ? widget.height : widget.height - 2.0,
+            decoration: BoxDecoration(
+              color: widget.color,
+              gradient: widget.gradient,
+              borderRadius: BorderRadius.circular(widget.borderRadius),
+            ),
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                widget.icon == null
+                    ? const SizedBox()
+                    : Container(
+                  width: 20.0,
+                  height: 20.0,
+                  margin: EdgeInsets.only(
+                    right: FlutterDictionary.instance.isRTL ? 0.0 : 50.0,
+                    left: FlutterDictionary.instance.isRTL ? 50.0 : 0.0,
+                  ),
+                  child: widget.icon,
+                ),
+                Flexible(
+                  child: RichText(
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
+                    text: TextSpan(
+                      text: widget.text,
+                      style: widget.fontText,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       onTap: widget.onTap,
     );

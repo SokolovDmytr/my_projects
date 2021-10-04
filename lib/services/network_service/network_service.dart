@@ -82,6 +82,7 @@ class NetworkService {
 
     logger.d('Response status code ${response.statusCode}');
     if (response.statusCode >= 400) {
+      logger.d(' body ${response.body}');
       return BaseHttpResponse(
         error: NoConnectionHttpError(
           error: response.body,

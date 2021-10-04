@@ -25,6 +25,8 @@ class GetRecipeParams implements IParameter {
       }
     }
 
+    logger.d(ids);
+
     return {
       parameterKeys['token']: token,
       parameterKeys['locale']: locale,

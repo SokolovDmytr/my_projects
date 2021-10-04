@@ -98,18 +98,20 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           }),
                         ),
                       ),
-                      GlobalButton(
-                        key: Key('onBoardingButton${vm.currentIndexDots}'),
-                        text: vm.currentIndexDots == 3 ? _language.buttonStart : _language.buttonNext,
-                        fontText: AppFonts.normalMediumTextStyle,
-                        height: 56.0,
+                      Container(
                         padding: const EdgeInsets.symmetric(horizontal:  31.0),
-                        onTap: () {
-                          vm.currentIndexDots == 3 ? vm.startUsage() : vm.nextSlide();
-                        },
-                        // color: AppColors.black,
-                        gradient: AppGradient.wheatMarigoldGradient,
-                        shadows: AppShadows.buttonOcreShadow,
+                        child: GlobalButton(
+                          key: Key('onBoardingButton${vm.currentIndexDots}'),
+                          text: vm.currentIndexDots == 3 ? _language.buttonStart : _language.buttonNext,
+                          fontText: AppFonts.normalMediumTextStyle,
+                          height: 56.0,
+                          onTap: () {
+                            vm.currentIndexDots == 3 ? vm.startUsage() : vm.nextSlide();
+                          },
+                          // color: AppColors.black,
+                          gradient: AppGradient.wheatMarigoldGradient,
+                          shadows: AppShadows.buttonOcreShadow,
+                        ),
                       ),
                     ],
                   ),

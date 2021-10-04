@@ -42,9 +42,10 @@ class _SwipeElementState extends State<SwipeElement> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+
     width = MediaQuery.of(context).size.width;
     final double maxSwipeDistance = width / 3;
-    final double partOfMaxSwipeDistance = 0.05 * maxSwipeDistance;
+    final double partOfMaxSwipeDistance = 0.02 * maxSwipeDistance;
 
     return AnimatedBuilder(
       animation: _closeAnimation,

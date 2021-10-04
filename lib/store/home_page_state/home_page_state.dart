@@ -13,7 +13,7 @@ class HomePageState {
   final List<Ingredient> ingredients;
   final List<Ingredient> tempIngredients;
 
-  HomePageState({
+  const HomePageState({
     @required this.ingredients,
     @required this.tempIngredients,
   });

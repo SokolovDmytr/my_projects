@@ -25,6 +25,7 @@ class HttpRoute{
   static const getFavorite = '/getFavorites';
   static const login = '/login';
   static const getIngredients = '/getIngredients';
+  static const getRecipe = '/getRecipe';
 }
 
 //delete

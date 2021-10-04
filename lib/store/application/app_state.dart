@@ -7,6 +7,8 @@ import 'package:yellow_team_fridge/store/home_page_state/home_page_epics.dart';
 import 'package:yellow_team_fridge/store/home_page_state/home_page_state.dart';
 import 'package:yellow_team_fridge/store/language_state/language_state.dart';
 import 'package:yellow_team_fridge/store/on_boarding_screen_state/on_boarding_screen_state.dart';
+import 'package:yellow_team_fridge/store/recipes_page_state/recipes_page_epics.dart';
+import 'package:yellow_team_fridge/store/recipes_page_state/recipes_page_state.dart';
 import 'package:yellow_team_fridge/store/shared/route_state/route_state.dart';
 import 'package:yellow_team_fridge/store/token_state/token_epics.dart';
 import 'package:yellow_team_fridge/store/token_state/token_state.dart';
@@ -25,6 +27,7 @@ class AppState {
   final BottomBarState bottomBarState;
   final FavoriteState favoriteState;
   final TokenState tokenState;
+  final RecipesPageState recipesPageState;
 
   AppState({
     @required this.homePageState,
@@ -34,6 +37,7 @@ class AppState {
     @required this.bottomBarState,
     @required this.favoriteState,
     @required this.tokenState,
+    @required this.recipesPageState,
   });
 
   ///All states are initialized in the [initial] function.
@@ -46,6 +50,7 @@ class AppState {
       favoriteState: FavoriteState.initial(),
       bottomBarState: BottomBarState.initial(),
       tokenState: TokenState.initial(),
+      recipesPageState: RecipesPageState.initial(),
     );
   }
 
@@ -59,6 +64,7 @@ class AppState {
       favoriteState: state.favoriteState.reducer(action),
       bottomBarState: state.bottomBarState.reducer(action),
       tokenState: state.tokenState.reducer(action),
+      recipesPageState: state.recipesPageState.reducer(action),
     );
   }
 
@@ -67,5 +73,6 @@ class AppState {
     FavoriteEpics.indexEpic,
     HomePageEpics.indexEpic,
     TokenEpics.indexEpic,
+    RecipesPageEpics.indexEpic,
   ]);
 }

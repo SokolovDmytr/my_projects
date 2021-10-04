@@ -19,8 +19,7 @@ class SignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
-    final AuthenticationPageLanguage _language =
-        FlutterDictionary.instance.language?.authenticationPageLanguage ?? en.authenticationPageLanguage;
+    final AuthenticationPageLanguage _language = FlutterDictionary.instance.language?.authenticationPageLanguage ?? en.authenticationPageLanguage;
     return StoreConnector<AppState, AuthPageViewModel>(
       converter: AuthPageViewModel.init,
       builder: (BuildContext context, AuthPageViewModel vm) => Column(
@@ -49,43 +48,51 @@ class SignInPage extends StatelessWidget {
             needShowButton: true,
             controller: passwordController,
           ),
-          GlobalButton(
-            icon: Image.asset(ImageAssets.googleLogo),
+          Container(
             padding: const EdgeInsets.only(top: 29.0),
-            key: Key('RegisterGoogle'),
-            text: _language.signInGoogle,
-            fontText: AppFonts.medium16blackTwoTextStyle,
-            shadows: AppShadows.textFieldShadow,
-            height: 42.0,
-            onTap: () {},
+            child: GlobalButton(
+              icon: Image.asset(ImageAssets.googleLogo),
+              key: Key('RegisterGoogle'),
+              text: _language.signInGoogle,
+              fontText: AppFonts.medium16blackTwoTextStyle,
+              shadows: AppShadows.textFieldShadow,
+              height: 42.0,
+              onTap: () {},
+            ),
           ),
-          GlobalButton(
-            height: 42.0,
-            icon: Image.asset(ImageAssets.appleLogo),
+          Container(
             padding: const EdgeInsets.only(top: 16),
-            key: Key('RegisterApple'),
-            text: _language.registerApple,
-            fontText: AppFonts.medium16blackTwoTextStyle,
-            shadows: AppShadows.textFieldShadow,
-            onTap: () {},
+            child: GlobalButton(
+              height: 42.0,
+              icon: Image.asset(ImageAssets.appleLogo),
+              key: Key('RegisterApple'),
+              text: _language.registerApple,
+              fontText: AppFonts.medium16blackTwoTextStyle,
+              shadows: AppShadows.textFieldShadow,
+              onTap: () {},
+            ),
           ),
-          GlobalButton(
+          Container(
             padding: const EdgeInsets.only(right: 16.0, left: 16.0, top: 30.0),
-            key: Key('LogIn'),
-            text: _language.logIn,
-            fontText: AppFonts.normalMediumTextStyle,
-            onTap: () => vm.logIn(emailController.text, passwordController.text),
-            shadows: AppShadows.buttonOcreShadow,
-            gradient: AppGradient.wheatMarigoldGradient,
+            child: GlobalButton(
+              key: Key('LogIn'),
+              text: _language.logIn,
+              fontText: AppFonts.normalMediumTextStyle,
+              onTap: () => vm.logIn(emailController.text, passwordController.text),
+              shadows: AppShadows.buttonOcreShadow,
+              gradient: AppGradient.wheatMarigoldGradient,
+            ),
           ),
-          GlobalButton(
+          Container(
             padding: const EdgeInsets.only(top: 16.0),
-            height: 19.0,
-            width: 178.0,
-            key: Key('forgotPassword'),
-            text: _language.buttonForgotPassword,
-            fontText: AppFonts.size16SemiBoldMarigold,
-            onTap: () {},
+            child: GlobalButton(
+              height: 19.0,
+              width: 178.0,
+              key: Key('forgotPassword'),
+              text: _language.buttonForgotPassword,
+              fontText: AppFonts.size16SemiBoldMarigold,
+              onTap: () {},
+            ),
           ),
         ],
       ),

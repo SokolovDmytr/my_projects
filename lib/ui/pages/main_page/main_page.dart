@@ -14,6 +14,7 @@ import 'package:yellow_team_fridge/res/image_assets.dart';
 import 'package:yellow_team_fridge/services/route_service/app_routes.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
 import 'package:yellow_team_fridge/store/home_page_state/home_page_selector.dart';
+import 'package:yellow_team_fridge/store/shared/route_state/actions/navigate_push_named_action.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_textfield.dart';
 import 'package:yellow_team_fridge/ui/layouts/pages_layout/pages_layout.dart';
@@ -107,94 +108,128 @@ class _MainPageState extends State<MainPage> {
                 child: StoreConnector<AppState, MainPageViewModel>(
                   converter: MainPageViewModel.init,
                   builder: (
-                    BuildContext _,
+                    BuildContext storeConnectorContext,
                     MainPageViewModel vm,
                   ) {
+                    final double stackWidth = MediaQuery.of(storeConnectorContext).size.width;
                     return vm.ingredients.isEmpty
                         ? Container(
                             margin: const EdgeInsets.fromLTRB(52.0, 30.0, 52.0, 80.0),
                             child: Image.asset(ImageAssets.favoriteChefArrow),
                           )
-                        : Column(
-                            mainAxisSize: MainAxisSize.min,
+                        : Stack(
+                            alignment: Alignment.topCenter,
+                            fit: StackFit.expand,
                             children: [
-                              InkWell(
-                                child: Container(
-                                  margin: const EdgeInsets.only(top: 25.0, bottom: 4.0),
-                                  alignment: FlutterDictionary.instance.isRTL ? Alignment.centerLeft : Alignment.centerRight,
-                                  child: Text(
-                                    language.clearAll,
-                                    style: AppFonts.smallPaselRedTextStyle,
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  InkWell(
+                                    child: Container(
+                                      margin: const EdgeInsets.only(top: 25.0, bottom: 4.0),
+                                      alignment: FlutterDictionary.instance.isRTL ? Alignment.centerLeft : Alignment.centerRight,
+                                      child: Text(
+                                        language.clearAll,
+                                        style: AppFonts.smallPaselRedTextStyle,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      vm.clearIngredients();
+                                    },
                                   ),
-                                ),
-                                onTap: () {
-                                  vm.clearIngredients();
-                                },
-                              ),
-                              Expanded(
-                                child: ListView.separated(
-                                  itemCount: vm.ingredients.length,
-                                  separatorBuilder: (BuildContext _, int index) {
-                                    return Container(
-                                      margin: const EdgeInsets.symmetric(vertical: 1.0),
-                                      child: Divider(
-                                        color: AppColors.black.withOpacity(0.5),
-                                        height: 0.5,
-                                      ),
-                                    );
-                                  },
-                                  itemBuilder: (BuildContext __, int index) {
-                                    return SwipeElement(
-                                      background: Container(
-                                          height: baseHeightOfIngredientElement,
-                                          color: AppColors.pastelRed,
-                                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                                          child: GlobalButton(
-                                            key: Key('GlobalButtonDelete'),
-                                            width: 70.0,
-                                            height: 45.0,
+                                  Expanded(
+                                    child: ListView.separated(
+                                      itemCount: vm.ingredients.length,
+                                      separatorBuilder: (BuildContext _, int index) {
+                                        return Container(
+                                          margin: const EdgeInsets.symmetric(vertical: 1.0),
+                                          child: Divider(
+                                            color: AppColors.black.withOpacity(0.5),
+                                            height: 0.5,
+                                          ),
+                                        );
+                                      },
+                                      itemBuilder: (BuildContext __, int index) {
+                                        return SwipeElement(
+                                          background: Container(
+                                            height: baseHeightOfIngredientElement,
                                             color: AppColors.pastelRed,
-                                            text: language.buttonDelete,
-                                            fontText: AppFonts.medium16Height24WhiteTextStyle,
-                                            onTap: () {
-                                              setState(() {
-                                                vm.deleteIngredient(vm.ingredients[index].i);
-                                              });
-                                            },
-                                          )),
-                                      child: SizedBox(
-                                        height: baseHeightOfIngredientElement,
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              margin: const EdgeInsets.fromLTRB(
-                                                22.0,
-                                                5.0,
-                                                4.0,
-                                                5.0,
-                                              ),
-                                              child: vm.ingredients[index].image == null
-                                                  ? Image.asset(ImageAssets.chefYellow)
-                                                  : Image.network(
-                                                      vm.ingredients[index].image,
-                                                      errorBuilder: (BuildContext _, Object __, StackTrace ___) {
-                                                        return Image.asset(ImageAssets.chefYellow);
-                                                      },
-                                                    ),
+                                            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                            child: GlobalButton(
+                                              key: Key('GlobalButtonDelete'),
+                                              width: 70.0,
+                                              height: 45.0,
+                                              color: AppColors.pastelRed,
+                                              text: language.buttonDelete,
+                                              fontText: AppFonts.medium16Height24WhiteTextStyle,
+                                              onTap: () {
+                                                setState(() {
+                                                  vm.deleteIngredient(vm.ingredients[index].i);
+                                                });
+                                              },
                                             ),
-                                            Flexible(
-                                              child: Text(
-                                                vm.ingredients[index].name ?? 'Not name',
-                                                style: AppFonts.mediumBlack70ShadowTextStyle,
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
+                                          ),
+                                          child: SizedBox(
+                                            height: baseHeightOfIngredientElement,
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  margin: const EdgeInsets.fromLTRB(
+                                                    22.0,
+                                                    5.0,
+                                                    4.0,
+                                                    5.0,
+                                                  ),
+                                                  child: vm.ingredients[index].image == null
+                                                      ? Image.asset(ImageAssets.chefYellow)
+                                                      : Image.network(
+                                                          vm.ingredients[index].image,
+                                                          errorBuilder: (BuildContext _, Object __, StackTrace ___) {
+                                                            return Image.asset(ImageAssets.chefYellow);
+                                                          },
+                                                        ),
+                                                ),
+                                                Flexible(
+                                                  child: Text(
+                                                    vm.ingredients[index].name ?? 'Not name',
+                                                    style: AppFonts.mediumBlack70ShadowTextStyle,
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Positioned(
+                                bottom: 0.0,
+                                child: Container(
+                                  width: stackWidth,
+                                  padding: const EdgeInsets.only(
+                                    bottom: 82.0,
+                                    left: 22.0,
+                                    right: 22.0,
+                                  ),
+                                  child: GlobalButton(
+                                    key: Key('MainPageGlobalButton'),
+                                    height: 56.0,
+                                    text: language.buttonWatchRecipes,
+                                    fontText: AppFonts.normalMediumTextStyle,
+                                    gradient: AppGradient.wheatMarigoldGradient,
+                                    onTap: () {
+                                      //vm.toRecipePage();
+                                      StoreProvider.of<AppState>(storeConnectorContext).dispatch(
+                                        NavigatePushNamedAction(
+                                          route: AppRoutes.recipes,
                                         ),
-                                      ),
-                                    );
-                                  },
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
                             ],
@@ -283,6 +318,9 @@ class _MainPageState extends State<MainPage> {
                                                   ? Image.asset(ImageAssets.chefYellow)
                                                   : Image.network(
                                                       tempIngredients[index].image,
+                                                      errorBuilder: (BuildContext _, Object __, StackTrace ___) {
+                                                        return Image.asset(ImageAssets.chefYellow);
+                                                      },
                                                     ),
                                             ),
                                             Flexible(

@@ -6,6 +6,7 @@ import 'package:yellow_team_fridge/ui/pages/favourites_page/favourites_page.dart
 import 'package:yellow_team_fridge/ui/pages/main_page/main_page.dart';
 import 'package:yellow_team_fridge/ui/pages/notification_page/notification_page.dart';
 import 'package:yellow_team_fridge/ui/pages/on_boarding_screen/on_boarding_screen.dart';
+import 'package:yellow_team_fridge/ui/pages/recipes_page/recipes_page.dart';
 import 'package:yellow_team_fridge/ui/pages/settings_page/settings_page.dart';
 
 class RouteService {
@@ -62,6 +63,11 @@ class RouteService {
         return _defaultRoute(
           settings: null,
           page: OnBoardingScreen(),
+        );
+      case AppRoutes.recipes:
+        return _defaultRoute(
+          settings: settings,
+          page: RecipesPage(),
         );
       default:
         return _defaultRoute(
