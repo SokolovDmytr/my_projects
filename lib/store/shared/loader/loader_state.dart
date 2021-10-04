@@ -49,8 +49,9 @@ class LoaderState {
   }
 
   LoaderState _stopLoadIndicator(StopLoadingAction action) {
+    List<ILoader> list = loaders..removeWhere((element) => element.loaderKey == action.loaderKey);
     return LoaderState(
-      loaders: loaders..removeWhere((element) => element.loaderKey == action.loaderKey),
+      loaders: list,
     );
   }
 }

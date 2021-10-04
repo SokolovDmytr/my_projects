@@ -150,7 +150,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 2.0),
       height: 20.0,
-      width: 85.0,
+      width: 80.0,
       child: Row(
         textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
         mainAxisSize: MainAxisSize.min,

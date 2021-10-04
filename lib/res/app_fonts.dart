@@ -175,6 +175,14 @@ class AppFonts {
     );
   }
 
+  static TextStyle get smallPaselRedTextStyle {
+    return GoogleFonts.roboto(
+      fontSize: 12.0,
+      color: AppColors.pastelRed,
+      fontWeight: FontWeight.w400,
+    );
+  }
+
   static TextStyle get smallTextStyleOpacity {
     return GoogleFonts.roboto(
       fontSize: 12.0,

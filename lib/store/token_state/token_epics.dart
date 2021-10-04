@@ -1,6 +1,5 @@
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:yellow_team_fridge/models/pages/ingredient.dart';
 import 'package:yellow_team_fridge/models/pages/token.dart';
 import 'package:yellow_team_fridge/services/network_service/models/base_http_response.dart';
 import 'package:yellow_team_fridge/services/network_service/network_service.dart';

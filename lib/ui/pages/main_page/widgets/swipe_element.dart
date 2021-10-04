@@ -43,8 +43,8 @@ class _SwipeElementState extends State<SwipeElement> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
-    double maxSwipeDistance = width / 3;
-    double partOfMaxSwipeDistance = 0.05 * maxSwipeDistance;
+    final double maxSwipeDistance = width / 3;
+    final double partOfMaxSwipeDistance = 0.05 * maxSwipeDistance;
 
     return AnimatedBuilder(
       animation: _closeAnimation,
@@ -59,7 +59,7 @@ class _SwipeElementState extends State<SwipeElement> with TickerProviderStateMix
                 child: Container(
                   decoration: BoxDecoration(
                     color: AppColors.white,
-                    borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: widget._valueOfMove < 8.0 ? BorderRadius.circular(0.0) : BorderRadius.circular(8.0),
                   ),
                   width: width,
                   child: widget.child,
@@ -71,7 +71,7 @@ class _SwipeElementState extends State<SwipeElement> with TickerProviderStateMix
             widget._startPosition = position.position.dx;
           },
           onPointerUp: (_) {
-            if (widget._needAnimation && !_closeController.isCompleted) {
+            if (widget._needAnimation) {
               if(widget._valueOfMove < maxSwipeDistance - partOfMaxSwipeDistance){
                 _closeController.reverse();
 
@@ -83,7 +83,7 @@ class _SwipeElementState extends State<SwipeElement> with TickerProviderStateMix
             }
           },
           onPointerMove: (position) {
-            double distance = position.position.dx - widget._startPosition;
+            final double distance = position.position.dx - widget._startPosition;
 
             if(distance < 0.0){
               return;

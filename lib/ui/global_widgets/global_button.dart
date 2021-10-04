@@ -62,10 +62,10 @@ class _GlobalButtonState extends State<GlobalButton> {
             ),
             Container(
               width: widget.padding == null
-                  ? 0.0
-                  : widget.borderColor == null
+                  ? widget.borderColor == null
                       ? widget.width
-                      : widget.width - 2.0,
+                      : widget.width - 2.0
+                  : widget.width,
               height: widget.borderColor == null ? widget.height : widget.height - 2.0,
               decoration: BoxDecoration(
                 color: widget.color,
@@ -81,8 +81,10 @@ class _GlobalButtonState extends State<GlobalButton> {
                       : Container(
                           width: 20.0,
                           height: 20.0,
-                          margin: EdgeInsets.only(right: FlutterDictionary.instance.isRTL ? 0.0 : 50.0,
-                          left: FlutterDictionary.instance.isRTL ? 50.0 : 0.0,),
+                          margin: EdgeInsets.only(
+                            right: FlutterDictionary.instance.isRTL ? 0.0 : 50.0,
+                            left: FlutterDictionary.instance.isRTL ? 50.0 : 0.0,
+                          ),
                           child: widget.icon,
                         ),
                   Flexible(

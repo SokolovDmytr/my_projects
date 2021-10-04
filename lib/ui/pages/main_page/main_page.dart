@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:yellow_team_fridge/dictionary/data/en.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/main_page_language.dart';
-import 'package:yellow_team_fridge/dictionary/flutter_delegate.dart';
 import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/models/pages/ingredient.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
@@ -35,7 +34,7 @@ class _MainPageState extends State<MainPage> {
   OverlayEntry _overlayEntry;
   BuildContext _textFieldContext;
   TextEditingController _textEditingController;
-  String _textFromTextField;
+  String _textFromSearchTextField = emptyString;
 
   @override
   void initState() {
@@ -48,10 +47,6 @@ class _MainPageState extends State<MainPage> {
         _overlayEntry = _createOverlayList();
         Overlay.of(context).insert(_overlayEntry);
       } else {
-        print('no focus');
-        HomePageSelector.clearTempIngredientList(
-          store: StoreProvider.of<AppState>(context),
-        );
         _overlayEntry.remove();
       }
     });
@@ -90,11 +85,18 @@ class _MainPageState extends State<MainPage> {
                       needPrefix: true,
                       needShowButton: false,
                       onChanged: (String text) {
+                        _textFromSearchTextField = text.trim();
                         if (text.trim().isNotEmpty) {
                           HomePageSelector.getIngredientsWithName(
                             store: StoreProvider.of<AppState>(context),
                             name: text.trim(),
                           );
+                        } else {
+                          if (StoreProvider.of<AppState>(context).state.homePageState.tempIngredients.isNotEmpty) {
+                            HomePageSelector.clearTempIngredientList(
+                              store: StoreProvider.of<AppState>(context),
+                            );
+                          }
                         }
                       },
                     );
@@ -113,66 +115,89 @@ class _MainPageState extends State<MainPage> {
                             margin: const EdgeInsets.fromLTRB(52.0, 30.0, 52.0, 80.0),
                             child: Image.asset(ImageAssets.favoriteChefArrow),
                           )
-                        : ListView.separated(
-                            itemCount: vm.ingredients.length,
-                            separatorBuilder: (BuildContext _, int index) {
-                              return Container(
-                                margin: const EdgeInsets.symmetric(vertical: 1.0),
-                                child: Divider(
-                                  color: AppColors.black.withOpacity(0.5),
-                                  height: 0.5,
-                                ),
-                              );
-                            },
-                            itemBuilder: (BuildContext __, int index) {
-                              return SwipeElement(
-                                background: Container(
-                                  height: baseHeightOfIngredientElement,
-                                  color: AppColors.pastelRed,
-                                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                                  child: GlobalButton(
-                                    key: Key('GlobalButtonDelete'),
-                                    width: 70.0,
-                                    height: 35.0,
-                                    text: language.buttonDelete,
-                                    fontText: AppFonts.medium16Height24WhiteTextStyle,
-                                    onTap: (){
-                                      setState(() {
-                                        vm.deleteIngredient(vm.ingredients[index].i);
-                                      });
-                                    },
-                                  )
-                                ),
-                                child: SizedBox(
-                                  height: baseHeightOfIngredientElement,
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        margin: const EdgeInsets.fromLTRB(
-                                          22.0,
-                                          5.0,
-                                          4.0,
-                                          5.0,
-                                        ),
-                                        child: vm.ingredients[index].image == null
-                                            ? Image.asset(ImageAssets.chefYellow)
-                                            : Image.network(
-                                                vm.ingredients[index].image,
-                                              ),
-                                      ),
-                                      Flexible(
-                                        child: Text(
-                                          vm.ingredients[index].name ?? 'Not name',
-                                          style: AppFonts.mediumBlack70ShadowTextStyle,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
+                        : Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              InkWell(
+                                child: Container(
+                                  margin: const EdgeInsets.only(top: 25.0, bottom: 4.0),
+                                  alignment: FlutterDictionary.instance.isRTL ? Alignment.centerLeft : Alignment.centerRight,
+                                  child: Text(
+                                    language.clearAll,
+                                    style: AppFonts.smallPaselRedTextStyle,
                                   ),
                                 ),
-                              );
-                            },
+                                onTap: () {
+                                  vm.clearIngredients();
+                                },
+                              ),
+                              Expanded(
+                                child: ListView.separated(
+                                  itemCount: vm.ingredients.length,
+                                  separatorBuilder: (BuildContext _, int index) {
+                                    return Container(
+                                      margin: const EdgeInsets.symmetric(vertical: 1.0),
+                                      child: Divider(
+                                        color: AppColors.black.withOpacity(0.5),
+                                        height: 0.5,
+                                      ),
+                                    );
+                                  },
+                                  itemBuilder: (BuildContext __, int index) {
+                                    return SwipeElement(
+                                      background: Container(
+                                          height: baseHeightOfIngredientElement,
+                                          color: AppColors.pastelRed,
+                                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                          child: GlobalButton(
+                                            key: Key('GlobalButtonDelete'),
+                                            width: 70.0,
+                                            height: 45.0,
+                                            color: AppColors.pastelRed,
+                                            text: language.buttonDelete,
+                                            fontText: AppFonts.medium16Height24WhiteTextStyle,
+                                            onTap: () {
+                                              setState(() {
+                                                vm.deleteIngredient(vm.ingredients[index].i);
+                                              });
+                                            },
+                                          )),
+                                      child: SizedBox(
+                                        height: baseHeightOfIngredientElement,
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              margin: const EdgeInsets.fromLTRB(
+                                                22.0,
+                                                5.0,
+                                                4.0,
+                                                5.0,
+                                              ),
+                                              child: vm.ingredients[index].image == null
+                                                  ? Image.asset(ImageAssets.chefYellow)
+                                                  : Image.network(
+                                                      vm.ingredients[index].image,
+                                                      errorBuilder: (BuildContext _, Object __, StackTrace ___) {
+                                                        return Image.asset(ImageAssets.chefYellow);
+                                                      },
+                                                    ),
+                                            ),
+                                            Flexible(
+                                              child: Text(
+                                                vm.ingredients[index].name ?? 'Not name',
+                                                style: AppFonts.mediumBlack70ShadowTextStyle,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
                           );
                   },
                 ),
@@ -185,7 +210,8 @@ class _MainPageState extends State<MainPage> {
   }
 
   OverlayEntry _createOverlayList() {
-    print('++');
+    final MainPageLanguage language = FlutterDictionary.instance.language?.mainPageLanguage ?? en.mainPageLanguage;
+
     final RenderBox renderBox = _textFieldContext.findRenderObject();
     final Size size = renderBox.size;
     final Offset offset = renderBox.localToGlobal(Offset.zero);
@@ -200,14 +226,18 @@ class _MainPageState extends State<MainPage> {
             BuildContext ctx,
           ) {
             final List<Ingredient> tempIngredients = StoreProvider.of<AppState>(ctx, listen: true).state.homePageState.tempIngredients;
-            final double containerHeight = tempIngredients.length > 3 ? 195.0 : baseHeightOfIngredientElement * tempIngredients.length * 1.25;
+            final double containerHeight = tempIngredients.length > 3
+                ? 195.0
+                : tempIngredients.isEmpty
+                    ? baseHeightOfIngredientElement
+                    : baseHeightOfIngredientElement * tempIngredients.length * 1.25;
             final OverlayContainerClipper clipper = OverlayContainerClipper(
               borderRadius: 8.0,
               triangleHeight: 15.0,
               triangleWidth: 8.0,
             );
 
-            return tempIngredients.isEmpty
+            return _textFromSearchTextField.isEmpty
                 ? const SizedBox()
                 : CustomPaint(
                     painter: ClipShadowShadowPainter(
@@ -219,53 +249,62 @@ class _MainPageState extends State<MainPage> {
                       child: Material(
                         child: SizedBox(
                           height: containerHeight,
-                          child: ListView.separated(
-                            itemCount: tempIngredients.length,
-                            separatorBuilder: (BuildContext _, int index) {
-                              return Divider(
-                                color: AppColors.black.withOpacity(0.5),
-                                height: 0.5,
-                              );
-                            },
-                            itemBuilder: (BuildContext _, int index) {
-                              return InkWell(
-                                child: SizedBox(
-                                  height: baseHeightOfIngredientElement,
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        margin: const EdgeInsets.fromLTRB(
-                                          22.0,
-                                          5.0,
-                                          4.0,
-                                          5.0,
-                                        ),
-                                        child: tempIngredients[index].image == null
-                                            ? Image.asset(ImageAssets.chefYellow)
-                                            : Image.network(
-                                                tempIngredients[index].image,
-                                              ),
-                                      ),
-                                      Flexible(
-                                        child: Text(
-                                          tempIngredients[index].name ?? 'Not name',
-                                          style: AppFonts.mediumBlack70TextStyle,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
+                          child: tempIngredients.isEmpty
+                              ? Container(
+                                  alignment: FlutterDictionary.instance.isRTL ? Alignment.centerRight : Alignment.centerLeft,
+                                  margin: const EdgeInsets.symmetric(horizontal: 22.0),
+                                  child: Text(
+                                    language.notFound,
+                                    style: AppFonts.mediumBlack70TextStyle,
                                   ),
+                                )
+                              : ListView.separated(
+                                  itemCount: tempIngredients.length,
+                                  separatorBuilder: (BuildContext _, int index) {
+                                    return Divider(
+                                      color: AppColors.black.withOpacity(0.5),
+                                      height: 0.5,
+                                    );
+                                  },
+                                  itemBuilder: (BuildContext _, int index) {
+                                    return InkWell(
+                                      child: SizedBox(
+                                        height: baseHeightOfIngredientElement,
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              margin: const EdgeInsets.fromLTRB(
+                                                22.0,
+                                                5.0,
+                                                4.0,
+                                                5.0,
+                                              ),
+                                              child: tempIngredients[index].image == null
+                                                  ? Image.asset(ImageAssets.chefYellow)
+                                                  : Image.network(
+                                                      tempIngredients[index].image,
+                                                    ),
+                                            ),
+                                            Flexible(
+                                              child: Text(
+                                                tempIngredients[index].name ?? 'Not name',
+                                                style: AppFonts.mediumBlack70TextStyle,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        HomePageSelector.addIngredient(
+                                          store: StoreProvider.of<AppState>(context),
+                                          ingredient: tempIngredients[index],
+                                        );
+                                      },
+                                    );
+                                  },
                                 ),
-                                onTap: () {
-                                  HomePageSelector.addIngredient(
-                                    store: StoreProvider.of<AppState>(context),
-                                    ingredient: tempIngredients[index],
-                                  );
-                                },
-                              );
-                            },
-                          ),
                         ),
                       ),
                     ),
