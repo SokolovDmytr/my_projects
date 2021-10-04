@@ -35,4 +35,15 @@ class AppGradient {
       ],
     );
   }
+
+  static LinearGradient get white {
+    return LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        AppColors.white,
+        AppColors.white,
+      ],
+    );
+  }
 }

@@ -27,7 +27,8 @@ class SettingsPage extends StatelessWidget {
       converter: LanguageViewModel.init,
       builder: (BuildContext context, LanguageViewModel vm) {
         final SettingsPageLanguage _language =
-            FlutterDictionary.instance.language?.settingsPageLanguage ?? en.settingsPageLanguage;
+            FlutterDictionary.instance.language?.settingsPageLanguage ??
+                en.settingsPageLanguage;
         return MainLayout(
           appBarType: AppBarType.simple,
           isMainStyleAppBar: true,
@@ -45,7 +46,8 @@ class SettingsPage extends StatelessWidget {
                 NotificationBlock(),
                 DescriptionBlock(),
                 InkWell(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => AuthPage())),
+                  onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => AuthPage())),
                   child: Container(
                     color: AppColors.black,
                     height: 100.0,
@@ -53,14 +55,14 @@ class SettingsPage extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ScreenRecipesPage())),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ScreenRecipePage())),
                   child: Container(
                     color: AppColors.red,
                     height: 100.0,
                     width: 200.0,
                   ),
                 ),
-                CongratulationBlock(),
               ],
             ),
           ),

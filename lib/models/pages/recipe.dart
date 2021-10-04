@@ -9,6 +9,7 @@ class Recipe {
   final int time;
   final String level;
   final List<Ingredient> ingredients;
+  final List<String> steps;
 
   const Recipe({
     @required this.i,
@@ -18,5 +19,6 @@ class Recipe {
     @required this.time,
     @required this.level,
     @required this.ingredients,
+    @required this.steps,
   });
 }

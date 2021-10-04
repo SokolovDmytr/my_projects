@@ -21,7 +21,7 @@ class ImageAssets {
   static const String pot = 'assets/png/pot.png';
   static const String splashScreenFridge = 'assets/png/splash_screen_fridge.png';
   static const String tutorial = 'assets/png/swipe_tutorial.png';
-  static const String addToFavoriteIcon = 'assets/png/add_to_favorite.png';
+  static const String addToFavoriteIcon = 'assets/png/add_to_favorites.png';
   static const String bonAppetitLogo = 'assets/png/bon_appetit1.png';
   static const String caloriesIcon = 'assets/png/calories.png';
   static const String favoritesIcon = 'assets/png/favorites.png';
