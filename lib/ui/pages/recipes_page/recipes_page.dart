@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
 import 'package:yellow_team_fridge/res/const.dart';
 import 'package:yellow_team_fridge/services/route_service/app_routes.dart';
@@ -21,9 +22,9 @@ class _RecipesPageState extends State<RecipesPage> {
       onInitialBuild: (RecipesPageViewModel vm) => vm.fetchData(),
       builder: (BuildContext context, RecipesPageViewModel vm){
         return MainLayout(
-          appBarType: AppBarType.screenRecipe,
-          gradient: AppGradient.marigoldWheatGradient,
-          isMainStyleAppBar: false,
+          appBarType: AppBarType.simple,
+          isMainStyleAppBar: true,
+          color: AppColors.wheat,
           currentPage: AppRoutes.recipes,
           key: UniqueKey(),
           body: ListView.builder(
@@ -31,8 +32,6 @@ class _RecipesPageState extends State<RecipesPage> {
             itemBuilder: (BuildContext _, int index) {
               return RecipeElement(
                 recipe: vm.recipes[index],
-                openCard: (String){},
-                isOpen: false,
               );
             },
           ),

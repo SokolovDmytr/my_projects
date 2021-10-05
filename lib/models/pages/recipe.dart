@@ -9,8 +9,10 @@ class Recipe {
   final int time;
   final String level;
   final List<Ingredient> ingredients;
+  final List<String> steps;
+  bool isFavorite = false;
 
-  const Recipe({
+  Recipe({
     @required this.i,
     @required this.name,
     @required this.image,
@@ -18,5 +20,6 @@ class Recipe {
     @required this.time,
     @required this.level,
     @required this.ingredients,
+    @required this.steps,
   });
 }

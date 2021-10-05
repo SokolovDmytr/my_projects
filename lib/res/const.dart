@@ -27,6 +27,8 @@ const String createByLink = 'https://appvesto.com/';
 const String title = 'My catalog';
 const String exampleId = '1234';
 const String emptyString = '';
+const String spaceString = ' ';
+const String colonString = ':';
 const String questionMark = '?';
 const String coma = ',';
 
