@@ -9,12 +9,15 @@ import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
 import 'package:yellow_team_fridge/res/image_assets.dart';
 import 'package:yellow_team_fridge/ui/pages/screen_recipe_page/widgets/congratulation_block.dart';
 import 'package:yellow_team_fridge/ui/pages/screen_recipe_page/widgets/cooking_block.dart';
+import 'package:yellow_team_fridge/ui/pages/screen_recipe_page/widgets/similar_recipes_block.dart';
 
 class ScreenRecipePage extends StatefulWidget {
   final Recipe recipe;
+  final List<Recipe> listRecipes;
 
   const ScreenRecipePage({
     this.recipe,
+    this.listRecipes,
     Key key,
   }) : super(key: key);
 
@@ -101,7 +104,7 @@ class _ScreenRecipePageState extends State<ScreenRecipePage>
                       ),
                       Positioned(
                         child: Container(
-                          height: 12.0,
+                          height: 13.0,
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                             color: AppColors.white,
@@ -133,6 +136,7 @@ class _ScreenRecipePageState extends State<ScreenRecipePage>
                     child: Column(
                       children: [
                         CookingBlock(recipe: widget.recipe),
+                        SimilarRecipesBlock(listRecipes: widget.listRecipes),
                         CongratulationBlock(),
                         CongratulationBlock(),
                         CongratulationBlock(),

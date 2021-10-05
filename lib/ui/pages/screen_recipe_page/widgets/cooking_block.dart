@@ -13,6 +13,13 @@ class CookingBlock extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: _buildSteps(),
+    );
+  }
+
   List<Widget> _buildSteps() {
     List<Widget> steps = [
       Row(
@@ -70,12 +77,5 @@ class CookingBlock extends StatelessWidget {
       );
     }
     return steps;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: _buildSteps(),
-    );
   }
 }
