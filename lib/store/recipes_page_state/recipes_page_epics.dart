@@ -5,32 +5,33 @@ import 'package:yellow_team_fridge/models/pages/recipe.dart';
 import 'package:yellow_team_fridge/services/network_service/models/base_http_response.dart';
 import 'package:yellow_team_fridge/services/network_service/network_service.dart';
 import 'package:yellow_team_fridge/services/network_service/res/consts.dart';
-import 'package:yellow_team_fridge/services/network_service/res/request_params/get_favorites_params.dart';
+import 'package:yellow_team_fridge/services/network_service/res/request_params/get_recipe_params.dart';
 import 'package:yellow_team_fridge/services/network_service/shared/fridge_parser.dart';
 import 'package:yellow_team_fridge/services/user_information_service/user_information_service.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
-import 'package:yellow_team_fridge/store/favorite_state/action/get_favorite_recipe_action.dart';
-import 'package:yellow_team_fridge/store/favorite_state/action/save_favorite_recipe_action.dart';
+import 'package:yellow_team_fridge/store/recipes_page_state/actions/get_recipes_with_ingredients_action.dart';
+import 'package:yellow_team_fridge/store/recipes_page_state/actions/save_recipe_list_action.dart';
 
-class FavoriteEpics {
+class RecipesPageEpics {
   static final indexEpic = combineEpics<AppState>([
-    getFavoriteRecipeEpic,
+    getRecipes,
   ]);
 
-  static Stream<dynamic> getFavoriteRecipeEpic(
+  static Stream<dynamic> getRecipes(
     Stream<dynamic> actions,
     EpicStore<AppState> store,
   ) {
-    return actions.whereType<GetFavoriteRecipeAction>().switchMap(
+    return actions.whereType<GetRecipesWithIngredientsAction>().switchMap(
       (action) async* {
         final String token = await UserInformationService.instance.getToken();
 
         NetworkService.instance.init(baseUrl: baseUrl);
         final BaseHttpResponse response = await NetworkService.instance.requestWithParams(
           type: HttpType.httpGet,
-          route: HttpRoute.getFavorite,
-          parameter: GetFavoritesParams(
+          route: HttpRoute.getRecipe,
+          parameter: GetRecipeParams(
             token: token,
+            idList: action.ids,
             locale: FlutterDictionaryDelegate.getCurrentLocale,
           ),
         );
@@ -41,7 +42,7 @@ class FavoriteEpics {
             response: response,
           );
 
-          yield SaveFavoriteRecipeAction(
+          yield SaveRecipeListAction(
             recipes: recipes,
           );
         }

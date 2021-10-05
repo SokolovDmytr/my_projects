@@ -19,6 +19,7 @@ class GlobalTextField extends StatefulWidget {
   final FocusNode focusNode;
   final Function onSubmitted;
 final TextInputAction textInputAction;
+  final Function(String text) onChanged;
 
   const GlobalTextField({
     @required this.needSuffix,
@@ -32,6 +33,7 @@ final TextInputAction textInputAction;
     this.focusNode,
     this.onSubmitted,
     this.textInputAction,
+    this.onChanged,
     Key key,
   }) : super(key: key);
 
@@ -54,12 +56,10 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
       ),
       child: TextFormField(
         onFieldSubmitted: widget.onSubmitted,
-        // autofocus: true,
-        focusNode: widget.focusNode,
         controller: widget.controller,
-        // textInputAction: widget.textInputAction,
+        focusNode: widget.focusNode ?? FocusNode(),
+        onChanged: widget.onChanged,
         decoration: InputDecoration(
-          // isCollapsed: true,
           isDense: true,
           prefixIconConstraints: BoxConstraints(
             maxHeight: widget.needPrefix ? 18.0 : 0.0,

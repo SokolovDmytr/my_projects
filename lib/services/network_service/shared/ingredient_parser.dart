@@ -11,7 +11,7 @@ class IngredientParser {
       try {
         for (var item in data) {
           ingredients.add(
-            Ingredient(i: item['i'], description: item['count'], count: item['description']),
+            Ingredient(i: item['i'], id: int.parse(item['i']), description: item['count'], count: item['description']),
           );
         }
       } catch (error) {
@@ -32,6 +32,7 @@ class IngredientParser {
         ingredients.add(
           Ingredient(
             id: item['i'],
+            i: item['i'].toString(),
             name: item['name'],
             image: item['image'],
           ),

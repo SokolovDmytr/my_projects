@@ -7,6 +7,7 @@ import 'package:yellow_team_fridge/services/network_service/network_service.dart
 import 'package:yellow_team_fridge/services/network_service/res/consts.dart';
 import 'package:yellow_team_fridge/services/network_service/res/request_params/get_ingredients_params.dart';
 import 'package:yellow_team_fridge/services/network_service/shared/fridge_parser.dart';
+import 'package:yellow_team_fridge/services/user_information_service/user_information_service.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
 import 'package:yellow_team_fridge/store/home_page_state/action/get_ingredients_with_string_action.dart';
 import 'package:yellow_team_fridge/store/home_page_state/action/save_temp_ingredients_action.dart';
@@ -22,12 +23,15 @@ class HomePageEpics {
   ) {
     return actions.whereType<GetIngredientsWithStringAction>().switchMap(
       (action) async* {
+
+        final String token = await UserInformationService.instance.getToken();
+
         NetworkService.instance.init(baseUrl: baseUrl);
         final BaseHttpResponse response = await NetworkService.instance.requestWithParams(
           type: HttpType.httpGet,
           route: HttpRoute.getIngredients,
           parameter: GetIngredientsParams(
-            token: tmp_token,
+            token: token,
             locale: FlutterDictionaryDelegate.getCurrentLocale,
             str: action.name,
           ),

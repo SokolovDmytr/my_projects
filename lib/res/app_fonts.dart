@@ -90,6 +90,15 @@ class AppFonts {
     );
   }
 
+  static TextStyle get mediumBlack70ShadowTextStyle {
+    return GoogleFonts.roboto(
+      fontSize: 20.0,
+      color: AppColors.black.withOpacity(0.7),
+      fontWeight: FontWeight.w400,
+      shadows: AppShadows.shadowText(color: AppColors.black30),
+    );
+  }
+
   static TextStyle get mediumShadowBlackTextStyle {
     return GoogleFonts.roboto(
       fontSize: 20.0,
@@ -162,6 +171,14 @@ class AppFonts {
     return GoogleFonts.roboto(
       fontSize: 12.0,
       color: AppColors.blackTwo,
+      fontWeight: FontWeight.w400,
+    );
+  }
+
+  static TextStyle get smallPaselRedTextStyle {
+    return GoogleFonts.roboto(
+      fontSize: 12.0,
+      color: AppColors.pastelRed,
       fontWeight: FontWeight.w400,
     );
   }
