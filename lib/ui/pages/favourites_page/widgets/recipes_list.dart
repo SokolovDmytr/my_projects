@@ -17,8 +17,15 @@ class RecipesList extends StatelessWidget {
           itemCount: viewModel.recipes.length,
           itemBuilder: (BuildContext _, int index) {
             viewModel.recipes[index].isFavorite = true;
-            return RecipeElement(
-              recipe: viewModel.recipes[index],
+            return InkWell(
+              onTap: () {
+                viewModel.saveRecipe(viewModel.recipes[index]);
+                viewModel.saveRecipes(viewModel.recipes, viewModel.recipes[index]);
+                viewModel.goToScreenRecipePage();
+              },
+              child: RecipeElement(
+                recipe: viewModel.recipes[index],
+              ),
             );
           },
         );

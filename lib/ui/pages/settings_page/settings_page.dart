@@ -11,6 +11,8 @@ import 'package:yellow_team_fridge/store/application/app_state.dart';
 import 'package:yellow_team_fridge/store/language_state/language_vm.dart';
 import 'package:yellow_team_fridge/ui/layouts/pages_layout/pages_layout.dart';
 import 'package:yellow_team_fridge/ui/pages/auth_page/auth_page.dart';
+import 'package:yellow_team_fridge/ui/pages/screen_recipe_page/screen_recipe_page.dart';
+import 'package:yellow_team_fridge/ui/pages/screen_recipe_page/widgets/congratulation_block.dart';
 import 'package:yellow_team_fridge/ui/pages/settings_page/widgets/description_block.dart';
 import 'package:yellow_team_fridge/ui/pages/settings_page/widgets/language_block.dart';
 import 'package:yellow_team_fridge/ui/pages/settings_page/widgets/log_out_block.dart';
@@ -25,7 +27,8 @@ class SettingsPage extends StatelessWidget {
       converter: LanguageViewModel.init,
       builder: (BuildContext context, LanguageViewModel vm) {
         final SettingsPageLanguage _language =
-            FlutterDictionary.instance.language?.settingsPageLanguage ?? en.settingsPageLanguage;
+            FlutterDictionary.instance.language?.settingsPageLanguage ??
+                en.settingsPageLanguage;
         return MainLayout(
           appBarType: AppBarType.simple,
           isMainStyleAppBar: true,
@@ -43,9 +46,19 @@ class SettingsPage extends StatelessWidget {
                 NotificationBlock(),
                 DescriptionBlock(),
                 InkWell(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => AuthPage())),
+                  onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => AuthPage())),
                   child: Container(
                     color: AppColors.black,
+                    height: 100.0,
+                    width: 200.0,
+                  ),
+                ),
+                InkWell(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ScreenRecipePage())),
+                  child: Container(
+                    color: AppColors.red,
                     height: 100.0,
                     width: 200.0,
                   ),

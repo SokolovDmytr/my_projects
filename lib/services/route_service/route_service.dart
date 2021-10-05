@@ -7,6 +7,7 @@ import 'package:yellow_team_fridge/ui/pages/main_page/main_page.dart';
 import 'package:yellow_team_fridge/ui/pages/notification_page/notification_page.dart';
 import 'package:yellow_team_fridge/ui/pages/on_boarding_screen/on_boarding_screen.dart';
 import 'package:yellow_team_fridge/ui/pages/recipes_page/recipes_page.dart';
+import 'package:yellow_team_fridge/ui/pages/screen_recipe_page/screen_recipe_page.dart';
 import 'package:yellow_team_fridge/ui/pages/settings_page/settings_page.dart';
 
 class RouteService {
@@ -22,16 +23,25 @@ class RouteService {
   final navigatorKey = GlobalKey<NavigatorState>();
 
   String getCurrentRoute() {
-    return (StoreProvider.of(navigatorKey.currentContext).state as AppState).routeState.routes.last;
+    return (StoreProvider.of(navigatorKey.currentContext).state as AppState)
+        .routeState
+        .routes
+        .last;
   }
 
   String getPrevRoute() {
-    final int length = (StoreProvider.of(navigatorKey.currentContext).state as AppState).routeState.routes.length;
+    final int length =
+        (StoreProvider.of(navigatorKey.currentContext).state as AppState)
+            .routeState
+            .routes
+            .length;
     if (length == 1) {
       return null;
     }
 
-    return (StoreProvider.of(navigatorKey.currentContext).state as AppState).routeState.routes[length - 2];
+    return (StoreProvider.of(navigatorKey.currentContext).state as AppState)
+        .routeState
+        .routes[length - 2];
   }
 
   // endregion
@@ -68,6 +78,11 @@ class RouteService {
         return _defaultRoute(
           settings: settings,
           page: RecipesPage(),
+        );
+      case AppRoutes.screenRecipePage:
+        return _defaultRoute(
+          settings: settings,
+          page: ScreenRecipePage(),
         );
       default:
         return _defaultRoute(

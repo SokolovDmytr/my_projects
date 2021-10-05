@@ -34,7 +34,8 @@ class _CustomSwitchState extends State<CustomSwitch> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    final AuthenticationPageLanguage _language = FlutterDictionary.instance.language?.authenticationPageLanguage ?? en.authenticationPageLanguage;
+    final AuthenticationPageLanguage _language =
+        FlutterDictionary.instance.language?.authenticationPageLanguage ?? en.authenticationPageLanguage;
     return AnimatedBuilder(
       animation: _animationController,
       builder: (context, child) {
@@ -58,35 +59,43 @@ class _CustomSwitchState extends State<CustomSwitch> with SingleTickerProviderSt
                   ),
                   color: AppColors.whiteThree,
                 ),
-                child: Container(
-                  alignment: widget.value ? Alignment.centerRight : Alignment.centerLeft,
-                  padding: const EdgeInsets.only(right: 1.0, left: 1.0),
-                  child: Container(
-                    width: (MediaQuery.of(context).size.width - 32) / 2,
-                    height: 46.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100.0),
-                      color: AppColors.white,
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(right: 1.0, left: 1.0),
+                      child: Container(
+                        child: Align(
+                          child: Text(
+                            _language.signIn,
+                            style: widget.value ? AppFonts.size16MediumPinkishGrey : AppFonts.size16SemiBoldMarigold,
+                          ),
+                        ),
+                        width: (MediaQuery.of(context).size.width - 36) / 2,
+                        height: 46.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100.0),
+                          color: widget.value ? AppColors.transparent : AppColors.white,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 15.0,
-                bottom: 15.0,
-                left: 62.0,
-                child: Text(
-                  _language.signIn,
-                  style: widget.value ? AppFonts.size16MediumPinkishGrey : AppFonts.size16SemiBoldMarigold,
-                ),
-              ),
-              Positioned(
-                top: 15.0,
-                bottom: 15.0,
-                right: 62.0,
-                child: Text(
-                  _language.signUp,
-                  style: widget.value ? AppFonts.size16SemiBoldMarigold : AppFonts.size16MediumPinkishGrey,
+                    Container(
+                      padding: const EdgeInsets.only(right: 1.0, left: 1.0),
+                      child: Container(
+                        child: Align(
+                          child: Text(
+                            _language.signUp,
+                            style: widget.value ? AppFonts.size16SemiBoldMarigold : AppFonts.size16MediumPinkishGrey,
+                          ),
+                        ),
+                        width: (MediaQuery.of(context).size.width - 36) / 2,
+                        height: 46.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100.0),
+                          color: widget.value ? AppColors.white : AppColors.transparent,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

@@ -53,127 +53,123 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
     return AnimatedSize(
       duration: AppDuration.recipeOpenDuration,
       vsync: this,
-      child: InkWell(
-        onTap: () {},
-        child: Container(
-          height: _focusNode.hasFocus ? 250.0 : 130.0,
-          margin: const EdgeInsets.symmetric(vertical: 8.0),
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(10.0),
-            boxShadow: AppShadows.recipeElementShadow,
-            border: Border.all(
-              color: widget._missingIngredients.isEmpty ? AppColors.white : AppColors.pastelRed,
-            ),
+      child: Container(
+        height: _focusNode.hasFocus ? 250.0 : 130.0,
+        margin: const EdgeInsets.symmetric(vertical: 8.0),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(10.0),
+          boxShadow: AppShadows.recipeElementShadow,
+          border: Border.all(
+            color: widget._missingIngredients.isEmpty ? AppColors.white : AppColors.pastelRed,
           ),
-          child: _focusNode.hasFocus
-              ? Column(
-                  children: [
-                    _getImage(),
-                    Container(
-                      margin: const EdgeInsets.all(10.0),
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        language.youDoNotHave,
-                        style: AppFonts.smallPaselRed16TextStyle,
-                      ),
-                    ),
-                    Expanded(
-                      child: GridView.count(
-                        primary: false,
-                        padding: const EdgeInsets.all(10.0),
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        childAspectRatio: 3.0,
-                        crossAxisCount: 2,
-                        children: widget._missingIngredients.map((e) {
-                          return Container(
-                            child: Row(
-                              children: [
-                                Image.network(
-                                  e.image ?? 'https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png',
-                                  width: 32.0,
-                                  height: 32.0,
-                                  errorBuilder: (BuildContext _, Object __, StackTrace ___) {
-                                    return Icon(Icons.error);
-                                  },
-                                ),
-                                RichText(
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  text: TextSpan(text: e.name, style: AppFonts.smallBoldBlackTwoTextStyle, children: [
-                                    TextSpan(
-                                      text: colonString,
-                                      style: AppFonts.smallBoldBlackTwoTextStyle,
-                                    ),
-                                    TextSpan(
-                                      text: spaceString,
-                                      style: AppFonts.smallTextStyle,
-                                    ),
-                                    TextSpan(
-                                      text: e.description,
-                                      style: AppFonts.smallTextStyle,
-                                    ),
-                                  ]),
-                                ),
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ],
-                )
-              : Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _getImage(),
-                    Expanded(
-                      child: Container(
-                        margin: const EdgeInsets.fromLTRB(
-                          16.0,
-                          14.0,
-                          16.0,
-                          9.0,
+        ),
+        child: _focusNode.hasFocus
+            ? Column(
+          children: [
+            _getImage(),
+            Container(
+              margin: const EdgeInsets.all(10.0),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                language.youDoNotHave,
+                style: AppFonts.smallPaselRed16TextStyle,
+              ),
+            ),
+            Expanded(
+              child: GridView.count(
+                primary: false,
+                padding: const EdgeInsets.all(10.0),
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                childAspectRatio: 3.0,
+                crossAxisCount: 2,
+                children: widget._missingIngredients.map((e) {
+                  return Container(
+                    child: Row(
+                      children: [
+                        Image.network(
+                          e.image ?? 'https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png',
+                          width: 32.0,
+                          height: 32.0,
+                          errorBuilder: (BuildContext _, Object __, StackTrace ___) {
+                            return Icon(Icons.error);
+                          },
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              height: 46.0,
-                              margin: const EdgeInsets.only(bottom: 8.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Flexible(
-                                    child: RichText(
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                      text: TextSpan(
-                                        text: widget.recipe.name,
-                                        style: AppFonts.mediumShadowBlackTextStyle,
-                                      ),
-                                    ),
-                                  ),
-                                  widget.recipe.isFavorite
-                                      ? Icon(
-                                          Icons.favorite,
-                                          color: AppColors.pastelRed,
-                                          size: 22.0,
-                                        )
-                                      : const SizedBox(),
-                                ],
+                        RichText(
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          text: TextSpan(text: e.name, style: AppFonts.smallBoldBlackTwoTextStyle, children: [
+                            TextSpan(
+                              text: colonString,
+                              style: AppFonts.smallBoldBlackTwoTextStyle,
+                            ),
+                            TextSpan(
+                              text: spaceString,
+                              style: AppFonts.smallTextStyle,
+                            ),
+                            TextSpan(
+                              text: e.description,
+                              style: AppFonts.smallTextStyle,
+                            ),
+                          ]),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ],
+        )
+            : Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _getImage(),
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(
+                  16.0,
+                  14.0,
+                  16.0,
+                  9.0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 46.0,
+                      margin: const EdgeInsets.only(bottom: 8.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Flexible(
+                            child: RichText(
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              text: TextSpan(
+                                text: widget.recipe.name,
+                                style: AppFonts.mediumShadowBlackTextStyle,
                               ),
                             ),
-                            widget._missingIngredients.isEmpty ? _getParameterOfRecipeWidgetBock() : _geMissingIngredientsBock(),
-                          ],
-                        ),
+                          ),
+                          widget.recipe.isFavorite
+                              ? Icon(
+                            Icons.favorite,
+                            color: AppColors.pastelRed,
+                            size: 22.0,
+                          )
+                              : const SizedBox(),
+                        ],
                       ),
-                    )
+                    ),
+                    widget._missingIngredients.isEmpty ? _getParameterOfRecipeWidgetBock() : _geMissingIngredientsBock(),
                   ],
                 ),
+              ),
+            )
+          ],
         ),
       ),
     );

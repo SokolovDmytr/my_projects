@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:yellow_team_fridge/dictionary/data/en.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/authentication_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
@@ -15,8 +16,10 @@ class GlobalTextField extends StatefulWidget {
   final bool needSuffix;
   final EdgeInsets padding;
   final TextEditingController controller;
-  final Function(String text) onChanged;
   final FocusNode focusNode;
+  final Function onSubmitted;
+final TextInputAction textInputAction;
+  final Function(String text) onChanged;
 
   const GlobalTextField({
     @required this.needSuffix,
@@ -27,8 +30,10 @@ class GlobalTextField extends StatefulWidget {
     this.hintText,
     this.hintStyle,
     this.controller,
-    this.onChanged,
     this.focusNode,
+    this.onSubmitted,
+    this.textInputAction,
+    this.onChanged,
     Key key,
   }) : super(key: key);
 
@@ -50,11 +55,11 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: TextFormField(
+        onFieldSubmitted: widget.onSubmitted,
         controller: widget.controller,
         focusNode: widget.focusNode ?? FocusNode(),
         onChanged: widget.onChanged,
         decoration: InputDecoration(
-          // isCollapsed: true,
           isDense: true,
           prefixIconConstraints: BoxConstraints(
             maxHeight: widget.needPrefix ? 18.0 : 0.0,

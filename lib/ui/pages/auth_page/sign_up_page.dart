@@ -12,14 +12,45 @@ import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_textfield.dart';
 import 'package:yellow_team_fridge/ui/pages/auth_page/auth_page_vm.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
   const SignUpPage({Key key}) : super(key: key);
 
   @override
+  _SignUpPageState createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+  final FocusNode emailFocus = FocusNode();
+  final FocusNode passwordFocus = FocusNode();
+  final FocusNode confirmPasswordFocus = FocusNode();
+
+  @override
+  void initState() {
+    emailController.addListener(() {});
+    passwordController.addListener(() {});
+    confirmPasswordController.addListener(() {});
+    emailFocus.addListener(() {});
+    passwordFocus.addListener(() {});
+    confirmPasswordFocus.addListener(() {});
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    emailFocus.dispose();
+    passwordFocus.dispose();
+    confirmPasswordFocus.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
-    final TextEditingController confirmPasswordController = TextEditingController();
     final AuthenticationPageLanguage _language =
         FlutterDictionary.instance.language?.authenticationPageLanguage ?? en.authenticationPageLanguage;
     return StoreConnector<AppState, AuthPageViewModel>(
@@ -39,15 +70,14 @@ class SignUpPage extends StatelessWidget {
             needPrefix: false,
             needShowButton: false,
             controller: emailController,
-          ),
-          GlobalTextField(
-            padding: const EdgeInsets.only(top: 20.0),
-            hintText: _language.textFieldEmail,
-            hintStyle: AppFonts.size16RegPinkishGrey,
-            needSuffix: false,
-            needLoader: false,
-            needPrefix: true,
-            needShowButton: false,
+            focusNode: emailFocus,
+            onSubmitted: (_) {
+              if (passwordController.text.isEmpty) {
+                FocusScope.of(context).requestFocus(passwordFocus);
+              } else if (confirmPasswordController.text.isEmpty) {
+                FocusScope.of(context).requestFocus(confirmPasswordFocus);
+              }
+            },
           ),
           GlobalTextField(
             padding: const EdgeInsets.only(top: 16.0),
@@ -58,6 +88,14 @@ class SignUpPage extends StatelessWidget {
             needPrefix: false,
             needShowButton: true,
             controller: passwordController,
+            focusNode: passwordFocus,
+            onSubmitted: (_) {
+              if (confirmPasswordController.text.isEmpty) {
+                FocusScope.of(context).requestFocus(confirmPasswordFocus);
+              } else if (emailController.text.isEmpty) {
+                FocusScope.of(context).requestFocus(emailFocus);
+              }
+            },
           ),
           GlobalTextField(
             padding: const EdgeInsets.only(top: 16.0),
@@ -68,6 +106,14 @@ class SignUpPage extends StatelessWidget {
             needPrefix: false,
             needShowButton: true,
             controller: confirmPasswordController,
+            focusNode: confirmPasswordFocus,
+            onSubmitted: (_) {
+              if (emailController.text.isEmpty) {
+                FocusScope.of(context).requestFocus(emailFocus);
+              } else if (passwordController.text.isEmpty) {
+                FocusScope.of(context).requestFocus(passwordFocus);
+              }
+            },
           ),
           Container(
             padding: const EdgeInsets.only(top: 29.0),
@@ -96,6 +142,7 @@ class SignUpPage extends StatelessWidget {
           Container(
             padding: const EdgeInsets.only(right: 16.0, left: 16.0, top: 30.0),
             child: GlobalButton(
+              height: 56.0,
               key: Key('SignUp'),
               text: _language.signUp,
               fontText: AppFonts.normalMediumTextStyle,

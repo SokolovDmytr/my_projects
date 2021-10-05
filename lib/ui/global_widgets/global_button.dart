@@ -43,6 +43,7 @@ class _GlobalButtonState extends State<GlobalButton> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: widget.onTap,
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -96,7 +97,6 @@ class _GlobalButtonState extends State<GlobalButton> {
           ),
         ],
       ),
-      onTap: widget.onTap,
     );
   }
 }

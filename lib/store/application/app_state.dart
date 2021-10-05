@@ -9,6 +9,7 @@ import 'package:yellow_team_fridge/store/language_state/language_state.dart';
 import 'package:yellow_team_fridge/store/on_boarding_screen_state/on_boarding_screen_state.dart';
 import 'package:yellow_team_fridge/store/recipes_page_state/recipes_page_epics.dart';
 import 'package:yellow_team_fridge/store/recipes_page_state/recipes_page_state.dart';
+import 'package:yellow_team_fridge/store/screen_recipe_page/screen_recipe_page_state.dart';
 import 'package:yellow_team_fridge/store/shared/route_state/route_state.dart';
 import 'package:yellow_team_fridge/store/token_state/token_epics.dart';
 import 'package:yellow_team_fridge/store/token_state/token_state.dart';
@@ -28,6 +29,7 @@ class AppState {
   final FavoriteState favoriteState;
   final TokenState tokenState;
   final RecipesPageState recipesPageState;
+  final ScreenRecipePageState screenRecipePageState;
 
   AppState({
     @required this.homePageState,
@@ -38,6 +40,7 @@ class AppState {
     @required this.favoriteState,
     @required this.tokenState,
     @required this.recipesPageState,
+    @required this.screenRecipePageState,
   });
 
   ///All states are initialized in the [initial] function.
@@ -51,6 +54,7 @@ class AppState {
       bottomBarState: BottomBarState.initial(),
       tokenState: TokenState.initial(),
       recipesPageState: RecipesPageState.initial(),
+      screenRecipePageState: ScreenRecipePageState.initial(),
     );
   }
 
@@ -65,6 +69,7 @@ class AppState {
       bottomBarState: state.bottomBarState.reducer(action),
       tokenState: state.tokenState.reducer(action),
       recipesPageState: state.recipesPageState.reducer(action),
+      screenRecipePageState: state.screenRecipePageState.reducer(action),
     );
   }
 
