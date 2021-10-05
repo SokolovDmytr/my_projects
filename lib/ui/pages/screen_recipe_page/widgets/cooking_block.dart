@@ -21,7 +21,7 @@ class CookingBlock extends StatelessWidget {
   }
 
   List<Widget> _buildSteps() {
-    List<Widget> steps = [
+    final List<Widget> steps = [
       Row(
         children: [
           Image.asset(

@@ -74,7 +74,15 @@ class AppFonts {
     );
   }
 
-  static TextStyle get mediumTextStyle {
+  static TextStyle get mediumTextStyleBlack {
+    return GoogleFonts.roboto(
+      fontSize: 20.0,
+      color: AppColors.black,
+      fontWeight: FontWeight.w400,
+    );
+  }
+
+  static TextStyle get mediumTextStyleBlackTwo {
     return GoogleFonts.roboto(
       fontSize: 20.0,
       color: AppColors.blackTwo,

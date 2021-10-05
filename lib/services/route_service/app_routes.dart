@@ -7,4 +7,5 @@ class AppRoutes{
   static const foods = '/foods';
   static const auth = '/auth';
   static const onBoardingScreen = '/onBoardingScreen';
+  static const screenRecipePage = '/screenRecipePage';
 }

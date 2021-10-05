@@ -19,38 +19,44 @@ class SimilarRecipesBlock extends StatefulWidget {
 class _SimilarRecipesBlockState extends State<SimilarRecipesBlock> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(
-            top: 40.0,
-            bottom: 20.0,
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, bottom: 70.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 40.0,
+              bottom: 20.0,
+            ),
+            child: Text(
+              'Similar recipes',
+              style: AppFonts.normalBlackTextStyle,
+            ),
           ),
-          child: Text(
-            'Similar recipes',
-            style: AppFonts.normalBlackTextStyle,
-          ),
-        ),
-        SizedBox(
-          height: 150.0,
-          width: MediaQuery.of(context).size.width,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: widget.listRecipes.length,
-            itemBuilder: (context, index) => Container(
-              height: 125.0,
-              width: 350.0,
-              margin: const EdgeInsets.only(right: 20.0),
-              child: RecipeElement(
-                recipe: widget.listRecipes[index],
-                isOpen: false,
-                openCard: null,
+          SizedBox(
+            height: 150.0,
+            width: MediaQuery.of(context).size.width,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.listRecipes.length,
+              itemBuilder: (context, index) => Container(
+                height: 125.0,
+                width: 350.0,
+                margin: const EdgeInsets.only(right: 20.0),
+                child: InkWell(
+                  onTap: () {},
+                  child: RecipeElement(
+                    recipe: widget.listRecipes[index],
+                    isOpen: false,
+                    openCard: null,
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
