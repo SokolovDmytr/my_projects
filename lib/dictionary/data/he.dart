@@ -96,6 +96,7 @@ Language he = Language(
     pieces: 'חתיכות',
     foodElements: 'רכיבי מזון',
     youHave: 'יש לך:',
+    youDontHave: 'אין לך:',
   ),
   settingsPageLanguage: SettingsPageLanguage(
     back: 'חזור',

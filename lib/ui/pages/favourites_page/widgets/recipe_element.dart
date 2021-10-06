@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:yellow_team_fridge/dictionary/data/en.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/favorites_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
@@ -11,9 +12,8 @@ import 'package:yellow_team_fridge/res/app_styles/app_shadows.dart';
 import 'package:yellow_team_fridge/res/const.dart';
 import 'package:yellow_team_fridge/res/image_assets.dart';
 import 'package:yellow_team_fridge/services/route_service/route_service.dart';
-import 'package:yellow_team_fridge/utils/comparator.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
-import 'package:flutter_redux/flutter_redux.dart';
+import 'package:yellow_team_fridge/utils/comparator.dart';
 
 class RecipeElement extends StatefulWidget {
   final Recipe recipe;
@@ -28,8 +28,11 @@ class RecipeElement extends StatefulWidget {
   _RecipeElementState createState() => _RecipeElementState();
 }
 
-class _RecipeElementState extends State<RecipeElement> with TickerProviderStateMixin {
-  final FavouritesPageLanguage language = FlutterDictionary.instance.language?.favouritesPageLanguage ?? en.favouritesPageLanguage;
+class _RecipeElementState extends State<RecipeElement>
+    with TickerProviderStateMixin {
+  final FavouritesPageLanguage language =
+      FlutterDictionary.instance.language?.favouritesPageLanguage ??
+          en.favouritesPageLanguage;
   final FocusNode _focusNode = FocusNode();
 
   @override
@@ -47,7 +50,8 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
   Widget build(BuildContext context) {
     widget._missingIngredients = CustomComparator.getMissingsIngredients(
       recipe: widget.recipe,
-      ingredients: StoreProvider.of<AppState>(context).state.homePageState.ingredients,
+      ingredients:
+          StoreProvider.of<AppState>(context).state.homePageState.ingredients,
     );
 
     return AnimatedSize(
@@ -61,116 +65,127 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
           borderRadius: BorderRadius.circular(10.0),
           boxShadow: AppShadows.recipeElementShadow,
           border: Border.all(
-            color: widget._missingIngredients.isEmpty ? AppColors.white : AppColors.pastelRed,
+            color: widget._missingIngredients.isEmpty
+                ? AppColors.white
+                : AppColors.pastelRed,
           ),
         ),
         child: _focusNode.hasFocus
             ? Column(
-          children: [
-            _getImage(),
-            Container(
-              margin: const EdgeInsets.all(10.0),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                language.youDoNotHave,
-                style: AppFonts.smallPaselRed16TextStyle,
-              ),
-            ),
-            Expanded(
-              child: GridView.count(
-                primary: false,
-                padding: const EdgeInsets.all(10.0),
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                childAspectRatio: 3.0,
-                crossAxisCount: 2,
-                children: widget._missingIngredients.map((e) {
-                  return Container(
-                    child: Row(
-                      children: [
-                        Image.network(
-                          e.image ?? 'https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png',
-                          width: 32.0,
-                          height: 32.0,
-                          errorBuilder: (BuildContext _, Object __, StackTrace ___) {
-                            return Icon(Icons.error);
-                          },
-                        ),
-                        RichText(
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          text: TextSpan(text: e.name, style: AppFonts.smallBoldBlackTwoTextStyle, children: [
-                            TextSpan(
-                              text: colonString,
-                              style: AppFonts.smallBoldBlackTwoTextStyle,
-                            ),
-                            TextSpan(
-                              text: spaceString,
-                              style: AppFonts.smallTextStyle,
-                            ),
-                            TextSpan(
-                              text: e.description,
-                              style: AppFonts.smallTextStyle,
-                            ),
-                          ]),
-                        ),
-                      ],
+                children: [
+                  _getImage(),
+                  Container(
+                    margin: const EdgeInsets.all(10.0),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      language.youDoNotHave,
+                      style: AppFonts.smallPaselRed16TextStyle,
                     ),
-                  );
-                }).toList(),
-              ),
-            ),
-          ],
-        )
+                  ),
+                  Expanded(
+                    child: GridView.count(
+                      primary: false,
+                      padding: const EdgeInsets.all(10.0),
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 3.0,
+                      crossAxisCount: 2,
+                      children: widget._missingIngredients.map((e) {
+                        return Container(
+                          child: Row(
+                            children: [
+                              Image.network(
+                                e.image ??
+                                    'https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png',
+                                width: 32.0,
+                                height: 32.0,
+                                errorBuilder: (BuildContext _, Object __,
+                                    StackTrace ___) {
+                                  return Icon(Icons.error);
+                                },
+                              ),
+                              RichText(
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                text: TextSpan(
+                                    text: e.name,
+                                    style: AppFonts.smallBoldBlackTwoTextStyle,
+                                    children: [
+                                      TextSpan(
+                                        text: colonString,
+                                        style:
+                                            AppFonts.smallBoldBlackTwoTextStyle,
+                                      ),
+                                      TextSpan(
+                                        text: spaceString,
+                                        style: AppFonts.smallTextStyle,
+                                      ),
+                                      TextSpan(
+                                        text: e.description,
+                                        style: AppFonts.smallTextStyle,
+                                      ),
+                                    ]),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
+              )
             : Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _getImage(),
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.fromLTRB(
-                  16.0,
-                  14.0,
-                  16.0,
-                  9.0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 46.0,
-                      margin: const EdgeInsets.only(bottom: 8.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _getImage(),
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.fromLTRB(
+                        16.0,
+                        14.0,
+                        16.0,
+                        9.0,
+                      ),
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Flexible(
-                            child: RichText(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              text: TextSpan(
-                                text: widget.recipe.name,
-                                style: AppFonts.mediumShadowBlackTextStyle,
-                              ),
+                          Container(
+                            height: 46.0,
+                            margin: const EdgeInsets.only(bottom: 8.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Flexible(
+                                  child: RichText(
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    text: TextSpan(
+                                      text: widget.recipe.name,
+                                      style:
+                                          AppFonts.mediumShadowBlackTextStyle,
+                                    ),
+                                  ),
+                                ),
+                                widget.recipe.isFavorite
+                                    ? Icon(
+                                        Icons.favorite,
+                                        color: AppColors.pastelRed,
+                                        size: 22.0,
+                                      )
+                                    : const SizedBox(),
+                              ],
                             ),
                           ),
-                          widget.recipe.isFavorite
-                              ? Icon(
-                            Icons.favorite,
-                            color: AppColors.pastelRed,
-                            size: 22.0,
-                          )
-                              : const SizedBox(),
+                          widget._missingIngredients.isEmpty
+                              ? _getParameterOfRecipeWidgetBock()
+                              : _geMissingIngredientsBock(),
                         ],
                       ),
                     ),
-                    widget._missingIngredients.isEmpty ? _getParameterOfRecipeWidgetBock() : _geMissingIngredientsBock(),
-                  ],
-                ),
+                  )
+                ],
               ),
-            )
-          ],
-        ),
       ),
     );
   }
@@ -189,7 +204,9 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
         width: _focusNode.hasFocus ? widthScreen : 128.0,
         child: Stack(
           fit: StackFit.expand,
-          alignment: FlutterDictionary.instance.isRTL ? Alignment.topRight : Alignment.topLeft,
+          alignment: FlutterDictionary.instance.isRTL
+              ? Alignment.topRight
+              : Alignment.topLeft,
           children: [
             widget.recipe.image == null
                 ? Image.asset(
@@ -197,7 +214,9 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                   )
                 : Image.network(
                     widget.recipe.image,
-                    fit: _focusNode.hasFocus ? BoxFit.fitWidth : BoxFit.fitHeight,
+                    fit: _focusNode.hasFocus
+                        ? BoxFit.fitWidth
+                        : BoxFit.fitHeight,
                     errorBuilder: (BuildContext _, Object __, StackTrace ___) {
                       return Image.asset(
                         ImageAssets.chefYellow,
@@ -291,8 +310,10 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                         width: 32.0,
                         margin: const EdgeInsets.symmetric(horizontal: 3.0),
                         child: Image.network(
-                          e.image ?? 'https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png',
-                          errorBuilder: (BuildContext _, Object __, StackTrace ___) {
+                          e.image ??
+                              'https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png',
+                          errorBuilder:
+                              (BuildContext _, Object __, StackTrace ___) {
                             return Icon(Icons.error);
                           },
                         ),
@@ -308,7 +329,9 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                   ),
                   child: InkWell(
                     child: Icon(
-                      _focusNode.hasFocus ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                      _focusNode.hasFocus
+                          ? Icons.keyboard_arrow_up
+                          : Icons.keyboard_arrow_down,
                       size: 24.0,
                     ),
                     onTap: () {
@@ -316,7 +339,9 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                         if (_focusNode.hasFocus) {
                           FocusManager.instance.primaryFocus.unfocus();
                         } else {
-                          FocusScope.of(RouteService.instance.navigatorKey.currentState.context).requestFocus(_focusNode);
+                          FocusScope.of(RouteService
+                                  .instance.navigatorKey.currentState.context)
+                              .requestFocus(_focusNode);
                         }
                       });
                     },
@@ -370,13 +395,19 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
     );
   }
 
-  Widget _getParameterOfRecipeWidget({@required String imageAssets, @required TextStyle textStyle, String text, String value}) {
+  Widget _getParameterOfRecipeWidget(
+      {@required String imageAssets,
+      @required TextStyle textStyle,
+      String text,
+      String value}) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 2.0),
       height: 20.0,
       width: 80.0,
       child: Row(
-        textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
+        textDirection: FlutterDictionary.instance.isRTL
+            ? TextDirection.rtl
+            : TextDirection.ltr,
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(

@@ -16,7 +16,7 @@ class RecipesListViewModel {
   final void Function(Recipe recipe) saveRecipe;
   final void Function(List<Recipe> recipes, Recipe recipe) saveRecipes;
 
-  RecipesListViewModel({
+  const RecipesListViewModel({
     @required this.recipes,
     @required this.openCardId,
     @required this.getFavoriteRecipeList,

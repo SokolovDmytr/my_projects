@@ -10,7 +10,7 @@ class CustomSwitch extends StatefulWidget {
   final bool value;
   final ValueChanged<bool> onChanged;
 
-  CustomSwitch({
+  const CustomSwitch({
     Key key,
     this.value,
     this.onChanged,
@@ -20,7 +20,8 @@ class CustomSwitch extends StatefulWidget {
   _CustomSwitchState createState() => _CustomSwitchState();
 }
 
-class _CustomSwitchState extends State<CustomSwitch> with SingleTickerProviderStateMixin {
+class _CustomSwitchState extends State<CustomSwitch>
+    with SingleTickerProviderStateMixin {
   AnimationController _animationController;
 
   @override
@@ -35,7 +36,8 @@ class _CustomSwitchState extends State<CustomSwitch> with SingleTickerProviderSt
   @override
   Widget build(BuildContext context) {
     final AuthenticationPageLanguage _language =
-        FlutterDictionary.instance.language?.authenticationPageLanguage ?? en.authenticationPageLanguage;
+        FlutterDictionary.instance.language?.authenticationPageLanguage ??
+            en.authenticationPageLanguage;
     return AnimatedBuilder(
       animation: _animationController,
       builder: (context, child) {
@@ -46,7 +48,9 @@ class _CustomSwitchState extends State<CustomSwitch> with SingleTickerProviderSt
             } else {
               _animationController.forward();
             }
-            widget.value == false ? widget.onChanged(true) : widget.onChanged(false);
+            widget.value == false
+                ? widget.onChanged(true)
+                : widget.onChanged(false);
           },
           child: Stack(
             children: [
@@ -67,14 +71,18 @@ class _CustomSwitchState extends State<CustomSwitch> with SingleTickerProviderSt
                         child: Align(
                           child: Text(
                             _language.signIn,
-                            style: widget.value ? AppFonts.size16MediumPinkishGrey : AppFonts.size16SemiBoldMarigold,
+                            style: widget.value
+                                ? AppFonts.size16MediumPinkishGrey
+                                : AppFonts.size16SemiBoldMarigold,
                           ),
                         ),
                         width: (MediaQuery.of(context).size.width - 36) / 2,
                         height: 46.0,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100.0),
-                          color: widget.value ? AppColors.transparent : AppColors.white,
+                          color: widget.value
+                              ? AppColors.transparent
+                              : AppColors.white,
                         ),
                       ),
                     ),
@@ -84,14 +92,18 @@ class _CustomSwitchState extends State<CustomSwitch> with SingleTickerProviderSt
                         child: Align(
                           child: Text(
                             _language.signUp,
-                            style: widget.value ? AppFonts.size16SemiBoldMarigold : AppFonts.size16MediumPinkishGrey,
+                            style: widget.value
+                                ? AppFonts.size16SemiBoldMarigold
+                                : AppFonts.size16MediumPinkishGrey,
                           ),
                         ),
                         width: (MediaQuery.of(context).size.width - 36) / 2,
                         height: 46.0,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100.0),
-                          color: widget.value ? AppColors.white : AppColors.transparent,
+                          color: widget.value
+                              ? AppColors.white
+                              : AppColors.transparent,
                         ),
                       ),
                     ),

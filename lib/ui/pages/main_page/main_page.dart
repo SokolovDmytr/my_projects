@@ -17,7 +17,7 @@ import 'package:yellow_team_fridge/store/home_page_state/home_page_selector.dart
 import 'package:yellow_team_fridge/store/shared/route_state/actions/navigate_push_named_action.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_textfield.dart';
-import 'package:yellow_team_fridge/ui/layouts/pages_layout/pages_layout.dart';
+import 'package:yellow_team_fridge/ui/layouts/main_layout/main_layout.dart';
 import 'package:yellow_team_fridge/ui/pages/main_page/main_page_view_model.dart';
 import 'package:yellow_team_fridge/ui/pages/main_page/widgets/clip_shadow_painter.dart';
 import 'package:yellow_team_fridge/ui/pages/main_page/widgets/overlay_container_clipper.dart';
@@ -55,7 +55,9 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    final MainPageLanguage language = FlutterDictionary.instance.language?.mainPageLanguage ?? en.mainPageLanguage;
+    final MainPageLanguage language =
+        FlutterDictionary.instance.language?.mainPageLanguage ??
+            en.mainPageLanguage;
 
     return AnnotatedRegion(
       value: SystemUiOverlayStyle(
@@ -93,7 +95,11 @@ class _MainPageState extends State<MainPage> {
                             name: text.trim(),
                           );
                         } else {
-                          if (StoreProvider.of<AppState>(context).state.homePageState.tempIngredients.isNotEmpty) {
+                          if (StoreProvider.of<AppState>(context)
+                              .state
+                              .homePageState
+                              .tempIngredients
+                              .isNotEmpty) {
                             HomePageSelector.clearTempIngredientList(
                               store: StoreProvider.of<AppState>(context),
                             );
@@ -111,10 +117,12 @@ class _MainPageState extends State<MainPage> {
                     BuildContext storeConnectorContext,
                     MainPageViewModel vm,
                   ) {
-                    final double stackWidth = MediaQuery.of(storeConnectorContext).size.width;
+                    final double stackWidth =
+                        MediaQuery.of(storeConnectorContext).size.width;
                     return vm.ingredients.isEmpty
                         ? Container(
-                            margin: const EdgeInsets.fromLTRB(52.0, 30.0, 52.0, 80.0),
+                            margin: const EdgeInsets.fromLTRB(
+                                52.0, 30.0, 52.0, 80.0),
                             child: Image.asset(ImageAssets.favoriteChefArrow),
                           )
                         : Stack(
@@ -126,8 +134,12 @@ class _MainPageState extends State<MainPage> {
                                 children: [
                                   InkWell(
                                     child: Container(
-                                      margin: const EdgeInsets.only(top: 25.0, bottom: 4.0),
-                                      alignment: FlutterDictionary.instance.isRTL ? Alignment.centerLeft : Alignment.centerRight,
+                                      margin: const EdgeInsets.only(
+                                          top: 25.0, bottom: 4.0),
+                                      alignment:
+                                          FlutterDictionary.instance.isRTL
+                                              ? Alignment.centerLeft
+                                              : Alignment.centerRight,
                                       child: Text(
                                         language.clearAll,
                                         style: AppFonts.smallPaselRedTextStyle,
@@ -140,61 +152,85 @@ class _MainPageState extends State<MainPage> {
                                   Expanded(
                                     child: ListView.separated(
                                       itemCount: vm.ingredients.length,
-                                      separatorBuilder: (BuildContext _, int index) {
+                                      separatorBuilder:
+                                          (BuildContext _, int index) {
                                         return Container(
-                                          margin: const EdgeInsets.symmetric(vertical: 1.0),
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 1.0),
                                           child: Divider(
-                                            color: AppColors.black.withOpacity(0.5),
+                                            color: AppColors.black
+                                                .withOpacity(0.5),
                                             height: 0.5,
                                           ),
                                         );
                                       },
-                                      itemBuilder: (BuildContext __, int index) {
+                                      itemBuilder:
+                                          (BuildContext __, int index) {
                                         return SwipeElement(
                                           background: Container(
-                                            height: baseHeightOfIngredientElement,
+                                            height:
+                                                baseHeightOfIngredientElement,
                                             color: AppColors.pastelRed,
-                                            padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 5.0),
                                             child: GlobalButton(
                                               key: Key('GlobalButtonDelete'),
                                               width: 70.0,
                                               height: 45.0,
                                               color: AppColors.pastelRed,
                                               text: language.buttonDelete,
-                                              fontText: AppFonts.medium16Height24WhiteTextStyle,
+                                              fontText: AppFonts
+                                                  .medium16Height24WhiteTextStyle,
                                               onTap: () {
                                                 setState(() {
-                                                  vm.deleteIngredient(vm.ingredients[index].i);
+                                                  vm.deleteIngredient(
+                                                      vm.ingredients[index].i);
                                                 });
                                               },
                                             ),
                                           ),
                                           child: SizedBox(
-                                            height: baseHeightOfIngredientElement,
+                                            height:
+                                                baseHeightOfIngredientElement,
                                             child: Row(
                                               children: [
                                                 Container(
-                                                  margin: const EdgeInsets.fromLTRB(
+                                                  margin:
+                                                      const EdgeInsets.fromLTRB(
                                                     22.0,
                                                     5.0,
                                                     4.0,
                                                     5.0,
                                                   ),
-                                                  child: vm.ingredients[index].image == null
-                                                      ? Image.asset(ImageAssets.chefYellow)
+                                                  child: vm.ingredients[index]
+                                                              .image ==
+                                                          null
+                                                      ? Image.asset(ImageAssets
+                                                          .chefYellow)
                                                       : Image.network(
-                                                          vm.ingredients[index].image,
-                                                          errorBuilder: (BuildContext _, Object __, StackTrace ___) {
-                                                            return Image.asset(ImageAssets.chefYellow);
+                                                          vm.ingredients[index]
+                                                              .image,
+                                                          errorBuilder:
+                                                              (BuildContext _,
+                                                                  Object __,
+                                                                  StackTrace
+                                                                      ___) {
+                                                            return Image.asset(
+                                                                ImageAssets
+                                                                    .chefYellow);
                                                           },
                                                         ),
                                                 ),
                                                 Flexible(
                                                   child: Text(
-                                                    vm.ingredients[index].name ?? 'Not name',
-                                                    style: AppFonts.mediumBlack70ShadowTextStyle,
+                                                    vm.ingredients[index]
+                                                            .name ??
+                                                        'Not name',
+                                                    style: AppFonts
+                                                        .mediumBlack70ShadowTextStyle,
                                                     maxLines: 1,
-                                                    overflow: TextOverflow.ellipsis,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                   ),
                                                 ),
                                               ],
@@ -223,7 +259,9 @@ class _MainPageState extends State<MainPage> {
                                     gradient: AppGradient.wheatMarigoldGradient,
                                     onTap: () {
                                       //vm.toRecipePage();
-                                      StoreProvider.of<AppState>(storeConnectorContext).dispatch(
+                                      StoreProvider.of<AppState>(
+                                              storeConnectorContext)
+                                          .dispatch(
                                         NavigatePushNamedAction(
                                           route: AppRoutes.recipes,
                                         ),
@@ -245,7 +283,9 @@ class _MainPageState extends State<MainPage> {
   }
 
   OverlayEntry _createOverlayList() {
-    final MainPageLanguage language = FlutterDictionary.instance.language?.mainPageLanguage ?? en.mainPageLanguage;
+    final MainPageLanguage language =
+        FlutterDictionary.instance.language?.mainPageLanguage ??
+            en.mainPageLanguage;
 
     final RenderBox renderBox = _textFieldContext.findRenderObject();
     final Size size = renderBox.size;
@@ -260,12 +300,18 @@ class _MainPageState extends State<MainPage> {
           builder: (
             BuildContext ctx,
           ) {
-            final List<Ingredient> tempIngredients = StoreProvider.of<AppState>(ctx, listen: true).state.homePageState.tempIngredients;
+            final List<Ingredient> tempIngredients =
+                StoreProvider.of<AppState>(ctx, listen: true)
+                    .state
+                    .homePageState
+                    .tempIngredients;
             final double containerHeight = tempIngredients.length > 3
                 ? 195.0
                 : tempIngredients.isEmpty
                     ? baseHeightOfIngredientElement
-                    : baseHeightOfIngredientElement * tempIngredients.length * 1.25;
+                    : baseHeightOfIngredientElement *
+                        tempIngredients.length *
+                        1.25;
             final OverlayContainerClipper clipper = OverlayContainerClipper(
               borderRadius: 8.0,
               triangleHeight: 15.0,
@@ -286,8 +332,11 @@ class _MainPageState extends State<MainPage> {
                           height: containerHeight,
                           child: tempIngredients.isEmpty
                               ? Container(
-                                  alignment: FlutterDictionary.instance.isRTL ? Alignment.centerRight : Alignment.centerLeft,
-                                  margin: const EdgeInsets.symmetric(horizontal: 22.0),
+                                  alignment: FlutterDictionary.instance.isRTL
+                                      ? Alignment.centerRight
+                                      : Alignment.centerLeft,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 22.0),
                                   child: Text(
                                     language.notFound,
                                     style: AppFonts.mediumBlack70TextStyle,
@@ -295,7 +344,8 @@ class _MainPageState extends State<MainPage> {
                                 )
                               : ListView.separated(
                                   itemCount: tempIngredients.length,
-                                  separatorBuilder: (BuildContext _, int index) {
+                                  separatorBuilder:
+                                      (BuildContext _, int index) {
                                     return Divider(
                                       color: AppColors.black.withOpacity(0.5),
                                       height: 0.5,
@@ -314,19 +364,30 @@ class _MainPageState extends State<MainPage> {
                                                 4.0,
                                                 5.0,
                                               ),
-                                              child: tempIngredients[index].image == null
-                                                  ? Image.asset(ImageAssets.chefYellow)
+                                              child: tempIngredients[index]
+                                                          .image ==
+                                                      null
+                                                  ? Image.asset(
+                                                      ImageAssets.chefYellow)
                                                   : Image.network(
-                                                      tempIngredients[index].image,
-                                                      errorBuilder: (BuildContext _, Object __, StackTrace ___) {
-                                                        return Image.asset(ImageAssets.chefYellow);
+                                                      tempIngredients[index]
+                                                          .image,
+                                                      errorBuilder:
+                                                          (BuildContext _,
+                                                              Object __,
+                                                              StackTrace ___) {
+                                                        return Image.asset(
+                                                            ImageAssets
+                                                                .chefYellow);
                                                       },
                                                     ),
                                             ),
                                             Flexible(
                                               child: Text(
-                                                tempIngredients[index].name ?? 'Not name',
-                                                style: AppFonts.mediumBlack70TextStyle,
+                                                tempIngredients[index].name ??
+                                                    'Not name',
+                                                style: AppFonts
+                                                    .mediumBlack70TextStyle,
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                               ),
@@ -336,7 +397,8 @@ class _MainPageState extends State<MainPage> {
                                       ),
                                       onTap: () {
                                         HomePageSelector.addIngredient(
-                                          store: StoreProvider.of<AppState>(context),
+                                          store: StoreProvider.of<AppState>(
+                                              context),
                                           ingredient: tempIngredients[index],
                                         );
                                       },

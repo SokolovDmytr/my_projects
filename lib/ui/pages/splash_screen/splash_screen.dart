@@ -14,7 +14,8 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
   double _widthScreen;
 
   @override
@@ -61,7 +62,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
             ),
           ),
           Container(
-            margin: const EdgeInsets.only(left: 48.0, right: 48.0, bottom: 160.0),
+            margin:
+                const EdgeInsets.only(left: 48.0, right: 48.0, bottom: 160.0),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(4.0),
               child: LinearProgressIndicator(

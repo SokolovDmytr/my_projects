@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:yellow_team_fridge/dictionary/data/en.dart';
+import 'package:yellow_team_fridge/dictionary/dictionary_classes/screen_recipe_language.dart';
+import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/models/pages/recipe.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
@@ -21,6 +24,9 @@ class CookingBlock extends StatelessWidget {
   }
 
   List<Widget> _buildSteps() {
+    final ScreenRecipeLanguage _language =
+        FlutterDictionary.instance.language?.screenRecipeLanguage ??
+            en.screenRecipeLanguage;
     final List<Widget> steps = [
       Row(
         children: [
@@ -32,7 +38,7 @@ class CookingBlock extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(
-              'Cooking:',
+              _language.cooking,
               style: AppFonts.mediumTextStyleBlackTwo,
             ),
           ),

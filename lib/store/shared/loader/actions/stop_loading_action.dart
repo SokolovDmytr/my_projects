@@ -5,7 +5,7 @@ import 'package:yellow_team_fridge/store/shared/loader/loader_state.dart';
 class StopLoadingAction extends BaseAction {
   final LoaderKey loaderKey;
 
-  StopLoadingAction({
+  const StopLoadingAction({
     @required this.loaderKey,
   }) : super(type: 'StopLoadingAction');
 }

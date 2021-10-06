@@ -14,7 +14,7 @@ class AuthPageViewModel {
     String password,
   ) logIn;
 
-  AuthPageViewModel({
+  const AuthPageViewModel({
     @required this.registerUser,
     @required this.logIn,
   });

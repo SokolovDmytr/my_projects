@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:yellow_team_fridge/dictionary/data/en.dart';
+import 'package:yellow_team_fridge/dictionary/dictionary_classes/screen_recipe_language.dart';
+import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/models/pages/ingredient.dart';
 import 'package:yellow_team_fridge/models/pages/recipe.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
@@ -22,25 +25,30 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
   List<Ingredient> missingIngredients = [];
   List<Widget> missingWidgets = [];
   List<Widget> availableWidgets = [];
+  final ScreenRecipeLanguage _language =
+      FlutterDictionary.instance.language?.screenRecipeLanguage ??
+          en.screenRecipeLanguage;
 
   @override
   Widget build(BuildContext context) {
     _createMissingAvailableLists();
+    _createAvailableWidgetsList();
+    _createMissingWidgetsList();
     return Column(
       children: [
         Text(
-          'Food elements:',
+          _language.foodElements,
           style: AppFonts.mediumTextStyleBlack,
         ),
         missingIngredients.isEmpty
             ? SizedBox()
             : Column(
-                children: [],
+                children: missingWidgets,
               ),
         availableIngredients.isEmpty
             ? SizedBox()
             : Column(
-                children: [],
+                children: availableWidgets,
               ),
       ],
     );
@@ -77,6 +85,12 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
     if (missingIngredients.isEmpty) {
       return;
     }
+    missingWidgets.add(
+      Text(
+        _language.youDontHave,
+        style: AppFonts.medium16Height24PastelRedTextStyle,
+      ),
+    );
     for (int index = 0; index < missingIngredients.length; index++) {
       missingWidgets.add(
         Row(
@@ -91,16 +105,61 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0),
-                  child: Text(missingIngredients[index].name),
+                  child: Text(
+                    missingIngredients[index].name,
+                    style: AppFonts.medium16Height24PastelRedTextStyle,
+                  ),
                 ),
               ],
             ),
-            Text('${missingIngredients[index].count} ${missingIngredients[index].description}'),
+            Text(
+              '${missingIngredients[index].count} ${missingIngredients[index].description}',
+              style: AppFonts.smallPaselRedTextStyle,
+            ),
           ],
         ),
       );
     }
   }
 
-  void _createAvailableWidgetsList() {}
+  void _createAvailableWidgetsList() {
+    if (availableIngredients.isEmpty) {
+      return;
+    }
+    availableWidgets.add(
+      Text(
+        _language.youHave,
+        style: AppFonts.medium16blackTwoTextStyle,
+      ),
+    );
+    for (int index = 0; index < availableIngredients.length; index++) {
+      availableWidgets.add(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Image.network(
+                  availableIngredients[index].image,
+                  height: 32.0,
+                  width: 32.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Text(
+                    availableIngredients[index].name,
+                    style: AppFonts.medium16Height26TextStyle,
+                  ),
+                ),
+              ],
+            ),
+            Text(
+              '${availableIngredients[index].count} ${availableIngredients[index].description}',
+              style: AppFonts.smallTextStyle,
+            ),
+          ],
+        ),
+      );
+    }
+  }
 }

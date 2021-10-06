@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:yellow_team_fridge/store/shared/base_action.dart';
 
-class NavigatePushNamedAction{
+class NavigatePushNamedAction extends BaseAction {
   final String route;
 
-  NavigatePushNamedAction({@required this.route});
+  const NavigatePushNamedAction({
+    @required this.route,
+  });
 }

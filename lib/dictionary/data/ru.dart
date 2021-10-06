@@ -95,7 +95,8 @@ Language ru = Language(
     grams: 'граммы',
     pieces: 'шт',
     foodElements: 'Ингридиенты',
-    youHave: 'У вас есть:',
+    youHave: 'У Вас есть:',
+    youDontHave: 'У Вас нет:'
   ),
   settingsPageLanguage: SettingsPageLanguage(
     back: 'Назад',

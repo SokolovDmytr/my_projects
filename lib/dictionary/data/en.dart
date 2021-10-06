@@ -96,6 +96,7 @@ Language en = Language(
     pieces: 'pieces',
     foodElements: 'Food elements',
     youHave: 'You have:',
+    youDontHave: 'You don`t have',
   ),
   settingsPageLanguage: SettingsPageLanguage(
     back: 'Back',

@@ -46,7 +46,8 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     final AuthenticationPageLanguage _language =
-        FlutterDictionary.instance.language?.authenticationPageLanguage ?? en.authenticationPageLanguage;
+        FlutterDictionary.instance.language?.authenticationPageLanguage ??
+            en.authenticationPageLanguage;
     return StoreConnector<AppState, AuthPageViewModel>(
       converter: AuthPageViewModel.init,
       builder: (BuildContext context, AuthPageViewModel vm) => Column(
@@ -91,7 +92,7 @@ class _SignInPageState extends State<SignInPage> {
             padding: const EdgeInsets.only(top: 29.0),
             child: GlobalButton(
               icon: Image.asset(ImageAssets.googleLogo),
-              key: Key('RegisterGoogle'),
+              key: Key('SignInGoogle'),
               text: _language.signInGoogle,
               fontText: AppFonts.medium16blackTwoTextStyle,
               shadows: AppShadows.textFieldShadow,
@@ -104,8 +105,8 @@ class _SignInPageState extends State<SignInPage> {
             child: GlobalButton(
               height: 42.0,
               icon: Image.asset(ImageAssets.appleLogo),
-              key: Key('RegisterApple'),
-              text: _language.registerApple,
+              key: Key('SignInApple'),
+              text: _language.signInApple,
               fontText: AppFonts.medium16blackTwoTextStyle,
               shadows: AppShadows.textFieldShadow,
               onTap: () {},
@@ -118,7 +119,12 @@ class _SignInPageState extends State<SignInPage> {
               height: 56.0,
               text: _language.logIn,
               fontText: AppFonts.normalMediumTextStyle,
-              onTap: () => vm.logIn(emailController.text, passwordController.text),
+              onTap: () {
+                if (emailController.text.isNotEmpty &&
+                    passwordController.text.isNotEmpty) {
+                  vm.logIn(emailController.text, passwordController.text);
+                }
+              },
               shadows: AppShadows.buttonOcreShadow,
               gradient: AppGradient.wheatMarigoldGradient,
             ),
