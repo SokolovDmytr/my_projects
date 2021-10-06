@@ -84,3 +84,6 @@ enum AppBarType {
 
 const double baseHeightOfIngredientElement = 55.0;
 const double minSwipeDistance = 25.0;
+
+const String hiveBoxName = 'fridge_app';
+const String userKey = 'admin';

@@ -12,6 +12,7 @@ class MainPageViewModel {
   final Function(String id) deleteIngredient;
   final Function() clearIngredients;
   final Function() toRecipePage;
+  final Function() getAllIngredient;
 
   const MainPageViewModel({
     @required this.ingredients,
@@ -21,6 +22,7 @@ class MainPageViewModel {
     @required this.deleteIngredient,
     @required this.clearIngredients,
     @required this.toRecipePage,
+    @required this.getAllIngredient,
   });
 
   static MainPageViewModel init(
@@ -40,7 +42,7 @@ class MainPageViewModel {
       deleteIngredient: (String id) => HomePageSelector.deleteIngredient(store: store, id: id),
       clearIngredients:() =>HomePageSelector.clearIngredientList(store: store),
       toRecipePage: () => HomePageSelector.toRecipesPage(store: store),
-
+      getAllIngredient: () => HomePageSelector.getAllIngredient(store: store),
     );
   }
 }

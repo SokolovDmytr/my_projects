@@ -17,10 +17,12 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 class RecipeElement extends StatefulWidget {
   final Recipe recipe;
+  final bool needOpenFunction;
   List<Ingredient> _missingIngredients = [];
 
   RecipeElement({
     @required this.recipe,
+    @required this.needOpenFunction,
     Key key,
   }) : super(key: key);
 
@@ -45,10 +47,12 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    widget._missingIngredients = CustomComparator.getMissingsIngredients(
-      recipe: widget.recipe,
-      ingredients: StoreProvider.of<AppState>(context).state.homePageState.ingredients,
-    );
+    if(widget._missingIngredients.isEmpty){
+      widget._missingIngredients = CustomComparator.getMissingsIngredients(
+        recipe: widget.recipe,
+        ingredients: StoreProvider.of<AppState>(context).state.homePageState.ingredients,
+      );
+    }
 
     return AnimatedSize(
       duration: AppDuration.recipeOpenDuration,
@@ -66,111 +70,130 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
         ),
         child: _focusNode.hasFocus
             ? Column(
-          children: [
-            _getImage(),
-            Container(
-              margin: const EdgeInsets.all(10.0),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                language.youDoNotHave,
-                style: AppFonts.smallPaselRed16TextStyle,
-              ),
-            ),
-            Expanded(
-              child: GridView.count(
-                primary: false,
-                padding: const EdgeInsets.all(10.0),
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                childAspectRatio: 3.0,
-                crossAxisCount: 2,
-                children: widget._missingIngredients.map((e) {
-                  return Container(
-                    child: Row(
-                      children: [
-                        Image.network(
-                          e.image ?? 'https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png',
-                          width: 32.0,
-                          height: 32.0,
-                          errorBuilder: (BuildContext _, Object __, StackTrace ___) {
-                            return Icon(Icons.error);
-                          },
-                        ),
-                        RichText(
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          text: TextSpan(text: e.name, style: AppFonts.smallBoldBlackTwoTextStyle, children: [
-                            TextSpan(
-                              text: colonString,
-                              style: AppFonts.smallBoldBlackTwoTextStyle,
-                            ),
-                            TextSpan(
-                              text: spaceString,
-                              style: AppFonts.smallTextStyle,
-                            ),
-                            TextSpan(
-                              text: e.description,
-                              style: AppFonts.smallTextStyle,
-                            ),
-                          ]),
-                        ),
-                      ],
+                children: [
+                  _getImage(),
+                  Container(
+                    margin: const EdgeInsets.all(10.0),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      language.youDoNotHave,
+                      style: AppFonts.smallPaselRed16TextStyle,
                     ),
-                  );
-                }).toList(),
-              ),
-            ),
-          ],
-        )
-            : Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _getImage(),
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.fromLTRB(
-                  16.0,
-                  14.0,
-                  16.0,
-                  9.0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 46.0,
-                      margin: const EdgeInsets.only(bottom: 8.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Flexible(
-                            child: RichText(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              text: TextSpan(
-                                text: widget.recipe.name,
-                                style: AppFonts.mediumShadowBlackTextStyle,
+                  ),
+                  Expanded(
+                    child: GridView.count(
+                      primary: false,
+                      padding: const EdgeInsets.all(10.0),
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 4.0,
+                      crossAxisCount: 2,
+                      children: widget._missingIngredients.map((e) {
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 3.0),
+                              child: Image.network(
+                                e.image,
+                                width: 32.0,
+                                height: 32.0,
+                                errorBuilder: (BuildContext _, Object __, StackTrace ___) {
+                                  return Icon(
+                                    Icons.error,
+                                    color: AppColors.pastelRed,
+                                  );
+                                },
                               ),
                             ),
+                            Flexible(
+                              child: RichText(
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                text: TextSpan(
+                                  text: e.name,
+                                  style: AppFonts.smallBoldBlackTwoTextStyle,
+                                  children: [
+                                    TextSpan(
+                                      text: colonString,
+                                      style: AppFonts.smallBoldBlackTwoTextStyle,
+                                    ),
+                                    TextSpan(
+                                      text: spaceString,
+                                      style: AppFonts.smallTextStyle,
+                                    ),
+                                    TextSpan(
+                                      text: e.description,
+                                      style: AppFonts.smallTextStyle,
+                                    ),
+                                    TextSpan(
+                                      text: spaceString,
+                                      style: AppFonts.smallTextStyle,
+                                    ),
+                                    TextSpan(
+                                      text: e.count,
+                                      style: AppFonts.smallTextStyle,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
+              )
+            : Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _getImage(),
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.fromLTRB(
+                        16.0,
+                        14.0,
+                        16.0,
+                        9.0,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 46.0,
+                            margin: const EdgeInsets.only(bottom: 8.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Flexible(
+                                  child: RichText(
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    text: TextSpan(
+                                      text: widget.recipe.name,
+                                      style: AppFonts.mediumShadowBlackTextStyle,
+                                    ),
+                                  ),
+                                ),
+                                widget.recipe.isFavorite
+                                    ? Icon(
+                                        Icons.favorite,
+                                        color: AppColors.pastelRed,
+                                        size: 22.0,
+                                      )
+                                    : const SizedBox(),
+                              ],
+                            ),
                           ),
-                          widget.recipe.isFavorite
-                              ? Icon(
-                            Icons.favorite,
-                            color: AppColors.pastelRed,
-                            size: 22.0,
-                          )
-                              : const SizedBox(),
+                          widget._missingIngredients.isEmpty ? _getParameterOfRecipeWidgetBock() : _geMissingIngredientsBock(),
                         ],
                       ),
                     ),
-                    widget._missingIngredients.isEmpty ? _getParameterOfRecipeWidgetBock() : _geMissingIngredientsBock(),
-                  ],
-                ),
+                  )
+                ],
               ),
-            )
-          ],
-        ),
       ),
     );
   }
@@ -263,6 +286,32 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                           ),
                         ),
                       ),
+
+            _focusNode.hasFocus ? Positioned(
+              bottom: 0.0,
+              left: FlutterDictionary.instance.isRTL ? 0.0 : null,
+              right: FlutterDictionary.instance.isRTL ? null : 0.0,
+              child: InkWell(
+                child: Container(
+                  height: 28.0,
+                  width: 28.0,
+                  margin: const EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.keyboard_arrow_up,
+                    size: 24.0,
+                  ),
+                ),
+                onTap: () {
+                  setState(() {
+                    FocusManager.instance.primaryFocus.unfocus();
+                  });
+                },
+              ),
+            ) : const SizedBox(),
           ],
         ),
       ),
@@ -291,16 +340,19 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                         width: 32.0,
                         margin: const EdgeInsets.symmetric(horizontal: 3.0),
                         child: Image.network(
-                          e.image ?? 'https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png',
+                          e.image,
                           errorBuilder: (BuildContext _, Object __, StackTrace ___) {
-                            return Icon(Icons.error);
+                            return Icon(
+                              Icons.error,
+                              color: AppColors.pastelRed,
+                            );
                           },
                         ),
                       );
                     }).toList(),
                   ),
                 ),
-                Container(
+                widget.needOpenFunction ? Container(
                   margin: EdgeInsets.only(
                     left: FlutterDictionary.instance.isRTL ? 0.0 : 10.0,
                     right: FlutterDictionary.instance.isRTL ? 10.0 : 0.0,
@@ -308,20 +360,16 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                   ),
                   child: InkWell(
                     child: Icon(
-                      _focusNode.hasFocus ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                      Icons.keyboard_arrow_down,
                       size: 24.0,
                     ),
                     onTap: () {
                       setState(() {
-                        if (_focusNode.hasFocus) {
-                          FocusManager.instance.primaryFocus.unfocus();
-                        } else {
-                          FocusScope.of(RouteService.instance.navigatorKey.currentState.context).requestFocus(_focusNode);
-                        }
+                        FocusScope.of(RouteService.instance.navigatorKey.currentState.context).requestFocus(_focusNode);
                       });
                     },
                   ),
-                ),
+                ) : const SizedBox(),
               ],
             ),
           ),

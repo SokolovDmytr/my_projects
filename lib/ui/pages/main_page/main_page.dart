@@ -107,6 +107,7 @@ class _MainPageState extends State<MainPage> {
               Expanded(
                 child: StoreConnector<AppState, MainPageViewModel>(
                   converter: MainPageViewModel.init,
+                  onInitialBuild: (MainPageViewModel vm) => vm.getAllIngredient(),
                   builder: (
                     BuildContext storeConnectorContext,
                     MainPageViewModel vm,
@@ -211,7 +212,7 @@ class _MainPageState extends State<MainPage> {
                                 child: Container(
                                   width: stackWidth,
                                   padding: const EdgeInsets.only(
-                                    bottom: 82.0,
+                                    bottom: 32.0,
                                     left: 22.0,
                                     right: 22.0,
                                   ),
@@ -222,12 +223,8 @@ class _MainPageState extends State<MainPage> {
                                     fontText: AppFonts.normalMediumTextStyle,
                                     gradient: AppGradient.wheatMarigoldGradient,
                                     onTap: () {
-                                      //vm.toRecipePage();
-                                      StoreProvider.of<AppState>(storeConnectorContext).dispatch(
-                                        NavigatePushNamedAction(
-                                          route: AppRoutes.recipes,
-                                        ),
-                                      );
+                                      print('1');
+                                      vm.toRecipePage();
                                     },
                                   ),
                                 ),

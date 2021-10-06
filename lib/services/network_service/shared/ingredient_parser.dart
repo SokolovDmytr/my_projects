@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yellow_team_fridge/models/pages/ingredient.dart';
+import 'package:yellow_team_fridge/res/const.dart';
 
 class IngredientParser {
   List<Ingredient> parseDataForRecipeList({
@@ -20,7 +21,7 @@ class IngredientParser {
           );
         }
       } catch (error) {
-        print(error);
+        logger.d('parseDataForRecipeList error: ${error}');
       }
     }
 
@@ -44,7 +45,7 @@ class IngredientParser {
         );
       }
     } catch (error) {
-      print(error);
+      logger.d('Ingredient parse error: ${error}');
     }
 
     return ingredients;

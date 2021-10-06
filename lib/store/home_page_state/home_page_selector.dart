@@ -7,6 +7,7 @@ import 'package:yellow_team_fridge/store/home_page_state/action/add_ingredient_a
 import 'package:yellow_team_fridge/store/home_page_state/action/clear_ingredient_list_action.dart';
 import 'package:yellow_team_fridge/store/home_page_state/action/clear_temp_ingredient_list_action.dart';
 import 'package:yellow_team_fridge/store/home_page_state/action/delete_ingredient_action.dart';
+import 'package:yellow_team_fridge/store/home_page_state/action/get_all_ingredient_action.dart';
 import 'package:yellow_team_fridge/store/home_page_state/action/get_ingredients_with_string_action.dart';
 import 'package:yellow_team_fridge/store/shared/route_state/actions/navigate_push_named_action.dart';
 
@@ -66,5 +67,16 @@ class HomePageSelector {
         route: AppRoutes.recipes,
       ),
     );
+  }
+
+  static void getAllIngredient({
+    @required Store<AppState> store,
+  }) {
+    if(store.state.homePageState.allIngredient.isEmpty){
+      store.dispatch(
+        GetAllIngredientAction(),
+      );
+    }
+
   }
 }

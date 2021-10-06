@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:yellow_team_fridge/models/pages/token.dart';
+import 'package:yellow_team_fridge/res/const.dart';
 
 class TokenParser {
   Token parse({
@@ -8,13 +9,16 @@ class TokenParser {
     Token currentToken;
     try {
       currentToken = Token(
-        createDate: DateTime.parse(token['createDate']),
+        /*
+        subtract needed to count the time to request to the server
+         */
+        createDate: DateTime.now().subtract(milliseconds500),
         refreshToken: token['refreshToken'],
         token: token['token'],
         ttlToken: token['ttlToken'],
       );
     } catch (error) {
-      print('Token parser error: ${error}');
+      logger.d('Token parser error: ${error}');
     }
     return currentToken;
   }

@@ -13,21 +13,25 @@ class RecipesList extends StatelessWidget {
       converter: RecipesListViewModel.init,
       onInitialBuild: (RecipesListViewModel vm) => vm.getFavoriteRecipeList(),
       builder: (BuildContext ctx, RecipesListViewModel viewModel) {
-        return ListView.builder(
-          itemCount: viewModel.recipes.length,
-          itemBuilder: (BuildContext _, int index) {
-            viewModel.recipes[index].isFavorite = true;
-            return InkWell(
-              onTap: () {
-                viewModel.saveRecipe(viewModel.recipes[index]);
-                viewModel.saveRecipes(viewModel.recipes, viewModel.recipes[index]);
-                viewModel.goToScreenRecipePage();
-              },
-              child: RecipeElement(
-                recipe: viewModel.recipes[index],
-              ),
-            );
-          },
+        return Container(
+          margin: const EdgeInsets.only(top: 21.0),
+          child: ListView.builder(
+            itemCount: viewModel.recipes.length,
+            itemBuilder: (BuildContext _, int index) {
+              viewModel.recipes[index].isFavorite = true;
+              return InkWell(
+                onTap: () {
+                  viewModel.saveRecipe(viewModel.recipes[index]);
+                  viewModel.saveRecipes(viewModel.recipes, viewModel.recipes[index]);
+                  viewModel.goToScreenRecipePage();
+                },
+                child: RecipeElement(
+                  recipe: viewModel.recipes[index],
+                  needOpenFunction: true,
+                ),
+              );
+            },
+          ),
         );
       },
     );
