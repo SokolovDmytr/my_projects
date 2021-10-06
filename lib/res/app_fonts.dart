@@ -116,6 +116,22 @@ class AppFonts {
     );
   }
 
+  static TextStyle get mediumTextStyle {
+    return GoogleFonts.roboto(
+      fontSize: 20.0,
+      color: AppColors.black,
+      fontWeight: FontWeight.w400,
+    );
+  }
+
+  static TextStyle get mediumWhiteTextStyle {
+    return GoogleFonts.roboto(
+      fontSize: 20.0,
+      color: AppColors.white,
+      fontWeight: FontWeight.w400,
+    );
+  }
+
   static TextStyle get medium16Height24TextStyle {
     return GoogleFonts.roboto(
       fontSize: 16.0,
@@ -167,6 +183,14 @@ class AppFonts {
     );
   }
 
+  static TextStyle get smallWhiteTextStyle {
+    return GoogleFonts.roboto(
+      fontSize: 12.0,
+      color: AppColors.white,
+      fontWeight: FontWeight.w400,
+    );
+  }
+
   static TextStyle get smallBlack20TextStyle {
     return GoogleFonts.roboto(
       fontSize: 12.0,
@@ -188,6 +212,15 @@ class AppFonts {
       fontSize: 12.0,
       color: AppColors.pastelRed,
       fontWeight: FontWeight.w400,
+    );
+  }
+
+  static TextStyle get smallPaselRed16TextStyle {
+    return GoogleFonts.roboto(
+      fontSize: 12.0,
+      color: AppColors.pastelRed,
+      fontWeight: FontWeight.w400,
+      height: 1.33,
     );
   }
 

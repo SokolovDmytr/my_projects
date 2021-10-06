@@ -16,6 +16,12 @@ class RecipeParser {
           data: item['ingredients'],
         );
 
+        List<String> steps = [];
+        List<dynamic> stepsData = item['steps'];
+        for(var stepData in stepsData){
+          steps.add(stepData);
+        }
+
         recipes.add(
           Recipe(
             i: item['i'],
@@ -24,8 +30,8 @@ class RecipeParser {
             time: item['time'],
             level: item['level'],
             image: item['image'],
-            steps: item['steps'],
             ingredients: ingredients,
+            steps: steps,
           ),
         );
       }

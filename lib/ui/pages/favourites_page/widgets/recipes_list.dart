@@ -16,6 +16,7 @@ class RecipesList extends StatelessWidget {
         return ListView.builder(
           itemCount: viewModel.recipes.length,
           itemBuilder: (BuildContext _, int index) {
+            viewModel.recipes[index].isFavorite = true;
             return InkWell(
               onTap: () {
                 viewModel.saveRecipe(viewModel.recipes[index]);
@@ -24,9 +25,6 @@ class RecipesList extends StatelessWidget {
               },
               child: RecipeElement(
                 recipe: viewModel.recipes[index],
-                isOpen: viewModel.recipes[index].i.toString() ==
-                    viewModel.openCardId,
-                openCard: viewModel.openCard,
               ),
             );
           },
