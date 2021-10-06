@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:yellow_team_fridge/store/shared/base_action.dart';
 
-class LogInAction {
+class LogInAction extends BaseAction {
   final String email;
   final String password;
 
-  LogInAction({
+  const LogInAction({
     @required this.email,
     @required this.password,
   });

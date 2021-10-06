@@ -23,6 +23,29 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
   List<Widget> missingWidgets = [];
   List<Widget> availableWidgets = [];
 
+  @override
+  Widget build(BuildContext context) {
+    _createMissingAvailableLists();
+    return Column(
+      children: [
+        Text(
+          'Food elements:',
+          style: AppFonts.mediumTextStyleBlack,
+        ),
+        missingIngredients.isEmpty
+            ? SizedBox()
+            : Column(
+                children: [],
+              ),
+        availableIngredients.isEmpty
+            ? SizedBox()
+            : Column(
+                children: [],
+              ),
+      ],
+    );
+  }
+
   void _createMissingAvailableLists() {
     final List<Ingredient> tempList = [];
     if (widget.ingredientsStored.isEmpty) {
@@ -50,26 +73,34 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    _createMissingAvailableLists();
-    return Column(
-      children: [
-        Text(
-          'Food elements:',
-          style: AppFonts.mediumTextStyleBlack,
+  void _createMissingWidgetsList() {
+    if (missingIngredients.isEmpty) {
+      return;
+    }
+    for (int index = 0; index < missingIngredients.length; index++) {
+      missingWidgets.add(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Image.network(
+                  missingIngredients[index].image,
+                  height: 32.0,
+                  width: 32.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Text(missingIngredients[index].name),
+                ),
+              ],
+            ),
+            Text('${missingIngredients[index].count} ${missingIngredients[index].description}'),
+          ],
         ),
-        missingIngredients.isEmpty
-            ? SizedBox()
-            : Column(
-                children: [],
-              ),
-        availableIngredients.isEmpty
-            ? SizedBox()
-            : Column(
-                children: [],
-              ),
-      ],
-    );
+      );
+    }
   }
+
+  void _createAvailableWidgetsList() {}
 }

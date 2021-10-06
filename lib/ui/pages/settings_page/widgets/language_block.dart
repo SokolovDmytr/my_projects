@@ -33,7 +33,7 @@ class _LanguageBlockState extends State<LanguageBlock> {
               padding: const EdgeInsets.only(bottom: 16.0),
               child: Text(
                 _language.language,
-                style: AppFonts.mediumTextStyle,
+                style: AppFonts.mediumTextStyleBlackTwo,
               ),
             ),
             Container(

@@ -29,7 +29,7 @@ class SettingsLayoutOptionWidget extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: AppFonts.mediumTextStyle,
+                  style: AppFonts.mediumTextStyleBlackTwo,
                 ),
                  RotatedBox(
                    quarterTurns: FlutterDictionary.instance.isRTL ? 2 : 4,

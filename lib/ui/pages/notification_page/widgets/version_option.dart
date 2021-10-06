@@ -38,7 +38,7 @@ class _VersionOptionState extends State<VersionOption> with SingleTickerProvider
                 children: [
                   Text(
                     widget.title,
-                    style: AppFonts.mediumTextStyle,
+                    style: AppFonts.mediumTextStyleBlackTwo,
                   ),
                   InkWell(
                     onTap: () {

@@ -33,7 +33,7 @@ class CookingBlock extends StatelessWidget {
             padding: const EdgeInsets.only(left: 8.0),
             child: Text(
               'Cooking:',
-              style: AppFonts.mediumTextStyle,
+              style: AppFonts.mediumTextStyleBlackTwo,
             ),
           ),
         ],

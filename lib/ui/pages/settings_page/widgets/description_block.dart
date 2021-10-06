@@ -17,7 +17,7 @@ class DescriptionBlock extends StatelessWidget {
       children: [
         Text(
           _language.aboutCompany,
-          style: AppFonts.mediumTextStyle,
+          style: AppFonts.mediumTextStyleBlackTwo,
         ),
         Padding(
           padding: const EdgeInsets.symmetric(
