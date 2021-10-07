@@ -5,5 +5,7 @@ import 'package:yellow_team_fridge/store/shared/base_action.dart';
 class ShowDialogAction extends BaseAction {
   final IDialog dialog;
 
-  ShowDialogAction({this.dialog}) : super(type: 'ShowDialogAction');
+  const ShowDialogAction({
+    this.dialog,
+  }) : super(type: 'ShowDialogAction');
 }

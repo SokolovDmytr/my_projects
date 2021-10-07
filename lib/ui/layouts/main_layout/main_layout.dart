@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:yellow_team_fridge/dictionary/data/en.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/settings_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/const.dart';
+import 'package:yellow_team_fridge/store/application/app_state.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/bottom_navigation_bar/navigation_bottom_bar.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/custom_app_bar.dart';
+import 'package:yellow_team_fridge/ui/layouts/main_layout/main_layout_vm.dart';
 
 class MainLayout extends StatelessWidget {
   final AppBarType appBarType;
@@ -46,25 +49,34 @@ class MainLayout extends StatelessWidget {
         break;
     }
 
-    return Scaffold(
-      backgroundColor: AppColors.white,
-      resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(
-        preferredSize: size,
-        isMainStyleAppBar: isMainStyleAppBar,
-        color: color,
-        title: title,
-        gradient: gradient,
-        textButton: _language.back,
-        key: key,
-        onTapBack: onTapBack,
-      ),
-      bottomNavigationBar: CustomNavigationBottomBar(
-        currentPage: currentPage,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14.0),
-        child: body,
+    return StoreConnector<AppState, MainLayoutViewModel>(
+      converter: MainLayoutViewModel.init,
+      builder: (context, vm) => WillPopScope(
+        onWillPop: () async {
+          vm.basicPop();
+          return true;
+        },
+        child: Scaffold(
+          backgroundColor: AppColors.white,
+          resizeToAvoidBottomInset: false,
+          appBar: CustomAppBar(
+            preferredSize: size,
+            isMainStyleAppBar: isMainStyleAppBar,
+            color: color,
+            title: title,
+            gradient: gradient,
+            textButton: _language.back,
+            key: key,
+            onTapBack: onTapBack,
+          ),
+          bottomNavigationBar: CustomNavigationBottomBar(
+            currentPage: currentPage,
+          ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14.0),
+            child: body,
+          ),
+        ),
       ),
     );
   }

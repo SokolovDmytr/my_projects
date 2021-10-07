@@ -18,7 +18,7 @@ class GlobalTextField extends StatefulWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
   final Function onSubmitted;
-final TextInputAction textInputAction;
+  final TextInputAction textInputAction;
   final Function(String text) onChanged;
 
   const GlobalTextField({
@@ -45,7 +45,8 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
   @override
   Widget build(BuildContext context) {
     final AuthenticationPageLanguage _language =
-        FlutterDictionary.instance.language?.authenticationPageLanguage ?? en.authenticationPageLanguage;
+        FlutterDictionary.instance.language?.authenticationPageLanguage ??
+            en.authenticationPageLanguage;
     return Container(
       height: 42.0,
       margin: widget.padding ?? const EdgeInsets.all(0.0),

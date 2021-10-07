@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-class NavigateReplaceAction{
+class NavigateReplaceAction {
   final String route;
 
-  NavigateReplaceAction({@required this.route});
+  const NavigateReplaceAction({
+    @required this.route,
+  });
 }

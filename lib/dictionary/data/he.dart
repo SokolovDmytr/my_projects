@@ -96,13 +96,14 @@ Language he = Language(
     pieces: 'חתיכות',
     foodElements: 'רכיבי מזון',
     youHave: 'יש לך:',
+    youDontHave: 'אין לך:',
   ),
   settingsPageLanguage: SettingsPageLanguage(
     back: 'חזור',
-    buttonOk: 'בסדר',
+    buttonYes: 'כן',
     settings: 'הגדרות',
     buttonNo: 'לא',
-    youSureWantToExit: 'האם אתה בטוח שברצונך לסגור את היישום ריק המקרר?',
+    youSureWantToExit: 'האם אתה בטוח שברצונך לצאת מהיישום',
     description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     aboutCompany: 'אודות חברה',

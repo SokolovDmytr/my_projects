@@ -7,7 +7,7 @@ class SettingsPageLanguage {
   final String aboutCompany;
   final String description;
   final String youSureWantToExit;
-  final String buttonOk;
+  final String buttonYes;
   final String buttonNo;
   final String notification;
   final String logOut;
@@ -20,7 +20,7 @@ class SettingsPageLanguage {
     @required this.aboutCompany,
     @required this.description,
     @required this.buttonNo,
-    @required this.buttonOk,
+    @required this.buttonYes,
     @required this.notification,
     @required this.logOut,
   });

@@ -22,7 +22,8 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   final FocusNode emailFocus = FocusNode();
   final FocusNode passwordFocus = FocusNode();
   final FocusNode confirmPasswordFocus = FocusNode();
@@ -52,7 +53,8 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     final AuthenticationPageLanguage _language =
-        FlutterDictionary.instance.language?.authenticationPageLanguage ?? en.authenticationPageLanguage;
+        FlutterDictionary.instance.language?.authenticationPageLanguage ??
+            en.authenticationPageLanguage;
     return StoreConnector<AppState, AuthPageViewModel>(
       converter: AuthPageViewModel.init,
       builder: (BuildContext context, AuthPageViewModel vm) => Column(
@@ -146,11 +148,17 @@ class _SignUpPageState extends State<SignUpPage> {
               key: Key('SignUp'),
               text: _language.signUp,
               fontText: AppFonts.normalMediumTextStyle,
-              onTap: () => vm.registerUser(
-                emailController.text,
-                passwordController.text,
-                confirmPasswordController.text,
-              ),
+              onTap: () {
+                if (emailController.text.isNotEmpty &&
+                    passwordController.text.isNotEmpty &&
+                    confirmPasswordController.text.isNotEmpty) {
+                  vm.registerUser(
+                    emailController.text,
+                    passwordController.text,
+                    confirmPasswordController.text,
+                  );
+                }
+              },
               shadows: AppShadows.buttonOcreShadow,
               gradient: AppGradient.wheatMarigoldGradient,
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:yellow_team_fridge/dictionary/data/en.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/favorites_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
@@ -11,9 +12,8 @@ import 'package:yellow_team_fridge/res/app_styles/app_shadows.dart';
 import 'package:yellow_team_fridge/res/const.dart';
 import 'package:yellow_team_fridge/res/image_assets.dart';
 import 'package:yellow_team_fridge/services/route_service/route_service.dart';
-import 'package:yellow_team_fridge/utils/comparator.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
-import 'package:flutter_redux/flutter_redux.dart';
+import 'package:yellow_team_fridge/utils/comparator.dart';
 
 class RecipeElement extends StatefulWidget {
   final Recipe recipe;
@@ -418,13 +418,19 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
     );
   }
 
-  Widget _getParameterOfRecipeWidget({@required String imageAssets, @required TextStyle textStyle, String text, String value}) {
+  Widget _getParameterOfRecipeWidget(
+      {@required String imageAssets,
+      @required TextStyle textStyle,
+      String text,
+      String value}) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 2.0),
       height: 20.0,
       width: 80.0,
       child: Row(
-        textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
+        textDirection: FlutterDictionary.instance.isRTL
+            ? TextDirection.rtl
+            : TextDirection.ltr,
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(

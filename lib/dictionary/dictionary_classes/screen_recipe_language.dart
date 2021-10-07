@@ -11,6 +11,7 @@ class ScreenRecipeLanguage {
   final String cooking;
   final String similarRecipes;
   final String youHave;
+  final String youDontHave;
 
   ScreenRecipeLanguage({
     @required this.back,
@@ -23,5 +24,6 @@ class ScreenRecipeLanguage {
     @required this.cooking,
     @required this.similarRecipes,
     @required this.youHave,
+    @required this.youDontHave,
   });
 }

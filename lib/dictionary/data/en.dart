@@ -96,13 +96,14 @@ Language en = Language(
     pieces: 'pieces',
     foodElements: 'Food elements',
     youHave: 'You have:',
+    youDontHave: 'You don`t have',
   ),
   settingsPageLanguage: SettingsPageLanguage(
     back: 'Back',
-    buttonOk: 'Ok',
+    buttonYes: 'Yes',
     settings: 'Settings',
     buttonNo: 'No',
-    youSureWantToExit: 'Are you sure you want to quit the application Empty Fridge?',
+    youSureWantToExit: 'Are you sure you want to quit the application',
     description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     aboutCompany: 'About company',

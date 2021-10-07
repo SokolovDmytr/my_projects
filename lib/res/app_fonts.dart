@@ -159,6 +159,15 @@ class AppFonts {
     );
   }
 
+  static TextStyle get medium16Height24PastelRedTextStyle {
+    return GoogleFonts.roboto(
+      fontSize: 16.0,
+      color: AppColors.pastelRed,
+      fontWeight: FontWeight.w400,
+      height: 1.5,
+    );
+  }
+
   static TextStyle get medium16Height26TextStyle {
     return GoogleFonts.roboto(
       fontSize: 16.0,

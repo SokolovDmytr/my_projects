@@ -26,14 +26,20 @@ class BottomBarState {
     return my_redux.Reducer<BottomBarState>(
       actions: HashMap.from({
         NavigateHomeAction: (dynamic action) => _navigateHome(action.store),
-        NavigateSettingsAction: (dynamic action) => _navigateSettings(action.store),
-        NavigateFavouritesAction: (dynamic action) => _navigateFavourites(action.store),
+        NavigateSettingsAction: (dynamic action) =>
+            _navigateSettings(action.store),
+        NavigateFavouritesAction: (dynamic action) =>
+            _navigateFavourites(action.store),
       }),
     ).updateState(action, this);
   }
 
   BottomBarState _navigateHome(Store<AppState> store) {
-    RouteSelectors.pushNamed(store: store, route: AppRoutes.homePage);
+    RouteSelectors.pushNamedAndRemoveUntil(
+      store: store,
+      route: AppRoutes.homePage,
+      routeNamePredicate: AppRoutes.homePage,
+    );
     return BottomBarState();
   }
 

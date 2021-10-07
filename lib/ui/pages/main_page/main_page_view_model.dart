@@ -3,6 +3,7 @@ import 'package:redux/redux.dart';
 import 'package:yellow_team_fridge/models/pages/ingredient.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
 import 'package:yellow_team_fridge/store/home_page_state/home_page_selector.dart';
+import 'package:yellow_team_fridge/store/language_state/language_selectors.dart';
 
 class MainPageViewModel {
   final List<Ingredient> ingredients;
@@ -13,6 +14,7 @@ class MainPageViewModel {
   final Function() clearIngredients;
   final Function() toRecipePage;
   final Function() getAllIngredient;
+  final String language;
 
   const MainPageViewModel({
     @required this.ingredients,
@@ -23,6 +25,7 @@ class MainPageViewModel {
     @required this.clearIngredients,
     @required this.toRecipePage,
     @required this.getAllIngredient,
+    @required this.language,
   });
 
   static MainPageViewModel init(
@@ -40,8 +43,9 @@ class MainPageViewModel {
         ingredient: ingredient,
       ),
       deleteIngredient: (String id) => HomePageSelector.deleteIngredient(store: store, id: id),
-      clearIngredients:() =>HomePageSelector.clearIngredientList(store: store),
+      clearIngredients: () =>HomePageSelector.clearIngredientList(store: store),
       toRecipePage: () => HomePageSelector.toRecipesPage(store: store),
+      language: LanguageSelectors.getCurrentLanguage(store),
       getAllIngredient: () => HomePageSelector.getAllIngredient(store: store),
     );
   }

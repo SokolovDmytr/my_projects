@@ -17,7 +17,7 @@ import 'package:yellow_team_fridge/store/application/app_state.dart';
 import 'package:yellow_team_fridge/store/home_page_state/home_page_selector.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_textfield.dart';
-import 'package:yellow_team_fridge/ui/layouts/pages_layout/pages_layout.dart';
+import 'package:yellow_team_fridge/ui/layouts/main_layout/main_layout.dart';
 import 'package:yellow_team_fridge/ui/pages/main_page/main_page_view_model.dart';
 import 'package:yellow_team_fridge/ui/pages/main_page/widgets/clip_shadow_painter.dart';
 import 'package:yellow_team_fridge/ui/pages/main_page/widgets/overlay_container_clipper.dart';
@@ -233,10 +233,7 @@ class _MainPageState extends State<MainPage> {
                                     text: language.buttonWatchRecipes,
                                     fontText: AppFonts.normalMediumTextStyle,
                                     gradient: AppGradient.wheatMarigoldGradient,
-                                    onTap: () {
-                                      print('1');
-                                      vm.toRecipePage();
-                                    },
+                                    onTap: () => vm.toRecipePage(),
                                   ),
                                 ),
                               ),

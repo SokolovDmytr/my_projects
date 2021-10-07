@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:yellow_team_fridge/dictionary/data/en.dart';
+import 'package:yellow_team_fridge/dictionary/dictionary_classes/screen_recipe_language.dart';
+import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/models/pages/recipe.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
 import 'package:yellow_team_fridge/ui/pages/favourites_page/widgets/recipe_element.dart';
@@ -17,6 +20,9 @@ class SimilarRecipesBlock extends StatefulWidget {
 }
 
 class _SimilarRecipesBlockState extends State<SimilarRecipesBlock> {
+  final ScreenRecipeLanguage _language =
+      FlutterDictionary.instance.language?.screenRecipeLanguage ??
+          en.screenRecipeLanguage;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -30,7 +36,7 @@ class _SimilarRecipesBlockState extends State<SimilarRecipesBlock> {
               bottom: 20.0,
             ),
             child: Text(
-              'Similar recipes',
+              _language.similarRecipes,
               style: AppFonts.normalBlackTextStyle,
             ),
           ),

@@ -42,7 +42,12 @@ class ScreenRecipePageState {
   }
 
   ScreenRecipePageState _saveRecipes(List<Recipe> newRecipes, Recipe newRecipe) {
-    newRecipes.remove(recipe);
-    return copyWith(recipes: newRecipes);
+    final List<Recipe> copyRecipes = [];
+    for(var item in newRecipes){
+      if(item != newRecipe) {
+        copyRecipes.add(item);
+      }
+    }
+    return copyWith(recipes: copyRecipes);
   }
 }
