@@ -29,9 +29,6 @@ class InitAppEpic {
           (action) async* {
             Token token = await UserInformationService.instance.init();
 
-            print('initAppEpic ${token?.token}');
-
-
             if(token != null){
               yield SaveTokenAction(token: token);
             }

@@ -26,12 +26,11 @@ class UserInformationService {
 
   Future<Token> init() async {
     logger.d('Load information');
-    Box<User> box = await Hive.openBox<User>(hiveBoxName);
+    Box<User> box = await Hive.box<User>(hiveBoxName);
     _user = await box.get(userKey);
-    box.close();
 
     logger.d(_user?.token);
-    if (_user == null) {
+    if (_user?.token == null) {
       _user = User(
         isFirstSeeSwipeTutorial: false,
         isFirstVisitApp: false,
@@ -97,8 +96,9 @@ class UserInformationService {
 
     final Token token = StoreProvider.of<AppState>(RouteService.instance.navigatorKey.currentContext).state.tokenState.token;
 
+    User user;
     if (token != null) {
-      User user = User(
+      user = User(
         token: token.token,
         refreshToken: token.refreshToken,
         createDate: token.createDate,
@@ -106,11 +106,15 @@ class UserInformationService {
         isFirstSeeSwipeTutorial: _user.isFirstSeeSwipeTutorial,
         isFirstVisitApp: _user.isFirstVisitApp,
       );
-      Box<User> box = await Hive.openBox<User>(hiveBoxName);
-      await box.clear();
-      await box.put(userKey, user);
-      box.close();
+    }else{
+      user = User(
+        isFirstSeeSwipeTutorial: _user.isFirstSeeSwipeTutorial,
+        isFirstVisitApp: _user.isFirstVisitApp,
+      );
     }
+
+    Box<User> box = await Hive.box<User>(hiveBoxName);
+    await box.put(userKey, user);
   }
 
   void visitApp() => _user.isFirstVisitApp = true;

@@ -12,13 +12,6 @@ class UserAdapter extends TypeAdapter<User> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
 
-    print('tokken ${fields[0] as String}');
-    print('refresh ${fields[1] as String}');
-    print('ttl ${fields[2] as String}');
-    print('time ${fields[3] as int}');
-    print('bool ${fields[4] as bool}');
-    print('bool 2 ${fields[5] as bool}');
-
     return User(
       token: fields[0] as String,
       refreshToken: fields[1] as String,
@@ -36,6 +29,7 @@ class UserAdapter extends TypeAdapter<User> {
   ) {
     print('write UserAdapter');
     writer
+      ..writeByte(6)
       ..writeByte(0)
       ..write(user.token)
       ..writeByte(1)

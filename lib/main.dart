@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:yellow_team_fridge/application/application.dart';
+import 'package:yellow_team_fridge/res/const.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
 import 'package:yellow_team_fridge/store/shared/route_state/navigation_middleware.dart';
 import 'package:hive/hive.dart';
@@ -28,6 +29,7 @@ void main() async {
   final Directory directory = await pathProvider.getApplicationDocumentsDirectory();
   Hive.init(directory.path);
   Hive.registerAdapter(UserAdapter());
+  await Hive.openBox<User>(hiveBoxName);
 
   final Store store = Store<AppState>(
     AppState.getReducer,
