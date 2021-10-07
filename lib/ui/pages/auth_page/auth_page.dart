@@ -21,28 +21,33 @@ class _AuthPageState extends State<AuthPage> {
       value: SystemUiOverlayStyle(
         statusBarColor: AppColors.white,
       ),
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: AppColors.white,
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 40.0, bottom: 26.0),
-                    child: CustomSwitch(
-                      key: Key('Switch'),
-                      onChanged: (bool value) {
-                        setState(() {
-                          currentPage = value;
-                        });
-                      },
-                      value: currentPage,
+      child: GestureDetector(
+        onTap: () {
+          FocusManager.instance.primaryFocus.unfocus();
+        },
+        child: SafeArea(
+          child: Scaffold(
+            backgroundColor: AppColors.white,
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 40.0, bottom: 26.0),
+                      child: CustomSwitch(
+                        key: Key('Switch'),
+                        onChanged: (bool value) {
+                          setState(() {
+                            currentPage = value;
+                          });
+                        },
+                        value: currentPage,
+                      ),
                     ),
-                  ),
-                  currentPage ? SignUpPage() : SignInPage(),
-                ],
+                    currentPage ? SignUpPage() : SignInPage(),
+                  ],
+                ),
               ),
             ),
           ),

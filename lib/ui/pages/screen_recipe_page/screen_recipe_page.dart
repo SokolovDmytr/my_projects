@@ -39,7 +39,10 @@ class _ScreenRecipePageState extends State<ScreenRecipePage>
       builder: (BuildContext context, ScreenRecipePageViewModel viewModel) {
         return SafeArea(
           child: WillPopScope(
-            onWillPop: () async => false,
+            onWillPop: () async {
+              viewModel.onTapBack();
+              return true;
+            },
             child: Scaffold(
               backgroundColor: AppColors.white,
               body: SliverFab(
@@ -117,7 +120,9 @@ class _ScreenRecipePageState extends State<ScreenRecipePage>
                     bottom: PreferredSize(
                       preferredSize: Size.fromHeight(0.0),
                       child: Transform.translate(
-                        offset: Offset(160.0, -20.0),
+                        offset: Offset(
+                            MediaQuery.of(context).size.width / 2 - 46.0,
+                            -20.0),
                         child: Icon(
                           Icons.favorite_sharp,
                           color: AppColors.red,

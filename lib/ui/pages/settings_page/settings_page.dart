@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:yellow_team_fridge/dictionary/data/en.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/settings_page_language.dart';
@@ -27,34 +28,39 @@ class SettingsPage extends StatelessWidget {
         final SettingsPageLanguage _language =
             FlutterDictionary.instance.language?.settingsPageLanguage ??
                 en.settingsPageLanguage;
-        return MainLayout(
-          appBarType: AppBarType.simple,
-          isMainStyleAppBar: true,
-          title: _language.settings,
-          gradient: AppGradient.wheatMarigoldGradient,
-          currentPage: AppRoutes.settings,
-          onTapBack: () => vm.onTapBack(),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 90.0,
-                ),
-                LogOutBlock(),
-                LanguageBlock(),
-                NotificationBlock(),
-                DescriptionBlock(),
-                //need to delete
-                InkWell(
-                  onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => AuthPage())),
-                  child: Container(
-                    color: AppColors.black,
-                    height: 100.0,
-                    width: 200.0,
+        return AnnotatedRegion(
+          value: SystemUiOverlayStyle(
+            statusBarColor: AppColors.transparent,
+          ),
+          child: MainLayout(
+            appBarType: AppBarType.simple,
+            isMainStyleAppBar: true,
+            title: _language.settings,
+            gradient: AppGradient.wheatMarigoldGradient,
+            currentPage: AppRoutes.settings,
+            onTapBack: () => vm.onTapBack(),
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 90.0,
                   ),
-                ),
-              ],
+                  LogOutBlock(),
+                  LanguageBlock(),
+                  NotificationBlock(),
+                  DescriptionBlock(),
+                  //need to delete
+                  InkWell(
+                    onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => AuthPage())),
+                    child: Container(
+                      color: AppColors.black,
+                      height: 100.0,
+                      width: 200.0,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );
