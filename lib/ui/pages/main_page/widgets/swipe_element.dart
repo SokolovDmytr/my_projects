@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/res/app_duration.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/const.dart';
@@ -61,7 +62,7 @@ class _SwipeElementState extends State<SwipeElement>
             children: [
               child,
               Positioned(
-                left: widget._valueOfMove,
+                left: FlutterDictionary.instance.isRTL ? -widget._valueOfMove : widget._valueOfMove,
                 child: Container(
                   decoration: BoxDecoration(
                     color: AppColors.white,
@@ -92,10 +93,17 @@ class _SwipeElementState extends State<SwipeElement>
             }
           },
           onPointerMove: (position) {
-            final double distance =
+            double distance =
                 position.position.dx - widget._startPosition;
 
-            if (distance < 0.0) {
+            if(FlutterDictionary.instance.isRTL){
+              if(distance > 0.0)
+                return;
+
+              distance = -distance;
+            }
+
+            if (FlutterDictionary.instance.isRTL == false && distance < 0.0 ) {
               return;
             }
 

@@ -172,6 +172,7 @@ class _MainPageState extends State<MainPage> {
                                             height: baseHeightOfIngredientElement,
                                             color: AppColors.pastelRed,
                                             padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                            alignment: FlutterDictionary.instance.isRTL ? Alignment.centerRight : Alignment.centerLeft,
                                             child: GlobalButton(
                                               key: Key('GlobalButtonDelete'),
                                               width: 70.0,
@@ -191,10 +192,10 @@ class _MainPageState extends State<MainPage> {
                                             child: Row(
                                               children: [
                                                 Container(
-                                                  margin: const EdgeInsets.fromLTRB(
-                                                    22.0,
+                                                  margin: EdgeInsets.fromLTRB(
+                                                    FlutterDictionary.instance.isRTL ? 4.0 : 22.0,
                                                     5.0,
-                                                    4.0,
+                                                    FlutterDictionary.instance.isRTL ? 22.0 : 4.0,
                                                     5.0,
                                                   ),
                                                   child: vm.ingredients[index].image == null
