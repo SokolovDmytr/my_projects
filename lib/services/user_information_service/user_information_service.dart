@@ -116,6 +116,13 @@ class UserInformationService {
     await box.put(userKey, user);
   }
 
+  void clear() async{
+    Box<User> box = await Hive.box<User>(hiveBoxName);
+    await box.clear();
+    _user.isFirstVisitApp = false;
+    _user.isFirstSeeSwipeTutorial = false;
+  }
+
   void visitApp() => _user.isFirstVisitApp = true;
 
   void seeSwipeTutorial() => _user.isFirstSeeSwipeTutorial = true;

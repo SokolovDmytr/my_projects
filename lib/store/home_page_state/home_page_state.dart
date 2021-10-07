@@ -6,16 +6,20 @@ import 'package:yellow_team_fridge/store/home_page_state/action/add_ingredient_a
 import 'package:yellow_team_fridge/store/home_page_state/action/clear_ingredient_list_action.dart';
 import 'package:yellow_team_fridge/store/home_page_state/action/clear_temp_ingredient_list_action.dart';
 import 'package:yellow_team_fridge/store/home_page_state/action/delete_ingredient_action.dart';
+import 'package:yellow_team_fridge/store/home_page_state/action/hide_loader.dart';
 import 'package:yellow_team_fridge/store/home_page_state/action/save_temp_ingredients_action.dart';
+import 'package:yellow_team_fridge/store/home_page_state/action/show_loader.dart';
 import 'package:yellow_team_fridge/store/shared/reducer.dart';
 import 'package:yellow_team_fridge/store/home_page_state/action/save_all_ingredient_action.dart';
 
 class HomePageState {
+  final bool needLoader;
   final List<Ingredient> ingredients;
   final List<Ingredient> tempIngredients;
   final List<Ingredient> allIngredient;
 
   const HomePageState({
+    @required this.needLoader,
     @required this.ingredients,
     @required this.tempIngredients,
     @required this.allIngredient,
@@ -23,6 +27,7 @@ class HomePageState {
 
   factory HomePageState.initial() {
     return HomePageState(
+      needLoader: false,
       ingredients: [],
       tempIngredients: [],
       allIngredient: [],
@@ -30,11 +35,13 @@ class HomePageState {
   }
 
   HomePageState copyWith({
+    bool inputNeedLoader,
     List<Ingredient> inputIngredients,
     List<Ingredient> inputTempIngredients,
     List<Ingredient> inputAllIngredient,
   }) {
     return HomePageState(
+      needLoader: inputNeedLoader ?? needLoader,
       ingredients: inputIngredients ?? ingredients,
       tempIngredients: inputTempIngredients ?? tempIngredients,
       allIngredient: inputAllIngredient ?? allIngredient,
@@ -50,6 +57,8 @@ class HomePageState {
         ClearTempIngredientListAction: (dynamic action) => _clearTempIngredientList(),
         ClearIngredientListAction: (dynamic action) => _clearIngredientList(),
         SaveAllIngredientAction: (dynamic action) => _saveAllIngrdient(action),
+        ShowLoaderAction: (dynamic action) => _showLoader(),
+        HideLoaderAction: (dynamic action) => _hideLoader(),
       }),
     ).updateState(action, this);
   }
@@ -88,5 +97,17 @@ class HomePageState {
 
   HomePageState _saveAllIngrdient(SaveAllIngredientAction action) {
     return copyWith(inputAllIngredient: action.ingredients);
+  }
+
+  HomePageState _showLoader(){
+    return copyWith(
+      inputNeedLoader: true,
+    );
+  }
+
+  HomePageState _hideLoader(){
+    return copyWith(
+      inputNeedLoader: false,
+    );
   }
 }

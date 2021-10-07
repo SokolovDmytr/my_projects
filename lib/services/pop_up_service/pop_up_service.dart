@@ -17,7 +17,7 @@ class PopUpService {
     showDialog(
       context: ctx,
       barrierDismissible: true,
-      barrierColor: AppColors.black.withOpacity(0.7),
+      barrierColor: AppColors.transparent,
       builder: (BuildContext _) => widget,
     );
   }

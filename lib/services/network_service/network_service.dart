@@ -53,7 +53,7 @@ class NetworkService {
     @required Map<String, String> params,
     String token,
   }) async {
-    final bool isConnection = await _checkInternetConnection();
+    final bool isConnection = await checkInternetConnection();
     if (isConnection == false) {
       return BaseHttpResponse(
         error: NoConnectionHttpError(
@@ -110,7 +110,7 @@ class NetworkService {
     );
   }
 
-  Future<bool> _checkInternetConnection() async {
+  Future<bool> checkInternetConnection() async {
     return await DataConnectionChecker().hasConnection;
   }
 }

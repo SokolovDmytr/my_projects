@@ -51,7 +51,7 @@ class _MainPageState extends State<MainPage> {
       } else {
         _overlayEntry.remove();
 
-        if (UserInformationService.instance.isFirstSeeSwipeTutorial() == false) {
+        if (UserInformationService.instance.isFirstSeeSwipeTutorial() == false && StoreProvider.of<AppState>(context, listen: true).state.homePageState.ingredients.isNotEmpty) {
           DialogSelector.showSwipeTutorialDialogFunction(
             store: StoreProvider.of<AppState>(context),
             onTapOk: () {
@@ -89,13 +89,18 @@ class _MainPageState extends State<MainPage> {
                 child: Builder(
                   builder: (BuildContext ctx) {
                     _textFieldContext = ctx;
+                    bool needLoader = StoreProvider.of<AppState>(ctx, listen: true).state.homePageState.needLoader;
+
                     return GlobalTextField(
                       controller: _textEditingController,
                       focusNode: _textFieldFocusNode,
                       needSuffix: true,
-                      needLoader: true,
+                      needLoader: needLoader,
                       needPrefix: true,
                       needShowButton: false,
+                      hintText: language.chooseTextField,
+                      hintStyle: AppFonts.medium16Height24TextStyle,
+
                       onChanged: (String text) {
                         _textFromSearchTextField = text.trim();
                         if (text.trim().isNotEmpty) {

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:yellow_team_fridge/services/dialog_service/dialogs/error_dialog/error_dialog.dart';
 import 'package:yellow_team_fridge/services/dialog_service/dialogs/error_dialog/error_dialog_widget.dart';
+import 'package:yellow_team_fridge/services/dialog_service/dialogs/loader/loader_pop_up.dart';
+import 'package:yellow_team_fridge/services/dialog_service/dialogs/loader/loader_widget.dart';
 import 'package:yellow_team_fridge/services/dialog_service/dialogs/swipe_tutorial_dialog/swipe_tutorial_dialog.dart';
 import 'package:yellow_team_fridge/services/dialog_service/dialogs/swipe_tutorial_dialog/swipe_tutorial_widget.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
@@ -46,6 +48,18 @@ class DialogSelector {
           child: SwipeTutorialWidget(
             onTapOk: onTapOk,
           ),
+        ),
+      ),
+    );
+  }
+
+  static void showLoader({
+    @required Store<AppState> store,
+}){
+    store.dispatch(
+      ShowDialogAction(
+        dialog: LoaderPopUp(
+          child: LoaderWidget(),
         ),
       ),
     );

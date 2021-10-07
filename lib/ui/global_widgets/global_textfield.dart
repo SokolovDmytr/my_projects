@@ -6,6 +6,7 @@ import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_shadows.dart';
+import 'package:yellow_team_fridge/res/image_assets.dart';
 
 class GlobalTextField extends StatefulWidget {
   final TextStyle hintStyle;
@@ -44,9 +45,7 @@ class GlobalTextField extends StatefulWidget {
 class _GlobalTextFieldState extends State<GlobalTextField> {
   @override
   Widget build(BuildContext context) {
-    final AuthenticationPageLanguage _language =
-        FlutterDictionary.instance.language?.authenticationPageLanguage ??
-            en.authenticationPageLanguage;
+    final AuthenticationPageLanguage _language = FlutterDictionary.instance.language?.authenticationPageLanguage ?? en.authenticationPageLanguage;
     return Container(
       height: 42.0,
       margin: widget.padding ?? const EdgeInsets.all(0.0),
@@ -60,11 +59,17 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
         controller: widget.controller,
         focusNode: widget.focusNode ?? FocusNode(),
         onChanged: widget.onChanged,
+        textAlignVertical: TextAlignVertical.center,
+        style: AppFonts.medium16Height24TextStyle,
         decoration: InputDecoration(
           isDense: true,
           prefixIconConstraints: BoxConstraints(
             maxHeight: widget.needPrefix ? 18.0 : 0.0,
             minWidth: 16.0,
+          ),
+          contentPadding: const EdgeInsets.only(
+            top: 15.0,
+            bottom: 8.0,
           ),
           prefixIcon: widget.needPrefix
               ? Padding(
@@ -77,13 +82,13 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
                   ),
                 )
               : SizedBox(),
-          contentPadding: const EdgeInsets.only(
-            top: 15.0,
-            bottom: 8.0,
-          ),
           suffix: widget.needSuffix
               ? widget.needLoader
-                  ? Text('loader')
+                  ? Image.asset(
+                      ImageAssets.loadingGif,
+                      height: 35.0,
+                      width: 35.0,
+                    )
                   : widget.needShowButton
                       ? Padding(
                           padding: const EdgeInsets.only(right: 16.0),
