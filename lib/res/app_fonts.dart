@@ -23,6 +23,15 @@ class AppFonts {
     );
   }
 
+  static TextStyle get normalWhiteHeight30TextStyle {
+    return GoogleFonts.roboto(
+      fontSize: 24.0,
+      color: AppColors.white,
+      fontWeight: FontWeight.w700,
+      height: 1.25,
+    );
+  }
+
   static TextStyle get normalBlackHeight30TextStyle {
     return GoogleFonts.roboto(
       fontSize: 24.0,

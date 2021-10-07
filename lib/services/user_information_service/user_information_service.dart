@@ -29,7 +29,6 @@ class UserInformationService {
     Box<User> box = await Hive.box<User>(hiveBoxName);
     _user = await box.get(userKey);
 
-    logger.d(_user?.token);
     if (_user?.token == null) {
       _user = User(
         isFirstSeeSwipeTutorial: false,

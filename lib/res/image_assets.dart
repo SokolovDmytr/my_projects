@@ -50,4 +50,5 @@ class ImageAssets {
   static const String bottomBarFavourites = 'assets/png/favourites@3x.png';
   static const String confetti = 'assets/png/surprize.png';
   static const String recipeMan3 = 'assets/png/recipe_man@3x.png';
+  static const String swipeTutorial = 'assets/png/swipe_tutorial.png';
 }

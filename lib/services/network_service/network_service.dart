@@ -76,24 +76,24 @@ class NetworkService {
     http.Response response;
     try {
       response = await request();
+
+      logger.d('Response status code ${response.statusCode}');
+      if (response.statusCode >= 400) {
+        logger.d(' body ${response.body}');
+        return BaseHttpResponse(
+          error: NoConnectionHttpError(
+            error: response.body,
+            statusCode: response.statusCode,
+          ),
+        );
+      }
+
+      return BaseHttpResponse(
+        response: json.decode(response.body),
+      );
     } catch (error) {
       logger.d(error);
     }
-
-    logger.d('Response status code ${response.statusCode}');
-    if (response.statusCode >= 400) {
-      logger.d(' body ${response.body}');
-      return BaseHttpResponse(
-        error: NoConnectionHttpError(
-          error: response.body,
-          statusCode: response.statusCode,
-        ),
-      );
-    }
-
-    return BaseHttpResponse(
-      response: json.decode(response.body),
-    );
   }
 
   Future<BaseHttpResponse> requestWithParams({
