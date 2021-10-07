@@ -5,10 +5,10 @@ class Ingredient {
   final int id;
   final String count;
   final String description;
-  final String name;
-  final String image;
+  String name;
+  String image;
 
-  const Ingredient({
+  Ingredient({
     this.i,
     this.id,
     this.description,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:redux_epics/redux_epics.dart';
+import 'package:yellow_team_fridge/store/application/init_app_epic.dart';
 import 'package:yellow_team_fridge/store/bottom_bar_state/bottom_bar_state.dart';
 import 'package:yellow_team_fridge/store/favorite_state/favorite_epics.dart';
 import 'package:yellow_team_fridge/store/favorite_state/favorite_state.dart';
@@ -10,6 +11,7 @@ import 'package:yellow_team_fridge/store/on_boarding_screen_state/on_boarding_sc
 import 'package:yellow_team_fridge/store/recipes_page_state/recipes_page_epics.dart';
 import 'package:yellow_team_fridge/store/recipes_page_state/recipes_page_state.dart';
 import 'package:yellow_team_fridge/store/screen_recipe_page/screen_recipe_page_state.dart';
+import 'package:yellow_team_fridge/store/shared/dialog_state/dialog_state.dart';
 import 'package:yellow_team_fridge/store/shared/route_state/route_state.dart';
 import 'package:yellow_team_fridge/store/token_state/token_epics.dart';
 import 'package:yellow_team_fridge/store/token_state/token_state.dart';
@@ -30,6 +32,7 @@ class AppState {
   final TokenState tokenState;
   final RecipesPageState recipesPageState;
   final ScreenRecipePageState screenRecipePageState;
+  final DialogState dialogState;
 
   AppState({
     @required this.homePageState,
@@ -41,6 +44,7 @@ class AppState {
     @required this.tokenState,
     @required this.recipesPageState,
     @required this.screenRecipePageState,
+  @required this.dialogState,
   });
 
   ///All states are initialized in the [initial] function.
@@ -55,6 +59,7 @@ class AppState {
       tokenState: TokenState.initial(),
       recipesPageState: RecipesPageState.initial(),
       screenRecipePageState: ScreenRecipePageState.initial(),
+      dialogState: DialogState.initial(),
     );
   }
 
@@ -70,6 +75,7 @@ class AppState {
       tokenState: state.tokenState.reducer(action),
       recipesPageState: state.recipesPageState.reducer(action),
       screenRecipePageState: state.screenRecipePageState.reducer(action),
+      dialogState: state.dialogState.reducer(action),
     );
   }
 
@@ -79,5 +85,6 @@ class AppState {
     HomePageEpics.indexEpic,
     TokenEpics.indexEpic,
     RecipesPageEpics.indexEpic,
+    InitAppEpic.indexEpic,
   ]);
 }

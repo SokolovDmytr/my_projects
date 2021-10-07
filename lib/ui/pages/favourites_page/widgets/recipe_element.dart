@@ -17,10 +17,12 @@ import 'package:yellow_team_fridge/utils/comparator.dart';
 
 class RecipeElement extends StatefulWidget {
   final Recipe recipe;
+  final bool needOpenFunction;
   List<Ingredient> _missingIngredients = [];
 
   RecipeElement({
     @required this.recipe,
+    @required this.needOpenFunction,
     Key key,
   }) : super(key: key);
 
@@ -28,11 +30,8 @@ class RecipeElement extends StatefulWidget {
   _RecipeElementState createState() => _RecipeElementState();
 }
 
-class _RecipeElementState extends State<RecipeElement>
-    with TickerProviderStateMixin {
-  final FavouritesPageLanguage language =
-      FlutterDictionary.instance.language?.favouritesPageLanguage ??
-          en.favouritesPageLanguage;
+class _RecipeElementState extends State<RecipeElement> with TickerProviderStateMixin {
+  final FavouritesPageLanguage language = FlutterDictionary.instance.language?.favouritesPageLanguage ?? en.favouritesPageLanguage;
   final FocusNode _focusNode = FocusNode();
 
   @override
@@ -48,11 +47,12 @@ class _RecipeElementState extends State<RecipeElement>
 
   @override
   Widget build(BuildContext context) {
-    widget._missingIngredients = CustomComparator.getMissingsIngredients(
-      recipe: widget.recipe,
-      ingredients:
-          StoreProvider.of<AppState>(context).state.homePageState.ingredients,
-    );
+    if(widget._missingIngredients.isEmpty){
+      widget._missingIngredients = CustomComparator.getMissingsIngredients(
+        recipe: widget.recipe,
+        ingredients: StoreProvider.of<AppState>(context).state.homePageState.ingredients,
+      );
+    }
 
     return AnimatedSize(
       duration: AppDuration.recipeOpenDuration,
@@ -65,9 +65,7 @@ class _RecipeElementState extends State<RecipeElement>
           borderRadius: BorderRadius.circular(10.0),
           boxShadow: AppShadows.recipeElementShadow,
           border: Border.all(
-            color: widget._missingIngredients.isEmpty
-                ? AppColors.white
-                : AppColors.pastelRed,
+            color: widget._missingIngredients.isEmpty ? AppColors.white : AppColors.pastelRed,
           ),
         ),
         child: _focusNode.hasFocus
@@ -88,46 +86,59 @@ class _RecipeElementState extends State<RecipeElement>
                       padding: const EdgeInsets.all(10.0),
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
-                      childAspectRatio: 3.0,
+                      childAspectRatio: 4.0,
                       crossAxisCount: 2,
                       children: widget._missingIngredients.map((e) {
-                        return Container(
-                          child: Row(
-                            children: [
-                              Image.network(
-                                e.image ??
-                                    'https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png',
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 3.0),
+                              child: Image.network(
+                                e.image,
                                 width: 32.0,
                                 height: 32.0,
-                                errorBuilder: (BuildContext _, Object __,
-                                    StackTrace ___) {
-                                  return Icon(Icons.error);
+                                errorBuilder: (BuildContext _, Object __, StackTrace ___) {
+                                  return Icon(
+                                    Icons.error,
+                                    color: AppColors.pastelRed,
+                                  );
                                 },
                               ),
-                              RichText(
+                            ),
+                            Flexible(
+                              child: RichText(
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
                                 text: TextSpan(
-                                    text: e.name,
-                                    style: AppFonts.smallBoldBlackTwoTextStyle,
-                                    children: [
-                                      TextSpan(
-                                        text: colonString,
-                                        style:
-                                            AppFonts.smallBoldBlackTwoTextStyle,
-                                      ),
-                                      TextSpan(
-                                        text: spaceString,
-                                        style: AppFonts.smallTextStyle,
-                                      ),
-                                      TextSpan(
-                                        text: e.description,
-                                        style: AppFonts.smallTextStyle,
-                                      ),
-                                    ]),
+                                  text: e.name,
+                                  style: AppFonts.smallBoldBlackTwoTextStyle,
+                                  children: [
+                                    TextSpan(
+                                      text: colonString,
+                                      style: AppFonts.smallBoldBlackTwoTextStyle,
+                                    ),
+                                    TextSpan(
+                                      text: spaceString,
+                                      style: AppFonts.smallTextStyle,
+                                    ),
+                                    TextSpan(
+                                      text: e.description,
+                                      style: AppFonts.smallTextStyle,
+                                    ),
+                                    TextSpan(
+                                      text: spaceString,
+                                      style: AppFonts.smallTextStyle,
+                                    ),
+                                    TextSpan(
+                                      text: e.count,
+                                      style: AppFonts.smallTextStyle,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         );
                       }).toList(),
                     ),
@@ -162,8 +173,7 @@ class _RecipeElementState extends State<RecipeElement>
                                     maxLines: 2,
                                     text: TextSpan(
                                       text: widget.recipe.name,
-                                      style:
-                                          AppFonts.mediumShadowBlackTextStyle,
+                                      style: AppFonts.mediumShadowBlackTextStyle,
                                     ),
                                   ),
                                 ),
@@ -177,9 +187,7 @@ class _RecipeElementState extends State<RecipeElement>
                               ],
                             ),
                           ),
-                          widget._missingIngredients.isEmpty
-                              ? _getParameterOfRecipeWidgetBock()
-                              : _geMissingIngredientsBock(),
+                          widget._missingIngredients.isEmpty ? _getParameterOfRecipeWidgetBock() : _geMissingIngredientsBock(),
                         ],
                       ),
                     ),
@@ -204,9 +212,7 @@ class _RecipeElementState extends State<RecipeElement>
         width: _focusNode.hasFocus ? widthScreen : 128.0,
         child: Stack(
           fit: StackFit.expand,
-          alignment: FlutterDictionary.instance.isRTL
-              ? Alignment.topRight
-              : Alignment.topLeft,
+          alignment: FlutterDictionary.instance.isRTL ? Alignment.topRight : Alignment.topLeft,
           children: [
             widget.recipe.image == null
                 ? Image.asset(
@@ -214,9 +220,7 @@ class _RecipeElementState extends State<RecipeElement>
                   )
                 : Image.network(
                     widget.recipe.image,
-                    fit: _focusNode.hasFocus
-                        ? BoxFit.fitWidth
-                        : BoxFit.fitHeight,
+                    fit: _focusNode.hasFocus ? BoxFit.fitWidth : BoxFit.fitHeight,
                     errorBuilder: (BuildContext _, Object __, StackTrace ___) {
                       return Image.asset(
                         ImageAssets.chefYellow,
@@ -282,6 +286,32 @@ class _RecipeElementState extends State<RecipeElement>
                           ),
                         ),
                       ),
+
+            _focusNode.hasFocus ? Positioned(
+              bottom: 0.0,
+              left: FlutterDictionary.instance.isRTL ? 0.0 : null,
+              right: FlutterDictionary.instance.isRTL ? null : 0.0,
+              child: InkWell(
+                child: Container(
+                  height: 28.0,
+                  width: 28.0,
+                  margin: const EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.keyboard_arrow_up,
+                    size: 24.0,
+                  ),
+                ),
+                onTap: () {
+                  setState(() {
+                    FocusManager.instance.primaryFocus.unfocus();
+                  });
+                },
+              ),
+            ) : const SizedBox(),
           ],
         ),
       ),
@@ -310,18 +340,19 @@ class _RecipeElementState extends State<RecipeElement>
                         width: 32.0,
                         margin: const EdgeInsets.symmetric(horizontal: 3.0),
                         child: Image.network(
-                          e.image ??
-                              'https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png',
-                          errorBuilder:
-                              (BuildContext _, Object __, StackTrace ___) {
-                            return Icon(Icons.error);
+                          e.image,
+                          errorBuilder: (BuildContext _, Object __, StackTrace ___) {
+                            return Icon(
+                              Icons.error,
+                              color: AppColors.pastelRed,
+                            );
                           },
                         ),
                       );
                     }).toList(),
                   ),
                 ),
-                Container(
+                widget.needOpenFunction ? Container(
                   margin: EdgeInsets.only(
                     left: FlutterDictionary.instance.isRTL ? 0.0 : 10.0,
                     right: FlutterDictionary.instance.isRTL ? 10.0 : 0.0,
@@ -329,24 +360,16 @@ class _RecipeElementState extends State<RecipeElement>
                   ),
                   child: InkWell(
                     child: Icon(
-                      _focusNode.hasFocus
-                          ? Icons.keyboard_arrow_up
-                          : Icons.keyboard_arrow_down,
+                      Icons.keyboard_arrow_down,
                       size: 24.0,
                     ),
                     onTap: () {
                       setState(() {
-                        if (_focusNode.hasFocus) {
-                          FocusManager.instance.primaryFocus.unfocus();
-                        } else {
-                          FocusScope.of(RouteService
-                                  .instance.navigatorKey.currentState.context)
-                              .requestFocus(_focusNode);
-                        }
+                        FocusScope.of(RouteService.instance.navigatorKey.currentState.context).requestFocus(_focusNode);
                       });
                     },
                   ),
-                ),
+                ) : const SizedBox(),
               ],
             ),
           ),

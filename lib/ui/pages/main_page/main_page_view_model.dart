@@ -13,6 +13,7 @@ class MainPageViewModel {
   final Function(String id) deleteIngredient;
   final Function() clearIngredients;
   final Function() toRecipePage;
+  final Function() getAllIngredient;
   final String language;
 
   const MainPageViewModel({
@@ -23,6 +24,7 @@ class MainPageViewModel {
     @required this.deleteIngredient,
     @required this.clearIngredients,
     @required this.toRecipePage,
+    @required this.getAllIngredient,
     @required this.language,
   });
 
@@ -44,6 +46,7 @@ class MainPageViewModel {
       clearIngredients: () =>HomePageSelector.clearIngredientList(store: store),
       toRecipePage: () => HomePageSelector.toRecipesPage(store: store),
       language: LanguageSelectors.getCurrentLanguage(store),
+      getAllIngredient: () => HomePageSelector.getAllIngredient(store: store),
     );
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:yellow_team_fridge/dictionary/data/en.dart';
+import 'package:yellow_team_fridge/dictionary/dictionary_classes/recipes_page_language.dart';
+import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/const.dart';
 import 'package:yellow_team_fridge/services/route_service/app_routes.dart';
@@ -14,6 +17,8 @@ class RecipesPage extends StatefulWidget {
 }
 
 class _RecipesPageState extends State<RecipesPage> {
+  final RecipesPageLanguage language = FlutterDictionary.instance.language?.recipesPageLanguage ?? en.recipesPageLanguage;
+
   @override
   Widget build(BuildContext _) {
     return StoreConnector<AppState, RecipesPageViewModel>(
@@ -21,19 +26,24 @@ class _RecipesPageState extends State<RecipesPage> {
       onInitialBuild: (RecipesPageViewModel vm) => vm.fetchData(),
       builder: (BuildContext context, RecipesPageViewModel vm){
         return MainLayout(
+          title: language.recipes,
           appBarType: AppBarType.simple,
           isMainStyleAppBar: true,
           color: AppColors.wheat,
           currentPage: AppRoutes.recipes,
           onTapBack: vm.onTapBack,
           key: UniqueKey(),
-          body: ListView.builder(
-            itemCount: vm.recipes.length,
-            itemBuilder: (BuildContext _, int index) {
-              return RecipeElement(
-                recipe: vm.recipes[index],
-              );
-            },
+          body: Container(
+            margin: const EdgeInsets.only(top: 21.0),
+            child: ListView.builder(
+              itemCount: vm.recipes.length,
+              itemBuilder: (BuildContext _, int index) {
+                return RecipeElement(
+                  recipe: vm.recipes[index],
+                  needOpenFunction: true,
+                );
+              },
+            ),
           ),
         );
       },

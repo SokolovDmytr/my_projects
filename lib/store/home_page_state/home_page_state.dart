@@ -8,30 +8,36 @@ import 'package:yellow_team_fridge/store/home_page_state/action/clear_temp_ingre
 import 'package:yellow_team_fridge/store/home_page_state/action/delete_ingredient_action.dart';
 import 'package:yellow_team_fridge/store/home_page_state/action/save_temp_ingredients_action.dart';
 import 'package:yellow_team_fridge/store/shared/reducer.dart';
+import 'package:yellow_team_fridge/store/home_page_state/action/save_all_ingredient_action.dart';
 
 class HomePageState {
   final List<Ingredient> ingredients;
   final List<Ingredient> tempIngredients;
+  final List<Ingredient> allIngredient;
 
   const HomePageState({
     @required this.ingredients,
     @required this.tempIngredients,
+    @required this.allIngredient,
   });
 
   factory HomePageState.initial() {
     return HomePageState(
       ingredients: [],
       tempIngredients: [],
+      allIngredient: [],
     );
   }
 
   HomePageState copyWith({
     List<Ingredient> inputIngredients,
     List<Ingredient> inputTempIngredients,
+    List<Ingredient> inputAllIngredient,
   }) {
     return HomePageState(
       ingredients: inputIngredients ?? ingredients,
       tempIngredients: inputTempIngredients ?? tempIngredients,
+      allIngredient: inputAllIngredient ?? allIngredient,
     );
   }
 
@@ -42,7 +48,8 @@ class HomePageState {
         DeleteIngredientAction: (dynamic action) => _deleteIngredient(action),
         AddIngredientAction: (dynamic action) => _addIngredient(action),
         ClearTempIngredientListAction: (dynamic action) => _clearTempIngredientList(),
-        ClearIngredientListAction: (dynamic action) => _clearIngredientList()
+        ClearIngredientListAction: (dynamic action) => _clearIngredientList(),
+        SaveAllIngredientAction: (dynamic action) => _saveAllIngrdient(action),
       }),
     ).updateState(action, this);
   }
@@ -77,5 +84,9 @@ class HomePageState {
 
   HomePageState _clearIngredientList() {
     return copyWith(inputIngredients: []);
+  }
+
+  HomePageState _saveAllIngrdient(SaveAllIngredientAction action) {
+    return copyWith(inputAllIngredient: action.ingredients);
   }
 }
