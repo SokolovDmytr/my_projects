@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
+import 'package:yellow_team_fridge/dictionary/data/en.dart';
+import 'package:yellow_team_fridge/dictionary/dictionary_classes/dialog_language.dart';
+import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/services/dialog_service/dialogs/error_dialog/error_dialog.dart';
 import 'package:yellow_team_fridge/services/dialog_service/dialogs/error_dialog/error_dialog_widget.dart';
 import 'package:yellow_team_fridge/services/dialog_service/dialogs/loader/loader_pop_up.dart';
@@ -9,6 +12,7 @@ import 'package:yellow_team_fridge/services/dialog_service/dialogs/swipe_tutoria
 import 'package:yellow_team_fridge/store/application/app_state.dart';
 import 'package:yellow_team_fridge/store/shared/dialog_state/actions/force_close_dialog_action.dart';
 import 'package:yellow_team_fridge/store/shared/dialog_state/actions/show_dialog_action.dart';
+import 'package:yellow_team_fridge/store/shared/loader/loader_state.dart';
 
 /// [DialogSelectors] it class with static functions for work with Dialogs from Pages.
 /// Functions:
@@ -55,10 +59,15 @@ class DialogSelector {
 
   static void showLoader({
     @required Store<AppState> store,
-}){
+  }) {
+    final DialogLanguage language = FlutterDictionary.instance.language?.mainPageLanguage ?? en.dialogLanguage;
+
     store.dispatch(
       ShowDialogAction(
         dialog: LoaderPopUp(
+          title: language.loadingText,
+          state: true,
+          loaderKey: LoaderKey.getData,
           child: LoaderWidget(),
         ),
       ),

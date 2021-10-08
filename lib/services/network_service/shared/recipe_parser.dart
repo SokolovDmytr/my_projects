@@ -17,8 +17,8 @@ class RecipeParser {
           data: item['ingredients'],
         );
 
-        List<String> steps = [];
-        List<dynamic> stepsData = item['steps'];
+        final List<String> steps = [];
+        final List<dynamic> stepsData = item['steps'];
         for(var stepData in stepsData){
           steps.add(stepData);
         }

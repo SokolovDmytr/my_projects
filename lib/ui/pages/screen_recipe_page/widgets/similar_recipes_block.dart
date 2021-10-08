@@ -54,6 +54,7 @@ class _SimilarRecipesBlockState extends State<SimilarRecipesBlock> {
                   onTap: () {},
                   child: RecipeElement(
                     recipe: widget.listRecipes[index],
+                    needOpenFunction: false,
                   ),
                 ),
               ),

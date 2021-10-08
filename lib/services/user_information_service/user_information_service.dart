@@ -26,8 +26,8 @@ class UserInformationService {
 
   Future<Token> init() async {
     logger.d('Load information');
-    Box<User> box = await Hive.box<User>(hiveBoxName);
-    _user = await box.get(userKey);
+    final Box<User> box = Hive.box<User>(hiveBoxName);
+    _user = box.get(userKey);
 
     if (_user?.token == null) {
       _user = User(
@@ -112,12 +112,12 @@ class UserInformationService {
       );
     }
 
-    Box<User> box = await Hive.box<User>(hiveBoxName);
+    final Box<User> box = Hive.box<User>(hiveBoxName);
     await box.put(userKey, user);
   }
 
   void clear() async{
-    Box<User> box = await Hive.box<User>(hiveBoxName);
+    final Box<User> box = Hive.box<User>(hiveBoxName);
     await box.clear();
     _user.isFirstVisitApp = false;
     _user.isFirstSeeSwipeTutorial = false;

@@ -7,11 +7,12 @@ class ILoader extends IDialog {
   final String title;
   final LoaderKey loaderKey;
 
-  ILoader({
+  const ILoader({
     @required this.state,
     @required this.loaderKey,
     @required this.title,
-  });
+    @required Widget child,
+  }) : super(child: child);
 
   Widget get widget {
     return child;

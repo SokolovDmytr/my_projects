@@ -26,16 +26,19 @@ class FridgeParser {
     @required Type exampleObject,
     @required BaseHttpResponse response,
   }) {
+    List<dynamic> result = [];
     if (exampleObject == Recipe) {
-      return _recipeParser.parse(
+      result =  _recipeParser.parse(
         data: response.response,
       );
     }
     if (exampleObject == Ingredient) {
-      return _ingredientParser.parse(
+      result = _ingredientParser.parse(
         data: response.response,
       );
     }
+
+    return result;
   }
 
   dynamic parseEntity({

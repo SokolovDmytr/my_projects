@@ -12,15 +12,15 @@ import 'package:yellow_team_fridge/services/user_information_service/user_inform
 import 'package:yellow_team_fridge/store/application/app_state.dart';
 import 'package:yellow_team_fridge/store/home_page_state/action/get_all_ingredient_action.dart';
 import 'package:yellow_team_fridge/store/home_page_state/action/get_ingredients_with_string_action.dart';
-import 'package:yellow_team_fridge/store/home_page_state/action/hide_loader.dart';
 import 'package:yellow_team_fridge/store/home_page_state/action/save_all_ingredient_action.dart';
 import 'package:yellow_team_fridge/store/home_page_state/action/save_temp_ingredients_action.dart';
 import 'package:yellow_team_fridge/services/dialog_service/dialogs/error_dialog/error_dialog.dart';
 import 'package:yellow_team_fridge/services/dialog_service/dialogs/error_dialog/error_dialog_widget.dart';
 import 'package:yellow_team_fridge/services/pop_up_service/pop_up_service.dart';
 import 'package:yellow_team_fridge/services/pop_up_service/server_error_pop_up_widget.dart';
-import 'package:yellow_team_fridge/store/home_page_state/action/show_loader.dart';
 import 'package:yellow_team_fridge/store/shared/dialog_state/actions/show_dialog_action.dart';
+import 'package:yellow_team_fridge/store/shared/loader/actions/show_loader_action.dart';
+import 'package:yellow_team_fridge/store/shared/loader/actions/hide_loader_action.dart';
 
 class HomePageEpics {
   static final indexEpic = combineEpics<AppState>([
@@ -36,13 +36,9 @@ class HomePageEpics {
       (action) async* {
         yield ShowLoaderAction();
 
-        await Future.delayed(Duration(seconds: 5));
-
-        bool isConnection = await NetworkService.instance.checkInternetConnection();
+        final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
         if (isConnection == false) {
-          yield HideLoaderAction();
-
           yield ShowDialogAction(
             dialog: ErrorDialog(
               child: ErrorDialogWidget(),
@@ -70,14 +66,12 @@ class HomePageEpics {
             response: response,
           );
 
+          yield HideLoaderAction();
+
           yield SaveTempIngredientsAction(
             ingredients: ingredients,
           );
-
-          yield HideLoaderAction();
-        }else{
-          yield HideLoaderAction();
-
+        } else {
           PopUpService.instance.show(
             widget: ServerErrorPopUpWidget(),
           );
@@ -92,7 +86,7 @@ class HomePageEpics {
   ) {
     return actions.whereType<GetAllIngredientAction>().switchMap(
       (action) async* {
-        bool isConnection = await NetworkService.instance.checkInternetConnection();
+        final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
         if (isConnection == false) {
           yield ShowDialogAction(
@@ -125,7 +119,7 @@ class HomePageEpics {
           yield SaveAllIngredientAction(
             ingredients: ingredients,
           );
-        }else{
+        } else {
           PopUpService.instance.show(
             widget: ServerErrorPopUpWidget(),
           );

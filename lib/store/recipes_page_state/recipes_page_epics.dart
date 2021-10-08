@@ -1,6 +1,9 @@
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:yellow_team_fridge/dictionary/data/en.dart';
+import 'package:yellow_team_fridge/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:yellow_team_fridge/dictionary/flutter_delegate.dart';
+import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/models/pages/ingredient.dart';
 import 'package:yellow_team_fridge/models/pages/recipe.dart';
 import 'package:yellow_team_fridge/services/dialog_service/dialogs/error_dialog/error_dialog.dart';
@@ -33,14 +36,18 @@ class RecipesPageEpics {
   ) {
     return actions.whereType<GetRecipesWithIngredientsAction>().switchMap(
       (action) async* {
+        final DialogLanguage language = FlutterDictionary.instance.language?.mainPageLanguage ?? en.dialogLanguage;
+
         yield ShowDialogAction(
           dialog: LoaderPopUp(
+            title: language.loadingText,
+            state: true,
             loaderKey: LoaderKey.getData,
             child: LoaderWidget(),
           ),
         );
 
-        bool isConnection = await NetworkService.instance.checkInternetConnection();
+        final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
         if (isConnection == false) {
           yield ForceCloseDialogAction();
@@ -72,7 +79,7 @@ class RecipesPageEpics {
             response: response,
           );
 
-          List<Ingredient> ingredients = store.state.homePageState.allIngredient;
+          final List<Ingredient> ingredients = store.state.homePageState.allIngredient;
 
           for (Recipe recipe in recipes) {
             for (Ingredient ingredient in recipe.ingredients) {

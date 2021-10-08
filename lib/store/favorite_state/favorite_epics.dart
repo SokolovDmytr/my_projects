@@ -1,6 +1,9 @@
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:yellow_team_fridge/dictionary/data/en.dart';
+import 'package:yellow_team_fridge/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:yellow_team_fridge/dictionary/flutter_delegate.dart';
+import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/models/pages/ingredient.dart';
 import 'package:yellow_team_fridge/models/pages/recipe.dart';
 import 'package:yellow_team_fridge/services/network_service/models/base_http_response.dart';
@@ -33,14 +36,18 @@ class FavoriteEpics {
   ) {
     return actions.whereType<GetFavoriteRecipeAction>().switchMap(
       (action) async* {
+        final DialogLanguage language = FlutterDictionary.instance.language?.mainPageLanguage ?? en.dialogLanguage;
+
         yield ShowDialogAction(
           dialog: LoaderPopUp(
+            title: language.loadingText,
+            state: true,
             loaderKey: LoaderKey.getData,
             child: LoaderWidget(),
           ),
         );
 
-        bool isConnection = await NetworkService.instance.checkInternetConnection();
+        final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
         if (isConnection == false) {
           yield ForceCloseDialogAction();
@@ -71,12 +78,12 @@ class FavoriteEpics {
             response: response,
           );
 
-          List<Ingredient> ingredients = store.state.homePageState.allIngredient;
+          final List<Ingredient> ingredients = store.state.homePageState.allIngredient;
 
-          for(Recipe recipe in recipes){
-            for(Ingredient ingredient in recipe.ingredients){
-              for(Ingredient dataIngredient in ingredients){
-                if(ingredient.i == dataIngredient.i){
+          for (Recipe recipe in recipes) {
+            for (Ingredient ingredient in recipe.ingredients) {
+              for (Ingredient dataIngredient in ingredients) {
+                if (ingredient.i == dataIngredient.i) {
                   ingredient.name = dataIngredient.name;
                   ingredient.image = dataIngredient.image;
                 }

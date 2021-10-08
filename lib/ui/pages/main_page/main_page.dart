@@ -11,10 +11,14 @@ import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_shadows.dart';
 import 'package:yellow_team_fridge/res/const.dart';
 import 'package:yellow_team_fridge/res/image_assets.dart';
+import 'package:yellow_team_fridge/services/dialog_service/dialogs/text_field_loader/text_field_loader.dart';
+import 'package:yellow_team_fridge/services/dialog_service/dialogs/text_field_loader/text_field_loader_widget.dart';
 import 'package:yellow_team_fridge/services/route_service/app_routes.dart';
 import 'package:yellow_team_fridge/services/user_information_service/user_information_service.dart';
 import 'package:yellow_team_fridge/store/application/app_state.dart';
 import 'package:yellow_team_fridge/store/home_page_state/home_page_selector.dart';
+import 'package:yellow_team_fridge/store/shared/loader/loader_selectors.dart';
+import 'package:yellow_team_fridge/store/shared/loader/loader_state.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_textfield.dart';
 import 'package:yellow_team_fridge/ui/layouts/main_layout/main_layout.dart';
@@ -32,6 +36,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final TextFieldLoaderWidget _textFieldLoaderWidget = TextFieldLoaderWidget();
   FocusNode _textFieldFocusNode;
   OverlayEntry _overlayEntry;
   BuildContext _textFieldContext;
@@ -51,17 +56,31 @@ class _MainPageState extends State<MainPage> {
       } else {
         _overlayEntry.remove();
 
-        if (UserInformationService.instance.isFirstSeeSwipeTutorial() == false && StoreProvider.of<AppState>(context, listen: true).state.homePageState.ingredients.isNotEmpty) {
+        if (UserInformationService.instance.isFirstSeeSwipeTutorial() == false &&
+            StoreProvider.of<AppState>(context, listen: true).state.homePageState.ingredients.isNotEmpty) {
           DialogSelector.showSwipeTutorialDialogFunction(
             store: StoreProvider.of<AppState>(context),
             onTapOk: () {
               UserInformationService.instance.seeSwipeTutorial();
-              DialogSelector.closeDialog(store: StoreProvider.of<AppState>(context),);
+              DialogSelector.closeDialog(
+                store: StoreProvider.of<AppState>(context),
+              );
             },
           );
         }
       }
     });
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) => LoaderSelectors.addLoader(
+        store: StoreProvider.of<AppState>(context),
+        loader: TextFieldLoader(
+          child: _textFieldLoaderWidget,
+          state: false,
+          loaderKey: LoaderKey.getData,
+          title: emptyString,
+        ),
+      ),
+    );
   }
 
   @override
@@ -89,24 +108,22 @@ class _MainPageState extends State<MainPage> {
                 child: Builder(
                   builder: (BuildContext ctx) {
                     _textFieldContext = ctx;
-                    bool needLoader = StoreProvider.of<AppState>(ctx, listen: true).state.homePageState.needLoader;
 
                     return GlobalTextField(
                       controller: _textEditingController,
                       focusNode: _textFieldFocusNode,
                       needSuffix: true,
-                      needLoader: needLoader,
+                      loader: _textFieldLoaderWidget,
                       needPrefix: true,
                       needShowButton: false,
                       hintText: language.chooseTextField,
                       hintStyle: AppFonts.medium16Height24TextStyle,
-
                       onChanged: (String text) {
                         _textFromSearchTextField = text.trim();
-                        if (text.trim().isNotEmpty) {
+                        if (_textFromSearchTextField.isNotEmpty) {
                           HomePageSelector.getIngredientsWithName(
                             store: StoreProvider.of<AppState>(context),
-                            name: text.trim(),
+                            name: _textFromSearchTextField,
                           );
                         } else {
                           if (StoreProvider.of<AppState>(context).state.homePageState.tempIngredients.isNotEmpty) {

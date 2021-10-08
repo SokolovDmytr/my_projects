@@ -88,12 +88,13 @@ class NetworkService {
         );
       }
 
-      return BaseHttpResponse(
-        response: json.decode(response.body),
-      );
     } catch (error) {
       logger.d(error);
     }
+
+    return BaseHttpResponse(
+      response: json.decode(response.body),
+    );
   }
 
   Future<BaseHttpResponse> requestWithParams({

@@ -6,13 +6,12 @@ import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_shadows.dart';
-import 'package:yellow_team_fridge/res/image_assets.dart';
 
 class GlobalTextField extends StatefulWidget {
   final TextStyle hintStyle;
   final String hintText;
   final bool needShowButton;
-  final bool needLoader;
+  final Widget loader;
   final bool needPrefix;
   final bool needSuffix;
   final EdgeInsets padding;
@@ -24,9 +23,9 @@ class GlobalTextField extends StatefulWidget {
 
   const GlobalTextField({
     @required this.needSuffix,
-    @required this.needLoader,
     @required this.needPrefix,
     @required this.needShowButton,
+    this.loader,
     this.padding,
     this.hintText,
     this.hintStyle,
@@ -82,13 +81,9 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
                   ),
                 )
               : SizedBox(),
-          suffix: widget.needSuffix
-              ? widget.needLoader
-                  ? Image.asset(
-                      ImageAssets.loadingGif,
-                      height: 35.0,
-                      width: 35.0,
-                    )
+          suffixIcon: widget.needSuffix
+              ? widget.loader != null
+                  ? widget.loader
                   : widget.needShowButton
                       ? Padding(
                           padding: const EdgeInsets.only(right: 16.0),

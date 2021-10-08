@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:yellow_team_fridge/dictionary/dictionary_classes/main_page_language.dart';
 import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/dictionary/data/en.dart';
-import 'package:yellow_team_fridge/dictionary/dictionary_classes/dialog_language.dart';
-import 'package:yellow_team_fridge/dictionary/flutter_dictionary.dart';
 import 'package:yellow_team_fridge/res/app_fonts.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_colors.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_gradient.dart';
 import 'package:yellow_team_fridge/res/app_styles/app_shadows.dart';
 import 'package:yellow_team_fridge/res/image_assets.dart';
-import 'package:yellow_team_fridge/services/dialog_service/dialog_service.dart';
 import 'package:yellow_team_fridge/ui/global_widgets/global_button.dart';
 
 class SwipeTutorialWidget extends StatelessWidget {
@@ -18,7 +15,11 @@ class SwipeTutorialWidget extends StatelessWidget {
 
   SwipeTutorialWidget({
     @required this.onTapOk,
-  });
+  }) : super(
+          key: Key(
+            'SwipeTutorialWidget',
+          ),
+        );
 
   @override
   Widget build(BuildContext context) {

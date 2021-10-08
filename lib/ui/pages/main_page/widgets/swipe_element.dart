@@ -97,8 +97,10 @@ class _SwipeElementState extends State<SwipeElement>
                 position.position.dx - widget._startPosition;
 
             if(FlutterDictionary.instance.isRTL){
-              if(distance > 0.0)
+              if(distance > 0.0){
                 return;
+              }
+
 
               distance = -distance;
             }

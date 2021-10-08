@@ -32,11 +32,10 @@ class TokenState {
   }
 
   TokenState _saveAction(Token token) {
-    print(token.token);
     return TokenState(token: token);
   }
 
   TokenState _deleteAction() {
-    return TokenState(token: null);
+    return TokenState();
   }
 }

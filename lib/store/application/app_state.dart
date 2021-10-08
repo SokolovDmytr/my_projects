@@ -12,6 +12,7 @@ import 'package:yellow_team_fridge/store/recipes_page_state/recipes_page_epics.d
 import 'package:yellow_team_fridge/store/recipes_page_state/recipes_page_state.dart';
 import 'package:yellow_team_fridge/store/screen_recipe_page/screen_recipe_page_state.dart';
 import 'package:yellow_team_fridge/store/shared/dialog_state/dialog_state.dart';
+import 'package:yellow_team_fridge/store/shared/loader/loader_state.dart';
 import 'package:yellow_team_fridge/store/shared/route_state/route_state.dart';
 import 'package:yellow_team_fridge/store/token_state/token_epics.dart';
 import 'package:yellow_team_fridge/store/token_state/token_state.dart';
@@ -33,6 +34,7 @@ class AppState {
   final RecipesPageState recipesPageState;
   final ScreenRecipePageState screenRecipePageState;
   final DialogState dialogState;
+  final LoaderState loaderState;
 
   AppState({
     @required this.homePageState,
@@ -45,6 +47,7 @@ class AppState {
     @required this.recipesPageState,
     @required this.screenRecipePageState,
   @required this.dialogState,
+    @required this.loaderState,
   });
 
   ///All states are initialized in the [initial] function.
@@ -60,6 +63,7 @@ class AppState {
       recipesPageState: RecipesPageState.initial(),
       screenRecipePageState: ScreenRecipePageState.initial(),
       dialogState: DialogState.initial(),
+      loaderState: LoaderState.initial(),
     );
   }
 
@@ -76,6 +80,7 @@ class AppState {
       recipesPageState: state.recipesPageState.reducer(action),
       screenRecipePageState: state.screenRecipePageState.reducer(action),
       dialogState: state.dialogState.reducer(action),
+      loaderState: state.loaderState.reducer(action),
     );
   }
 

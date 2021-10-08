@@ -14,6 +14,11 @@ import 'package:yellow_team_fridge/ui/pages/favourites_page/widgets/recipe_eleme
 import 'package:yellow_team_fridge/ui/pages/recipes_page/recipes_page_view_model.dart';
 
 class RecipesPage extends StatefulWidget {
+  RecipesPage()
+      : super(
+          key: Key('RecipesPage'),
+        );
+
   @override
   _RecipesPageState createState() => _RecipesPageState();
 }
@@ -26,7 +31,7 @@ class _RecipesPageState extends State<RecipesPage> {
     return StoreConnector<AppState, RecipesPageViewModel>(
       converter: RecipesPageViewModel.init,
       onInitialBuild: (RecipesPageViewModel vm) => vm.fetchData(),
-      builder: (BuildContext context, RecipesPageViewModel vm){
+      builder: (BuildContext context, RecipesPageViewModel vm) {
         return MainLayout(
           title: language.recipes,
           appBarType: AppBarType.simple,
@@ -35,42 +40,42 @@ class _RecipesPageState extends State<RecipesPage> {
           currentPage: AppRoutes.recipes,
           onTapBack: vm.onTapBack,
           key: UniqueKey(),
-          body: vm.recipes.isEmpty ?
-              Column(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(
-                      70.0,
-                      90.0,
-                      70.0,
-                      90.0,
+          body: vm.recipes.isEmpty
+              ? Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(
+                        70.0,
+                        90.0,
+                        70.0,
+                        90.0,
+                      ),
+                      child: Text(
+                        language.listEmpty,
+                        style: AppFonts.normalBlackHeight30TextStyle,
+                        softWrap: false,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                    child: Text(
-                      language.listEmpty,
-                      style: AppFonts.normalBlackHeight30TextStyle,
-                      softWrap: false,
-                      overflow: TextOverflow.ellipsis,
+                    Flexible(
+                      child: Image.asset(
+                        ImageAssets.recipePageChef,
+                      ),
                     ),
+                  ],
+                )
+              : Container(
+                  margin: const EdgeInsets.only(top: 21.0),
+                  child: ListView.builder(
+                    itemCount: vm.recipes.length,
+                    itemBuilder: (BuildContext _, int index) {
+                      return RecipeElement(
+                        recipe: vm.recipes[index],
+                        needOpenFunction: true,
+                      );
+                    },
                   ),
-                  Flexible(
-                    child: Image.asset(
-                      ImageAssets.recipePageChef,
-                    ),
-                  ),
-                ],
-              ) :
-          Container(
-            margin: const EdgeInsets.only(top: 21.0),
-            child: ListView.builder(
-              itemCount: vm.recipes.length,
-              itemBuilder: (BuildContext _, int index) {
-                return RecipeElement(
-                  recipe: vm.recipes[index],
-                  needOpenFunction: true,
-                );
-              },
-            ),
-          ),
+                ),
         );
       },
     );

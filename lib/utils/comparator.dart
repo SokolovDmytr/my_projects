@@ -20,8 +20,10 @@ class CustomComparator {
         }
       }
 
-      if(isFind == false)
+      if(isFind == false){
         missingIngredient.add(recipeIngredient);
+      }
+
     }
 
     return missingIngredient;
