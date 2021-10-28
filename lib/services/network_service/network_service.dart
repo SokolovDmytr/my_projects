@@ -1,8 +1,7 @@
 import 'dart:convert';
 
-import 'package:data_connection_checker/data_connection_checker.dart';
-import 'package:flutter/material.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
+import 'package:fridge_yellow_team_bloc/services/internet_connection_helper.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/interfaces/i_base_request.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/interfaces/i_parameter.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/models/base_http_response.dart';
@@ -100,6 +99,6 @@ class NetworkService {
   }
 
   Future<bool> checkInternetConnection() async {
-    return await DataConnectionChecker().hasConnection;
+    return await InternetConnectionHelper.hasInternetConnection();
   }
 }

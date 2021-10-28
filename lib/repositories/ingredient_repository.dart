@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_delegate.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/models/base_http_response.dart';

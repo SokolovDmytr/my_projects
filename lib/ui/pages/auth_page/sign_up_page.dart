@@ -10,6 +10,8 @@ import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_button.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_textfield.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/auth_page/cubit/auth_page_cubit.dart';
+import 'package:provider/src/provider.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -159,9 +161,7 @@ class _SignUpPageState extends State<SignUpPage> {
             onTap: () {
               final bool emailValid = RegExp(patternForEmail).hasMatch(emailController.text);
               if (emailValid && passwordController.text.isNotEmpty && confirmPasswordController.text == passwordController.text) {
-                /*
-                  add register
-                   */
+                context.read<AuthPageCubit>().register(emailController.text, emailController.text, passwordController.text);
               } else {
                 if (passwordController.text != confirmPasswordController.text ||
                     passwordController.text.isEmpty ||

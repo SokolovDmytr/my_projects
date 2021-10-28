@@ -1,5 +1,6 @@
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/token.dart';
+import 'package:fridge_yellow_team_bloc/repositories/auth_repository.dart';
 import 'package:fridge_yellow_team_bloc/res/app_duration.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/models/base_http_response.dart';

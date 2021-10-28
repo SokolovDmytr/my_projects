@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/interfaces/i_base_request.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/models/delete_request_model.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/models/get_request_model.dart';
@@ -8,7 +6,6 @@ import 'package:fridge_yellow_team_bloc/services/network_service/models/post_req
 import 'package:fridge_yellow_team_bloc/services/network_service/models/put_request_model.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/network_service.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/res/consts.dart';
-
 
 class RequestBuilders {
   static IBaseRequest get({
@@ -95,7 +92,7 @@ class RequestBuilders {
 
   static IBaseRequest delete({
     required String functionName,
-    required String url,
+    String? url,
     String? token,
     MapEntry<String, String>? tokenEntry,
     Map<String, String>? headers,
@@ -157,10 +154,8 @@ class RequestBuilders {
     if (params != null && params.isNotEmpty) {
       final List<String> paramStrings = params
           .map((key, value) {
-            if (key == null || value == null) logger.e('params: $params');
-
             return MapEntry(
-              key ?? '',
+              key,
               _createParamString(key, value) ?? '',
             );
           })
@@ -194,7 +189,7 @@ class RequestBuilders {
 
     if (tokenEntry != null) {
       headers = _addTokenEntryToHeaders(
-        tokenEntry: tokenEntry!,
+        tokenEntry: tokenEntry,
         headers: headers,
       );
     }
@@ -202,7 +197,7 @@ class RequestBuilders {
     return headers;
   }
 
-  static String _createParamString(String key, String value) {
+  static String? _createParamString(String key, String value) {
     return key + '=' + value;
   }
 

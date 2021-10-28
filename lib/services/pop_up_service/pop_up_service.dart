@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
+import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
 
 class PopUpService {
   static const tag = '[PopUpService]';
@@ -12,8 +13,8 @@ class PopUpService {
 
   void show({
     required Widget widget,
-    required BuildContext ctx,
   }) {
+    BuildContext ctx = RouteService.instance.navigatorKey.currentState!.context;
     showDialog(
       context: ctx,
       barrierDismissible: true,

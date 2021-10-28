@@ -6,6 +6,7 @@ enum HttpType {
 const int noConnectionStatusCode = -1;
 const int networkStatusCodeOk = 200;
 const String baseUrl = 'http://104.236.36.62:8082';
+const String exampleUrl = 'example.com';
 
 const Map<String, String> parameterKeys = {
   'firstName': 'firstName',

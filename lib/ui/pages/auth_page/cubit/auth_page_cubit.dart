@@ -20,10 +20,9 @@ class AuthPageCubit extends Cubit<AuthPageState> {
   AuthPageCubit() : super(AuthPageState.init());
 
   Future<void> logIn(String email, String password) async {
-    PopUpService.instance.show(widget: LoaderWidget(), ctx: RouteService.instance.navigatorKey.currentState!.context);
+    PopUpService.instance.show(widget: LoaderWidget());
 
     final bool isConnection = await NetworkService.instance.checkInternetConnection();
-
     if (isConnection == false) {
       DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
       DialogService.instance.show(
@@ -51,14 +50,13 @@ class AuthPageCubit extends Cubit<AuthPageState> {
     } else {
       DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
       PopUpService.instance.show(
-        ctx: RouteService.instance.navigatorKey.currentContext!,
         widget: ServerErrorPopUpWidget(),
       );
     }
   }
 
   Future<void> logOut() async {
-    PopUpService.instance.show(widget: LoaderWidget(), ctx: RouteService.instance.navigatorKey.currentState!.context);
+    PopUpService.instance.show(widget: LoaderWidget());
 
     final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
@@ -85,49 +83,47 @@ class AuthPageCubit extends Cubit<AuthPageState> {
     } else {
       DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
       PopUpService.instance.show(
-        ctx: RouteService.instance.navigatorKey.currentContext!,
         widget: ServerErrorPopUpWidget(),
       );
     }
   }
-}
 
-Future<void> register(String email, String firstName, String password) async {
-  PopUpService.instance.show(widget: LoaderWidget(), ctx: RouteService.instance.navigatorKey.currentState!.context);
+  Future<void> register(String email, String firstName, String password) async {
+    PopUpService.instance.show(widget: LoaderWidget());
 
-  final bool isConnection = await NetworkService.instance.checkInternetConnection();
+    final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
-  if (isConnection == false) {
-    DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
-    DialogService.instance.show(
-      dialog: ErrorDialog(
-        child: ErrorDialogWidget(),
-      ),
+    if (isConnection == false) {
+      DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
+      DialogService.instance.show(
+        dialog: ErrorDialog(
+          child: ErrorDialogWidget(),
+        ),
+      );
+      return;
+    }
+
+    final BaseHttpResponse response = await AuthRepository.instance.register(
+      email: email,
+      firstName: firstName,
+      password: password,
     );
-    return;
-  }
 
-  final BaseHttpResponse response = await AuthRepository.instance.register(
-    email: email,
-    firstName: firstName,
-    password: password,
-  );
+    if (response.error == null) {
+      final Token token = FridgeParser.instance.parseEntity(
+        exampleObject: Token,
+        response: response,
+      );
+      RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().saveToken(token);
 
-  if (response.error == null) {
-    final Token token = FridgeParser.instance.parseEntity(
-      exampleObject: Token,
-      response: response,
-    );
-    RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().saveToken(token);
+      DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
 
-    DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
-
-    UserInformationService.instance.isFirstVisitApp() ? RouteSelectors.goToOnBoardingPage().call() : RouteSelectors.goToHomePage().call();
-  } else {
-    DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
-    PopUpService.instance.show(
-      ctx: RouteService.instance.navigatorKey.currentContext!,
-      widget: ServerErrorPopUpWidget(),
-    );
+      UserInformationService.instance.isFirstVisitApp() ? RouteSelectors.goToOnBoardingPage().call() : RouteSelectors.goToHomePage().call();
+    } else {
+      DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
+      PopUpService.instance.show(
+        widget: ServerErrorPopUpWidget(),
+      );
+    }
   }
 }

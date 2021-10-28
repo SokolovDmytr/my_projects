@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class DialogLanguage {
   final String loginPopUpTitle;
   final String loginPopUpNewVersionText;

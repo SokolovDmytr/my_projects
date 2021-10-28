@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/recipe.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/token.dart';

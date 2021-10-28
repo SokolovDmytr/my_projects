@@ -1,6 +1,6 @@
 part of 'user.dart';
 
-@HiveType()
+@HiveType(typeId: 1)
 class UserAdapter extends TypeAdapter<User> {
   @override
   final int typeId = 1;

@@ -132,7 +132,7 @@ class _SignInPageState extends State<SignInPage> {
             onTap: () {
               final bool emailValid = RegExp(patternForEmail).hasMatch(emailController.text);
               if (emailValid && passwordController.text.isNotEmpty) {
-                RouteService.instance.navigatorKey.currentState!.context.read<AuthPageCubit>().logIn(emailController.text, passwordController.text);
+                context.read<AuthPageCubit>().logIn(emailController.text, passwordController.text);
               } else {
                 if (passwordController.text.isEmpty) {
                   passwordColor = AppColors.red;
