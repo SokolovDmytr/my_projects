@@ -6,19 +6,19 @@ import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 
 class GlobalButton extends StatefulWidget {
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
   final String text;
   final TextStyle fontText;
-  final Function onTap;
-  final LinearGradient gradient;
-  final Color color;
-  final Image icon;
-  final List<BoxShadow> shadows;
-  final Color borderColor;
-  final LinearGradient borderGradient;
-  final double borderRadius;
-  final EdgeInsets innerPadding;
+  final void Function() onTap;
+  final LinearGradient? gradient;
+  final Color? color;
+  final Image? icon;
+  final List<BoxShadow>? shadows;
+  final Color? borderColor;
+  final LinearGradient? borderGradient;
+  final double? borderRadius;
+  final EdgeInsets? innerPadding;
 
   const GlobalButton({
     required Key key,
@@ -46,7 +46,7 @@ class _GlobalButtonState extends State<GlobalButton> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: widget.onTap,
-      borderRadius: BorderRadius.circular(widget.borderRadius),
+      borderRadius: BorderRadius.circular(widget.borderRadius!),
       child: Container(
         width: widget.width,
         height: widget.height,
@@ -55,16 +55,16 @@ class _GlobalButtonState extends State<GlobalButton> {
           gradient: widget.borderGradient,
           color: widget.borderColor,
           boxShadow: widget.shadows,
-          borderRadius: BorderRadius.circular(widget.borderRadius),
+          borderRadius: BorderRadius.circular(widget.borderRadius!),
         ),
         child: Container(
-          width: (widget.borderGradient == null && widget.borderColor == null) ? widget.width : widget.width - 2.0,
-          height: (widget.borderGradient == null && widget.borderColor == null) ? widget.height : widget.height - 2.0,
+          width: (widget.borderGradient == null && widget.borderColor == null) ? widget.width : widget.width! - 2.0,
+          height: (widget.borderGradient == null && widget.borderColor == null) ? widget.height : widget.height! - 2.0,
           padding: widget.innerPadding ?? EdgeInsets.zero,
           decoration: BoxDecoration(
             color: widget.color,
             gradient: widget.gradient,
-            borderRadius: BorderRadius.circular(widget.borderRadius),
+            borderRadius: BorderRadius.circular(widget.borderRadius!),
           ),
           alignment: Alignment.center,
           child: Row(

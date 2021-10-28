@@ -12,7 +12,7 @@ import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_button.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_textfield.dart';
 
 class EnterNewPasswordDialogWidget extends StatefulWidget {
-  final Function(String) onTapSave;
+  final void Function(String) onTapSave;
 
   const EnterNewPasswordDialogWidget({
     required this.onTapSave,
@@ -83,7 +83,7 @@ class _EnterNewPasswordDialogWidgetState extends State<EnterNewPasswordDialogWid
               hintStyle: AppFonts.medium16Height24pinkishGreyTextStyle,
               needShowButton: false,
               onChanged: (String text) => _password = text,
-              onSubmitted: () {
+              onSubmitted: (String str) {
                 FocusScope.of(context).requestFocus(_confirmPasswordTextFieldFocusNode);
               },
             ),

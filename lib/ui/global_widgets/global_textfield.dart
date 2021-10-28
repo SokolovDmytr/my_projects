@@ -17,7 +17,7 @@ class GlobalTextField extends StatefulWidget {
   final EdgeInsets? padding;
   final TextEditingController? controller;
   final FocusNode? focusNode;
-  final Function? onSubmitted;
+  final void Function(String)? onSubmitted;
   final Function(String text)? onChanged;
   final Color? errorColor;
 
@@ -26,13 +26,13 @@ class GlobalTextField extends StatefulWidget {
     required this.needPrefix,
     required this.needShowButton,
     required this.showInPut,
+    this.onSubmitted,
     this.loader,
     this.padding,
     this.hintText,
     this.hintStyle,
     this.controller,
     this.focusNode,
-    this.onSubmitted,
     this.onChanged,
     this.errorColor,
     Key? key,
@@ -43,7 +43,7 @@ class GlobalTextField extends StatefulWidget {
 }
 
 class _GlobalTextFieldState extends State<GlobalTextField> {
-  bool? passwordVisible;
+  late bool passwordVisible;
 
   @override
   void initState() {
