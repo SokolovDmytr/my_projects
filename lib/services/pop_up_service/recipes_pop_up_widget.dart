@@ -6,7 +6,7 @@ class RecipesPopUpWidget extends StatelessWidget {
 
   const RecipesPopUpWidget({
     required this.text,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

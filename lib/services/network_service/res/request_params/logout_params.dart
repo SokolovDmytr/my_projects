@@ -12,7 +12,7 @@ class LogOutParams implements IParameter {
   @override
   Map<String, String> getParams() {
     return {
-      parameterKeys['token']: token,
+      parameterKeys['token']!: token,
     };
   }
 }

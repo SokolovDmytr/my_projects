@@ -5,6 +5,7 @@ import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/settings_p
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
+import 'package:fridge_yellow_team_bloc/services/route_service/route_selectors.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/custom_app_bar.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/navigation_bottom_bar.dart';
 
@@ -58,6 +59,7 @@ class MainLayout extends StatelessWidget {
           if (!isMainStyleAppBar!) {
             return false;
           } else {
+            RouteSelectors.doPop().call();
             return true;
           }
         },
@@ -75,7 +77,7 @@ class MainLayout extends StatelessWidget {
             onTapBack: onTapBack,
           ),
           bottomNavigationBar: CustomNavigationBottomBar(
-            currentPage: currentPage!,
+            currentPage: currentPage ?? emptyString,
           ),
           body: Padding(
             padding: needPaddings! ? const EdgeInsets.symmetric(horizontal: 15.0) : const EdgeInsets.symmetric(),

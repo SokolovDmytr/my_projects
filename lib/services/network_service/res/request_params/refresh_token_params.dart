@@ -12,7 +12,7 @@ class RefreshTokenParams implements IParameter {
   @override
   Map<String, String> getParams() {
     return {
-      parameterKeys['refreshToken']: refreshToken,
+      parameterKeys['refreshToken']!: refreshToken,
     };
   }
 }

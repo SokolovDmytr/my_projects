@@ -8,7 +8,7 @@ import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_gradient.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/app_routes.dart';
-import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
+import 'package:fridge_yellow_team_bloc/services/route_service/route_selectors.dart';
 
 class CustomNavigationBottomBar extends StatelessWidget {
   final String currentPage;
@@ -37,7 +37,7 @@ class CustomNavigationBottomBar extends StatelessWidget {
                   image: ImageAssets.bottomBarHome,
                   text: _language.home,
                   isHome: true,
-                  function: () {},
+                  function: RouteSelectors.goToHomePage(),
                   page: AppRoutes.homePage,
                   currentPage: currentPage,
                 ),
@@ -45,7 +45,7 @@ class CustomNavigationBottomBar extends StatelessWidget {
                   image: ImageAssets.bottomBarFavourites,
                   text: _language.favourites,
                   isHome: false,
-                  function: () {},
+                  function: RouteSelectors.goToFavoritesPage(),
                   page: AppRoutes.favorites,
                   currentPage: currentPage,
                 ),
@@ -53,7 +53,7 @@ class CustomNavigationBottomBar extends StatelessWidget {
                   image: ImageAssets.bottomBarSettings,
                   text: _language.settings,
                   isHome: false,
-                  function: () {},
+                  function: RouteSelectors.goToSettingsPage(),
                   page: AppRoutes.settings,
                   currentPage: currentPage,
                 ),

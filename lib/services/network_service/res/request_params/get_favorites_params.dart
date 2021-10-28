@@ -14,8 +14,8 @@ class GetFavoritesParams implements IParameter {
   @override
   Map<String, String> getParams() {
     return {
-      parameterKeys['token']: token,
-      parameterKeys['locale']: locale,
+      parameterKeys['token']!: token,
+      parameterKeys['locale']!: locale,
     };
   }
 }

@@ -16,9 +16,9 @@ class GetIngredientsParams implements IParameter {
   @override
   Map<String, String> getParams() {
     return {
-      parameterKeys['token']: token,
-      parameterKeys['locale']: locale,
-      parameterKeys['str']: str,
+      parameterKeys['token']!: token,
+      parameterKeys['locale']!: locale,
+      parameterKeys['str']!: str,
     };
   }
 }

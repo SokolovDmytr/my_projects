@@ -7,12 +7,12 @@ import 'package:http/src/response.dart';
 class PostRequestModel implements IBaseRequest {
   final String url;
   final Map<String, String> headers;
-  final Map<String, String> body;
+  final Map<String, dynamic>? body;
 
   const PostRequestModel({
-    this.url,
-    this.headers,
-    this.body,
+    required this.url,
+    required this.headers,
+    required this.body,
   });
 
   @override

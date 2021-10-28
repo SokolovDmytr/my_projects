@@ -11,11 +11,11 @@ import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_button.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_textfield.dart';
 
 class EnterCodeDialogWidget extends StatefulWidget {
-  final Function(String) onTapSend;
+  final Function(String?) onTapSend;
 
   const EnterCodeDialogWidget({
     required this.onTapSend,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -24,7 +24,7 @@ class EnterCodeDialogWidget extends StatefulWidget {
 
 class _EnterCodeDialogWidgetState extends State<EnterCodeDialogWidget> {
   final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
-  String _text;
+  String? _text;
 
   @override
   Widget build(BuildContext context) {

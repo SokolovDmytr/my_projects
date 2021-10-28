@@ -8,9 +8,9 @@ class PutRequestModel implements IBaseRequest {
   final Map<String, String> body;
 
   const PutRequestModel({
-    this.url,
-    this.headers,
-    this.body,
+    required this.url,
+    required this.headers,
+    required this.body,
   });
 
   @override

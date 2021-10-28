@@ -16,7 +16,7 @@ class LogOutAppDialogWidget extends StatelessWidget {
 
   LogOutAppDialogWidget({
     required this.onTapYes,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

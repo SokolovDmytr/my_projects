@@ -10,7 +10,7 @@ import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_button.dart';
 
 class SwipeTutorialWidget extends StatelessWidget {
-  final Function onTapOk;
+  final void Function() onTapOk;
   final MainPageLanguage language = FlutterDictionary.instance.language?.mainPageLanguage ?? en.mainPageLanguage;
 
   SwipeTutorialWidget({

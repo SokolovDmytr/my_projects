@@ -14,8 +14,8 @@ class ChangePasswordParams implements IParameter {
   @override
   Map<String, String> getParams() {
     return {
-      parameterKeys['email']: email,
-      parameterKeys['password']: password,
+      parameterKeys['email']!: email,
+      parameterKeys['password']!: password,
     };
   }
 }

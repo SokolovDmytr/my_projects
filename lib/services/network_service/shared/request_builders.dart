@@ -13,14 +13,14 @@ import 'package:fridge_yellow_team_bloc/services/network_service/res/consts.dart
 class RequestBuilders {
   static IBaseRequest get({
     required String functionName,
-    String url,
-    String token,
-    MapEntry tokenEntry,
-    Map<String, String> headers,
-    Map<String, String> params,
+    String? url,
+    String? token,
+    Map<String, String>? params,
+    MapEntry<String, String>? tokenEntry,
+    Map<String, String>? headers,
   }) {
     url = _attachParams(
-      url: url ?? NetworkService.instance.baseUrl,
+      url: url ?? NetworkService.instance.baseUrl!,
       params: params,
       functionName: functionName,
     );
@@ -39,15 +39,15 @@ class RequestBuilders {
 
   static IBaseRequest post({
     required String functionName,
-    String url,
-    String token,
-    MapEntry tokenEntry,
-    Map<String, String> headers,
-    Map<String, String> params,
-    Map<String, String> body = const {},
+    String? url,
+    String? token,
+    MapEntry<String, String>? tokenEntry,
+    Map<String, String>? headers,
+    Map<String, String>? params,
+    Map<String, dynamic>? body = const {},
   }) {
     url = _attachParams(
-      url: url ?? NetworkService.instance.baseUrl,
+      url: url ?? NetworkService.instance.baseUrl!,
       params: params,
       functionName: functionName,
     );
@@ -67,15 +67,15 @@ class RequestBuilders {
 
   static IBaseRequest put({
     required String functionName,
-    String url,
-    String token,
-    MapEntry tokenEntry,
-    Map<String, String> headers,
-    Map<String, String> params,
+    String? url,
+    String? token,
+    MapEntry<String, String>? tokenEntry,
+    Map<String, String>? headers,
+    Map<String, String>? params,
     Map<String, String> body = const {},
   }) {
     url = _attachParams(
-      url: url ?? NetworkService.instance.baseUrl,
+      url: url ?? NetworkService.instance.baseUrl!,
       params: params,
       functionName: functionName,
     );
@@ -95,14 +95,14 @@ class RequestBuilders {
 
   static IBaseRequest delete({
     required String functionName,
-    String url,
-    String token,
-    MapEntry tokenEntry,
-    Map<String, String> headers,
-    Map<String, String> params,
+    required String url,
+    String? token,
+    MapEntry<String, String>? tokenEntry,
+    Map<String, String>? headers,
+    Map<String, String>? params,
   }) {
     url = _attachParams(
-      url: url ?? NetworkService.instance.baseUrl,
+      url: url ?? NetworkService.instance.baseUrl!,
       params: params,
       functionName: functionName,
     );
@@ -121,15 +121,15 @@ class RequestBuilders {
 
   static IBaseRequest patch({
     required String functionName,
-    String url,
-    String token,
-    MapEntry tokenEntry,
-    Map<String, String> headers,
-    Map<String, String> params,
+    String? url,
+    String? token,
+    MapEntry<String, String>? tokenEntry,
+    Map<String, String>? headers,
+    Map<String, String>? params,
     Map<String, String> body = const {},
   }) {
     url = _attachParams(
-      url: url ?? NetworkService.instance.baseUrl,
+      url: url ?? NetworkService.instance.baseUrl!,
       params: params,
       functionName: functionName,
     );
@@ -148,9 +148,9 @@ class RequestBuilders {
   }
 
   static String _attachParams({
-    String url,
-    String functionName,
-    Map<String, String> params,
+    required String url,
+    required String functionName,
+    Map<String, String>? params,
   }) {
     String originalRoute = functionName;
 
@@ -177,9 +177,9 @@ class RequestBuilders {
   }
 
   static Map<String, String> _attachHeaders({
-    String token,
-    MapEntry tokenEntry,
-    Map<String, String> headers,
+    String? token,
+    MapEntry<String, String>? tokenEntry,
+    Map<String, String>? headers,
   }) {
     headers ??= {};
 
@@ -194,7 +194,7 @@ class RequestBuilders {
 
     if (tokenEntry != null) {
       headers = _addTokenEntryToHeaders(
-        tokenEntry: tokenEntry,
+        tokenEntry: tokenEntry!,
         headers: headers,
       );
     }
@@ -207,8 +207,8 @@ class RequestBuilders {
   }
 
   static Map<String, String> _addBearerToken({
-    String token,
-    Map<String, String> headers,
+    String? token,
+    Map<String, String>? headers,
   }) {
     headers ??= {};
 
@@ -220,8 +220,8 @@ class RequestBuilders {
   }
 
   static Map<String, String> _addTokenEntryToHeaders({
-    MapEntry<String, String> tokenEntry,
-    Map<String, String> headers,
+    required MapEntry<String, String> tokenEntry,
+    Map<String, String>? headers,
   }) {
     headers ??= {};
 
@@ -233,7 +233,7 @@ class RequestBuilders {
   }
 
   static Map<String, String> _addDefaultHeaders({
-    Map<String, String> headers,
+    Map<String, String>? headers,
   }) {
     headers ??= {};
 

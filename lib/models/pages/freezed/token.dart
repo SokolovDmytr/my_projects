@@ -4,12 +4,12 @@ part 'token.freezed.dart';
 part 'token.g.dart';
 
 @freezed
-abstract class Token with _$Token {
+class Token with _$Token {
   const factory Token({
-    String token,
-    String refreshToken,
-    String ttlToken,
-    DateTime createDate,
+    required String token,
+    required String refreshToken,
+    required String ttlToken,
+    required DateTime createDate
   }) = _Token;
 
   factory Token.fromJson(Map<String, dynamic> json) => _$TokenFromJson(json);

@@ -1,22 +1,21 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
-import 'package:fridge_yellow_team_bloc/res/const.dart';
 
 part 'recipe.freezed.dart';
 part 'recipe.g.dart';
 
 @freezed
-abstract class Recipe with _$Recipe {
+class Recipe with _$Recipe {
   const factory Recipe({
-    @Default(-1) int i,
-    @Default(emptyString) String name,
-    @Default(emptyString) String image,
-    @Default(0) time,
-    @Default(0.0) double calories,
-    @Default(emptyString) String level,
-    @Default([]) List<Ingredient> ingredients,
-    @Default([]) List<String> steps,
-    @Default(false) bool isFavorite,
+    required int i,
+    required String name,
+    required int time,
+    required double calories,
+    required String level,
+    required List<Ingredient> ingredients,
+    required List<String> steps,
+    String? image,
+    @Default(false) bool isFavorite
   }) = _Recipe;
 
 

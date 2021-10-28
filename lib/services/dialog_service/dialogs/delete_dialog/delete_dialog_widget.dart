@@ -17,7 +17,7 @@ class DeleteDialogWidget extends StatelessWidget {
   DeleteDialogWidget({
     required this.text,
     required this.onTapDelete,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

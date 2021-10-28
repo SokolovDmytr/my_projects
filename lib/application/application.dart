@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
+import 'package:fridge_yellow_team_bloc/application/cubit/application_token_state.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_delegate.dart';
 import 'package:fridge_yellow_team_bloc/res/keys.dart';
 import 'package:fridge_yellow_team_bloc/res/locales.dart';
+import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/splash_screen/splash_screen.dart';
 
 class Application extends StatelessWidget {
@@ -9,21 +13,27 @@ class Application extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      // onGenerateRoute: route.RouteBuilder.onGenerateRoute,
-      home: SplashScreen(),
-      locale: Locale(Locales.base),
-      supportedLocales: FlutterDictionaryDelegate.getSupportedLocales!,
-      localizationsDelegates: FlutterDictionaryDelegate.getLocalizationDelegates,
-      builder: (context, child) {
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(
-            textScaleFactor: 1.0,
-          ),
-          child: child ?? const SizedBox(),
-        );
-      },
+    return BlocProvider(
+      create: (_) => ApplicationTokenCubit(),
+      child: BlocBuilder<ApplicationTokenCubit, ApplicationTokenState>(
+        builder: (context, state) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: SplashScreen(),
+          onGenerateRoute: RouteService.instance.onGenerateRoute,
+          navigatorKey: RouteService.instance.navigatorKey,
+          locale: Locale(Locales.base),
+          supportedLocales: FlutterDictionaryDelegate.getSupportedLocales!,
+          localizationsDelegates: FlutterDictionaryDelegate.getLocalizationDelegates,
+          builder: (context, child) {
+            return MediaQuery(
+              data: MediaQuery.of(context).copyWith(
+                textScaleFactor: 1.0,
+              ),
+              child: child ?? const SizedBox(),
+            );
+          },
+        ),
+      ),
     );
   }
 }
