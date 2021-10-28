@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_delegate.dart';
 import 'package:fridge_yellow_team_bloc/res/keys.dart';
 import 'package:fridge_yellow_team_bloc/res/locales.dart';
-import 'package:fridge_yellow_team_bloc/ui/pages/home_page/home_page.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/splash_screen/splash_screen.dart';
 
 class Application extends StatelessWidget {
   Application() : super(key: Key(ApplicationKeys.application));
@@ -12,9 +12,9 @@ class Application extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // onGenerateRoute: route.RouteBuilder.onGenerateRoute,
-      home: HomePage(),
+      home: SplashScreen(),
       locale: Locale(Locales.base),
-      supportedLocales: FlutterDictionaryDelegate.getSupportedLocales,
+      supportedLocales: FlutterDictionaryDelegate.getSupportedLocales!,
       localizationsDelegates: FlutterDictionaryDelegate.getLocalizationDelegates,
       builder: (context, child) {
         return MediaQuery(

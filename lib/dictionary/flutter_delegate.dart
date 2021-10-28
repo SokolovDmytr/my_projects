@@ -17,7 +17,7 @@ class FlutterDictionaryDelegate extends LocalizationsDelegate<FlutterDictionary>
 
   static String get getCurrentLocale => SupportedLocales.instance.getCurrentLocale;
 
-  static List<Locale> get getSupportedLocales => SupportedLocales.instance.getSupportedLocales;
+  static List<Locale>? get getSupportedLocales => SupportedLocales.instance.getSupportedLocales;
 
   static void changeLocaleWithLanguageCode(String languageCode) => SupportedLocales.instance.changeLocale(languageCode);
 

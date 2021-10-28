@@ -14,7 +14,7 @@ class CustomNavigationBottomBar extends StatelessWidget {
   final String currentPage;
 
   CustomNavigationBottomBar({
-    this.currentPage,
+    required this.currentPage,
   }) : super(key: UniqueKey());
 
   @override
@@ -95,7 +95,7 @@ class CustomNavigationBottomBar extends StatelessWidget {
     required bool isHome,
     required String page,
     required String currentPage,
-    required Function function,
+    required void Function() function,
   }) {
     final Color color = isHome ? AppColors.black.withOpacity(0.2) : AppColors.black;
     return InkWell(

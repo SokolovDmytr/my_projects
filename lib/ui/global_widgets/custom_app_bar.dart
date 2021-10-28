@@ -10,11 +10,11 @@ import 'package:fridge_yellow_team_bloc/ui/global_widgets/app_bar_curve_painter.
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Size _preferredSize;
-  final String title;
-  final Color color;
-  final LinearGradient gradient;
-  final String textButton;
-  final Function onTapBack;
+  final String? title;
+  final Color? color;
+  final LinearGradient? gradient;
+  final String? textButton;
+  final void Function()? onTapBack;
   final bool isMainStyleAppBar;
 
   const CustomAppBar({
@@ -25,7 +25,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.gradient,
     this.textButton,
     this.onTapBack,
-    Key key,
+    Key? key,
   })  : _preferredSize = preferredSize,
         super(key: key);
 
@@ -88,7 +88,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                               SizedBox(
                                 width: 60.0,
                                 child: Text(
-                                  textButton,
+                                  textButton!,
                                   style: AppFonts.medium16Height24TextStyle,
                                   maxLines: 1,
                                 ),
@@ -106,7 +106,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
-                        title,
+                        title!,
                         style: AppFonts.normalBlackHeight30TextStyle,
                       ),
                     ),

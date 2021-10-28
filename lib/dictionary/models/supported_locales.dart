@@ -22,7 +22,7 @@ class SupportedLocales {
         languageCode: 'he',
         language: he,
       ),
-    ]!;
+    ];
   }
 
   static SupportedLocales instance = SupportedLocales._();
@@ -32,8 +32,8 @@ class SupportedLocales {
     _supportedLocales!.firstWhere((SupportedLanguage supLang) => supLang.languageCode == languageCode).choose();
   }
 
-  List<Locale> get getSupportedLocales {
-    return _supportedLocales?.map((SupportedLanguage supLang) => supLang.getLocale)?.toList() ?? <SupportedLanguage>[];
+  List<Locale>? get getSupportedLocales {
+    return _supportedLocales!.map((SupportedLanguage supLang) => supLang.getLocale).toList();
   }
 
   String get getCurrentLocale {
