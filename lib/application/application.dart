@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_delegate.dart';
 import 'package:fridge_yellow_team_bloc/res/keys.dart';
 import 'package:fridge_yellow_team_bloc/res/locales.dart';
+import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/home_page/home_page.dart';
 
 class Application extends StatelessWidget {
@@ -11,7 +12,8 @@ class Application extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // onGenerateRoute: route.RouteBuilder.onGenerateRoute,
+      onGenerateRoute: RouteService.instance.onGenerateRoute,
+      navigatorKey: RouteService.instance.navigatorKey,
       home: HomePage(),
       locale: Locale(Locales.base),
       supportedLocales: FlutterDictionaryDelegate.getSupportedLocales,

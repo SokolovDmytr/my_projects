@@ -7,8 +7,8 @@ class GetRequestModel implements IBaseRequest {
   final Map<String, String> headers;
 
   const GetRequestModel({
-    this.url,
-    this.headers,
+    required this.url,
+    required this.headers,
   });
 
   @override

@@ -18,13 +18,15 @@ class LocalStorageService {
     StorageKeys.isFirstOpen: 'isFirstOpen',
   };
 
-  Future<bool> getValueExistsByKey(StorageKeys key) async {
-    return await _service.read(key: _keys[key]) != null;
+  Future<bool> getValueExistsByKey({required StorageKeys key}) async {
+    return await _service.read(key: _keys[key]!) != null;
   }
 
-  Future<String> getValueByKey(StorageKeys key) async {
+  Future<String?> getValueByKey({required StorageKeys key}) async {
     try {
-      final String value = await _service.read(key: _keys[key]);
+      final String? value = await _service.read(
+        key: _keys[key]!,
+      );
 
       return value;
     } catch (e) {
@@ -32,12 +34,18 @@ class LocalStorageService {
     }
   }
 
-  Future<void> deleteValueByKey(StorageKeys key) async {
-    await _service.delete(key: _keys[key]);
+  Future<void> deleteValueByKey({required StorageKeys key}) async {
+    await _service.delete(key: _keys[key]!);
   }
 
-  Future<void> saveValueByKey(StorageKeys key, String value) async {
-    await _service.write(key: _keys[key], value: value);
+  Future<void> saveValueByKey({
+    required StorageKeys key,
+    String? value,
+  }) async {
+    await _service.write(
+      key: key.toString(),
+      value: value,
+    );
   }
 }
 

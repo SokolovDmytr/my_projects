@@ -14,8 +14,8 @@ class RegistrationGoogleParams implements IParameter {
   @override
   Map<String, String> getParams() {
     return {
-      parameterKeys['email']: email,
-      parameterKeys['googleToken']: googleToken,
+      parameterKeys['email']!: email,
+      parameterKeys['googleToken']!: googleToken,
     };
   }
 }

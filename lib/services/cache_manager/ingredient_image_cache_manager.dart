@@ -11,7 +11,7 @@ class IngredientImageCacheManager {
 
   IngredientImageCacheManager._();
 
-  Image getImageWithIdIngredient({
+  Image? getImageWithIdIngredient({
     required Ingredient ingredient,
   }) {
     if (ingredient.image == null) {

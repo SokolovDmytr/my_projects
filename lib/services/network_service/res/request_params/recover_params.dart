@@ -12,7 +12,7 @@ class RecoverParams implements IParameter {
   @override
   Map<String, String> getParams() {
     return {
-      parameterKeys['email']: email,
+      parameterKeys['email']!: email,
     };
   }
 }

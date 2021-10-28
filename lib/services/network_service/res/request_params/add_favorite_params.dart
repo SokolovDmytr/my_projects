@@ -14,8 +14,8 @@ class AddFavoriteParams implements IParameter {
   @override
   Map<String, String> getParams() {
     return {
-      parameterKeys['token']: token,
-      parameterKeys['recipeId']: recipeId,
+      parameterKeys['token']!: token,
+      parameterKeys['recipeId']!: recipeId,
     };
   }
 }

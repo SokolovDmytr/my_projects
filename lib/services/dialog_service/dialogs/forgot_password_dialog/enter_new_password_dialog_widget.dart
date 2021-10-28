@@ -16,7 +16,7 @@ class EnterNewPasswordDialogWidget extends StatefulWidget {
 
   const EnterNewPasswordDialogWidget({
     required this.onTapSave,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -27,8 +27,8 @@ class _EnterNewPasswordDialogWidgetState extends State<EnterNewPasswordDialogWid
   final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
   final FocusNode _passwordTextFieldFocusNode = FocusNode();
   final FocusNode _confirmPasswordTextFieldFocusNode = FocusNode();
-  String _password;
-  String _confirmPassword;
+  String? _password;
+  String? _confirmPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -110,8 +110,8 @@ class _EnterNewPasswordDialogWidgetState extends State<EnterNewPasswordDialogWid
                 gradient: AppGradient.wheatMarigoldGradient,
                 shadows: AppShadows.buttonOcreShadow,
                 onTap: () {
-                  if (_password == _confirmPassword) {
-                    widget.onTapSave.call(_password);
+                  if (_password == _confirmPassword && _password != null) {
+                    widget.onTapSave.call(_password!);
                   } else {
                     FocusScope.of(context).requestFocus(_passwordTextFieldFocusNode);
                   }

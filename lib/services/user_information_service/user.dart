@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 part 'user_adapter.g.dart';
@@ -6,13 +5,13 @@ part 'user_adapter.g.dart';
 @HiveType(typeId: 1)
 class User {
   @HiveField(0)
-  final String token;
+  final String? token;
   @HiveField(1)
-  final String refreshToken;
+  final String? refreshToken;
   @HiveField(2)
-  final String ttlToken;
+  final String? ttlToken;
   @HiveField(3)
-  final DateTime createDate;
+  final DateTime? createDate;
   @HiveField(4)
   bool isFirstVisitApp;
   @HiveField(5)

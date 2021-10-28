@@ -20,7 +20,7 @@ class NewVersionDialogWidget extends StatelessWidget {
     required this.onTapOk,
     required this.title,
     required this.body,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

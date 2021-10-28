@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'recipe.dart';
 
@@ -8,6 +9,10 @@ part of 'recipe.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 Recipe _$RecipeFromJson(Map<String, dynamic> json) {
   return _Recipe.fromJson(json);
 }
@@ -16,55 +21,52 @@ Recipe _$RecipeFromJson(Map<String, dynamic> json) {
 class _$RecipeTearOff {
   const _$RecipeTearOff();
 
-// ignore: unused_element
   _Recipe call(
-      {int i = -1,
-      String name = emptyString,
-      String image = emptyString,
-      dynamic time = 0,
-      double calories = 0.0,
-      String level = emptyString,
-      List<Ingredient> ingredients = const [],
-      List<String> steps = const [],
+      {required int i,
+      required String name,
+      required int time,
+      required double calories,
+      required String level,
+      required List<Ingredient> ingredients,
+      required List<String> steps,
+      String? image,
       bool isFavorite = false}) {
     return _Recipe(
       i: i,
       name: name,
-      image: image,
       time: time,
       calories: calories,
       level: level,
       ingredients: ingredients,
       steps: steps,
+      image: image,
       isFavorite: isFavorite,
     );
   }
 
-// ignore: unused_element
-  Recipe fromJson(Map<String, Object> json) {
+  Recipe fromJson(Map<String, Object?> json) {
     return Recipe.fromJson(json);
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $Recipe = _$RecipeTearOff();
 
 /// @nodoc
 mixin _$Recipe {
-  int get i;
-  String get name;
-  String get image;
-  dynamic get time;
-  double get calories;
-  String get level;
-  List<Ingredient> get ingredients;
-  List<String> get steps;
-  bool get isFavorite;
+  int get i => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  int get time => throw _privateConstructorUsedError;
+  double get calories => throw _privateConstructorUsedError;
+  String get level => throw _privateConstructorUsedError;
+  List<Ingredient> get ingredients => throw _privateConstructorUsedError;
+  List<String> get steps => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
+  bool get isFavorite => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $RecipeCopyWith<Recipe> get copyWith;
+  $RecipeCopyWith<Recipe> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -74,12 +76,12 @@ abstract class $RecipeCopyWith<$Res> {
   $Res call(
       {int i,
       String name,
-      String image,
-      dynamic time,
+      int time,
       double calories,
       String level,
       List<Ingredient> ingredients,
       List<String> steps,
+      String? image,
       bool isFavorite});
 }
 
@@ -93,29 +95,53 @@ class _$RecipeCopyWithImpl<$Res> implements $RecipeCopyWith<$Res> {
 
   @override
   $Res call({
-    Object i = freezed,
-    Object name = freezed,
-    Object image = freezed,
-    Object time = freezed,
-    Object calories = freezed,
-    Object level = freezed,
-    Object ingredients = freezed,
-    Object steps = freezed,
-    Object isFavorite = freezed,
+    Object? i = freezed,
+    Object? name = freezed,
+    Object? time = freezed,
+    Object? calories = freezed,
+    Object? level = freezed,
+    Object? ingredients = freezed,
+    Object? steps = freezed,
+    Object? image = freezed,
+    Object? isFavorite = freezed,
   }) {
     return _then(_value.copyWith(
-      i: i == freezed ? _value.i : i as int,
-      name: name == freezed ? _value.name : name as String,
-      image: image == freezed ? _value.image : image as String,
-      time: time == freezed ? _value.time : time as dynamic,
-      calories: calories == freezed ? _value.calories : calories as double,
-      level: level == freezed ? _value.level : level as String,
+      i: i == freezed
+          ? _value.i
+          : i // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      time: time == freezed
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as int,
+      calories: calories == freezed
+          ? _value.calories
+          : calories // ignore: cast_nullable_to_non_nullable
+              as double,
+      level: level == freezed
+          ? _value.level
+          : level // ignore: cast_nullable_to_non_nullable
+              as String,
       ingredients: ingredients == freezed
           ? _value.ingredients
-          : ingredients as List<Ingredient>,
-      steps: steps == freezed ? _value.steps : steps as List<String>,
-      isFavorite:
-          isFavorite == freezed ? _value.isFavorite : isFavorite as bool,
+          : ingredients // ignore: cast_nullable_to_non_nullable
+              as List<Ingredient>,
+      steps: steps == freezed
+          ? _value.steps
+          : steps // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isFavorite: isFavorite == freezed
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -128,12 +154,12 @@ abstract class _$RecipeCopyWith<$Res> implements $RecipeCopyWith<$Res> {
   $Res call(
       {int i,
       String name,
-      String image,
-      dynamic time,
+      int time,
       double calories,
       String level,
       List<Ingredient> ingredients,
       List<String> steps,
+      String? image,
       bool isFavorite});
 }
 
@@ -148,132 +174,130 @@ class __$RecipeCopyWithImpl<$Res> extends _$RecipeCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object i = freezed,
-    Object name = freezed,
-    Object image = freezed,
-    Object time = freezed,
-    Object calories = freezed,
-    Object level = freezed,
-    Object ingredients = freezed,
-    Object steps = freezed,
-    Object isFavorite = freezed,
+    Object? i = freezed,
+    Object? name = freezed,
+    Object? time = freezed,
+    Object? calories = freezed,
+    Object? level = freezed,
+    Object? ingredients = freezed,
+    Object? steps = freezed,
+    Object? image = freezed,
+    Object? isFavorite = freezed,
   }) {
     return _then(_Recipe(
-      i: i == freezed ? _value.i : i as int,
-      name: name == freezed ? _value.name : name as String,
-      image: image == freezed ? _value.image : image as String,
-      time: time == freezed ? _value.time : time,
-      calories: calories == freezed ? _value.calories : calories as double,
-      level: level == freezed ? _value.level : level as String,
+      i: i == freezed
+          ? _value.i
+          : i // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      time: time == freezed
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as int,
+      calories: calories == freezed
+          ? _value.calories
+          : calories // ignore: cast_nullable_to_non_nullable
+              as double,
+      level: level == freezed
+          ? _value.level
+          : level // ignore: cast_nullable_to_non_nullable
+              as String,
       ingredients: ingredients == freezed
           ? _value.ingredients
-          : ingredients as List<Ingredient>,
-      steps: steps == freezed ? _value.steps : steps as List<String>,
-      isFavorite:
-          isFavorite == freezed ? _value.isFavorite : isFavorite as bool,
+          : ingredients // ignore: cast_nullable_to_non_nullable
+              as List<Ingredient>,
+      steps: steps == freezed
+          ? _value.steps
+          : steps // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isFavorite: isFavorite == freezed
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_Recipe implements _Recipe {
   const _$_Recipe(
-      {this.i = -1,
-      this.name = emptyString,
-      this.image = emptyString,
-      this.time = 0,
-      this.calories = 0.0,
-      this.level = emptyString,
-      this.ingredients = const [],
-      this.steps = const [],
-      this.isFavorite = false})
-      : assert(i != null),
-        assert(name != null),
-        assert(image != null),
-        assert(time != null),
-        assert(calories != null),
-        assert(level != null),
-        assert(ingredients != null),
-        assert(steps != null),
-        assert(isFavorite != null);
+      {required this.i,
+      required this.name,
+      required this.time,
+      required this.calories,
+      required this.level,
+      required this.ingredients,
+      required this.steps,
+      this.image,
+      this.isFavorite = false});
 
   factory _$_Recipe.fromJson(Map<String, dynamic> json) =>
-      _$_$_RecipeFromJson(json);
+      _$$_RecipeFromJson(json);
 
-  @JsonKey(defaultValue: -1)
   @override
   final int i;
-  @JsonKey(defaultValue: emptyString)
   @override
   final String name;
-  @JsonKey(defaultValue: emptyString)
   @override
-  final String image;
-  @JsonKey(defaultValue: 0)
-  @override
-  final dynamic time;
-  @JsonKey(defaultValue: 0.0)
+  final int time;
   @override
   final double calories;
-  @JsonKey(defaultValue: emptyString)
   @override
   final String level;
-  @JsonKey(defaultValue: const [])
   @override
   final List<Ingredient> ingredients;
-  @JsonKey(defaultValue: const [])
   @override
   final List<String> steps;
+  @override
+  final String? image;
   @JsonKey(defaultValue: false)
   @override
   final bool isFavorite;
 
   @override
   String toString() {
-    return 'Recipe(i: $i, name: $name, image: $image, time: $time, calories: $calories, level: $level, ingredients: $ingredients, steps: $steps, isFavorite: $isFavorite)';
+    return 'Recipe(i: $i, name: $name, time: $time, calories: $calories, level: $level, ingredients: $ingredients, steps: $steps, image: $image, isFavorite: $isFavorite)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Recipe &&
-            (identical(other.i, i) ||
-                const DeepCollectionEquality().equals(other.i, i)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.image, image) ||
-                const DeepCollectionEquality().equals(other.image, image)) &&
-            (identical(other.time, time) ||
-                const DeepCollectionEquality().equals(other.time, time)) &&
+        (other.runtimeType == runtimeType &&
+            other is _Recipe &&
+            (identical(other.i, i) || other.i == i) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.time, time) || other.time == time) &&
             (identical(other.calories, calories) ||
-                const DeepCollectionEquality()
-                    .equals(other.calories, calories)) &&
-            (identical(other.level, level) ||
-                const DeepCollectionEquality().equals(other.level, level)) &&
-            (identical(other.ingredients, ingredients) ||
-                const DeepCollectionEquality()
-                    .equals(other.ingredients, ingredients)) &&
-            (identical(other.steps, steps) ||
-                const DeepCollectionEquality().equals(other.steps, steps)) &&
+                other.calories == calories) &&
+            (identical(other.level, level) || other.level == level) &&
+            const DeepCollectionEquality()
+                .equals(other.ingredients, ingredients) &&
+            const DeepCollectionEquality().equals(other.steps, steps) &&
+            (identical(other.image, image) || other.image == image) &&
             (identical(other.isFavorite, isFavorite) ||
-                const DeepCollectionEquality()
-                    .equals(other.isFavorite, isFavorite)));
+                other.isFavorite == isFavorite));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(i) ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(image) ^
-      const DeepCollectionEquality().hash(time) ^
-      const DeepCollectionEquality().hash(calories) ^
-      const DeepCollectionEquality().hash(level) ^
-      const DeepCollectionEquality().hash(ingredients) ^
-      const DeepCollectionEquality().hash(steps) ^
-      const DeepCollectionEquality().hash(isFavorite);
+  int get hashCode => Object.hash(
+      runtimeType,
+      i,
+      name,
+      time,
+      calories,
+      level,
+      const DeepCollectionEquality().hash(ingredients),
+      const DeepCollectionEquality().hash(steps),
+      image,
+      isFavorite);
 
   @JsonKey(ignore: true)
   @override
@@ -282,20 +306,20 @@ class _$_Recipe implements _Recipe {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_RecipeToJson(this);
+    return _$$_RecipeToJson(this);
   }
 }
 
 abstract class _Recipe implements Recipe {
   const factory _Recipe(
-      {int i,
-      String name,
-      String image,
-      dynamic time,
-      double calories,
-      String level,
-      List<Ingredient> ingredients,
-      List<String> steps,
+      {required int i,
+      required String name,
+      required int time,
+      required double calories,
+      required String level,
+      required List<Ingredient> ingredients,
+      required List<String> steps,
+      String? image,
       bool isFavorite}) = _$_Recipe;
 
   factory _Recipe.fromJson(Map<String, dynamic> json) = _$_Recipe.fromJson;
@@ -305,9 +329,7 @@ abstract class _Recipe implements Recipe {
   @override
   String get name;
   @override
-  String get image;
-  @override
-  dynamic get time;
+  int get time;
   @override
   double get calories;
   @override
@@ -317,8 +339,10 @@ abstract class _Recipe implements Recipe {
   @override
   List<String> get steps;
   @override
+  String? get image;
+  @override
   bool get isFavorite;
   @override
   @JsonKey(ignore: true)
-  _$RecipeCopyWith<_Recipe> get copyWith;
+  _$RecipeCopyWith<_Recipe> get copyWith => throw _privateConstructorUsedError;
 }

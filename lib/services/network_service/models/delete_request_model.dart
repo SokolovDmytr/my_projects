@@ -7,8 +7,8 @@ class DeleteRequestModel implements IBaseRequest {
   final Map<String, String> headers;
 
   const DeleteRequestModel({
-    this.url,
-    this.headers,
+    required this.url,
+    required this.headers,
   });
 
   @override

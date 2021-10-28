@@ -1,32 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/app_routes.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/home_page/home_page.dart';
 
 class RouteService {
   // region [Initialize]
   static const String tag = '[RouteHelper]';
 
-  RouteService._privateConstructor();
-
   static final RouteService _instance = RouteService._privateConstructor();
 
   static RouteService get instance => _instance;
 
+  RouteService._privateConstructor();
+
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
   // endregion
-  Route<dynamic> onGenerateRoute({
-    required RouteSettings settings,
-  }) {
+  Route<dynamic> onGenerateRoute(
+    RouteSettings settings,
+  ) {
     switch (settings.name) {
-      case AppRoutes.splashScreenPage:
+      /*case AppRoutes.splashScreenPage:
         return _defaultRoute(
           settings: settings,
           page: SplashScreen(),
-        );
+        );*/
       case AppRoutes.homePage:
         return _defaultRoute(
           settings: settings,
-          page: MainPage(),
+          page: HomePage(),
         );
-      case AppRoutes.settings:
+      /*case AppRoutes.settings:
         return _defaultRoute(
           settings: settings,
           page: SettingsPage(),
@@ -60,11 +63,11 @@ class RouteService {
         return _defaultRoute(
           settings: settings,
           page: AuthPage(),
-        );
+        );*/
       default:
         return _defaultRoute(
           settings: settings,
-          page: MainPage(),
+          page: HomePage(),
         );
     }
   }

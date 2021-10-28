@@ -9,12 +9,12 @@ import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.d
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_button.dart';
 
 class ErrorDialogWidget extends StatelessWidget {
-  final String text;
+  final String? text;
   final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
   ErrorDialogWidget({
     this.text,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

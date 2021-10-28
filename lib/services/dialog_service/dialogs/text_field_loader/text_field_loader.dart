@@ -18,11 +18,11 @@ class TextFieldLoader extends ILoader {
 
   @override
   void show() {
-    (widget as TextFieldLoaderWidget).rebuild(true);
+      (widget as TextFieldLoaderWidget).rebuild!(true);
   }
 
   void hide() {
-    (widget as TextFieldLoaderWidget).rebuild(false);
+    (widget as TextFieldLoaderWidget).rebuild!(false);
   }
 
   @override

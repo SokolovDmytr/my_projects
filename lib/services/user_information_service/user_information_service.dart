@@ -19,9 +19,9 @@ class UserInformationService {
 
   UserInformationService._();
 
-  User _user;
+  User? _user;
 
-  Future<Token> init() async {
+  Future<Token?> init() async {
     logger.d('Load information');
     final Box<User> box = Hive.box<User>(hiveBoxNameUser);
     _user = box.get(userKey);
@@ -34,10 +34,10 @@ class UserInformationService {
       return null;
     } else {
       return Token(
-        token: _user.token,
-        refreshToken: _user.refreshToken,
-        createDate: _user.createDate,
-        ttlToken: _user.ttlToken,
+        token: _user!.token!,
+        refreshToken: _user!.refreshToken!,
+        createDate: _user!.createDate!,
+        ttlToken: _user!.ttlToken!,
       );
     }
   }
@@ -46,7 +46,7 @@ class UserInformationService {
     /*
     get Token from store
      */
-    final Token token = Token();
+    final Token? token = null;
 
     if (token != null &&
         token.token != null &&
@@ -62,7 +62,7 @@ class UserInformationService {
         type: HttpType.httpGet,
         route: HttpRoute.updateToken,
         parameter: RefreshTokenParams(
-          refreshToken: token.refreshToken,
+          refreshToken: token!.refreshToken,
         ),
       );
 
@@ -76,7 +76,7 @@ class UserInformationService {
          */
         return authToken.token;
       } else {
-        logger.e('Update token error: ${response.error.error}');
+        logger.e('Update token error: ${response.error!.error}');
         return token.token;
       }
     }
@@ -92,13 +92,13 @@ class UserInformationService {
         refreshToken: token.refreshToken,
         createDate: token.createDate,
         ttlToken: token.ttlToken,
-        isFirstSeeSwipeTutorial: _user.isFirstSeeSwipeTutorial,
-        isFirstVisitApp: _user.isFirstVisitApp,
+        isFirstSeeSwipeTutorial: _user!.isFirstSeeSwipeTutorial,
+        isFirstVisitApp: _user!.isFirstVisitApp,
       );
     } else {
       user = User(
-        isFirstSeeSwipeTutorial: _user.isFirstSeeSwipeTutorial,
-        isFirstVisitApp: _user.isFirstVisitApp,
+        isFirstSeeSwipeTutorial: _user!.isFirstSeeSwipeTutorial,
+        isFirstVisitApp: _user!.isFirstVisitApp,
       );
     }
     try {
@@ -112,35 +112,35 @@ class UserInformationService {
   void clear() async {
     final Box<User> box = Hive.box<User>(hiveBoxNameUser);
     await box.clear();
-    _user.isFirstVisitApp = true;
-    _user.isFirstSeeSwipeTutorial = false;
+    _user!.isFirstVisitApp = true;
+    _user!.isFirstSeeSwipeTutorial = false;
   }
 
   void visitApp() {
-    _user.isFirstVisitApp = false;
+    _user!.isFirstVisitApp = false;
 
     /*
     get Token from store
-     */
+
 
     final Token token = Token();
 
-    saveInformation(token);
+    saveInformation(token);*/
   }
 
   void seeSwipeTutorial() {
-    _user.isFirstSeeSwipeTutorial = true;
+    _user!.isFirstSeeSwipeTutorial = true;
 
     /*
     get Token from store
-     */
+
 
     final Token token = Token();
 
-    saveInformation(token);
+    saveInformation(token);*/
   }
 
-  bool isFirstVisitApp() => _user.isFirstVisitApp;
+  bool isFirstVisitApp() => _user!.isFirstVisitApp;
 
-  bool isFirstSeeSwipeTutorial() => _user.isFirstSeeSwipeTutorial;
+  bool isFirstSeeSwipeTutorial() => _user!.isFirstSeeSwipeTutorial;
 }

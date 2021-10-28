@@ -13,7 +13,7 @@ class CleanedListView extends StatelessWidget {
 
   CleanedListView({
     required this.keyValue,
-    this.children,
+    required this.children,
   }) : super(key: Key(keyValue + 'CleanedListView'));
 
   @override

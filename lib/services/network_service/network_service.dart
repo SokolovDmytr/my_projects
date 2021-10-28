@@ -35,7 +35,7 @@ class NetworkService {
 
   /// Basic url for requests. This variable will use as default but can be updated by [overrideBaseUrl].
   /// All request builders use this variable for build request but also have a param [url].
-  String baseUrl;
+  String? baseUrl;
 
   /// This function will update a [baseUrl]. Not required for use.
   void overrideBaseUrl(String url) => baseUrl = baseUrl;
@@ -49,9 +49,9 @@ class NetworkService {
   Future<BaseHttpResponse> _request({
     required HttpType type,
     required String route,
-    required Map<String, dynamic> body,
+    required Map<String, dynamic>? body,
     required Map<String, String> params,
-    String token,
+    String? token,
   }) async {
     IBaseRequest request;
     switch (type) {
@@ -63,7 +63,7 @@ class NetworkService {
         break;
     }
 
-    http.Response response;
+    http.Response? response;
     try {
       response = await request();
 
@@ -81,7 +81,7 @@ class NetworkService {
     }
 
     return BaseHttpResponse(
-      response: json.decode(response.body),
+      response: json.decode(response!.body),
     );
   }
 
@@ -89,7 +89,7 @@ class NetworkService {
     required HttpType type,
     required String route,
     required IParameter parameter,
-    String token,
+    String? token,
   }) {
     return _request(
       type: type,

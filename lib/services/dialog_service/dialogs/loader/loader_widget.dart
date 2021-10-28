@@ -11,7 +11,7 @@ class LoaderWidget extends StatelessWidget {
   final bool isRtl = FlutterDictionary.instance.isRTL;
 
   LoaderWidget({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

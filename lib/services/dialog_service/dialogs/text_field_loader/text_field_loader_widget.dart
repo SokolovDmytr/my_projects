@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 
 class TextFieldLoaderWidget extends StatefulWidget {
-  Function(bool value) rebuild;
+  Function(bool value)? rebuild;
   bool isVisible;
 
   TextFieldLoaderWidget({

@@ -17,7 +17,7 @@ class EnterEmailDialogWidget extends StatefulWidget {
 
   const EnterEmailDialogWidget({
     required this.onTapSend,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -26,8 +26,8 @@ class EnterEmailDialogWidget extends StatefulWidget {
 
 class _EnterEmailDialogWidgetState extends State<EnterEmailDialogWidget> {
   final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
-  Color _emailColor;
-  String _text;
+  Color? _emailColor;
+  String _text = emptyString;
 
   @override
   Widget build(BuildContext context) {

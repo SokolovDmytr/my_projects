@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/shared/i_dialog.dart';
+import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
 
 class DialogService {
   static const tag = '[DialogService]';
@@ -16,7 +17,7 @@ class DialogService {
 
   bool get isDisplayed => _isDisplayed;
 
-  void show({required IDialog dialog, BuildContext ctx}) {
+  void show({required IDialog dialog,}) {
     if (_isDisplayed) {
       logger.e('$tag => <_display> => Error Message: _isDisplayed: $_isDisplayed, Dialog cant be showed.');
       return;
@@ -25,7 +26,7 @@ class DialogService {
     _isDisplayed = true;
 
     showDialog(
-      context: ctx,
+      context: RouteService.instance.navigatorKey.currentState!.context,
       barrierDismissible: false,
       barrierColor: AppColors.black.withOpacity(0.7),
       builder: (BuildContext _) => dialog.child,

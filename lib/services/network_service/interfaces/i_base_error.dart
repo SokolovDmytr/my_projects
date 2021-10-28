@@ -4,7 +4,7 @@ class IBaseError {
   final String error;
 
   const IBaseError({
-    this.error,
-    this.statusCode,
+    required this.error,
+    required this.statusCode,
   });
 }

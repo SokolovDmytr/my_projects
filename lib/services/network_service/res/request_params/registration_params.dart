@@ -16,9 +16,9 @@ class RegistrationParams implements IParameter {
   @override
   Map<String, String> getParams() {
     return {
-      parameterKeys['firstName']: firstName,
-      parameterKeys['email']: email,
-      parameterKeys['password']: password,
+      parameterKeys['firstName']!: firstName,
+      parameterKeys['email']!: email,
+      parameterKeys['password']!: password,
     };
   }
 }

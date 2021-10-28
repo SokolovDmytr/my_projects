@@ -15,7 +15,7 @@ class RemoveFavouriteDialogWidget extends StatelessWidget {
 
   RemoveFavouriteDialogWidget({
     required this.onTapYes,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

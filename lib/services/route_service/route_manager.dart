@@ -1,54 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
-
+import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
+import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
 
 class RouteManager {
   static final RouteManager _instance = RouteManager._();
 
   static RouteManager get instance => _instance;
 
-  final List<String> _routes;
+  final List<String> _routes = [];
 
-  RouteManager._() : _routes = [];
+  RouteManager._();
 
   int get routesCount => _routes.length;
 
-  String get currentRoute => _routes.isNotEmpty ? _routes.last : null;
+  String? get currentRoute => _routes.isNotEmpty ? _routes.last : null;
 
-  List<String> get routesList => _routes.isNotEmpty ? _routes : null;
+  List<String>? get routesList => _routes.isNotEmpty ? _routes : null;
 
   bool get canPop {
-    return NavigatorHolder.navigatorKey.currentState.canPop() && _routes.length > 1;
+    return RouteService.instance.navigatorKey.currentState!.canPop() && _routes.length > 1;
   }
 
-  NavigateToAction pop() {
-    if (_isDialogDisplayed()) return null;
-    if (_routes == null || _routes.isEmpty) return null;
+  void pop() {
+    if (_isDialogDisplayed()) return;
+    if (_routes.isEmpty) return;
 
     _routes.removeLast();
 
     logger.i('<pop> => Did pop!');
-    return NavigateToAction.pop();
+    return Navigator.of(RouteService.instance.navigatorKey.currentState!.context).pop();
   }
 
-  NavigateToAction push({
+  void push({
     required String route,
   }) {
-    if (_routes == null || _isDialogDisplayed()) return null;
-    if (_routes.isNotEmpty && _routes.last == route) return null;
+    if (_isDialogDisplayed()) ;
+    if (_routes.isNotEmpty && _routes.last == route) ;
 
     _routes.add(route);
 
     logger.i('<push> => Did push! $route');
-    return NavigateToAction.push(route);
+    Navigator.of(RouteService.instance.navigatorKey.currentState!.context).pushNamed(route);
+    return;
   }
 
-  NavigateToAction pushAndRemoveUntil({
+  void pushAndRemoveUntil({
     required String route,
     required String routeNamePredicate,
   }) {
-    if (_routes == null || _isDialogDisplayed()) return null;
-    if (_routes.isNotEmpty && _routes.last == route) return null;
+    if (_isDialogDisplayed()) return;
+    if (_routes.isNotEmpty && _routes.last == route) return;
 
     for (int index = _routes.length - 1; index > 0; index--) {
       if (_routes[index] == routeNamePredicate) {
@@ -62,18 +64,23 @@ class RouteManager {
 
     logger.i('<pushAndRemoveUntil> => Did pushAndRemoveUntil! $route');
 
-    return NavigateToAction.pushNamedAndRemoveUntil(route, ModalRoute.withName(routeNamePredicate));
+    Navigator.of(RouteService.instance.navigatorKey.currentState!.context).pushNamedAndRemoveUntil(
+      route,
+      ModalRoute.withName(routeNamePredicate),
+    );
+    return;
   }
 
-  NavigateToAction replace({required String route, bool needCheckLastRoute}) {
-    if (_routes == null || _isDialogDisplayed()) return null;
-    if (_routes.isNotEmpty && _routes.last == route && needCheckLastRoute) return null;
+  void replace({required String route, bool? needCheckLastRoute}) {
+    if (_isDialogDisplayed()) return;
+    if (_routes.isNotEmpty && _routes.last == route && needCheckLastRoute != null && needCheckLastRoute) return;
 
     _routes.removeLast();
     logger.i('<replace> => Did replace! $route');
     _routes.add(route);
 
-    return NavigateToAction.replace(route);
+    Navigator.of(RouteService.instance.navigatorKey.currentState!.context).pushReplacementNamed(route);
+    return;
   }
 
   bool _isDialogDisplayed() => DialogService.instance.isDisplayed;

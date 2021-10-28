@@ -26,9 +26,9 @@ class GetRecipeParams implements IParameter {
     }
 
     return {
-      parameterKeys['token']: token,
-      parameterKeys['locale']: locale,
-      parameterKeys['ids']: ids,
+      parameterKeys['token']!: token,
+      parameterKeys['locale']!: locale,
+      parameterKeys['ids']!: ids,
     };
   }
 }
