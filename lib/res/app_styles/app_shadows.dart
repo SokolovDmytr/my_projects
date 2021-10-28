@@ -12,6 +12,15 @@ class AppShadows {
     ];
   }
 
+  static List<BoxShadow> get containerOcreShadow {
+    return [
+      BoxShadow(
+        color: AppColors.ocre.withOpacity(0.5),
+        blurRadius: 10.0,
+      ),
+    ];
+  }
+
   static List<BoxShadow> get buttonOcreShadow {
     return [
       BoxShadow(

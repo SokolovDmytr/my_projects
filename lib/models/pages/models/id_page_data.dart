@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/interfaces/i_page_data.dart';
 
 class IdPageData implements IPageData {

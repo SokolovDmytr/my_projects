@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/authentication_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/bottom_navigation_bar_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
@@ -9,7 +8,6 @@ import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/on_boardin
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/recipes_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/screen_recipe_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/settings_page_language.dart';
-
 
 class Language {
   final AuthenticationPageLanguage authenticationPageLanguage;

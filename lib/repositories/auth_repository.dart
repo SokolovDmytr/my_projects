@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/models/base_http_response.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/network_service.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/res/consts.dart';
@@ -10,7 +9,6 @@ import 'package:fridge_yellow_team_bloc/services/network_service/res/request_par
 import 'package:fridge_yellow_team_bloc/services/network_service/res/request_params/recover_params.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/res/request_params/registration_google_params.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/res/request_params/registration_params.dart';
-
 
 class AuthRepository {
   static final AuthRepository _instance = AuthRepository._();

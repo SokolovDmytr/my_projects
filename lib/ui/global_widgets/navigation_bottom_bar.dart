@@ -8,7 +8,6 @@ import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_gradient.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/app_routes.dart';
-import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
 
 class CustomNavigationBottomBar extends StatelessWidget {
   final String currentPage;

@@ -1,4 +1,5 @@
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/token.dart';
+import 'package:fridge_yellow_team_bloc/repositories/auth_repository.dart';
 import 'package:fridge_yellow_team_bloc/res/app_duration.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/models/base_http_response.dart';
@@ -8,7 +9,6 @@ import 'package:fridge_yellow_team_bloc/services/network_service/res/request_par
 import 'package:fridge_yellow_team_bloc/services/network_service/shared/fridge_parser.dart';
 import 'package:fridge_yellow_team_bloc/services/user_information_service/user.dart';
 import 'package:hive/hive.dart';
-
 
 class UserInformationService {
   static const tag = '[UserInformationService]';
@@ -43,13 +43,20 @@ class UserInformationService {
   }
 
   Future<String> getToken() async {
+    final BaseHttpResponse response = await AuthRepository.instance.logIn(
+      email: 'maximshirokostup@capdefier.com',
+      password: '12345',
+    );
+    if (response.error == null) {
+      return Token.fromJson(response.response).token;
+    }
+    return response.error!.error;
     /*
     get Token from store
      */
     final Token? token = null;
 
     if (token != null &&
-        token.token != null &&
         token.createDate.add(AppDuration.timeValidOfToken).isAfter(
               DateTime.now(),
             )) {

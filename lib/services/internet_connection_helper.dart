@@ -1,7 +1,17 @@
-import 'package:data_connection_checker/data_connection_checker.dart';
+import 'dart:io';
+
+import 'package:fridge_yellow_team_bloc/services/network_service/res/consts.dart';
 
 class InternetConnectionHelper {
   static Future<bool> hasInternetConnection() async {
-    return await DataConnectionChecker().hasConnection;
+    try {
+      final List<InternetAddress> result = await InternetAddress.lookup(exampleUrl);
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        return true;
+      }
+    } on SocketException catch (_) {
+      return false;
+    }
+    return false;
   }
 }
