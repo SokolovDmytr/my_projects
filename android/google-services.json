@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "150747223185",
+    "project_id": "fridge-yellow-team-bloc",
+    "storage_bucket": "fridge-yellow-team-bloc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150747223185:android:1451080db6a50bf0801b30",
+        "android_client_info": {
+          "package_name": "com.appvesto.fridge_yellow_team"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "150747223185-rf7hutfkih64h5jbl46l9chqufm3cqit.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDn_lIlH8d06-6844COJOz3XyM7Oaf7yno"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "150747223185-rf7hutfkih64h5jbl46l9chqufm3cqit.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
