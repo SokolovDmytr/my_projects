@@ -1,78 +1,71 @@
 import 'package:flutter/material.dart';
-
-import 'package:base_project_template/res/app_styles/app_colors.dart';
+import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 
 class AppGradient {
-  static LinearGradient get overflowTopWhiteGradient {
-    return  LinearGradient(
+  static LinearGradient get wheatMarigoldGradient {
+    return LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
-      List: [
-        AppColors.kWhite.withOpacity(1.0),
-        AppColors.kWhite.withOpacity(0.6),
-        AppColors.kWhite.withOpacity(0.3),
-        AppColors.kWhite.withOpacity(0.0),
+      colors: [
+        AppColors.wheat,
+        AppColors.marigold,
       ],
+      tileMode: TileMode.mirror,
     );
   }
-  static LinearGradient get overflowBottomWhiteGradient {
-    return  LinearGradient(
-      end: Alignment.topCenter,
-      begin: Alignment.bottomCenter,
-      List: [
-        AppColors.kWhite.withOpacity(1.0),
-        AppColors.kWhite.withOpacity(0.6),
-        AppColors.kWhite.withOpacity(0.3),
-        AppColors.kWhite.withOpacity(0.0),
+
+  static LinearGradient get marigoldWheatGradient {
+    return LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        AppColors.marigold,
+        AppColors.wheat,
       ],
     );
   }
 
-  static LinearGradient get overflowTopGradient {
-    return  LinearGradient(
+  static LinearGradient get black30black0 {
+    return LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
-        List: [
-        AppColors.kLightGrey.withOpacity(0.2),
-        AppColors.kLightGrey.withOpacity(0.1),
-        AppColors.kLightGrey.withOpacity(0.05),
-        AppColors.kLightGrey.withOpacity(0.0),
-      ],
-    );
-  }
-  static LinearGradient get overflowBottomGradient {
-    return  LinearGradient(
-      begin: Alignment.bottomCenter,
-      end: Alignment.topCenter,
-      List: [
-        AppColors.kLightGrey.withOpacity(0.2),
-        AppColors.kLightGrey.withOpacity(0.1),
-        AppColors.kLightGrey.withOpacity(0.05),
-        AppColors.kLightGrey.withOpacity(0.0),
-      ],
-    );
-  }
-  static LinearGradient get overflowLeftGradient {
-    return  LinearGradient(
-      begin: Alignment.centerRight,
-      end: Alignment.centerLeft,
-      List: [
-        AppColors.kLightGrey.withOpacity(0.2),
-        AppColors.kLightGrey.withOpacity(0.1),
-        AppColors.kLightGrey.withOpacity(0.05),
-        AppColors.kLightGrey.withOpacity(0.0),
-      ],
-    );
-  }
-  static LinearGradient get overflowRightGradient {
-    return  LinearGradient(
-      List: [
-        AppColors.kLightGrey.withOpacity(0.2),
-        AppColors.kLightGrey.withOpacity(0.1),
-        AppColors.kLightGrey.withOpacity(0.05),
-        AppColors.kLightGrey.withOpacity(0.0),
+      colors: [
+        AppColors.black25,
+        AppColors.black20,
       ],
     );
   }
 
+  static LinearGradient get whiteWhite0 {
+    return LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        AppColors.white0,
+        AppColors.white.withOpacity(0.7),
+      ],
+    );
+  }
+
+  static LinearGradient get white {
+    return LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        AppColors.white,
+        AppColors.white,
+      ],
+    );
+  }
+
+  static LinearGradient get transparent {
+    return LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        AppColors.transparent,
+        AppColors.transparent,
+      ],
+    );
+  }
 }

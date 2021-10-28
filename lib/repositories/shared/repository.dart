@@ -1,4 +1,4 @@
-import 'package:base_project_template/adapters/interfaces/i_adapter.dart';
+import 'package:fridge_yellow_team_bloc/adapters/interfaces/i_adapter.dart';
 
 class Repository {
   Future<T> repository<T>(IAdapter adapter) async {

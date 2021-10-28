@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:base_project_template/res/const.dart';
-import 'package:base_project_template/services/network_service/interfaces/i_base_request.dart';
-import 'package:base_project_template/services/network_service/models/delete_request_model.dart';
-import 'package:base_project_template/services/network_service/models/get_request_model.dart';
-import 'package:base_project_template/services/network_service/models/patch_request_model.dart';
-import 'package:base_project_template/services/network_service/models/post_request_model.dart';
-import 'package:base_project_template/services/network_service/models/put_request_model.dart';
-import 'package:base_project_template/services/network_service/network_service.dart';
-import 'package:base_project_template/services/network_service/res/consts.dart';
+import 'package:fridge_yellow_team_bloc/res/const.dart';
+import 'package:fridge_yellow_team_bloc/services/network_service/interfaces/i_base_request.dart';
+import 'package:fridge_yellow_team_bloc/services/network_service/models/delete_request_model.dart';
+import 'package:fridge_yellow_team_bloc/services/network_service/models/get_request_model.dart';
+import 'package:fridge_yellow_team_bloc/services/network_service/models/patch_request_model.dart';
+import 'package:fridge_yellow_team_bloc/services/network_service/models/post_request_model.dart';
+import 'package:fridge_yellow_team_bloc/services/network_service/models/put_request_model.dart';
+import 'package:fridge_yellow_team_bloc/services/network_service/network_service.dart';
+import 'package:fridge_yellow_team_bloc/services/network_service/res/consts.dart';
+
 
 class RequestBuilders {
   static IBaseRequest get({
-    @required String functionName,
+    required String functionName,
     String url,
     String token,
     MapEntry tokenEntry,
@@ -37,7 +38,7 @@ class RequestBuilders {
   }
 
   static IBaseRequest post({
-    @required String functionName,
+    required String functionName,
     String url,
     String token,
     MapEntry tokenEntry,
@@ -65,7 +66,7 @@ class RequestBuilders {
   }
 
   static IBaseRequest put({
-    @required String functionName,
+    required String functionName,
     String url,
     String token,
     MapEntry tokenEntry,
@@ -93,7 +94,7 @@ class RequestBuilders {
   }
 
   static IBaseRequest delete({
-    @required String functionName,
+    required String functionName,
     String url,
     String token,
     MapEntry tokenEntry,
@@ -119,7 +120,7 @@ class RequestBuilders {
   }
 
   static IBaseRequest patch({
-    @required String functionName,
+    required String functionName,
     String url,
     String token,
     MapEntry tokenEntry,
@@ -212,7 +213,7 @@ class RequestBuilders {
     headers ??= {};
 
     if (token != null) {
-      headers.addEntries([MapEntry(TOKEN_KEY, BEARER_BASE + token)]);
+      headers.addEntries([MapEntry(tokenKey, bearerBase + token)]);
     }
 
     return headers;
@@ -237,8 +238,8 @@ class RequestBuilders {
     headers ??= {};
 
     headers.addEntries([
-      MapEntry(ACCEPT, CONTENT_TYPE_VALUE),
-      MapEntry(CONTENT_TYPE_KEY, CONTENT_TYPE_VALUE),
+      MapEntry(accept, contentTypeValue),
+      MapEntry(contentTypeKey, contentTypeValue),
     ]);
 
     return headers;

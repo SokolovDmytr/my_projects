@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:base_project_template/res/const.dart';
-import 'package:base_project_template/services/focus_service/focus_key.dart';
+import 'package:fridge_yellow_team_bloc/res/const.dart';
+import 'package:fridge_yellow_team_bloc/services/focus_service/focus_key.dart';
 
 /// This Service help us with fields navigation.
 /// [FocusService] is not a singleton, for using - create a variable on the screen widget.

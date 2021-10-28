@@ -1,15 +1,15 @@
 import 'dart:convert';
 
+import 'package:fridge_yellow_team_bloc/services/network_service/interfaces/i_base_request.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/src/response.dart';
-import 'package:base_project_template/services/network_service/interfaces/i_base_request.dart';
 
 class PostRequestModel implements IBaseRequest {
   final String url;
   final Map<String, String> headers;
   final Map<String, String> body;
 
-  PostRequestModel({
+  const PostRequestModel({
     this.url,
     this.headers,
     this.body,
@@ -18,7 +18,7 @@ class PostRequestModel implements IBaseRequest {
   @override
   Future<Response> call() {
     return http.post(
-      url,
+      Uri.parse(url),
       headers: headers,
       body: json.encode(body),
     );

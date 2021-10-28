@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
-import 'package:base_project_template/dictionary/models/language.dart';
-import 'package:base_project_template/dictionary/flutter_dictionary.dart';
-import 'package:base_project_template/dictionary/models/supported_locales.dart';
+import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
+import 'package:fridge_yellow_team_bloc/dictionary/models/language.dart';
+import 'package:fridge_yellow_team_bloc/dictionary/models/supported_locales.dart';
 
 class FlutterDictionaryDelegate extends LocalizationsDelegate<FlutterDictionary> {
   static List<LocalizationsDelegate<dynamic>> get getLocalizationDelegates {
@@ -39,5 +38,4 @@ class FlutterDictionaryDelegate extends LocalizationsDelegate<FlutterDictionary>
 
   @override
   bool shouldReload(LocalizationsDelegate<FlutterDictionary> old) => false;
-
 }

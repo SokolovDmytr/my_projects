@@ -1,5 +1,5 @@
 ///[ApplicationKeys]contains keys used in Application class
-class ApplicationKeys{
+class ApplicationKeys {
   static const String application = 'Application';
 }
 

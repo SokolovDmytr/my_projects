@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 abstract class IPageData {
   final String id;
 
-  IPageData({
-    @required this.id
+  const IPageData({
+    required this.id,
   });
 }

@@ -13,8 +13,8 @@ class FocusKey {
   bool canBeOpened;
 
   FocusKey({
-    @required this.value,
-    @required this.order,
+    required this.value,
+    required this.order,
     this.canBeOpened = true,
   });
 
@@ -28,12 +28,12 @@ class FocusKey {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is FocusKey &&
-              runtimeType == other.runtimeType &&
-              value == other.value &&
-              order == other.order &&
-              focusNode == other.focusNode &&
-              canBeOpened == other.canBeOpened;
+      other is FocusKey &&
+          runtimeType == other.runtimeType &&
+          value == other.value &&
+          order == other.order &&
+          focusNode == other.focusNode &&
+          canBeOpened == other.canBeOpened;
 
   @override
   int get hashCode => value.hashCode ^ order.hashCode ^ focusNode.hashCode ^ canBeOpened.hashCode;

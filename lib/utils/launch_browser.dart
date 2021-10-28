@@ -1,4 +1,4 @@
-import 'package:base_project_template/res/const.dart';
+import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:url_launcher/url_launcher.dart';
 

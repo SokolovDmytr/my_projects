@@ -1,33 +1,62 @@
 import 'package:flutter/material.dart';
-
-import 'package:base_project_template/res/app_styles/app_colors.dart';
+import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 
 class AppShadows {
-  static List<BoxShadow> shadowText(Color color) {
-    return [
-      BoxShadow(color: color, spreadRadius: 1.0, blurRadius: 4),
-    ];
-  }
-
-  static List<BoxShadow> emptyShadow() {
-    return [
-      BoxShadow(color: AppColors.kWhite.withOpacity(0)),
-    ];
-  }
-
-  static List<BoxShadow> shadowsFile(Color color) {
+  static List<BoxShadow> get buttonBlackShadow {
     return [
       BoxShadow(
-        offset: Offset(-1, 0),
-        color: AppColors.kWhite.withOpacity(0.2),
-        blurRadius: 12.0,
+        color: AppColors.black80,
+        blurRadius: 5,
+        offset: Offset(0.0, 2.0),
       ),
+    ];
+  }
+
+  static List<BoxShadow> get buttonOcreShadow {
+    return [
       BoxShadow(
-        offset: Offset(1, 0),
+        color: AppColors.ocre,
+        spreadRadius: -18.0,
+        blurRadius: 15.0,
+        offset: Offset(0.0, 20.0),
+      ),
+    ];
+  }
+
+  static List<BoxShadow> get recipeElementShadow {
+    return [
+      BoxShadow(
+        color: AppColors.black36.withOpacity(0.3),
+        blurRadius: 10.0,
+        offset: Offset(0.0, 3.0),
+      ),
+    ];
+  }
+
+  static List<BoxShadow> shadowText({required Color color}) {
+    return [
+      BoxShadow(
         color: color,
-        spreadRadius: 16.0,
-        blurRadius: 12.0,
+        blurRadius: 4.0,
+        offset: Offset(0.0, 3.0),
       ),
     ];
+  }
+
+  static List<BoxShadow> get textFieldShadow {
+    return [
+      BoxShadow(
+        color: AppColors.black80,
+        blurRadius: 5.0,
+        offset: Offset(0.0, 2.0),
+      ),
+    ];
+  }
+
+  static Shadow get blurShadow {
+    return Shadow(
+      blurRadius: 2.0,
+      color: AppColors.black25,
+    );
   }
 }

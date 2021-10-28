@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:base_project_template/services/dialog_service/shared/i_dialog.dart';
-import 'package:base_project_template/store/shared/loader/loader_state.dart';
+import 'package:fridge_yellow_team_bloc/res/const.dart';
+import 'package:fridge_yellow_team_bloc/services/dialog_service/shared/i_dialog.dart';
 
 class ILoader extends IDialog {
   final bool state;
   final String title;
   final LoaderKey loaderKey;
 
-  ILoader({
-    @required this.state,
-    @required this.loaderKey,
-    @required this.title,
-  });
+  const ILoader({
+    required this.state,
+    required this.loaderKey,
+    required this.title,
+    required Widget child,
+  }) : super(child: child);
 
   Widget get widget {
-    return Container();
+    return child;
   }
 
   @override
-  void show(DisplayFunction displayFunction) {}
+  void show() {}
 }

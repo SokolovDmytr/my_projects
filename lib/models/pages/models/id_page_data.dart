@@ -1,5 +1,5 @@
-import 'package:base_project_template/models/pages/interfaces/i_page_data.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:fridge_yellow_team_bloc/models/pages/interfaces/i_page_data.dart';
 
 class IdPageData implements IPageData {
   @override
@@ -7,7 +7,7 @@ class IdPageData implements IPageData {
   final int pageNumber;
 
   IdPageData({
-    @required this.id,
-    @required this.pageNumber,
+    required this.id,
+    required this.pageNumber,
   });
 }
