@@ -4,12 +4,12 @@ import 'package:fridge_yellow_team_bloc/models/pages/models/image_with_id.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 
 
-class IngredientImageCacheManager {
-  static final IngredientImageCacheManager _instance = IngredientImageCacheManager._();
+class ImageCacheManager {
+  static final ImageCacheManager _instance = ImageCacheManager._();
 
-  static IngredientImageCacheManager get instance => _instance;
+  static ImageCacheManager get instance => _instance;
 
-  IngredientImageCacheManager._();
+  ImageCacheManager._();
 
   Image? getImageWithIdIngredient({
     required Ingredient ingredient,

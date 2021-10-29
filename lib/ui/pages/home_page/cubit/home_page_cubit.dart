@@ -16,7 +16,7 @@ import 'package:fridge_yellow_team_bloc/ui/pages/home_page/cubit/home_page_state
 class HomePageCubit extends Cubit<HomePageState> {
   HomePageCubit()
       : super(
-          const HomePageState(
+          HomePageState(
             ingredients: [],
             tempIngredients: [],
             allIngredient: [],
@@ -61,10 +61,9 @@ class HomePageCubit extends Cubit<HomePageState> {
   }
 
   void addIngredient({required Ingredient ingredient}) {
-    final List<Ingredient> ingredients = state.ingredients;
     emit(
       state.copyWith(
-        inputIngredients: ingredients..add(ingredient),
+        inputIngredients: state.ingredients..add(ingredient),
       ),
     );
   }

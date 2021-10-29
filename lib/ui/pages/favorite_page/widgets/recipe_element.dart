@@ -11,7 +11,7 @@ import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_shadows.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
-import 'package:fridge_yellow_team_bloc/services/cache_manager/ingredient_image_cache_manager.dart';
+import 'package:fridge_yellow_team_bloc/services/cache_manager/image_cache_manager.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/remove_favourite_dialog/remove_favourite_dialog.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/remove_favourite_dialog/remove_favourite_widget.dart';
@@ -126,7 +126,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                                       height: 32.0,
                                       width: 32.0,
                                       margin: const EdgeInsets.symmetric(horizontal: 3.0),
-                                      child: IngredientImageCacheManager.instance.getImageWithIdIngredient(ingredient: e) ??
+                                      child: ImageCacheManager.instance.getImageWithIdIngredient(ingredient: e) ??
                                           CachedNetworkImage(
                                             imageUrl: e.image!,
                                             imageBuilder: (BuildContext _, ImageProvider imageProvider) {
@@ -399,7 +399,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                         height: 32.0,
                         width: 32.0,
                         margin: const EdgeInsets.symmetric(horizontal: 3.0),
-                        child: IngredientImageCacheManager.instance.getImageWithIdIngredient(ingredient: e) ??
+                        child: ImageCacheManager.instance.getImageWithIdIngredient(ingredient: e) ??
                             CachedNetworkImage(
                               imageUrl: e.image!,
                               imageBuilder: (BuildContext _, ImageProvider imageProvider) {
