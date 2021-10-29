@@ -1,22 +1,16 @@
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/token.dart';
-import 'package:fridge_yellow_team_bloc/res/const.dart';
+import 'package:fridge_yellow_team_bloc/services/user_information_service/user_information_service.dart';
 
 class ApplicationTokenState {
-  final Token token;
+  final Token? token;
 
   ApplicationTokenState({
     required this.token,
   });
 
   static ApplicationTokenState init() {
-    return ApplicationTokenState(
-      token: Token(
-        token: emptyString,
-        ttlToken: emptyString,
-        refreshToken: emptyString,
-        createDate: DateTime.now(),
-      ),
-    );
+    final Token? token = UserInformationService.instance.init();
+    return ApplicationTokenState(token: token);
   }
 
   ApplicationTokenState copyWith({

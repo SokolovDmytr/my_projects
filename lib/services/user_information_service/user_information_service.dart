@@ -1,6 +1,5 @@
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/token.dart';
-import 'package:fridge_yellow_team_bloc/repositories/auth_repository.dart';
 import 'package:fridge_yellow_team_bloc/res/app_duration.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/models/base_http_response.dart';
@@ -24,7 +23,7 @@ class UserInformationService {
 
   User? _user;
 
-  Future<Token?> init() async {
+  Token? init() {
     logger.d('Load information');
     final Box<User> box = Hive.box<User>(hiveBoxNameUser);
     _user = box.get(userKey);
@@ -33,6 +32,10 @@ class UserInformationService {
       _user = User(
         isFirstSeeSwipeTutorial: false,
         isFirstVisitApp: true,
+        token: emptyString,
+        createDate: DateTime.now(),
+        refreshToken: emptyString,
+        ttlToken: emptyString,
       );
       return null;
     } else {
@@ -46,9 +49,9 @@ class UserInformationService {
   }
 
   Future<String> getToken() async {
-    final Token token = RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().state.token;
+    final Token? token = RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().state.token;
 
-    if (token.token != emptyString &&
+    if (token!.token != emptyString &&
         token.createDate.add(AppDuration.timeValidOfToken).isAfter(
               DateTime.now(),
             )) {
@@ -115,13 +118,13 @@ class UserInformationService {
 
   void visitApp() {
     _user!.isFirstVisitApp = false;
-    final Token token = RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().state.token;
+    final Token? token = RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().state.token;
     saveInformation(token);
   }
 
   void seeSwipeTutorial() {
     _user!.isFirstSeeSwipeTutorial = true;
-    final Token token = RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().state.token;
+    final Token? token = RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().state.token;
     saveInformation(token);
   }
 
