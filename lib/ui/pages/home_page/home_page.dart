@@ -300,7 +300,8 @@ class _HomePageState extends State<HomePage> {
           builder: (
             BuildContext ctx,
           ) {
-            final List<Ingredient> tempIngredients = _textFieldContext!.watch<HomePageCubit>().state.tempIngredients;
+            final List<Ingredient> tempIngredients = _textFieldContext!.read<HomePageCubit>().state.tempIngredients;
+            print(_textFromSearchTextField);
             final double containerHeight = tempIngredients.length > 3
                 ? 195.0
                 : tempIngredients.isEmpty
