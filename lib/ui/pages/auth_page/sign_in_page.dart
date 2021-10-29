@@ -8,7 +8,6 @@ import 'package:fridge_yellow_team_bloc/res/app_styles/app_gradient.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_shadows.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
-import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_button.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_textfield.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/auth_page/cubit/auth_page_cubit.dart';

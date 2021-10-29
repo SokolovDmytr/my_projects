@@ -13,7 +13,7 @@ import 'package:fridge_yellow_team_bloc/res/app_styles/app_shadows.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_selectors.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_button.dart';
-import 'package:fridge_yellow_team_bloc/ui/pages/home_page/home_page.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/home_page/view/home_page.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   OnBoardingScreen() : super(key: UniqueKey());
