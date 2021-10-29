@@ -1,10 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
+import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
+import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
+import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/token.dart';
 import 'package:fridge_yellow_team_bloc/repositories/auth_repository.dart';
+import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/error_dialog/error_dialog.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/error_dialog/error_dialog_widget.dart';
+import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/loader/loader_pop_up.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/loader/loader_widget.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/models/base_http_response.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/network_service.dart';
@@ -20,11 +25,19 @@ class AuthPageCubit extends Cubit<AuthPageState> {
   AuthPageCubit() : super(AuthPageState.init());
 
   Future<void> logIn(String email, String password) async {
-    PopUpService.instance.show(widget: LoaderWidget());
+    final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+    DialogService.instance.show(
+      dialog: LoaderPopUp(
+        title: language.loadingText,
+        state: true,
+        loaderKey: LoaderKey.getData,
+        child: LoaderWidget(),
+      ),
+    );
 
     final bool isConnection = await NetworkService.instance.checkInternetConnection();
     if (isConnection == false) {
-      // DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
+      DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
       DialogService.instance.show(
         dialog: ErrorDialog(
           child: ErrorDialogWidget(),
@@ -43,9 +56,9 @@ class AuthPageCubit extends Cubit<AuthPageState> {
         response: response,
       );
       RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().saveToken(token);
+      UserInformationService.instance.saveInformation(token);
 
-      // DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
-
+      DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
       UserInformationService.instance.isFirstVisitApp() ? RouteSelectors.goToOnBoardingPage().call() : RouteSelectors.goToHomePage().call();
     } else {
       DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
@@ -55,41 +68,16 @@ class AuthPageCubit extends Cubit<AuthPageState> {
     }
   }
 
-  Future<void> logOut() async {
-    PopUpService.instance.show(widget: LoaderWidget());
-
-    final bool isConnection = await NetworkService.instance.checkInternetConnection();
-
-    if (isConnection == false) {
-      DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
-      DialogService.instance.show(
-        dialog: ErrorDialog(
-          child: ErrorDialogWidget(),
-        ),
-      );
-      return;
-    }
-
-    final BaseHttpResponse response = await AuthRepository.instance.logOut(
-      token: RouteService.instance.navigatorKey.currentContext!.read<ApplicationTokenCubit>().state.token.token,
-    );
-    if (response.error == null) {
-      UserInformationService.instance.clear();
-      RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().saveToken(AuthPageState().token);
-
-      DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
-
-      RouteSelectors.goToAuthPage();
-    } else {
-      DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
-      PopUpService.instance.show(
-        widget: ServerErrorPopUpWidget(),
-      );
-    }
-  }
-
   Future<void> register(String email, String firstName, String password) async {
-    PopUpService.instance.show(widget: LoaderWidget());
+    final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+    DialogService.instance.show(
+      dialog: LoaderPopUp(
+        title: language.loadingText,
+        state: true,
+        loaderKey: LoaderKey.getData,
+        child: LoaderWidget(),
+      ),
+    );
 
     final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
@@ -115,9 +103,9 @@ class AuthPageCubit extends Cubit<AuthPageState> {
         response: response,
       );
       RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().saveToken(token);
+      UserInformationService.instance.saveInformation(token);
 
       DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
-
       UserInformationService.instance.isFirstVisitApp() ? RouteSelectors.goToOnBoardingPage().call() : RouteSelectors.goToHomePage().call();
     } else {
       DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);

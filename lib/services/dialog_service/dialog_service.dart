@@ -17,7 +17,7 @@ class DialogService {
 
   bool get isDisplayed => _isDisplayed;
 
-  void show({required IDialog dialog,}) {
+  void show({required IDialog dialog}) {
     if (_isDisplayed) {
       logger.e('$tag => <_display> => Error Message: _isDisplayed: $_isDisplayed, Dialog cant be showed.');
       return;

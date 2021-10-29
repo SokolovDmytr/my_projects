@@ -46,10 +46,5 @@ Future<void> main() async {
   Hive.registerAdapter(UserAdapter());
   await Hive.openBox<User>(hiveBoxNameUser);
 
-  final Token? token = await UserInformationService.instance.init();
-  if (token != null && token.token != emptyString) {
-    await UserInformationService.instance.init();
-  }
-
   runApp(Application());
 }
