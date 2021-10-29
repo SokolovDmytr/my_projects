@@ -24,7 +24,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
 
     final bool isConnection = await NetworkService.instance.checkInternetConnection();
     if (isConnection == false) {
-      DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
+      // DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
       DialogService.instance.show(
         dialog: ErrorDialog(
           child: ErrorDialogWidget(),
@@ -44,7 +44,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
       );
       RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().saveToken(token);
 
-      DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
+      // DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
 
       UserInformationService.instance.isFirstVisitApp() ? RouteSelectors.goToOnBoardingPage().call() : RouteSelectors.goToHomePage().call();
     } else {

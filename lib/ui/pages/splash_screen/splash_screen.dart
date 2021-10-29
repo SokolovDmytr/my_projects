@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     Future.delayed(
       AppDuration.defaultDurationForSplashScreen,
       () {
-        BlocProvider.of<ApplicationTokenCubit>(context).state.token!.token == emptyString
+        BlocProvider.of<ApplicationTokenCubit>(context).state.token.token == emptyString
             ? RouteSelectors.goToAuthPage().call()
             : RouteSelectors.goToOnBoardingPage().call();
       },
