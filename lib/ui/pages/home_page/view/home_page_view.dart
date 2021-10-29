@@ -14,9 +14,13 @@ import 'package:fridge_yellow_team_bloc/res/app_styles/app_shadows.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 import 'package:fridge_yellow_team_bloc/services/cache_manager/image_cache_manager.dart';
+import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
+import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/swipe_tutorial_dialog/swipe_tutorial_dialog.dart';
+import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/swipe_tutorial_dialog/swipe_tutorial_widget.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/text_field_loader/text_field_loader_widget.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/app_routes.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_selectors.dart';
+import 'package:fridge_yellow_team_bloc/services/user_information_service/user_information_service.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_button.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_textfield.dart';
 import 'package:fridge_yellow_team_bloc/ui/layouts/main_layout/main_layout.dart';
@@ -56,18 +60,17 @@ class _HomePageViewState extends State<HomePageView> {
           Overlay.of(context)!.insert(_overlayEntry);
         } else {
           _overlayEntry.remove();
-/*
-            if (UserInformationService.instance.isFirstSeeSwipeTutorial() == false &&
-                StoreProvider.of<AppState>(context, listen: true).state.homePageState.ingredients.isNotEmpty) {
-              DialogSelector.showSwipeTutorialDialogFunction(
-                store: StoreProvider.of<AppState>(context),
-                onTapOk: () {
+
+          if (UserInformationService.instance.isFirstSeeSwipeTutorial() == false && context.read<HomePageCubit>().ingredientsIsEmpty() == false) {
+            DialogService.instance.show(
+              dialog: SwipeTutorialDialog(
+                child: SwipeTutorialWidget(onTapOk: () {
                   UserInformationService.instance.seeSwipeTutorial();
-                  DialogSelector.closeDialog(
-                    store: StoreProvider.of<AppState>(context),
-                  );
-                },
-              );*/
+                  DialogService.instance.close(context);
+                }),
+              ),
+            );
+          }
         }
       },
     );
@@ -293,15 +296,15 @@ class _HomePageViewState extends State<HomePageView> {
         top: offset.dy + size.height,
         width: size.width,
         child: BlocSelector<HomePageCubit, HomePageState, List<Ingredient>>(
-          bloc: context.watch(),
+          bloc: context.read(),
           selector: (HomePageState state) {
             existIngredients = state.ingredients;
             return state.tempIngredients;
           },
           builder: (
-              BuildContext _,
-              List<Ingredient> ingredients,
-              ) {
+            BuildContext _,
+            List<Ingredient> ingredients,
+          ) {
             final List<Ingredient> tempIngredients = [];
             for (Ingredient ingredient in ingredients) {
               bool needAdd = true;
@@ -319,8 +322,8 @@ class _HomePageViewState extends State<HomePageView> {
             final double containerHeight = tempIngredients.length > 3
                 ? 195.0
                 : tempIngredients.isEmpty
-                ? baseHeightOfIngredientElement
-                : baseHeightOfIngredientElement * tempIngredients.length * 1.25;
+                    ? baseHeightOfIngredientElement
+                    : baseHeightOfIngredientElement * tempIngredients.length * 1.25;
             final OverlayContainerClipper clipper = OverlayContainerClipper(
               borderRadius: 8.0,
               triangleHeight: 15.0,
@@ -330,83 +333,83 @@ class _HomePageViewState extends State<HomePageView> {
             return _textFromSearchTextField.isEmpty
                 ? const SizedBox()
                 : CustomPaint(
-              painter: ClipShadowShadowPainter(
-                clipper: clipper,
-                shadow: AppShadows.blurShadow,
-              ),
-              child: ClipPath(
-                clipper: clipper,
-                child: Material(
-                  child: SizedBox(
-                    height: containerHeight,
-                    child: tempIngredients.isEmpty
-                        ? Container(
-                      alignment: FlutterDictionary.instance.isRTL ? Alignment.bottomRight : Alignment.bottomLeft,
-                      margin: const EdgeInsets.fromLTRB(22.0, 35.0, 22.0, 27.0),
-                      child: Text(
-                        language.notFound,
-                        style: AppFonts.mediumBlack70TextStyle,
-                      ),
-                    )
-                        : ListView.separated(
-                      itemCount: tempIngredients.length,
-                      padding: const EdgeInsets.only(top: 15.0),
-                      separatorBuilder: (BuildContext _, int index) {
-                        return Divider(
-                          color: AppColors.black.withOpacity(0.5),
-                          height: 0.5,
-                        );
-                      },
-                      itemBuilder: (BuildContext _, int index) {
-                        return InkWell(
-                          child: SizedBox(
-                            height: baseHeightOfIngredientElement,
-                            child: Row(
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.fromLTRB(
-                                    22.0,
-                                    5.0,
-                                    4.0,
-                                    5.0,
-                                  ),
-                                  child: ImageCacheManager.instance.getImageWithIdIngredient(ingredient: tempIngredients[index]) ??
-                                      CachedNetworkImage(
-                                        imageUrl: tempIngredients[index].image!,
-                                        imageBuilder: (BuildContext _, ImageProvider imageProvider) {
-                                          return Image(image: imageProvider);
-                                        },
-                                        placeholder: (context, url) => SizedBox(
-                                          width: baseHeightOfIngredientElement,
-                                          child: Image.asset(ImageAssets.chefYellow),
-                                        ),
-                                        errorWidget: (context, url, error) {
-                                          return Image.asset(ImageAssets.chefYellow);
-                                        },
-                                      ),
-                                ),
-                                Flexible(
-                                  child: Text(
-                                    tempIngredients[index].name ?? 'Not name',
-                                    style: AppFonts.mediumBlack70TextStyle,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          onTap: () {
-                            //context.read<HomePageCubit>().addIngredient(ingredient: tempIngredients[index]);
-                            FocusManager.instance.primaryFocus!.unfocus();
-                          },
-                        );
-                      },
+                    painter: ClipShadowShadowPainter(
+                      clipper: clipper,
+                      shadow: AppShadows.blurShadow,
                     ),
-                  ),
-                ),
-              ),
-            );
+                    child: ClipPath(
+                      clipper: clipper,
+                      child: Material(
+                        child: SizedBox(
+                          height: containerHeight,
+                          child: tempIngredients.isEmpty
+                              ? Container(
+                                  alignment: FlutterDictionary.instance.isRTL ? Alignment.bottomRight : Alignment.bottomLeft,
+                                  margin: const EdgeInsets.fromLTRB(22.0, 35.0, 22.0, 27.0),
+                                  child: Text(
+                                    language.notFound,
+                                    style: AppFonts.mediumBlack70TextStyle,
+                                  ),
+                                )
+                              : ListView.separated(
+                                  itemCount: tempIngredients.length,
+                                  padding: const EdgeInsets.only(top: 15.0),
+                                  separatorBuilder: (BuildContext _, int index) {
+                                    return Divider(
+                                      color: AppColors.black.withOpacity(0.5),
+                                      height: 0.5,
+                                    );
+                                  },
+                                  itemBuilder: (BuildContext _, int index) {
+                                    return InkWell(
+                                      child: SizedBox(
+                                        height: baseHeightOfIngredientElement,
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              margin: const EdgeInsets.fromLTRB(
+                                                22.0,
+                                                5.0,
+                                                4.0,
+                                                5.0,
+                                              ),
+                                              child: ImageCacheManager.instance.getImageWithIdIngredient(ingredient: tempIngredients[index]) ??
+                                                  CachedNetworkImage(
+                                                    imageUrl: tempIngredients[index].image!,
+                                                    imageBuilder: (BuildContext _, ImageProvider imageProvider) {
+                                                      return Image(image: imageProvider);
+                                                    },
+                                                    placeholder: (context, url) => SizedBox(
+                                                      width: baseHeightOfIngredientElement,
+                                                      child: Image.asset(ImageAssets.chefYellow),
+                                                    ),
+                                                    errorWidget: (context, url, error) {
+                                                      return Image.asset(ImageAssets.chefYellow);
+                                                    },
+                                                  ),
+                                            ),
+                                            Flexible(
+                                              child: Text(
+                                                tempIngredients[index].name ?? 'Not name',
+                                                style: AppFonts.mediumBlack70TextStyle,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        context.read<HomePageCubit>().addIngredient(ingredient: tempIngredients[index]);
+                                        FocusManager.instance.primaryFocus!.unfocus();
+                                      },
+                                    );
+                                  },
+                                ),
+                        ),
+                      ),
+                    ),
+                  );
           },
         ),
       ),

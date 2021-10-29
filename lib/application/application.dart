@@ -25,7 +25,7 @@ class Application extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        home: SplashScreen(),
         onGenerateRoute: RouteService.instance.onGenerateRoute,
         navigatorKey: RouteService.instance.navigatorKey,
         locale: Locale(Locales.base),

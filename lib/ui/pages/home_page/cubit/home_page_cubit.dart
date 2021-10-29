@@ -88,4 +88,6 @@ class HomePageCubit extends Cubit<HomePageState> {
       state.copyWith(inputIngredients: state.ingredients..removeWhere((element) => element.i == id)),
     );
   }
+
+  bool ingredientsIsEmpty() => state.ingredients.isEmpty;
 }
