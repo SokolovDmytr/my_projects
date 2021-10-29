@@ -326,7 +326,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                               ? const SizedBox()
                               : _getParameterOfRecipeWidget(
                                   imageAssets: ImageAssets.difficultyIcon,
-                                  value: widget.recipe.level,
+                                  value: widget.recipe.level!,
                                   textStyle: AppFonts.smallWhiteTextStyle,
                                 ),
                         ],
@@ -474,7 +474,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                       ),
                       _getParameterOfRecipeWidget(
                         imageAssets: ImageAssets.difficultyIcon,
-                        value: widget.recipe.level,
+                        value: widget.recipe.level!,
                         textStyle: AppFonts.smallTextStyle,
                       ),
                     ],

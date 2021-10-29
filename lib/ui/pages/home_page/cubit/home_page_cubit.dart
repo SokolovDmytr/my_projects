@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
 import 'package:fridge_yellow_team_bloc/repositories/ingredient_repository.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
@@ -10,13 +11,13 @@ import 'package:fridge_yellow_team_bloc/services/network_service/res/consts.dart
 import 'package:fridge_yellow_team_bloc/services/network_service/shared/fridge_parser.dart';
 import 'package:fridge_yellow_team_bloc/services/pop_up_service/pop_up_service.dart';
 import 'package:fridge_yellow_team_bloc/services/pop_up_service/server_error_pop_up_widget.dart';
-import 'package:fridge_yellow_team_bloc/services/user_information_service/user_information_service.dart';
+import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/home_page/cubit/home_page_state.dart';
 
 class HomePageCubit extends Cubit<HomePageState> {
   HomePageCubit()
       : super(
-          HomePageState(
+          const HomePageState(
             ingredients: [],
             tempIngredients: [],
             images: [],
@@ -35,7 +36,7 @@ class HomePageCubit extends Cubit<HomePageState> {
       return;
     }
 
-    final String token = await UserInformationService.instance.getToken();
+    final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
 
     NetworkService.instance.init(baseUrl: baseUrl);
     final BaseHttpResponse response = await IngredientRepository.instance.fetchIngredientData(
@@ -60,9 +61,12 @@ class HomePageCubit extends Cubit<HomePageState> {
   }
 
   void addIngredient({required Ingredient ingredient}) {
+    final List<Ingredient> resIngredients = List.from(state.ingredients);
+    resIngredients.add(ingredient);
+
     emit(
       state.copyWith(
-        inputIngredients: state.ingredients..add(ingredient),
+        inputIngredients: resIngredients,
       ),
     );
   }
@@ -84,8 +88,10 @@ class HomePageCubit extends Cubit<HomePageState> {
   }
 
   void deleteIngredient({required String id}) {
+    final List<Ingredient> resIngredients = List.from(state.ingredients);
+    resIngredients.removeWhere((element) => element.i == id);
     emit(
-      state.copyWith(inputIngredients: state.ingredients..removeWhere((element) => element.i == id)),
+      state.copyWith(inputIngredients: resIngredients),
     );
   }
 

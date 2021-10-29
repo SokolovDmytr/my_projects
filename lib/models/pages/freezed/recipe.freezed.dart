@@ -26,9 +26,9 @@ class _$RecipeTearOff {
       required String name,
       required int time,
       required double calories,
-      required String level,
       required List<Ingredient> ingredients,
       required List<String> steps,
+      String? level,
       String? image,
       bool isFavorite = false}) {
     return _Recipe(
@@ -36,9 +36,9 @@ class _$RecipeTearOff {
       name: name,
       time: time,
       calories: calories,
-      level: level,
       ingredients: ingredients,
       steps: steps,
+      level: level,
       image: image,
       isFavorite: isFavorite,
     );
@@ -58,9 +58,9 @@ mixin _$Recipe {
   String get name => throw _privateConstructorUsedError;
   int get time => throw _privateConstructorUsedError;
   double get calories => throw _privateConstructorUsedError;
-  String get level => throw _privateConstructorUsedError;
   List<Ingredient> get ingredients => throw _privateConstructorUsedError;
   List<String> get steps => throw _privateConstructorUsedError;
+  String? get level => throw _privateConstructorUsedError;
   String? get image => throw _privateConstructorUsedError;
   bool get isFavorite => throw _privateConstructorUsedError;
 
@@ -78,9 +78,9 @@ abstract class $RecipeCopyWith<$Res> {
       String name,
       int time,
       double calories,
-      String level,
       List<Ingredient> ingredients,
       List<String> steps,
+      String? level,
       String? image,
       bool isFavorite});
 }
@@ -99,9 +99,9 @@ class _$RecipeCopyWithImpl<$Res> implements $RecipeCopyWith<$Res> {
     Object? name = freezed,
     Object? time = freezed,
     Object? calories = freezed,
-    Object? level = freezed,
     Object? ingredients = freezed,
     Object? steps = freezed,
+    Object? level = freezed,
     Object? image = freezed,
     Object? isFavorite = freezed,
   }) {
@@ -122,10 +122,6 @@ class _$RecipeCopyWithImpl<$Res> implements $RecipeCopyWith<$Res> {
           ? _value.calories
           : calories // ignore: cast_nullable_to_non_nullable
               as double,
-      level: level == freezed
-          ? _value.level
-          : level // ignore: cast_nullable_to_non_nullable
-              as String,
       ingredients: ingredients == freezed
           ? _value.ingredients
           : ingredients // ignore: cast_nullable_to_non_nullable
@@ -134,6 +130,10 @@ class _$RecipeCopyWithImpl<$Res> implements $RecipeCopyWith<$Res> {
           ? _value.steps
           : steps // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      level: level == freezed
+          ? _value.level
+          : level // ignore: cast_nullable_to_non_nullable
+              as String?,
       image: image == freezed
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -156,9 +156,9 @@ abstract class _$RecipeCopyWith<$Res> implements $RecipeCopyWith<$Res> {
       String name,
       int time,
       double calories,
-      String level,
       List<Ingredient> ingredients,
       List<String> steps,
+      String? level,
       String? image,
       bool isFavorite});
 }
@@ -178,9 +178,9 @@ class __$RecipeCopyWithImpl<$Res> extends _$RecipeCopyWithImpl<$Res>
     Object? name = freezed,
     Object? time = freezed,
     Object? calories = freezed,
-    Object? level = freezed,
     Object? ingredients = freezed,
     Object? steps = freezed,
+    Object? level = freezed,
     Object? image = freezed,
     Object? isFavorite = freezed,
   }) {
@@ -201,10 +201,6 @@ class __$RecipeCopyWithImpl<$Res> extends _$RecipeCopyWithImpl<$Res>
           ? _value.calories
           : calories // ignore: cast_nullable_to_non_nullable
               as double,
-      level: level == freezed
-          ? _value.level
-          : level // ignore: cast_nullable_to_non_nullable
-              as String,
       ingredients: ingredients == freezed
           ? _value.ingredients
           : ingredients // ignore: cast_nullable_to_non_nullable
@@ -213,6 +209,10 @@ class __$RecipeCopyWithImpl<$Res> extends _$RecipeCopyWithImpl<$Res>
           ? _value.steps
           : steps // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      level: level == freezed
+          ? _value.level
+          : level // ignore: cast_nullable_to_non_nullable
+              as String?,
       image: image == freezed
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -233,9 +233,9 @@ class _$_Recipe implements _Recipe {
       required this.name,
       required this.time,
       required this.calories,
-      required this.level,
       required this.ingredients,
       required this.steps,
+      this.level,
       this.image,
       this.isFavorite = false});
 
@@ -251,11 +251,11 @@ class _$_Recipe implements _Recipe {
   @override
   final double calories;
   @override
-  final String level;
-  @override
   final List<Ingredient> ingredients;
   @override
   final List<String> steps;
+  @override
+  final String? level;
   @override
   final String? image;
   @JsonKey(defaultValue: false)
@@ -264,7 +264,7 @@ class _$_Recipe implements _Recipe {
 
   @override
   String toString() {
-    return 'Recipe(i: $i, name: $name, time: $time, calories: $calories, level: $level, ingredients: $ingredients, steps: $steps, image: $image, isFavorite: $isFavorite)';
+    return 'Recipe(i: $i, name: $name, time: $time, calories: $calories, ingredients: $ingredients, steps: $steps, level: $level, image: $image, isFavorite: $isFavorite)';
   }
 
   @override
@@ -277,10 +277,10 @@ class _$_Recipe implements _Recipe {
             (identical(other.time, time) || other.time == time) &&
             (identical(other.calories, calories) ||
                 other.calories == calories) &&
-            (identical(other.level, level) || other.level == level) &&
             const DeepCollectionEquality()
                 .equals(other.ingredients, ingredients) &&
             const DeepCollectionEquality().equals(other.steps, steps) &&
+            (identical(other.level, level) || other.level == level) &&
             (identical(other.image, image) || other.image == image) &&
             (identical(other.isFavorite, isFavorite) ||
                 other.isFavorite == isFavorite));
@@ -293,9 +293,9 @@ class _$_Recipe implements _Recipe {
       name,
       time,
       calories,
-      level,
       const DeepCollectionEquality().hash(ingredients),
       const DeepCollectionEquality().hash(steps),
+      level,
       image,
       isFavorite);
 
@@ -316,9 +316,9 @@ abstract class _Recipe implements Recipe {
       required String name,
       required int time,
       required double calories,
-      required String level,
       required List<Ingredient> ingredients,
       required List<String> steps,
+      String? level,
       String? image,
       bool isFavorite}) = _$_Recipe;
 
@@ -333,11 +333,11 @@ abstract class _Recipe implements Recipe {
   @override
   double get calories;
   @override
-  String get level;
-  @override
   List<Ingredient> get ingredients;
   @override
   List<String> get steps;
+  @override
+  String? get level;
   @override
   String? get image;
   @override

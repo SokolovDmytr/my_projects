@@ -25,7 +25,7 @@ class ImageCacheManager {
         final ImageWithId image = _imageCache.firstWhere((element) => element.id == ingredient.image);
         return image.image;
       } catch (error) {
-        logger.i(error);
+        logger.i('$error in ImageCacheManager.getImageWithIdIngredient');
       }
     }
 

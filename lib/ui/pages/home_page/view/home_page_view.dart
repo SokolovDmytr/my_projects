@@ -266,7 +266,7 @@ class _HomePageViewState extends State<HomePageView> {
                                     text: language.buttonWatchRecipes,
                                     fontText: AppFonts.normalMediumTextStyle,
                                     gradient: AppGradient.wheatMarigoldGradient,
-                                    onTap: RouteSelectors.goToRecipesPage(),
+                                    onTap: RouteSelectors.goToRecipesPage(ingredients: state.ingredients),
                                   ),
                                 ),
                               ),
@@ -345,7 +345,7 @@ class _HomePageViewState extends State<HomePageView> {
                           child: tempIngredients.isEmpty
                               ? Container(
                                   alignment: FlutterDictionary.instance.isRTL ? Alignment.bottomRight : Alignment.bottomLeft,
-                                  margin: const EdgeInsets.fromLTRB(22.0, 35.0, 22.0, 27.0),
+                                  margin: const EdgeInsets.fromLTRB(22.0, 10.0, 22.0, 10.0),
                                   child: Text(
                                     language.notFound,
                                     style: AppFonts.mediumBlack70TextStyle,

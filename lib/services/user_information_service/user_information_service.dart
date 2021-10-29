@@ -48,40 +48,6 @@ class UserInformationService {
     }
   }
 
-  Future<String> getToken() async {
-    final Token? token = RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().state.token;
-
-    if (token != null && token.token != emptyString &&
-        token.createDate.add(AppDuration.timeValidOfToken).isAfter(
-              DateTime.now(),
-            )) {
-      return token.token;
-    } else {
-      logger.d('Update token');
-
-      NetworkService.instance.init(baseUrl: baseUrl);
-      final BaseHttpResponse response = await NetworkService.instance.requestWithParams(
-        type: HttpType.httpGet,
-        route: HttpRoute.updateToken,
-        parameter: RefreshTokenParams(
-          refreshToken: token!.refreshToken,
-        ),
-      );
-
-      if (response.error == null) {
-        final Token authToken = FridgeParser.instance.parseEntity(
-          exampleObject: Token,
-          response: response,
-        );
-        RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().saveToken(authToken);
-        return authToken.token;
-      } else {
-        logger.e('Update token error: ${response.error!.error}');
-        return token.token;
-      }
-    }
-  }
-
   void saveInformation(Token? token) async {
     logger.d('Save information');
 

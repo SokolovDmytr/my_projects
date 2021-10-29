@@ -11,9 +11,9 @@ class Recipe with _$Recipe {
     required String name,
     required int time,
     required double calories,
-    required String level,
     required List<Ingredient> ingredients,
     required List<String> steps,
+    String? level,
     String? image,
     @Default(false) bool isFavorite
   }) = _Recipe;
