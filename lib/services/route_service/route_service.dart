@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/app_routes.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/auth_page/auth_page.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/home_page/home_page.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/notification_page/notification_page.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/on_boarding_screen/on_boarding_screen.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/settings_page/settings_page.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/splash_screen/splash_screen.dart';
 
 class RouteService {
   // region [Initialize]
@@ -19,17 +24,17 @@ class RouteService {
     RouteSettings settings,
   ) {
     switch (settings.name) {
-      /*case AppRoutes.splashScreenPage:
+      case AppRoutes.splashScreenPage:
         return _defaultRoute(
           settings: settings,
           page: SplashScreen(),
-        );*/
+        );
       case AppRoutes.homePage:
         return _defaultRoute(
           settings: settings,
           page: HomePage(),
         );
-      /*case AppRoutes.settings:
+      case AppRoutes.settings:
         return _defaultRoute(
           settings: settings,
           page: SettingsPage(),
@@ -39,31 +44,31 @@ class RouteService {
           settings: settings,
           page: NotificationPage(),
         );
-      case AppRoutes.favorites:
-        return _defaultRoute(
-          settings: settings,
-          page: FavouritesPage(),
-        );
+      // case AppRoutes.favorites:
+      //   return _defaultRoute(
+      //     settings: settings,
+      //     page: FavouritesPage(),
+      //   );
       case AppRoutes.onBoardingScreen:
         return _defaultRoute(
           settings: settings,
           page: OnBoardingScreen(),
         );
-      case AppRoutes.recipes:
-        return _defaultRoute(
-          settings: settings,
-          page: RecipesPage(),
-        );
-      case AppRoutes.screenRecipePage:
-        return _defaultRoute(
-          settings: settings,
-          page: ScreenRecipePage(),
-        );
+      // case AppRoutes.recipes:
+      //   return _defaultRoute(
+      //     settings: settings,
+      //     page: RecipesPage(),
+      //   );
+      // case AppRoutes.screenRecipePage:
+      //   return _defaultRoute(
+      //     settings: settings,
+      //     page: ScreenRecipePage(),
+      //   );
       case AppRoutes.auth:
         return _defaultRoute(
           settings: settings,
           page: AuthPage(),
-        );*/
+        );
       default:
         return _defaultRoute(
           settings: settings,

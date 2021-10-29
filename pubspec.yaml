@@ -46,7 +46,6 @@ dependencies:
   flutter_notification_channel: ^2.0.0
   freezed_annotation: ^0.15.0
   json_annotation: ^4.3.0
-
   flutter_bloc: ^7.3.1
 
 dev_dependencies:
@@ -69,3 +68,4 @@ flutter:
 
   assets:
     - assets/png/
+    - assets/gif/

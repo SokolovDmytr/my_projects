@@ -1,3 +1,4 @@
+import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/token.dart';
 import 'package:fridge_yellow_team_bloc/repositories/auth_repository.dart';
 import 'package:fridge_yellow_team_bloc/res/app_duration.dart';
@@ -7,8 +8,10 @@ import 'package:fridge_yellow_team_bloc/services/network_service/network_service
 import 'package:fridge_yellow_team_bloc/services/network_service/res/consts.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/res/request_params/refresh_token_params.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/shared/fridge_parser.dart';
+import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
 import 'package:fridge_yellow_team_bloc/services/user_information_service/user.dart';
 import 'package:hive/hive.dart';
+import 'package:provider/src/provider.dart';
 
 class UserInformationService {
   static const tag = '[UserInformationService]';
@@ -43,20 +46,9 @@ class UserInformationService {
   }
 
   Future<String> getToken() async {
-    final BaseHttpResponse response = await AuthRepository.instance.logIn(
-      email: 'maximshirokostup@capdefier.com',
-      password: '12345',
-    );
-    if (response.error == null) {
-      return Token.fromJson(response.response).token;
-    }
-    return response.error!.error;
-    /*
-    get Token from store
-     */
-    final Token? token = null;
+    final Token token = RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().state.token;
 
-    if (token != null &&
+    if (token.token != emptyString &&
         token.createDate.add(AppDuration.timeValidOfToken).isAfter(
               DateTime.now(),
             )) {
@@ -69,7 +61,7 @@ class UserInformationService {
         type: HttpType.httpGet,
         route: HttpRoute.updateToken,
         parameter: RefreshTokenParams(
-          refreshToken: token!.refreshToken,
+          refreshToken: token.refreshToken,
         ),
       );
 
@@ -78,9 +70,7 @@ class UserInformationService {
           exampleObject: Token,
           response: response,
         );
-        /*
-        Save Token to store
-         */
+        RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().saveToken(authToken);
         return authToken.token;
       } else {
         logger.e('Update token error: ${response.error!.error}');
@@ -89,7 +79,7 @@ class UserInformationService {
     }
   }
 
-  void saveInformation(Token token) async {
+  void saveInformation(Token? token) async {
     logger.d('Save information');
 
     User user;
@@ -125,26 +115,14 @@ class UserInformationService {
 
   void visitApp() {
     _user!.isFirstVisitApp = false;
-
-    /*
-    get Token from store
-
-
-    final Token token = Token();
-
-    saveInformation(token);*/
+    final Token token = RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().state.token;
+    saveInformation(token);
   }
 
   void seeSwipeTutorial() {
     _user!.isFirstSeeSwipeTutorial = true;
-
-    /*
-    get Token from store
-
-
-    final Token token = Token();
-
-    saveInformation(token);*/
+    final Token token = RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().state.token;
+    saveInformation(token);
   }
 
   bool isFirstVisitApp() => _user!.isFirstVisitApp;

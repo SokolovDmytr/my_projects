@@ -11,6 +11,7 @@ import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_gradient.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_shadows.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
+import 'package:fridge_yellow_team_bloc/services/route_service/route_selectors.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_button.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/home_page/home_page.dart';
 
@@ -88,7 +89,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       fontText: AppFonts.normalMediumTextStyle,
                       height: 56.0,
                       onTap: () => setState(() {
-                        _currentIndexDots == 3 ? Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => HomePage())) : _nextAction();
+                        _currentIndexDots == 3 ? RouteSelectors.goToHomePage().call() : _nextAction();
                       }),
                       gradient: AppGradient.wheatMarigoldGradient,
                       shadows: AppShadows.buttonOcreShadow,

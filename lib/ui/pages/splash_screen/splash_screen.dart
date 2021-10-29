@@ -3,10 +3,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
 import 'package:fridge_yellow_team_bloc/res/app_duration.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
+import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
-import 'package:fridge_yellow_team_bloc/ui/pages/on_boarding_screen/on_boarding_screen.dart';
+import 'package:fridge_yellow_team_bloc/services/route_service/route_selectors.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -32,10 +35,9 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     Future.delayed(
       AppDuration.defaultDurationForSplashScreen,
       () {
-        /*
-        Add page transition
-         */
-        Navigator.of(context).push(MaterialPageRoute(builder: (_) => OnBoardingScreen()));
+        BlocProvider.of<ApplicationTokenCubit>(context).state.token.token == emptyString
+            ? RouteSelectors.goToAuthPage().call()
+            : RouteSelectors.goToOnBoardingPage().call();
       },
     );
   }

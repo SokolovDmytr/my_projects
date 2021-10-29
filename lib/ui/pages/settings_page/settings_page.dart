@@ -7,6 +7,7 @@ import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_gradient.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/app_routes.dart';
+import 'package:fridge_yellow_team_bloc/services/route_service/route_selectors.dart';
 import 'package:fridge_yellow_team_bloc/ui/layouts/main_layout/main_layout.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/settings_page/widgets/description_block.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/settings_page/widgets/language_block.dart';
@@ -29,7 +30,7 @@ class SettingsPage extends StatelessWidget {
         title: _language.settings,
         gradient: AppGradient.wheatMarigoldGradient,
         currentPage: AppRoutes.settings,
-        onTapBack: () {},
+        onTapBack: RouteSelectors.doPop(),
         body: SingleChildScrollView(
           child: Column(
             children: [
