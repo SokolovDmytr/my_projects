@@ -52,13 +52,14 @@ class RouteSelectors {
     return () => RouteManager.instance.push(route: AppRoutes.recipes);
   }
 
-  static void Function() goToScreenRecipePage() {
-    return () => RouteManager.instance.push(route: AppRoutes.screenRecipePage);
+  static void Function() goToScreenRecipePage({required Object arguments}) {
+    return () => RouteManager.instance.push(route: AppRoutes.screenRecipePage, arguments: arguments);
   }
 
-  static void Function() goToScreenRecipePageReplace() {
+  static void Function() goToScreenRecipePageReplace({required Object arguments}) {
     return () => RouteManager.instance.replace(
           route: AppRoutes.screenRecipePage,
+          arguments: arguments,
           needCheckLastRoute: false,
         );
   }

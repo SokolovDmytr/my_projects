@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/app_routes.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/auth_page/auth_page.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/favorite_page/favourites_page.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/home_page/view/home_page.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/notification_page/notification_page.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/on_boarding_screen/on_boarding_screen.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/screen_recipe_page/screen_recipe_page.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/settings_page/settings_page.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/splash_screen/splash_screen.dart';
 
@@ -44,11 +46,11 @@ class RouteService {
           settings: settings,
           page: NotificationPage(),
         );
-      // case AppRoutes.favorites:
-      //   return _defaultRoute(
-      //     settings: settings,
-      //     page: FavouritesPage(),
-      //   );
+      case AppRoutes.favorites:
+        return _defaultRoute(
+          settings: settings,
+          page: FavouritesPage(),
+        );
       case AppRoutes.onBoardingScreen:
         return _defaultRoute(
           settings: settings,
@@ -59,11 +61,11 @@ class RouteService {
       //     settings: settings,
       //     page: RecipesPage(),
       //   );
-      // case AppRoutes.screenRecipePage:
-      //   return _defaultRoute(
-      //     settings: settings,
-      //     page: ScreenRecipePage(),
-      //   );
+      case AppRoutes.screenRecipePage:
+        return _defaultRoute(
+          settings: settings,
+          page: ScreenRecipePage(),
+        );
       case AppRoutes.auth:
         return _defaultRoute(
           settings: settings,

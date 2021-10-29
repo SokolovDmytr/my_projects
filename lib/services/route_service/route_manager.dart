@@ -34,6 +34,7 @@ class RouteManager {
 
   void push({
     required String route,
+    Object? arguments,
   }) {
     if (_isDialogDisplayed()) ;
     if (_routes.isNotEmpty && _routes.last == route) ;
@@ -41,7 +42,10 @@ class RouteManager {
     _routes.add(route);
 
     logger.i('<push> => Did push! $route');
-    Navigator.of(RouteService.instance.navigatorKey.currentState!.context).pushNamed(route);
+    Navigator.of(RouteService.instance.navigatorKey.currentState!.context).pushNamed(
+      route,
+      arguments: arguments,
+    );
     return;
   }
 
@@ -71,7 +75,11 @@ class RouteManager {
     return;
   }
 
-  void replace({required String route, bool? needCheckLastRoute}) {
+  void replace({
+    required String route,
+    bool? needCheckLastRoute,
+    Object? arguments,
+  }) {
     if (_isDialogDisplayed()) return;
     if (_routes.isNotEmpty && _routes.last == route && needCheckLastRoute != null && needCheckLastRoute) return;
 
@@ -79,7 +87,10 @@ class RouteManager {
     logger.i('<replace> => Did replace! $route');
     _routes.add(route);
 
-    Navigator.of(RouteService.instance.navigatorKey.currentState!.context).pushReplacementNamed(route);
+    Navigator.of(RouteService.instance.navigatorKey.currentState!.context).pushReplacementNamed(
+      route,
+      arguments: arguments,
+    );
     return;
   }
 
