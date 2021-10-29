@@ -8,5 +8,5 @@ class AppDuration {
   static const Duration swipeElementDuration = Duration(milliseconds: 300);
   static const Duration oneMinuteDuration = Duration(minutes: 1);
   static const Duration timeValidOfToken = Duration(hours: 1);
-  static const Duration delayOfSendRequestToServer = Duration(milliseconds: 600);
+  static const Duration delayOfSendRequestToServer = Duration(minutes: 1);
 }

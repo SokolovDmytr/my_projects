@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:fridge_yellow_team_bloc/res/app_duration.dart';
 
 part 'token.freezed.dart';
 part 'token.g.dart';
