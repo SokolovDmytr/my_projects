@@ -2,10 +2,10 @@ import 'package:fridge_yellow_team_bloc/models/pages/freezed/recipe.dart';
 
 class RecipesState {
   final List<Recipe> favoriteRecipes;
-  final List<Recipe> recipe;
+  final List<Recipe> recipes;
 
-  RecipesState({
-    required this.recipe,
+  const RecipesState({
+    required this.recipes,
     required this.favoriteRecipes,
   });
 
@@ -14,7 +14,7 @@ class RecipesState {
     List<Recipe>? inputFavoriteRecipes,
   }) =>
       RecipesState(
-        recipe: inputRecipe ?? recipe,
+        recipes: inputRecipe ?? recipes,
         favoriteRecipes: inputFavoriteRecipes ?? favoriteRecipes,
       );
 }

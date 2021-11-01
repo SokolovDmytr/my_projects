@@ -5,7 +5,9 @@ import 'package:fridge_yellow_team_bloc/application/cubit/recipes_state.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/recipes_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
+import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/recipe.dart';
+import 'package:fridge_yellow_team_bloc/models/pages/models/screen_recipe_arguments.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_gradient.dart';
@@ -25,7 +27,7 @@ class RecipesPageView extends StatelessWidget {
 
     return BlocSelector<RecipesCubit, RecipesState, List<Recipe>>(
       selector: (RecipesState state) {
-        return state.recipe;
+        return state.recipes;
       },
       builder: (BuildContext context, List<Recipe> recipes) {
         return MainLayout(
@@ -64,6 +66,12 @@ class RecipesPageView extends StatelessWidget {
                   itemBuilder: (BuildContext _, int index) {
                     return InkWell(
                       onTap: () {
+                        RouteSelectors.goToScreenRecipePage(
+                          arguments: ScreenRecipeArguments(
+                            recipes: recipes,
+                            index: index,
+                          ),
+                        );
                       },
                       child: Padding(
                         padding: index == 0

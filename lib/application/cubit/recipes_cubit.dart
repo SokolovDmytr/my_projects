@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/recipes_state.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
@@ -19,13 +20,12 @@ import 'package:fridge_yellow_team_bloc/services/network_service/shared/fridge_p
 import 'package:fridge_yellow_team_bloc/services/pop_up_service/pop_up_service.dart';
 import 'package:fridge_yellow_team_bloc/services/pop_up_service/server_error_pop_up_widget.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
-import 'package:fridge_yellow_team_bloc/services/user_information_service/user_information_service.dart';
 
 class RecipesCubit extends Cubit<RecipesState> {
   RecipesCubit()
       : super(
-          RecipesState(
-            recipe: [],
+          const RecipesState(
+            recipes: [],
             favoriteRecipes: [],
           ),
         );
@@ -33,29 +33,13 @@ class RecipesCubit extends Cubit<RecipesState> {
   Future<void> loadRecipes({required List<Ingredient> ingredients}) async {
     final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
-    DialogService.instance.show(
-      dialog: LoaderPopUp(
-        title: language.loadingText,
-        state: true,
-        loaderKey: LoaderKey.getData,
-        child: LoaderWidget(),
-      ),
-    );
-
     final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
     if (isConnection == false) {
-      DialogService.instance.close(RouteService.instance.navigatorKey.currentState!.context);
-
-      DialogService.instance.show(
-        dialog: ErrorDialog(
-          child: ErrorDialogWidget(),
-        ),
-      );
       return;
     }
 
-    final String token = await UserInformationService.instance.getToken();
+    final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
 
     final List<String> ids = [];
     for (Ingredient ingredient in ingredients) {
@@ -100,10 +84,7 @@ class RecipesCubit extends Cubit<RecipesState> {
 
       emit(state.copyWith(inputRecipe: resRecipes));
 
-      DialogService.instance.close(RouteService.instance.navigatorKey.currentState!.context);
     } else {
-      DialogService.instance.close(RouteService.instance.navigatorKey.currentState!.context);
-
       PopUpService.instance.show(
         widget: ServerErrorPopUpWidget(),
       );

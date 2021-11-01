@@ -1,3 +1,5 @@
+import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
+import 'package:fridge_yellow_team_bloc/models/pages/models/screen_recipe_arguments.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/app_routes.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_manager.dart';
@@ -48,15 +50,23 @@ class RouteSelectors {
         );
   }
 
-  static void Function() goToRecipesPage() {
-    return () => RouteManager.instance.push(route: AppRoutes.recipes);
+  static void Function() goToRecipesPage({required List<Ingredient> ingredients}) {
+    return () => RouteManager.instance.push(
+          route: AppRoutes.recipes,
+          arguments: ingredients,
+        );
   }
 
-  static void Function() goToScreenRecipePage() {
-    return () => RouteManager.instance.push(route: AppRoutes.screenRecipePage);
+  static void Function() goToScreenRecipePage({
+    required ScreenRecipeArguments arguments,
+  }) {
+    return () => RouteManager.instance.push(
+          route: AppRoutes.screenRecipePage,
+          arguments: arguments,
+        );
   }
 
-  static void Function() goToScreenRecipePageReplace({required Object arguments}) {
+  static void Function() goToScreenRecipePageReplace({required ScreenRecipeArguments arguments}) {
     return () => RouteManager.instance.replace(
           route: AppRoutes.screenRecipePage,
           arguments: arguments,

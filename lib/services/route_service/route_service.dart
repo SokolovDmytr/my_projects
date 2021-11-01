@@ -5,6 +5,7 @@ import 'package:fridge_yellow_team_bloc/ui/pages/favorite_page/favourites_page.d
 import 'package:fridge_yellow_team_bloc/ui/pages/home_page/view/home_page.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/notification_page/notification_page.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/on_boarding_screen/on_boarding_screen.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/recipes_page/recipes_page.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/screen_recipe_page/screen_recipe_page.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/settings_page/settings_page.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/splash_screen/splash_screen.dart';
@@ -56,11 +57,11 @@ class RouteService {
           settings: settings,
           page: OnBoardingScreen(),
         );
-      // case AppRoutes.recipes:
-      //   return _defaultRoute(
-      //     settings: settings,
-      //     page: RecipesPage(),
-      //   );
+      case AppRoutes.recipes:
+        return _defaultRoute(
+          settings: settings,
+          page: RecipesPage(),
+        );
       case AppRoutes.screenRecipePage:
         return _defaultRoute(
           settings: settings,
