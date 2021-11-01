@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/recipes_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/favorites_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
+import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/recipe.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/models/screen_recipe_arguments.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
@@ -18,6 +20,7 @@ class RecipesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Recipe> favouriteRecipes = BlocProvider.of<RecipesCubit>(context).state.favoriteRecipes;
+    final List<Ingredient> ingredients = BlocProvider.of<IngredientCubit>(context).state.ingredients;
     final FavouritesPageLanguage language = FlutterDictionary.instance.language?.favouritesPageLanguage ?? en.favouritesPageLanguage;
     return favouriteRecipes.isEmpty
         ? Center(
@@ -52,7 +55,7 @@ class RecipesList extends StatelessWidget {
                     arguments: ScreenRecipeArguments(
                       recipes: favouriteRecipes,
                       index: index,
-                      isPreviousFavourite: true,
+                      ingredients: ingredients,
                     ),
                   ).call();
                 },

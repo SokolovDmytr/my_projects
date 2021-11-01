@@ -141,7 +141,7 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
               ),
             ),
             Text(
-              '${missingIngredients[index].description} ${missingIngredients[index].count}',
+              '${missingIngredients[index].count} ${missingIngredients[index].description}',
               style: AppFonts.smallPaselRedTextStyle,
             ),
           ],
@@ -198,7 +198,7 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
               ),
             ),
             Text(
-              '${availableIngredients[index].description} ${availableIngredients[index].count}',
+              '${availableIngredients[index].count} ${availableIngredients[index].description}',
               style: AppFonts.smallTextStyle,
             ),
           ],

@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
         BlocProvider.of<ApplicationTokenCubit>(context).state.token?.token == emptyString ||
                 BlocProvider.of<ApplicationTokenCubit>(context).state.token?.token == null
             ? RouteSelectors.goToAuthPage().call()
-            : RouteSelectors.goToAuthPage().call();
+            : RouteSelectors.goToOnBoardingPage().call();
       },
     );
   }

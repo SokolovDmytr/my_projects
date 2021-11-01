@@ -135,4 +135,54 @@ class RecipesCubit extends Cubit<RecipesState> {
       );
     }
   }
+
+  Future<void> addFavourite(String recipeId) async {
+    final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+
+    final bool isConnection = await NetworkService.instance.checkInternetConnection();
+
+    if (isConnection == false) {
+      return;
+    }
+
+    final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
+    final BaseHttpResponse response = await RecipeRepository.instance.addToFavorite(token: token, recipeId: recipeId);
+
+    if (response.error == null) {
+      final Recipe recipe = FridgeParser.instance.parseEntity(
+        exampleObject: Recipe,
+        response: response,
+      );
+      final List<Recipe> favouritesList = state.favoriteRecipes;
+      favouritesList.add(recipe);
+      emit(state.copyWith(inputFavoriteRecipes: favouritesList));
+    } else {
+      PopUpService.instance.show(
+        widget: ServerErrorPopUpWidget(),
+      );
+    }
+  }
+
+  Future<void> removeFavourite(Recipe recipeToRemove) async {
+    final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+
+    final bool isConnection = await NetworkService.instance.checkInternetConnection();
+
+    if (isConnection == false) {
+      return;
+    }
+
+    final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
+    final BaseHttpResponse response = await RecipeRepository.instance.removeFromFavorite(token: token, recipeId: recipeToRemove.i.toString());
+
+    if (response.error == null) {
+      final List<Recipe> favouritesList = List.of(state.favoriteRecipes);
+      favouritesList.removeWhere((element) => element.i == recipeToRemove.i);
+      emit(state.copyWith(inputFavoriteRecipes: favouritesList));
+    } else {
+      PopUpService.instance.show(
+        widget: ServerErrorPopUpWidget(),
+      );
+    }
+  }
 }

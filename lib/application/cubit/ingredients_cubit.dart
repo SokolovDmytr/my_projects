@@ -25,14 +25,16 @@ import 'package:fridge_yellow_team_bloc/utils/loader_image/loader_image.dart';
 class IngredientCubit extends Cubit<IngredientState> {
   IngredientCubit()
       : super(
-          const IngredientState(allIngredients: []),
+          const IngredientState(
+            allIngredients: [],
+            ingredients: [],
+          ),
         );
 
   Future<void> loadAllIngredients() async {
-    if(state.allIngredients.isNotEmpty){
+    if (state.allIngredients.isNotEmpty) {
       return;
     }
-
 
     final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
@@ -47,7 +49,7 @@ class IngredientCubit extends Cubit<IngredientState> {
 
     final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
 
-    if(token == emptyString){
+    if (token == emptyString) {
       return;
     }
 
@@ -81,11 +83,39 @@ class IngredientCubit extends Cubit<IngredientState> {
       await Future.wait([completer.future]);
       LoaderImage.instance.stopListen();
       ImageCacheManager.instance.addAllImages(images: images);
-
     } else {
       PopUpService.instance.show(
         widget: ServerErrorPopUpWidget(),
       );
     }
   }
+
+  void addIngredient({required Ingredient ingredient}) {
+    final List<Ingredient> resIngredients = List.from(state.ingredients);
+    resIngredients.add(ingredient);
+
+    emit(
+      state.copyWith(
+        inputIngredients: resIngredients,
+      ),
+    );
+  }
+
+  void clearIngredients() {
+    emit(
+      state.copyWith(
+        inputIngredients: [],
+      ),
+    );
+  }
+
+  void deleteIngredient({required String id}) {
+    final List<Ingredient> resIngredients = List.from(state.ingredients);
+    resIngredients.removeWhere((element) => element.i == id);
+    emit(
+      state.copyWith(inputIngredients: resIngredients),
+    );
+  }
+
+  bool ingredientsIsEmpty() => state.ingredients.isEmpty;
 }

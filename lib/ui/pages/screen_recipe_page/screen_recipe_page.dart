@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:fridge_yellow_team_bloc/application/cubit/recipes_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/screen_recipe_language.dart';
@@ -14,6 +15,8 @@ import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/remove_favourite_dialog/remove_favourite_dialog.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/remove_favourite_dialog/remove_favourite_widget.dart';
+import 'package:fridge_yellow_team_bloc/services/pop_up_service/pop_up_service.dart';
+import 'package:fridge_yellow_team_bloc/services/pop_up_service/recipes_pop_up_widget.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_selectors.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/navigation_bottom_bar.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/screen_recipe_page/widgets/congratulation_block.dart';
@@ -21,6 +24,7 @@ import 'package:fridge_yellow_team_bloc/ui/pages/screen_recipe_page/widgets/cook
 import 'package:fridge_yellow_team_bloc/ui/pages/screen_recipe_page/widgets/custom_sliver_fab.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/screen_recipe_page/widgets/food_elements_block.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/screen_recipe_page/widgets/similar_recipes_block.dart';
+import 'package:provider/src/provider.dart';
 
 class ScreenRecipePage extends StatefulWidget {
   final bool previousPageFavourite;
@@ -61,13 +65,13 @@ class _ScreenRecipePageState extends State<ScreenRecipePage> with SingleTickerPr
                     dialog: RemoveFavouriteDialog(
                       child: RemoveFavouriteDialogWidget(
                         onTapYes: () {
-                          //ToDo: remove from recipe
+                          context.read<RecipesCubit>().removeFavourite(arguments.recipes[arguments.index]);
                         },
                       ),
                     ),
                   );
                 } else if (arguments.recipes[arguments.index].isFavorite == false) {
-                  //ToDo: add to favourite
+                  context.read<RecipesCubit>().addFavourite(arguments.recipes[arguments.index].i.toString());
                 }
               },
               child: Stack(
@@ -113,30 +117,26 @@ class _ScreenRecipePageState extends State<ScreenRecipePage> with SingleTickerPr
                         ? Offset(-MediaQuery.of(context).size.width / 2 + 46.0, -20.0)
                         : Offset(MediaQuery.of(context).size.width / 2 - 46.0, -20.0),
                     child: InkWell(
-                      // onTap: () {
-                      //   if (true) {
-                      //     DialogService.instance.show(
-                      //       dialog: RemoveFavouriteDialog(
-                      //         child: RemoveFavouriteDialogWidget(
-                      //           onTapYes: () {
-                      //             viewModel.removeFavoriteRecipe(
-                      //               viewModel.recipe.i,
-                      //             );
-                      //             viewModel.recipe = viewModel.recipe.copyWith(isFavorite: false);
-                      //           },
-                      //         ),
-                      //       ),
-                      //     );
-                      //   } else if (viewModel.recipe.isFavorite == false) {
-                      //     viewModel.addFavoriteRecipe(viewModel.recipe.i.toString(), viewModel.recipe);
-                      //     viewModel.recipe = viewModel.recipe.copyWith(isFavorite: true);
-                      //     PopUpService.instance.show(
-                      //       widget: RecipesPopUpWidget(
-                      //         text: _languageDialog.recipePopUpAddedText,
-                      //       ),
-                      //     );
-                      //   }
-                      // },
+                      onTap: () {
+                        if (arguments.recipes[arguments.index].isFavorite) {
+                          DialogService.instance.show(
+                            dialog: RemoveFavouriteDialog(
+                              child: RemoveFavouriteDialogWidget(
+                                onTapYes: () {
+                                  context.read<RecipesCubit>().removeFavourite(arguments.recipes[arguments.index]);
+                                },
+                              ),
+                            ),
+                          );
+                        } else if (arguments.recipes[arguments.index].isFavorite == false) {
+                          context.read<RecipesCubit>().addFavourite(arguments.recipes[arguments.index].i.toString());
+                          PopUpService.instance.show(
+                            widget: RecipesPopUpWidget(
+                              text: _languageDialog.recipePopUpAddedText,
+                            ),
+                          );
+                        }
+                      },
                       child: Icon(
                         Icons.favorite_sharp,
                         color: arguments.recipes[arguments.index].isFavorite ? AppColors.red : AppColors.black.withOpacity(0.5),
@@ -248,7 +248,7 @@ class _ScreenRecipePageState extends State<ScreenRecipePage> with SingleTickerPr
                                   bottom: 25.0,
                                 ),
                                 child: Text(
-                                  arguments.recipes[index].name,
+                                  arguments.recipes[arguments.index].name,
                                   style: AppFonts.normalBlackHeight30ShadowTextStyle,
                                 ),
                               ),
@@ -258,21 +258,21 @@ class _ScreenRecipePageState extends State<ScreenRecipePage> with SingleTickerPr
                                   children: [
                                     _getParameterOfRecipeWidget(
                                       imageAssets: ImageAssets.timeIcon,
-                                      value: arguments.recipes[index].time.toString(),
+                                      value: arguments.recipes[arguments.index].time.toString(),
                                       text: _languageScreenRecipePage.min,
                                       textStyle: AppFonts.smallTextStyle,
                                     ),
                                     _getParameterOfRecipeWidget(
                                       imageAssets: ImageAssets.caloriesIcon,
-                                      value: arguments.recipes[index].calories.toStringAsFixed(1),
+                                      value: arguments.recipes[arguments.index].calories.toStringAsFixed(1),
                                       text: _languageScreenRecipePage.cal,
                                       textStyle: AppFonts.smallTextStyle,
                                     ),
-                                    arguments.recipes[index].level == null
+                                    arguments.recipes[arguments.index].level == null
                                         ? const SizedBox()
                                         : _getParameterOfRecipeWidget(
                                             imageAssets: ImageAssets.difficultyIcon,
-                                            value: arguments.recipes[index].level!,
+                                            value: arguments.recipes[arguments.index].level!,
                                             textStyle: AppFonts.smallTextStyle,
                                           ),
                                   ],
@@ -280,9 +280,9 @@ class _ScreenRecipePageState extends State<ScreenRecipePage> with SingleTickerPr
                               ),
                               FoodElementsBlock(
                                 recipe: arguments.recipes[arguments.index],
-                                ingredientsStored: viewModel.ingredient,
+                                ingredientsStored: arguments.ingredients,
                               ),
-                              CookingBlock(recipe: arguments.recipes[index]),
+                              CookingBlock(recipe: arguments.recipes[arguments.index]),
                               CongratulationBlock(),
                             ],
                           ),
@@ -301,21 +301,12 @@ class _ScreenRecipePageState extends State<ScreenRecipePage> with SingleTickerPr
     );
   }
 
-  // void _checkFavourites(ScreenRecipePageVM viewModel) {
-  //   for (int index = 0; index < viewModel.allFavouritesRecipesList.length; index++) {
-  //     if (viewModel.recipe.i == viewModel.allFavouritesRecipesList[index].i) {
-  //       viewModel.recipe = viewModel.recipe.copyWith(isFavorite: true);
-  //       // viewModel.addFavoriteRecipe(viewModel.recipe.i.toString(), viewModel.recipe);
-  //     }
-  //   }
-  // }
-
   Widget _similarRecipesBlock(ScreenRecipeArguments arguments) {
     if (arguments.recipes.length == 1) {
       return const SizedBox(height: 50.0);
     }
     return SimilarRecipesBlock(
-      recipes: arguments.recipes,
+      arguments: arguments,
     );
   }
 

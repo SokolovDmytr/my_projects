@@ -18,9 +18,7 @@ class HomePageCubit extends Cubit<HomePageState> {
   HomePageCubit()
       : super(
           const HomePageState(
-            ingredients: [],
             tempIngredients: [],
-            images: [],
           ),
         );
 
@@ -60,17 +58,6 @@ class HomePageCubit extends Cubit<HomePageState> {
     }
   }
 
-  void addIngredient({required Ingredient ingredient}) {
-    final List<Ingredient> resIngredients = List.from(state.ingredients);
-    resIngredients.add(ingredient);
-
-    emit(
-      state.copyWith(
-        inputIngredients: resIngredients,
-      ),
-    );
-  }
-
   void clearTempIngredients() {
     emit(
       state.copyWith(
@@ -78,22 +65,4 @@ class HomePageCubit extends Cubit<HomePageState> {
       ),
     );
   }
-
-  void clearIngredients() {
-    emit(
-      state.copyWith(
-        inputIngredients: [],
-      ),
-    );
-  }
-
-  void deleteIngredient({required String id}) {
-    final List<Ingredient> resIngredients = List.from(state.ingredients);
-    resIngredients.removeWhere((element) => element.i == id);
-    emit(
-      state.copyWith(inputIngredients: resIngredients),
-    );
-  }
-
-  bool ingredientsIsEmpty() => state.ingredients.isEmpty;
 }

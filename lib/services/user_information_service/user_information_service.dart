@@ -1,12 +1,6 @@
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/token.dart';
-import 'package:fridge_yellow_team_bloc/res/app_duration.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
-import 'package:fridge_yellow_team_bloc/services/network_service/models/base_http_response.dart';
-import 'package:fridge_yellow_team_bloc/services/network_service/network_service.dart';
-import 'package:fridge_yellow_team_bloc/services/network_service/res/consts.dart';
-import 'package:fridge_yellow_team_bloc/services/network_service/res/request_params/refresh_token_params.dart';
-import 'package:fridge_yellow_team_bloc/services/network_service/shared/fridge_parser.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
 import 'package:fridge_yellow_team_bloc/services/user_information_service/user.dart';
 import 'package:hive/hive.dart';
@@ -32,10 +26,6 @@ class UserInformationService {
       _user = User(
         isFirstSeeSwipeTutorial: false,
         isFirstVisitApp: true,
-        token: emptyString,
-        createDate: DateTime.now(),
-        refreshToken: emptyString,
-        ttlToken: emptyString,
       );
       return null;
     } else {
