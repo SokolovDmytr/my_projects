@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/models/image_with_id.dart';
-import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 
 class ImageCacheManager {
@@ -24,9 +23,7 @@ class ImageCacheManager {
       try {
         final ImageWithId image = _imageCache.firstWhere((element) => element.id == ingredient.image);
         return image.image;
-      } catch (error) {
-        logger.i('$error in ImageCacheManager.getImageWithIdIngredient');
-      }
+      } catch (error) {}
     }
 
     return null;

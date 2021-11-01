@@ -7,8 +7,9 @@ import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 
 class ServerErrorPopUpWidget extends StatelessWidget {
   final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+  final String? text;
 
-  ServerErrorPopUpWidget({Key? key}) : super(key: key);
+  ServerErrorPopUpWidget({this.text, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class ServerErrorPopUpWidget extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: Text(
-                language.serverErrorText,
+                text ?? language.serverErrorText,
                 maxLines: 2,
                 softWrap: true,
                 style: AppFonts.medium16Height24TextStyle,

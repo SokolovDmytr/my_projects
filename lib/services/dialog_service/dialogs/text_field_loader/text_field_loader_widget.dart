@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 
 class TextFieldLoaderWidget extends StatefulWidget {
-  Function(bool value)? rebuild;
-  bool isVisible;
+  late Function(bool value)? rebuild;
 
-  TextFieldLoaderWidget({
-    this.isVisible = false,
-  }) : super(
+  TextFieldLoaderWidget()
+      : super(
           key: UniqueKey(),
         );
 
@@ -16,13 +14,15 @@ class TextFieldLoaderWidget extends StatefulWidget {
 }
 
 class _TextFieldLoaderWidgetState extends State<TextFieldLoaderWidget> {
+  bool isVisible = false;
+
   @override
   void initState() {
     super.initState();
 
     widget.rebuild = ((bool value) {
       setState(() {
-        widget.isVisible = value;
+        isVisible = value;
       });
     });
   }
@@ -34,7 +34,7 @@ class _TextFieldLoaderWidgetState extends State<TextFieldLoaderWidget> {
       width: 25.0,
       height: 25.0,
       child: Visibility(
-        visible: widget.isVisible,
+        visible: isVisible,
         child: Image.asset(
           ImageAssets.loadingGif,
         ),

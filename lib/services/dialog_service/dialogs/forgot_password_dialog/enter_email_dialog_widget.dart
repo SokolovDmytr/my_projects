@@ -55,7 +55,7 @@ class _EnterEmailDialogWidgetState extends State<EnterEmailDialogWidget> {
                   size: 24.0,
                 ),
                 onTap: () {
-                  DialogService.instance.close(context);
+                  DialogService.instance.close();
                 },
               ),
             ),

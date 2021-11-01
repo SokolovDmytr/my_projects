@@ -8,6 +8,9 @@ import 'package:fridge_yellow_team_bloc/res/app_styles/app_gradient.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_shadows.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
+import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
+import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/forgot_password_dialog/enter_email_dialog_widget.dart';
+import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/forgot_password_dialog/forgot_password_dialog.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_button.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_textfield.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/auth_page/cubit/auth_page_cubit.dart';
@@ -101,9 +104,7 @@ class _SignInPageState extends State<SignInPage> {
             shadows: AppShadows.textFieldShadow,
             height: 42.0,
             onTap: () {
-              /*
-                add google login
-                 */
+              context.read<AuthPageCubit>().signInWithGoogle();
             },
             innerPadding: const EdgeInsets.symmetric(horizontal: 60.0),
           ),
@@ -160,9 +161,17 @@ class _SignInPageState extends State<SignInPage> {
             text: _language.buttonForgotPassword,
             fontText: AppFonts.size16SemiBoldMarigold,
             onTap: () {
-              /*
-                forgot password
-                 */
+              DialogService.instance.show(
+                dialog: ForgotPasswordDialog(
+                  child: EnterEmailDialogWidget(
+                    onTapSend: (String? email) {
+                      if (email != null) {
+                        context.read<AuthPageCubit>().sendEmail(email: email);
+                      }
+                    },
+                  ),
+                ),
+              );
             },
           ),
         ),

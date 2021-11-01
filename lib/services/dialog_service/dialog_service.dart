@@ -19,7 +19,7 @@ class DialogService {
 
   void show({required IDialog dialog}) {
     if (_isDisplayed) {
-      logger.e('$tag => <_display> => Error Message: _isDisplayed: $_isDisplayed, Dialog cant be showed.');
+      logger.e('$tag => <_display> => Error Message: _isDisplayed: $_isDisplayed, Dialog $dialog cant be showed.');
       return;
     }
 
@@ -33,13 +33,13 @@ class DialogService {
     );
   }
 
-  void close(BuildContext ctx) {
+  void close() {
     if (!_isDisplayed) {
       logger.e('$tag => <closeDialog> => Error Message: _isDisplayed: $_isDisplayed, Dialog cant be removed.');
       return;
     }
 
-    Navigator.of(ctx).pop();
+    Navigator.of(RouteService.instance.navigatorKey.currentState!.context).pop();
 
     _isDisplayed = false;
   }

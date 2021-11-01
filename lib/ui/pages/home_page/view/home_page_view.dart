@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_state.dart';
+import 'package:fridge_yellow_team_bloc/application/cubit/recipes_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/main_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
@@ -34,7 +35,12 @@ import 'package:fridge_yellow_team_bloc/ui/pages/home_page/widgets/swipe_element
 import 'package:fridge_yellow_team_bloc/utils/function_delay.dart';
 
 class HomePageView extends StatefulWidget {
-  const HomePageView({Key? key}) : super(key: key);
+  final TextFieldLoaderWidget loader;
+
+  const HomePageView({
+    required this.loader,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _HomePageViewState createState() => _HomePageViewState();
@@ -44,7 +50,6 @@ class _HomePageViewState extends State<HomePageView> {
   final _functionDelay = FunctionDelay(
     duration: AppDuration.delayOfSendRequestToServer,
   );
-  final TextFieldLoaderWidget _textFieldLoaderWidget = TextFieldLoaderWidget();
   late FocusNode _textFieldFocusNode;
   late OverlayEntry _overlayEntry;
   BuildContext? _textFieldContext;
@@ -68,7 +73,7 @@ class _HomePageViewState extends State<HomePageView> {
               dialog: SwipeTutorialDialog(
                 child: SwipeTutorialWidget(onTapOk: () {
                   UserInformationService.instance.seeSwipeTutorial();
-                  DialogService.instance.close(context);
+                  DialogService.instance.close();
                 }),
               ),
             );
@@ -106,14 +111,11 @@ class _HomePageViewState extends State<HomePageView> {
                   builder: (BuildContext ctx) {
                     _textFieldContext = ctx;
 
-                    //TODO make logic for loader
-                    bool needLoader = true;
-
                     return GlobalTextField(
                       showInPut: true,
                       focusNode: _textFieldFocusNode,
                       needSuffix: true,
-                      loader: _textFieldLoaderWidget,
+                      loader: widget.loader,
                       needPrefix: true,
                       needShowButton: false,
                       hintText: language.chooseTextField,
@@ -210,9 +212,7 @@ class _HomePageViewState extends State<HomePageView> {
                                                           text: language.buttonDelete,
                                                           fontText: AppFonts.medium16Height24WhiteTextStyle,
                                                           onTap: () {
-                                                            context
-                                                                .read<IngredientCubit>()
-                                                                .deleteIngredient(id: existIngredients[index].i);
+                                                            context.read<IngredientCubit>().deleteIngredient(id: existIngredients[index].i);
                                                           },
                                                         ),
                                                       ),
@@ -272,13 +272,15 @@ class _HomePageViewState extends State<HomePageView> {
                                           right: 22.0,
                                         ),
                                         child: GlobalButton(
-                                          key: UniqueKey(),
-                                          height: 56.0,
-                                          text: language.buttonWatchRecipes,
-                                          fontText: AppFonts.normalMediumTextStyle,
-                                          gradient: AppGradient.wheatMarigoldGradient,
-                                          onTap: RouteSelectors.goToRecipesPage(ingredients: existIngredients),
-                                        ),
+                                            key: UniqueKey(),
+                                            height: 56.0,
+                                            text: language.buttonWatchRecipes,
+                                            fontText: AppFonts.normalMediumTextStyle,
+                                            gradient: AppGradient.wheatMarigoldGradient,
+                                            onTap: () {
+                                              RouteSelectors.goToRecipesPage().call();
+                                              context.read<RecipesCubit>().loadRecipes(ingredients: existIngredients);
+                                            }),
                                       ),
                                     ),
                                   ],

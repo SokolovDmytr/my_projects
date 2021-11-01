@@ -8,6 +8,7 @@ import 'package:fridge_yellow_team_bloc/services/network_service/network_service
 import 'package:fridge_yellow_team_bloc/services/network_service/res/consts.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/res/request_params/refresh_token_params.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/shared/fridge_parser.dart';
+import 'package:fridge_yellow_team_bloc/services/user_information_service/user_information_service.dart';
 
 class ApplicationTokenCubit extends Cubit<ApplicationTokenState> {
   ApplicationTokenCubit() : super(ApplicationTokenState.init());
@@ -22,11 +23,11 @@ class ApplicationTokenCubit extends Cubit<ApplicationTokenState> {
             )) {
       return state.token!.token;
     } else {
-      if(state.token == null){
+      if (state.token == null) {
         return emptyString;
       }
 
-      logger.d('Update token');
+      logger.d('Update token: ${state.token!.refreshToken}');
 
       NetworkService.instance.init(baseUrl: baseUrl);
       final BaseHttpResponse response = await NetworkService.instance.requestWithParams(
@@ -45,6 +46,8 @@ class ApplicationTokenCubit extends Cubit<ApplicationTokenState> {
         emit(
           state.copyWith(token: authToken),
         );
+
+        UserInformationService.instance.saveInformation(authToken);
         return authToken.token;
       } else {
         logger.e('Update token error: ${response.error!.error}');

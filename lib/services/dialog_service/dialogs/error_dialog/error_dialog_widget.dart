@@ -59,7 +59,7 @@ class ErrorDialogWidget extends StatelessWidget {
                 text: language.deletePopUpButtonOkText,
                 fontText: AppFonts.normalMediumTextStyle,
                 onTap: () {
-                  DialogService.instance.close(context);
+                  DialogService.instance.close();
                 },
                 gradient: AppGradient.wheatMarigoldGradient,
               ),

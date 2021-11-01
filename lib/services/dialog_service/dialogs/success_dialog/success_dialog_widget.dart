@@ -58,7 +58,7 @@ class SuccessDialogWidget extends StatelessWidget {
                 height: 56.0,
                 text: language.deletePopUpButtonOkText,
                 fontText: AppFonts.normalMediumTextStyle,
-                onTap: () => DialogService.instance.close(context),
+                onTap: () => DialogService.instance.close(),
                 gradient: AppGradient.wheatMarigoldGradient,
               ),
             )

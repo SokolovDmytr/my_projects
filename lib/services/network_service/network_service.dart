@@ -1,14 +1,13 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/internet_connection_helper.dart';
-import 'package:fridge_yellow_team_bloc/services/network_service/interfaces/i_base_request.dart';
+import 'package:fridge_yellow_team_bloc/services/network_service/interfaces/i_base_http_error.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/interfaces/i_parameter.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/models/base_http_response.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/models/no_connection_http_error.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/res/consts.dart';
-import 'package:fridge_yellow_team_bloc/services/network_service/shared/request_builders.dart';
-import 'package:http/http.dart' as http;
 
 /// [NetworkService] it is Service for get data from server.
 /// In our architecture we does use this service from [Request] classes from [network/requests/] folder.
@@ -26,74 +25,92 @@ import 'package:http/http.dart' as http;
 class NetworkService {
   static const tag = '[NetworkService]';
 
-  NetworkService._privateConstructor();
-
   static final NetworkService _instance = NetworkService._privateConstructor();
 
   static NetworkService get instance => _instance;
 
   /// Basic url for requests. This variable will use as default but can be updated by [overrideBaseUrl].
   /// All request builders use this variable for build request but also have a param [url].
-  String? baseUrl;
+  String? _baseUrl;
+  late Dio _dio;
+
+  NetworkService._privateConstructor() {
+    _dio = Dio();
+  }
 
   /// This function will update a [baseUrl]. Not required for use.
-  void overrideBaseUrl(String url) => baseUrl = baseUrl;
+  void overrideBaseUrl(String url) => _baseUrl = url;
+
+  String? get baseUrl => _baseUrl?? baseUrl;
 
   void init({
     required String baseUrl,
   }) {
-    this.baseUrl = baseUrl;
+    _baseUrl = baseUrl;
   }
 
   Future<BaseHttpResponse> _request({
     required HttpType type,
     required String route,
-    required Map<String, dynamic>? body,
     required Map<String, String> params,
-    String? token,
   }) async {
-    IBaseRequest request;
-    switch (type) {
-      case HttpType.httpGet:
-        request = RequestBuilders.get(functionName: route, params: params, token: token);
-        break;
-      case HttpType.httpPost:
-        request = RequestBuilders.post(functionName: route, params: params, body: body, token: token);
-        break;
+    if (_baseUrl == null) {
+      _baseUrl = baseUrl;
+      throw Exception('Base url must be initialize: current url $_baseUrl');
     }
 
-    http.Response? response;
+    Response? response;
     try {
-      response = await request();
+      String url = _baseUrl! + route;
+      switch (type) {
+        case HttpType.httpGet:
+          response = await _dio.get(
+            url,
+            queryParameters: params,
+          );
+          break;
+        case HttpType.httpPost:
+          response = await _dio.post(
+            url,
+            queryParameters: params,
+          );
+          break;
+      }
 
       logger.d('Response status code ${response.statusCode}');
-      if (response.statusCode >= 300) {
+      if (response.statusCode == null || response.statusCode! >= 300) {
+        logger.e(response.data);
         return BaseHttpResponse(
           error: NoConnectionHttpError(
-            error: response.body,
-            statusCode: response.statusCode,
+            error: response.data,
+            statusCode: response.statusCode ?? noConnectionStatusCode,
           ),
         );
       }
-    } catch (error) {
-      logger.e(error);
-    }
 
-    return BaseHttpResponse(
-      response: json.decode(response!.body),
-    );
+      return BaseHttpResponse(
+        response: json.decode(response.data),
+      );
+    } on DioError catch (error) {
+      logger.e(error);
+
+      return BaseHttpResponse(
+        error: IBaseHttpError(
+          error: error.toString(),
+          statusCode: response?.statusCode ?? noConnectionStatusCode,
+        ),
+      );
+    }
   }
 
   Future<BaseHttpResponse> requestWithParams({
     required HttpType type,
     required String route,
     required IParameter parameter,
-    String? token,
   }) {
     return _request(
       type: type,
       route: route,
-      body: null,
       params: parameter.getParams(),
     );
   }

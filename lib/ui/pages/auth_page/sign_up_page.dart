@@ -131,9 +131,7 @@ class _SignUpPageState extends State<SignUpPage> {
             shadows: AppShadows.textFieldShadow,
             height: 42.0,
             onTap: () {
-              /*
-                add google register
-                 */
+              context.read<AuthPageCubit>().registerWithGoogle();
             },
             innerPadding: const EdgeInsets.symmetric(horizontal: 60.0),
           ),
