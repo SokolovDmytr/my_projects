@@ -4,14 +4,12 @@ import 'package:fridge_yellow_team_bloc/res/app_duration.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 
+
 class SwipeElement extends StatefulWidget {
   final Widget child;
   final Widget background;
-  bool _needAnimation = false;
-  double _startPosition = 0.0;
-  double _valueOfMove = 0.0;
 
-  SwipeElement({
+  const SwipeElement({
     required this.child,
     required this.background,
     Key? key,
@@ -24,7 +22,13 @@ class SwipeElement extends StatefulWidget {
 class _SwipeElementState extends State<SwipeElement> with TickerProviderStateMixin {
   late AnimationController _closeController;
   late Animation<double> _closeAnimation;
-  double? width;
+  double _valueOfMove = 0.0;
+  bool _isSwiped = false;
+  bool _localPositionMoreThenWidgetHeight = false;
+  bool _needAnimation = false;
+  double? _width;
+  double? _startPosition;
+  double? _startPositionY;
 
   @override
   void initState() {
@@ -33,7 +37,7 @@ class _SwipeElementState extends State<SwipeElement> with TickerProviderStateMix
     _closeController = AnimationController(
       vsync: this,
       duration: AppDuration.oneMinuteDuration,
-      reverseDuration: milliseconds500,
+      reverseDuration: AppDuration.swipeElementDuration,
     );
     _closeAnimation = Tween<double>(begin: 1.0, end: 0.8).animate(_closeController);
   }
@@ -47,67 +51,88 @@ class _SwipeElementState extends State<SwipeElement> with TickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    width = MediaQuery.of(context).size.width;
-    final double maxSwipeDistance = width! / 3;
-    final double partOfMaxSwipeDistance = 0.02 * maxSwipeDistance;
-
-    return AnimatedBuilder(
-      animation: _closeAnimation,
-      child: widget.background,
-      builder: (BuildContext ctx, Widget? child) {
-        return Listener(
-          child: Stack(
-            children: [
-              child!,
-              Positioned(
-                left: FlutterDictionary.instance.isRTL ? -widget._valueOfMove : widget._valueOfMove,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: widget._valueOfMove < 8.0 ? BorderRadius.circular(0.0) : BorderRadius.circular(8.0),
+    _width = MediaQuery.of(context).size.width;
+    final double maxSwipeDistance = _width! / 4;
+    final double partOfMaxSwipeDistance = 0.1 * maxSwipeDistance;
+    return LayoutBuilder(
+      builder: (BuildContext ctx, BoxConstraints constrains) {
+        return AnimatedBuilder(
+          animation: _closeAnimation,
+          child: widget.child,
+          builder: (BuildContext ctx, Widget? child) {
+            return Listener(
+              child: Stack(
+                fit: StackFit.passthrough,
+                children: [
+                  widget.background,
+                  Positioned(
+                    left: FlutterDictionary.instance.isRTL
+                        ? _isSwiped
+                        ? -maxSwipeDistance - _valueOfMove
+                        : -_valueOfMove
+                        : _isSwiped
+                        ? maxSwipeDistance + _valueOfMove
+                        : _valueOfMove,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: _needAnimation ? BorderRadius.circular(8.0) : BorderRadius.circular(0.0),
+                      ),
+                      width: constrains.minWidth,
+                      child: child,
+                    ),
                   ),
-                  width: width,
-                  child: widget.child,
-                ),
+                ],
               ),
-            ],
-          ),
-          onPointerDown: (position) {
-            widget._startPosition = position.position.dx;
-          },
-          onPointerUp: (_) {
-            if (widget._needAnimation) {
-              if (widget._valueOfMove < maxSwipeDistance - partOfMaxSwipeDistance) {
-                _closeController.reverse();
+              onPointerDown: (position) {
+                _startPosition = position.position.dx;
+                _startPositionY = position.position.dy;
+                _localPositionMoreThenWidgetHeight = false;
+              },
+              onPointerUp: (_) {
+                if (_needAnimation) {
+                  if (_valueOfMove < maxSwipeDistance - partOfMaxSwipeDistance) {
+                    _closeController.reverse(from: 1.0);
+                    _isSwiped = false;
 
-                widget._needAnimation = false;
-                widget._valueOfMove = _closeController.value;
-              } else {
-                widget._valueOfMove = maxSwipeDistance;
-              }
-            }
-          },
-          onPointerMove: (position) {
-            double distance = position.position.dx - widget._startPosition;
+                    _needAnimation = false;
+                    _valueOfMove = 0.0;
+                  } else {
+                    _closeController.reverse(from: 1.0);
+                    _valueOfMove = 0.0;
+                    _isSwiped = true;
+                  }
+                }
+              },
+              onPointerMove: (position) {
+                final double verticalDistance = position.position.dy - _startPositionY!;
+                double distance = position.position.dx - _startPosition!;
 
-            if (FlutterDictionary.instance.isRTL) {
-              if (distance > 0.0) return;
+                if (_localPositionMoreThenWidgetHeight == false) {
+                  if (position.localPosition.dy > baseHeightOfIngredientElement || verticalDistance.abs() > distance.abs()) {
+                    _localPositionMoreThenWidgetHeight = true;
+                    _closeController.reverse(from: 1.0);
+                    _isSwiped = false;
 
-              distance = -distance;
-            }
+                    _needAnimation = false;
+                    _valueOfMove = 0.0;
+                  } else {
+                    if (FlutterDictionary.instance.isRTL) {
+                      distance = -distance;
+                    }
 
-            if (FlutterDictionary.instance.isRTL == false && distance < 0.0) {
-              return;
-            }
+                    if ((_isSwiped == false && distance > minSwipeDistance) || (_isSwiped && distance < 0 && maxSwipeDistance + distance > 0)) {
+                      _needAnimation = true;
+                      _closeController.forward();
 
-            if (distance > minSwipeDistance) {
-              widget._needAnimation = true;
-              _closeController.forward();
-
-              if (distance < maxSwipeDistance) {
-                widget._valueOfMove = distance;
-              }
-            }
+                      if (distance < maxSwipeDistance) {
+                        _valueOfMove = distance;
+                      }
+                    }
+                  }
+                }
+              },
+            );
           },
         );
       },

@@ -26,7 +26,7 @@ class ApplicationTokenCubit extends Cubit<ApplicationTokenState> {
         return emptyString;
       }
 
-      logger.d('Update token');
+      logger.d('Update token: ${state.token!.refreshToken}');
 
       NetworkService.instance.init(baseUrl: baseUrl);
       final BaseHttpResponse response = await NetworkService.instance.requestWithParams(
@@ -52,4 +52,6 @@ class ApplicationTokenCubit extends Cubit<ApplicationTokenState> {
       }
     }
   }
+
+
 }

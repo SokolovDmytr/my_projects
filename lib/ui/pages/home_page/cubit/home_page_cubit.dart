@@ -5,6 +5,7 @@ import 'package:fridge_yellow_team_bloc/repositories/ingredient_repository.dart'
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/error_dialog/error_dialog.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/error_dialog/error_dialog_widget.dart';
+import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/text_field_loader/text_field_loader_widget.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/models/base_http_response.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/network_service.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/res/consts.dart';
@@ -15,14 +16,16 @@ import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dar
 import 'package:fridge_yellow_team_bloc/ui/pages/home_page/cubit/home_page_state.dart';
 
 class HomePageCubit extends Cubit<HomePageState> {
-  HomePageCubit()
+  HomePageCubit({required TextFieldLoaderWidget loader,})
       : super(
-          const HomePageState(
+          HomePageState(
             tempIngredients: [],
+            loader: loader,
           ),
         );
 
   Future<void> getIngredientsWithString({required String str}) async {
+    state.loader.rebuild!(true);
     final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
     if (isConnection == false) {
@@ -31,6 +34,7 @@ class HomePageCubit extends Cubit<HomePageState> {
           child: ErrorDialogWidget(),
         ),
       );
+      state.loader.rebuild!(false);
       return;
     }
 
@@ -51,7 +55,9 @@ class HomePageCubit extends Cubit<HomePageState> {
       emit(
         state.copyWith(inputTempIngredients: ingredients),
       );
+      state.loader.rebuild!(false);
     } else {
+      state.loader.rebuild!(false);
       PopUpService.instance.show(
         widget: ServerErrorPopUpWidget(),
       );
