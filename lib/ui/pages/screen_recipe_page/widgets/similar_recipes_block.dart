@@ -44,7 +44,7 @@ class _SimilarRecipesBlockState extends State<SimilarRecipesBlock> {
             width: MediaQuery.of(context).size.width,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: vm.recipes.length,
+              itemCount: 3,
               itemBuilder: (context, index) => Container(
                 height: 125.0,
                 width: 350.0,
@@ -52,26 +52,26 @@ class _SimilarRecipesBlockState extends State<SimilarRecipesBlock> {
                     ? const EdgeInsets.only(right: 20.0, bottom: 10.0)
                     : const EdgeInsets.only(left: 20.0, bottom: 10.0),
                 child: InkWell(
-                  onTap: () {
-                    if (vm.isPreviousFavourite) {
-                      vm.saveRecipe(vm.recipes[index]);
-                      vm.saveRecipes(vm.allFavouritesRecipesList, vm.recipes[index]);
-                    } else {
-                      vm.saveRecipe(vm.recipes[index]);
-                      vm.saveRecipes(vm.allRecipesList, vm.recipes[index]);
-                    }
-                    vm.goToScreenRecipePage();
-                  },
-                  child: Padding(
-                    padding: index == vm.recipes.length - 1
-                        ? const EdgeInsets.only(top: 20.0, bottom: 24.0, right: 20.0)
-                        : const EdgeInsets.only(top: 20.0, bottom: 24.0),
-                    child: RecipeElement(
-                      needOpenFunction: false,
-                      recipe: vm.recipes[index],
-                      needFavoriteIcon: false,
-                    ),
-                  ),
+                  // onTap: () {
+                  //   if (vm.isPreviousFavourite) {
+                  //     vm.saveRecipe(vm.recipes[index]);
+                  //     vm.saveRecipes(vm.allFavouritesRecipesList, vm.recipes[index]);
+                  //   } else {
+                  //     vm.saveRecipe(vm.recipes[index]);
+                  //     vm.saveRecipes(vm.allRecipesList, vm.recipes[index]);
+                  //   }
+                  //   vm.goToScreenRecipePage();
+                  // },
+                  // child: Padding(
+                  //   padding: index == vm.recipes.length - 1
+                  //       ? const EdgeInsets.only(top: 20.0, bottom: 24.0, right: 20.0)
+                  //       : const EdgeInsets.only(top: 20.0, bottom: 24.0),
+                  //   child: RecipeElement(
+                  //     needOpenFunction: false,
+                  //     recipe: vm.recipes[index],
+                  //     needFavoriteIcon: false,
+                  //   ),
+                  // ),
                 ),
               ),
             ),

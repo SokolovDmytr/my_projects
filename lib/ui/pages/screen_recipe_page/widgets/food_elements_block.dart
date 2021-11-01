@@ -116,19 +116,19 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
                     key: ValueKey(missingIngredients[index].i),
                     height: 32.0,
                     width: 32.0,
-                    child: IngredientImageCacheManager.instance.getImageWithIdIngredient(ingredient: missingIngredients[index]) ??
-                        Image.network(
-                          missingIngredients[index].image,
-                          errorBuilder: (
-                            BuildContext _,
-                            Object __,
-                            StackTrace ___,
-                          ) {
-                            return Image.asset(
-                              ImageAssets.chefYellow,
-                            );
-                          },
-                        ),
+                    // child: IngredientImageCacheManager.instance.getImageWithIdIngredient(ingredient: missingIngredients[index]) ??
+                    //     Image.network(
+                    //       missingIngredients[index].image,
+                    //       errorBuilder: (
+                    //         BuildContext _,
+                    //         Object __,
+                    //         StackTrace ___,
+                    //       ) {
+                    //         return Image.asset(
+                    //           ImageAssets.chefYellow,
+                    //         );
+                    //       },
+                    //     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 5.0),
@@ -173,19 +173,19 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
                     key: ValueKey(availableIngredients[index].i),
                     width: 32.0,
                     height: 32.0,
-                    child: IngredientImageCacheManager.instance.getImageWithIdIngredient(ingredient: availableIngredients[index]) ??
-                        Image.network(
-                          availableIngredients[index].image,
-                          errorBuilder: (
-                            BuildContext _,
-                            Object __,
-                            StackTrace ___,
-                          ) {
-                            return Image.asset(
-                              ImageAssets.chefYellow,
-                            );
-                          },
-                        ),
+                    // child: IngredientImageCacheManager.instance.getImageWithIdIngredient(ingredient: availableIngredients[index]) ??
+                    //     Image.network(
+                    //       availableIngredients[index].image,
+                    //       errorBuilder: (
+                    //         BuildContext _,
+                    //         Object __,
+                    //         StackTrace ___,
+                    //       ) {
+                    //         return Image.asset(
+                    //           ImageAssets.chefYellow,
+                    //         );
+                    //       },
+                    //     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 5.0),

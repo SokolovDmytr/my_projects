@@ -266,7 +266,7 @@ class _HomePageViewState extends State<HomePageView> {
                                     text: language.buttonWatchRecipes,
                                     fontText: AppFonts.normalMediumTextStyle,
                                     gradient: AppGradient.wheatMarigoldGradient,
-                                    onTap: RouteSelectors.goToScreenRecipePage(arguments: emptyString),
+                                    onTap: RouteSelectors.goToRecipesPage(),
                                   ),
                                 ),
                               ),

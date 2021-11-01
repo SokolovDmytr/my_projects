@@ -51,7 +51,7 @@ class UserInformationService {
   Future<String> getToken() async {
     final Token? token = RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().state.token;
 
-    if (token!.token != emptyString &&
+    if (token != null && token.token != emptyString &&
         token.createDate.add(AppDuration.timeValidOfToken).isAfter(
               DateTime.now(),
             )) {
@@ -64,7 +64,7 @@ class UserInformationService {
         type: HttpType.httpGet,
         route: HttpRoute.updateToken,
         parameter: RefreshTokenParams(
-          refreshToken: token.refreshToken,
+          refreshToken: token!.refreshToken,
         ),
       );
 
