@@ -12,6 +12,7 @@ import 'package:fridge_yellow_team_bloc/res/app_styles/app_gradient.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_shadows.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_selectors.dart';
+import 'package:fridge_yellow_team_bloc/services/user_information_service/user_information_service.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_button.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -88,7 +89,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       fontText: AppFonts.normalMediumTextStyle,
                       height: 56.0,
                       onTap: () => setState(() {
-                        _currentIndexDots == 3 ? RouteSelectors.goToHomePage().call() : _nextAction();
+                        _currentIndexDots == 3 ? _startAction() : _nextAction();
                       }),
                       gradient: AppGradient.wheatMarigoldGradient,
                       shadows: AppShadows.buttonOcreShadow,
@@ -142,6 +143,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       _currentIndexDots = _currentIndexDots + 1,
       duration: AppDuration.onBoardingScreenDuration,
     );
+  }
+
+  void _startAction() {
+    UserInformationService.instance.visitApp();
+    RouteSelectors.goToHomePage().call();
   }
 
   List<T> map<T>(List list, Function handler) {

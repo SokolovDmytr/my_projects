@@ -10,6 +10,7 @@ import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_selectors.dart';
+import 'package:fridge_yellow_team_bloc/services/user_information_service/user_information_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -38,7 +39,9 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
         BlocProvider.of<ApplicationTokenCubit>(context).state.token?.token == emptyString ||
                 BlocProvider.of<ApplicationTokenCubit>(context).state.token?.token == null
             ? RouteSelectors.goToAuthPage().call()
-            : RouteSelectors.goToOnBoardingPage().call();
+            : UserInformationService.instance.isFirstVisitApp()
+                ? RouteSelectors.goToOnBoardingPage().call()
+                : RouteSelectors.goToHomePage().call();
       },
     );
   }
