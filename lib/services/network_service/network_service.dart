@@ -41,7 +41,7 @@ class NetworkService {
   /// This function will update a [baseUrl]. Not required for use.
   void overrideBaseUrl(String url) => _baseUrl = url;
 
-  String? get baseUrl => _baseUrl?? baseUrl;
+  String? get baseUrl => _baseUrl ?? baseUrl;
 
   void init({
     required String baseUrl,
