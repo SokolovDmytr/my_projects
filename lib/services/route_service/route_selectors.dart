@@ -1,4 +1,3 @@
-import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/models/screen_recipe_arguments.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/app_routes.dart';
@@ -50,10 +49,9 @@ class RouteSelectors {
         );
   }
 
-  static void Function() goToRecipesPage({required List<Ingredient> ingredients}) {
+  static void Function() goToRecipesPage() {
     return () => RouteManager.instance.push(
           route: AppRoutes.recipes,
-          arguments: ingredients,
         );
   }
 

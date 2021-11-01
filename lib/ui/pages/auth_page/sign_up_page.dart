@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/authentication_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';

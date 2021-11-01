@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_state.dart';
+import 'package:fridge_yellow_team_bloc/application/cubit/recipes_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/main_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
@@ -271,13 +272,15 @@ class _HomePageViewState extends State<HomePageView> {
                                           right: 22.0,
                                         ),
                                         child: GlobalButton(
-                                          key: UniqueKey(),
-                                          height: 56.0,
-                                          text: language.buttonWatchRecipes,
-                                          fontText: AppFonts.normalMediumTextStyle,
-                                          gradient: AppGradient.wheatMarigoldGradient,
-                                          onTap: RouteSelectors.goToRecipesPage(ingredients: existIngredients),
-                                        ),
+                                            key: UniqueKey(),
+                                            height: 56.0,
+                                            text: language.buttonWatchRecipes,
+                                            fontText: AppFonts.normalMediumTextStyle,
+                                            gradient: AppGradient.wheatMarigoldGradient,
+                                            onTap: () {
+                                              RouteSelectors.goToRecipesPage().call();
+                                              context.read<RecipesCubit>().loadRecipes(ingredients: existIngredients);
+                                            }),
                                       ),
                                     ),
                                   ],
