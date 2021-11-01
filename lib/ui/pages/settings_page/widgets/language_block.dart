@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:fridge_yellow_team_bloc/application/cubit/language_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/settings_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_delegate.dart';
@@ -7,6 +8,7 @@ import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/models/supported_locales.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
+import 'package:provider/src/provider.dart';
 
 class LanguageBlock extends StatefulWidget {
   LanguageBlock() : super(key: UniqueKey());
@@ -45,6 +47,7 @@ class _LanguageBlockState extends State<LanguageBlock> {
                   borderRadius: BorderRadius.circular(10.0),
                   onTap: () {
                     FlutterDictionary.instance.setNewLanguage(SupportedLocales.instance.getSupportedLocales![index].toString());
+                    context.read<LanguageCubit>().updateLanguage();
                   },
                   child: Container(
                     alignment: Alignment.center,

@@ -74,7 +74,7 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                       ),
                     );
                   } else if (context.read<ScreenRecipePageCubit>().state.isFavourite == false) {
-                    context.read<RecipesCubit>().addFavourite(arguments.recipes[arguments.index].i.toString());
+                    context.read<RecipesCubit>().addFavourite(arguments.recipes[arguments.index]);
                     context.read<ScreenRecipePageCubit>().updateFavouriteStatus(isFavourite: true);
                   }
                 },
@@ -134,7 +134,7 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                               ),
                             );
                           } else if (arguments.recipes[arguments.index].isFavorite == false) {
-                            context.read<RecipesCubit>().addFavourite(arguments.recipes[arguments.index].i.toString());
+                            context.read<RecipesCubit>().addFavourite(arguments.recipes[arguments.index]);
                             context.read<ScreenRecipePageCubit>().updateFavouriteStatus(isFavourite: true);
                             PopUpService.instance.show(
                               widget: RecipesPopUpWidget(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
+import 'package:fridge_yellow_team_bloc/application/cubit/language_cubit.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/recipes_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_delegate.dart';
 import 'package:fridge_yellow_team_bloc/res/keys.dart';
@@ -26,6 +27,9 @@ class Application extends StatelessWidget {
         BlocProvider(
           create: (BuildContext _) => RecipesCubit(),
         ),
+        BlocProvider(
+          create: (BuildContext _) => LanguageCubit(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

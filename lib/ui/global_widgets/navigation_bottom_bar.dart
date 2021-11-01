@@ -31,6 +31,7 @@ class CustomNavigationBottomBar extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 6.0),
             child: Row(
+              textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _getBottomBarElement(
@@ -45,7 +46,6 @@ class CustomNavigationBottomBar extends StatelessWidget {
                   image: ImageAssets.bottomBarFavourites,
                   text: _language.favourites,
                   isHome: false,
-                  // function: RouteSelectors.goToScreenRecipePage(arguments: null),
                   function: RouteSelectors.goToFavoritesPage(),
                   page: AppRoutes.favorites,
                   currentPage: currentPage,

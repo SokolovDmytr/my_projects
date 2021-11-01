@@ -162,7 +162,7 @@ class RecipesCubit extends Cubit<RecipesState> {
     }
   }
 
-  Future<void> addFavourite(String recipeId) async {
+  Future<void> addFavourite(Recipe recipe) async {
     final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
     final bool isConnection = await NetworkService.instance.checkInternetConnection();
@@ -172,13 +172,9 @@ class RecipesCubit extends Cubit<RecipesState> {
     }
 
     final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
-    final BaseHttpResponse response = await RecipeRepository.instance.addToFavorite(token: token, recipeId: recipeId);
+    final BaseHttpResponse response = await RecipeRepository.instance.addToFavorite(token: token, recipeId: recipe.i.toString());
 
     if (response.error == null) {
-      final Recipe recipe = FridgeParser.instance.parseEntity(
-        exampleObject: Recipe,
-        response: response,
-      );
       final List<Recipe> favouritesList = state.favoriteRecipes;
       favouritesList.add(recipe);
       emit(state.copyWith(inputFavoriteRecipes: favouritesList));
