@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/favorites_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
@@ -16,6 +17,8 @@ import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.d
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/remove_favourite_dialog/remove_favourite_dialog.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/remove_favourite_dialog/remove_favourite_widget.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
+import 'package:fridge_yellow_team_bloc/utils/comparator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RecipeElement extends StatefulWidget {
   final Recipe recipe;
@@ -46,10 +49,10 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
         setState(() {});
       }
     });
-    _missingIngredients = [];/*CustomComparator.getMissingIngredients(
+    _missingIngredients = CustomComparator.getMissingIngredients(
       recipe: widget.recipe,
-      ingredients: StoreProvider.of<AppState>(context, listen: false).state.homePageState.ingredients,
-    );*/
+      ingredients: context.read<IngredientCubit>().state.ingredients,
+    );
   }
 
   @override

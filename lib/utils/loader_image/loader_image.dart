@@ -109,7 +109,7 @@ void loadImagesInIsolate(
           messageFromIsolate.sendPort.send(
             ImageWithId(
               image: image!,
-              id: key,
+              id: messageFromIsolate.urls[key]!,
             ),
           );
         }),
