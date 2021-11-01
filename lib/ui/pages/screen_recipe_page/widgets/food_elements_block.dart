@@ -6,7 +6,8 @@ import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/recipe.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
-
+import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
+import 'package:fridge_yellow_team_bloc/ui/global_widgets/custom_network_image.dart';
 
 class FoodElementsBlock extends StatefulWidget {
   final List<Ingredient> ingredientsStored;
@@ -115,19 +116,11 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
                     key: ValueKey(missingIngredients[index].i),
                     height: 32.0,
                     width: 32.0,
-                    // child: IngredientImageCacheManager.instance.getImageWithIdIngredient(ingredient: missingIngredients[index]) ??
-                    //     Image.network(
-                    //       missingIngredients[index].image,
-                    //       errorBuilder: (
-                    //         BuildContext _,
-                    //         Object __,
-                    //         StackTrace ___,
-                    //       ) {
-                    //         return Image.asset(
-                    //           ImageAssets.chefYellow,
-                    //         );
-                    //       },
-                    //     ),
+                    child: CustomNetworkImage(
+                      url: missingIngredients[index].image,
+                      placeholder: Image.asset(ImageAssets.chefYellow),
+                      fit: BoxFit.contain,
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 5.0),
@@ -172,19 +165,11 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
                     key: ValueKey(availableIngredients[index].i),
                     width: 32.0,
                     height: 32.0,
-                    // child: IngredientImageCacheManager.instance.getImageWithIdIngredient(ingredient: availableIngredients[index]) ??
-                    //     Image.network(
-                    //       availableIngredients[index].image,
-                    //       errorBuilder: (
-                    //         BuildContext _,
-                    //         Object __,
-                    //         StackTrace ___,
-                    //       ) {
-                    //         return Image.asset(
-                    //           ImageAssets.chefYellow,
-                    //         );
-                    //       },
-                    //     ),
+                    child: CustomNetworkImage(
+                      url: availableIngredients[index].image,
+                      placeholder: Image.asset(ImageAssets.chefYellow),
+                      fit: BoxFit.contain,
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 5.0),

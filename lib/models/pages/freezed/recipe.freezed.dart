@@ -55,34 +55,44 @@ const $Recipe = _$RecipeTearOff();
 /// @nodoc
 mixin _$Recipe {
   int get i => throw _privateConstructorUsedError;
+
   String get name => throw _privateConstructorUsedError;
+
   int get time => throw _privateConstructorUsedError;
+
   double get calories => throw _privateConstructorUsedError;
+
   List<Ingredient> get ingredients => throw _privateConstructorUsedError;
+
   List<String> get steps => throw _privateConstructorUsedError;
+
   String? get level => throw _privateConstructorUsedError;
+
   String? get image => throw _privateConstructorUsedError;
+
   bool get isFavorite => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $RecipeCopyWith<Recipe> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $RecipeCopyWith<$Res> {
-  factory $RecipeCopyWith(Recipe value, $Res Function(Recipe) then) =
-      _$RecipeCopyWithImpl<$Res>;
-  $Res call(
-      {int i,
-      String name,
-      int time,
-      double calories,
-      List<Ingredient> ingredients,
-      List<String> steps,
-      String? level,
-      String? image,
-      bool isFavorite});
+  factory $RecipeCopyWith(Recipe value, $Res Function(Recipe) then) = _$RecipeCopyWithImpl<$Res>;
+
+  $Res call({
+    int i,
+    String name,
+    int time,
+    double calories,
+    List<Ingredient> ingredients,
+    List<String> steps,
+    String? level,
+    String? image,
+    bool isFavorite,
+  });
 }
 
 /// @nodoc
@@ -90,6 +100,7 @@ class _$RecipeCopyWithImpl<$Res> implements $RecipeCopyWith<$Res> {
   _$RecipeCopyWithImpl(this._value, this._then);
 
   final Recipe _value;
+
   // ignore: unused_field
   final $Res Function(Recipe) _then;
 
@@ -148,26 +159,25 @@ class _$RecipeCopyWithImpl<$Res> implements $RecipeCopyWith<$Res> {
 
 /// @nodoc
 abstract class _$RecipeCopyWith<$Res> implements $RecipeCopyWith<$Res> {
-  factory _$RecipeCopyWith(_Recipe value, $Res Function(_Recipe) then) =
-      __$RecipeCopyWithImpl<$Res>;
+  factory _$RecipeCopyWith(_Recipe value, $Res Function(_Recipe) then) = __$RecipeCopyWithImpl<$Res>;
+
   @override
-  $Res call(
-      {int i,
-      String name,
-      int time,
-      double calories,
-      List<Ingredient> ingredients,
-      List<String> steps,
-      String? level,
-      String? image,
-      bool isFavorite});
+  $Res call({
+    int i,
+    String name,
+    int time,
+    double calories,
+    List<Ingredient> ingredients,
+    List<String> steps,
+    String? level,
+    String? image,
+    bool isFavorite,
+  });
 }
 
 /// @nodoc
-class __$RecipeCopyWithImpl<$Res> extends _$RecipeCopyWithImpl<$Res>
-    implements _$RecipeCopyWith<$Res> {
-  __$RecipeCopyWithImpl(_Recipe _value, $Res Function(_Recipe) _then)
-      : super(_value, (v) => _then(v as _Recipe));
+class __$RecipeCopyWithImpl<$Res> extends _$RecipeCopyWithImpl<$Res> implements _$RecipeCopyWith<$Res> {
+  __$RecipeCopyWithImpl(_Recipe _value, $Res Function(_Recipe) _then) : super(_value, (v) => _then(v as _Recipe));
 
   @override
   _Recipe get _value => super._value as _Recipe;
@@ -239,8 +249,7 @@ class _$_Recipe implements _Recipe {
       this.image,
       this.isFavorite = false});
 
-  factory _$_Recipe.fromJson(Map<String, dynamic> json) =>
-      _$$_RecipeFromJson(json);
+  factory _$_Recipe.fromJson(Map<String, dynamic> json) => _$$_RecipeFromJson(json);
 
   @override
   final int i;
@@ -275,34 +284,21 @@ class _$_Recipe implements _Recipe {
             (identical(other.i, i) || other.i == i) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.time, time) || other.time == time) &&
-            (identical(other.calories, calories) ||
-                other.calories == calories) &&
-            const DeepCollectionEquality()
-                .equals(other.ingredients, ingredients) &&
+            (identical(other.calories, calories) || other.calories == calories) &&
+            const DeepCollectionEquality().equals(other.ingredients, ingredients) &&
             const DeepCollectionEquality().equals(other.steps, steps) &&
             (identical(other.level, level) || other.level == level) &&
             (identical(other.image, image) || other.image == image) &&
-            (identical(other.isFavorite, isFavorite) ||
-                other.isFavorite == isFavorite));
+            (identical(other.isFavorite, isFavorite) || other.isFavorite == isFavorite));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      i,
-      name,
-      time,
-      calories,
-      const DeepCollectionEquality().hash(ingredients),
-      const DeepCollectionEquality().hash(steps),
-      level,
-      image,
-      isFavorite);
+  int get hashCode => Object.hash(runtimeType, i, name, time, calories, const DeepCollectionEquality().hash(ingredients),
+      const DeepCollectionEquality().hash(steps), level, image, isFavorite);
 
   @JsonKey(ignore: true)
   @override
-  _$RecipeCopyWith<_Recipe> get copyWith =>
-      __$RecipeCopyWithImpl<_Recipe>(this, _$identity);
+  _$RecipeCopyWith<_Recipe> get copyWith => __$RecipeCopyWithImpl<_Recipe>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -326,22 +322,31 @@ abstract class _Recipe implements Recipe {
 
   @override
   int get i;
+
   @override
   String get name;
+
   @override
   int get time;
+
   @override
   double get calories;
+
   @override
   List<Ingredient> get ingredients;
+
   @override
   List<String> get steps;
+
   @override
   String? get level;
+
   @override
   String? get image;
+
   @override
   bool get isFavorite;
+
   @override
   @JsonKey(ignore: true)
   _$RecipeCopyWith<_Recipe> get copyWith => throw _privateConstructorUsedError;

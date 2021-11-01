@@ -67,6 +67,17 @@ class RecipesCubit extends Cubit<RecipesState> {
       ids: ids,
     );
 
+    List<Recipe>? favoriteRecipes;
+    if (state.favoriteRecipes.isEmpty) {
+      final BaseHttpResponse responseWithFavoriteRecipe = await RecipeRepository.instance.fetchFavoriteRecipeData(token: token);
+      favoriteRecipes = FridgeParser.instance.parseList(
+        exampleObject: Recipe,
+        response: responseWithFavoriteRecipe,
+      ) as List<Recipe>;
+    } else {
+      favoriteRecipes = state.favoriteRecipes;
+    }
+
     if (response.error == null) {
       final List<Recipe> recipes = FridgeParser.instance.parseList(
         exampleObject: Recipe,
@@ -77,6 +88,15 @@ class RecipesCubit extends Cubit<RecipesState> {
 
       final List<Recipe> resRecipes = [];
       for (Recipe recipe in recipes) {
+        bool isFavoriteRecipe = false;
+
+        for (Recipe favoriteRecipe in favoriteRecipes) {
+          if (recipe.i == favoriteRecipe.i) {
+            isFavoriteRecipe = true;
+            break;
+          }
+        }
+
         final List<Ingredient> resIngredients = [];
         for (Ingredient ingredient in recipe.ingredients) {
           for (Ingredient dataIngredient in ingredients) {
@@ -94,6 +114,7 @@ class RecipesCubit extends Cubit<RecipesState> {
         resRecipes.add(
           recipe.copyWith(
             ingredients: resIngredients,
+            isFavorite: isFavoriteRecipe,
           ),
         );
       }
@@ -113,9 +134,25 @@ class RecipesCubit extends Cubit<RecipesState> {
   Future<void> loadFavouritesRecipes() async {
     final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
+    DialogService.instance.show(
+      dialog: LoaderPopUp(
+        title: language.loadingText,
+        state: true,
+        loaderKey: LoaderKey.getData,
+        child: LoaderWidget(),
+      ),
+    );
+
     final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
     if (isConnection == false) {
+      DialogService.instance.close();
+
+      DialogService.instance.show(
+        dialog: ErrorDialog(
+          child: ErrorDialogWidget(),
+        ),
+      );
       return;
     }
 
@@ -155,7 +192,11 @@ class RecipesCubit extends Cubit<RecipesState> {
       }
 
       emit(state.copyWith(inputFavoriteRecipes: resRecipes));
+
+      DialogService.instance.close();
     } else {
+      DialogService.instance.close();
+
       PopUpService.instance.show(
         widget: ServerErrorPopUpWidget(),
       );
@@ -175,12 +216,8 @@ class RecipesCubit extends Cubit<RecipesState> {
     final BaseHttpResponse response = await RecipeRepository.instance.addToFavorite(token: token, recipeId: recipeId);
 
     if (response.error == null) {
-      final Recipe recipe = FridgeParser.instance.parseEntity(
-        exampleObject: Recipe,
-        response: response,
-      );
       final List<Recipe> favouritesList = state.favoriteRecipes;
-      favouritesList.add(recipe);
+      favouritesList.add(state.recipes.where((element) => element.i.toString() == recipeId).first);
       emit(state.copyWith(inputFavoriteRecipes: favouritesList));
     } else {
       PopUpService.instance.show(
@@ -189,7 +226,7 @@ class RecipesCubit extends Cubit<RecipesState> {
     }
   }
 
-  Future<void> removeFavourite(Recipe recipeToRemove) async {
+  Future<void> removeFavourite({required Recipe recipeToRemove}) async {
     final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
     final bool isConnection = await NetworkService.instance.checkInternetConnection();

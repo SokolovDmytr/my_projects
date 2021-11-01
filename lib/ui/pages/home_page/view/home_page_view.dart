@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +15,6 @@ import 'package:fridge_yellow_team_bloc/res/app_styles/app_gradient.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_shadows.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
-import 'package:fridge_yellow_team_bloc/services/cache_manager/image_cache_manager.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/swipe_tutorial_dialog/swipe_tutorial_dialog.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/swipe_tutorial_dialog/swipe_tutorial_widget.dart';
@@ -24,6 +22,7 @@ import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/text_fie
 import 'package:fridge_yellow_team_bloc/services/route_service/app_routes.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_selectors.dart';
 import 'package:fridge_yellow_team_bloc/services/user_information_service/user_information_service.dart';
+import 'package:fridge_yellow_team_bloc/ui/global_widgets/custom_network_image.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_button.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_textfield.dart';
 import 'package:fridge_yellow_team_bloc/ui/layouts/main_layout/main_layout.dart';
@@ -223,18 +222,11 @@ class _HomePageViewState extends State<HomePageView> {
                                                             Container(
                                                               width: 57.0,
                                                               margin: const EdgeInsets.all(4.0),
-                                                              child: ImageCacheManager.instance
-                                                                      .getImageWithIdIngredient(ingredient: existIngredients[index]) ??
-                                                                  CachedNetworkImage(
-                                                                    imageUrl: existIngredients[index].image!,
-                                                                    placeholder: (_, __) => SizedBox(
-                                                                      width: baseHeightOfIngredientElement,
-                                                                      child: Image.asset(ImageAssets.chefYellow),
-                                                                    ),
-                                                                    errorWidget: (_, __, ___) {
-                                                                      return Image.asset(ImageAssets.chefYellow);
-                                                                    },
-                                                                  ),
+                                                              child: CustomNetworkImage(
+                                                                url: existIngredients[index].image,
+                                                                placeholder: Image.asset(ImageAssets.chefYellow),
+                                                                fit: BoxFit.contain,
+                                                              ),
                                                             ),
                                                             Flexible(
                                                               child: Text(
@@ -387,20 +379,11 @@ class _HomePageViewState extends State<HomePageView> {
                                                 4.0,
                                                 5.0,
                                               ),
-                                              child: ImageCacheManager.instance.getImageWithIdIngredient(ingredient: tempIngredients[index]) ??
-                                                  CachedNetworkImage(
-                                                    imageUrl: tempIngredients[index].image!,
-                                                    imageBuilder: (BuildContext _, ImageProvider imageProvider) {
-                                                      return Image(image: imageProvider);
-                                                    },
-                                                    placeholder: (context, url) => SizedBox(
-                                                      width: baseHeightOfIngredientElement,
-                                                      child: Image.asset(ImageAssets.chefYellow),
-                                                    ),
-                                                    errorWidget: (context, url, error) {
-                                                      return Image.asset(ImageAssets.chefYellow);
-                                                    },
-                                                  ),
+                                              child: CustomNetworkImage(
+                                                url: tempIngredients[index].image,
+                                                placeholder: Image.asset(ImageAssets.chefYellow),
+                                                fit: BoxFit.contain,
+                                              ),
                                             ),
                                             Flexible(
                                               child: Text(
