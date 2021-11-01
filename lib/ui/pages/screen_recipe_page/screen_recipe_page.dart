@@ -5,14 +5,22 @@ import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/screen_recipe_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
+import 'package:fridge_yellow_team_bloc/models/pages/models/screen_recipe_arguments.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_gradient.dart';
+import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
+import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
+import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/remove_favourite_dialog/remove_favourite_dialog.dart';
+import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/remove_favourite_dialog/remove_favourite_widget.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_selectors.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/navigation_bottom_bar.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/screen_recipe_page/widgets/congratulation_block.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/screen_recipe_page/widgets/cooking_block.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/screen_recipe_page/widgets/custom_sliver_fab.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/screen_recipe_page/widgets/food_elements_block.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/screen_recipe_page/widgets/similar_recipes_block.dart';
 
 class ScreenRecipePage extends StatefulWidget {
   final bool previousPageFavourite;
@@ -31,6 +39,7 @@ class _ScreenRecipePageState extends State<ScreenRecipePage> with SingleTickerPr
 
   @override
   Widget build(BuildContext context) {
+    final ScreenRecipeArguments arguments = ModalRoute.of(context)!.settings.arguments as ScreenRecipeArguments;
     final ScreenRecipeLanguage _languageScreenRecipePage = FlutterDictionary.instance.language?.screenRecipeLanguage ?? en.screenRecipeLanguage;
     final DialogLanguage _languageDialog = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
     return SafeArea(
@@ -41,30 +50,25 @@ class _ScreenRecipePageState extends State<ScreenRecipePage> with SingleTickerPr
         },
         child: Scaffold(
           bottomNavigationBar: CustomNavigationBottomBar(
-            currentPage: '',
+            currentPage: emptyString,
           ),
           backgroundColor: AppColors.white,
           body: CustomSliverFab(
             floatingWidget: InkWell(
               onTap: () {
-                // if (viewModel.recipe.isFavorite) {
-                //   DialogService.instance.show(
-                //     dialog: RemoveFavouriteDialog(
-                //       child: RemoveFavouriteDialogWidget(
-                //         onTapYes: () {
-                //           viewModel.removeFavoriteRecipe(
-                //             viewModel.recipe.i,
-                //           );
-                //         },
-                //       ),
-                //     ),
-                //   );
-                // } else if (viewModel.recipe.isFavorite == false) {
-                //   viewModel.addFavoriteRecipe(
-                //     viewModel.recipe.i.toString(),
-                //     viewModel.recipe,
-                //   );
-                // }
+                if (arguments.recipes[arguments.index].isFavorite) {
+                  DialogService.instance.show(
+                    dialog: RemoveFavouriteDialog(
+                      child: RemoveFavouriteDialogWidget(
+                        onTapYes: () {
+                          //ToDo: remove from recipe
+                        },
+                      ),
+                    ),
+                  );
+                } else if (arguments.recipes[arguments.index].isFavorite == false) {
+                  //ToDo: add to favourite
+                }
               },
               child: Stack(
                 children: [
@@ -135,7 +139,7 @@ class _ScreenRecipePageState extends State<ScreenRecipePage> with SingleTickerPr
                       // },
                       child: Icon(
                         Icons.favorite_sharp,
-                        color: true ? AppColors.red : AppColors.black.withOpacity(0.5),
+                        color: arguments.recipes[arguments.index].isFavorite ? AppColors.red : AppColors.black.withOpacity(0.5),
                       ),
                     ),
                   ),
@@ -151,18 +155,14 @@ class _ScreenRecipePageState extends State<ScreenRecipePage> with SingleTickerPr
                           decoration: BoxDecoration(
                             gradient: height == 80.0 ? AppGradient.transparent : AppGradient.black30black0,
                             image: DecorationImage(
-                              image: AssetImage(ImageAssets.chefYellow),
+                              image: arguments.recipes[arguments.index].image == null
+                                  ? AssetImage(ImageAssets.chefYellow)
+                                  : NetworkImage(arguments.recipes[arguments.index].image!) as ImageProvider,
                               fit: BoxFit.cover,
                               colorFilter: ColorFilter.mode(
                                 AppColors.transparent,
-                                BlendMode.clear,
+                                arguments.recipes[arguments.index].image == null ? BlendMode.clear : BlendMode.color,
                               ),
-                            ),
-                          ),
-                          child: FlexibleSpaceBar(
-                            background: Image.asset(
-                              ImageAssets.chefYellow,
-                              fit: BoxFit.fill,
                             ),
                           ),
                         ),
@@ -248,46 +248,46 @@ class _ScreenRecipePageState extends State<ScreenRecipePage> with SingleTickerPr
                                   bottom: 25.0,
                                 ),
                                 child: Text(
-                                  'viewModel.recipe.name',
+                                  arguments.recipes[index].name,
                                   style: AppFonts.normalBlackHeight30ShadowTextStyle,
                                 ),
                               ),
-                              // Padding(
-                              //   padding: const EdgeInsets.only(bottom: 35.0),
-                              //   child: Row(
-                              //     children: [
-                              //       _getParameterOfRecipeWidget(
-                              //         imageAssets: ImageAssets.timeIcon,
-                              //         value: viewModel.recipe.time.toString(),
-                              //         text: _languageScreenRecipePage.min,
-                              //         textStyle: AppFonts.smallTextStyle,
-                              //       ),
-                              //       _getParameterOfRecipeWidget(
-                              //         imageAssets: ImageAssets.caloriesIcon,
-                              //         value: viewModel.recipe.calories.toStringAsFixed(1),
-                              //         text: _languageScreenRecipePage.cal,
-                              //         textStyle: AppFonts.smallTextStyle,
-                              //       ),
-                              //       viewModel.recipe.level == null
-                              //           ? const SizedBox()
-                              //           : _getParameterOfRecipeWidget(
-                              //               imageAssets: ImageAssets.difficultyIcon,
-                              //               value: viewModel.recipe.level,
-                              //               textStyle: AppFonts.smallTextStyle,
-                              //             ),
-                              //     ],
-                              //   ),
-                              // ),
-                              // FoodElementsBlock(
-                              //   recipe: viewModel.recipe,
-                              //   ingredientsStored: viewModel.ingredient,
-                              // ),
-                              // CookingBlock(recipe: viewModel.recipe),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 35.0),
+                                child: Row(
+                                  children: [
+                                    _getParameterOfRecipeWidget(
+                                      imageAssets: ImageAssets.timeIcon,
+                                      value: arguments.recipes[index].time.toString(),
+                                      text: _languageScreenRecipePage.min,
+                                      textStyle: AppFonts.smallTextStyle,
+                                    ),
+                                    _getParameterOfRecipeWidget(
+                                      imageAssets: ImageAssets.caloriesIcon,
+                                      value: arguments.recipes[index].calories.toStringAsFixed(1),
+                                      text: _languageScreenRecipePage.cal,
+                                      textStyle: AppFonts.smallTextStyle,
+                                    ),
+                                    arguments.recipes[index].level == null
+                                        ? const SizedBox()
+                                        : _getParameterOfRecipeWidget(
+                                            imageAssets: ImageAssets.difficultyIcon,
+                                            value: arguments.recipes[index].level!,
+                                            textStyle: AppFonts.smallTextStyle,
+                                          ),
+                                  ],
+                                ),
+                              ),
+                              FoodElementsBlock(
+                                recipe: arguments.recipes[arguments.index],
+                                ingredientsStored: viewModel.ingredient,
+                              ),
+                              CookingBlock(recipe: arguments.recipes[index]),
                               CongratulationBlock(),
                             ],
                           ),
                         ),
-                        // _similarRecipesBlock(viewModel),
+                        _similarRecipesBlock(arguments),
                       ],
                     ),
                   ),
@@ -301,64 +301,63 @@ class _ScreenRecipePageState extends State<ScreenRecipePage> with SingleTickerPr
     );
   }
 
-// void _checkFavourites(ScreenRecipePageVM viewModel) {
-//   for (int index = 0; index < viewModel.allFavouritesRecipesList.length; index++) {
-//     if (viewModel.recipe.i == viewModel.allFavouritesRecipesList[index].i) {
-//       viewModel.recipe = viewModel.recipe.copyWith(isFavorite: true);
-//       // viewModel.addFavoriteRecipe(viewModel.recipe.i.toString(), viewModel.recipe);
-//     }
-//   }
-// }
+  // void _checkFavourites(ScreenRecipePageVM viewModel) {
+  //   for (int index = 0; index < viewModel.allFavouritesRecipesList.length; index++) {
+  //     if (viewModel.recipe.i == viewModel.allFavouritesRecipesList[index].i) {
+  //       viewModel.recipe = viewModel.recipe.copyWith(isFavorite: true);
+  //       // viewModel.addFavoriteRecipe(viewModel.recipe.i.toString(), viewModel.recipe);
+  //     }
+  //   }
+  // }
 
-// Widget _similarRecipesBlock(ScreenRecipePageVM viewModel) {
-//   if (viewModel.allFavouritesRecipesList.length == 1 && viewModel.isPreviousFavourite) {
-//     return const SizedBox(height: 50.0);
-//   } else if (viewModel.allRecipesList.length == 1 && !viewModel.isPreviousFavourite) {
-//     return const SizedBox(height: 50.0);
-//   } else {
-//     return SimilarRecipesBlock();
-//   }
-// }
+  Widget _similarRecipesBlock(ScreenRecipeArguments arguments) {
+    if (arguments.recipes.length == 1) {
+      return const SizedBox(height: 50.0);
+    }
+    return SimilarRecipesBlock(
+      recipes: arguments.recipes,
+    );
+  }
 
-// Widget _getParameterOfRecipeWidget({
-//   @required String imageAssets,
-//   @required TextStyle textStyle,
-//   String text,
-//   String value,
-// }) {
-//   return Container(
-//     margin: const EdgeInsets.symmetric(horizontal: 2.0),
-//     height: 20.0,
-//     width: 80.0,
-//     child: Row(
-//       textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
-//       mainAxisSize: MainAxisSize.min,
-//       children: [
-//         Image.asset(
-//           imageAssets,
-//         ),
-//         Flexible(
-//           child: Container(
-//             margin: const EdgeInsets.only(
-//               left: 4.0,
-//               right: 4.0,
-//             ),
-//             child: Text(
-//               value,
-//               style: textStyle,
-//               overflow: TextOverflow.ellipsis,
-//               maxLines: 1,
-//             ),
-//           ),
-//         ),
-//         text == null
-//             ? const SizedBox()
-//             : Text(
-//                 text,
-//                 style: textStyle,
-//               ),
-//       ],
-//     ),
-//   );
-// }
+  Widget _getParameterOfRecipeWidget({
+    required String imageAssets,
+    required TextStyle textStyle,
+    String? text,
+    required String value,
+  }) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 2.0),
+      height: 20.0,
+      width: 80.0,
+      child: Row(
+        textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            imageAssets,
+          ),
+          Flexible(
+            child: Container(
+              margin: const EdgeInsets.only(
+                left: 4.0,
+                right: 4.0,
+              ),
+              child: Text(
+                value,
+                style: textStyle,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
+            ),
+          ),
+          text == null
+              ? const SizedBox()
+              : Text(
+                  text,
+                  style: textStyle,
+                ),
+        ],
+      ),
+    );
+  }
 }

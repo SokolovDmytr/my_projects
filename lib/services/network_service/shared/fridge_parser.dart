@@ -17,9 +17,7 @@ class FridgeParser {
     if (exampleObject == Recipe) {
       final List<Recipe> result = [];
       for (var item in response.response) {
-        result.add(
-          Recipe.fromJson(item),
-        );
+        result.add(Recipe.fromJson(item));
       }
 
       return result;

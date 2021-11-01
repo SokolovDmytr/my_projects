@@ -70,6 +70,7 @@ class RecipesPageView extends StatelessWidget {
                           arguments: ScreenRecipeArguments(
                             recipes: recipes,
                             index: index,
+                            isPreviousFavourite: false,
                           ),
                         );
                       },

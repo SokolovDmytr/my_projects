@@ -8,9 +8,7 @@ class FavouritesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: context.read<RecipesCubit>(),
-      child: FavouritesPageView(),
-    );
+    context.read<RecipesCubit>().loadFavouritesRecipes();
+    return FavouritesPageView();
   }
 }
