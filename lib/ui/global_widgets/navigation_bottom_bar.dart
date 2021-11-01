@@ -45,6 +45,7 @@ class CustomNavigationBottomBar extends StatelessWidget {
                   image: ImageAssets.bottomBarFavourites,
                   text: _language.favourites,
                   isHome: false,
+                  // function: RouteSelectors.goToScreenRecipePage(arguments: null),
                   function: RouteSelectors.goToFavoritesPage(),
                   page: AppRoutes.favorites,
                   currentPage: currentPage,
