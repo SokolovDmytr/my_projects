@@ -52,6 +52,4 @@ class ApplicationTokenCubit extends Cubit<ApplicationTokenState> {
       }
     }
   }
-
-
 }

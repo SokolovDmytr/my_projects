@@ -65,7 +65,7 @@ class LoaderImage {
     int countOfLoadImage = 0;
     port.listen(
       (message) {
-        if (message is ImageWithId) {
+        if (message is ImageWithId && _streamController!.isClosed == false) {
           _streamController!.add(message);
           countOfLoadImage++;
           if (countOfLoadImage == keys.length) {

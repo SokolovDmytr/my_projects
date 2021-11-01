@@ -72,7 +72,7 @@ class _HomePageViewState extends State<HomePageView> {
               dialog: SwipeTutorialDialog(
                 child: SwipeTutorialWidget(onTapOk: () {
                   UserInformationService.instance.seeSwipeTutorial();
-                  DialogService.instance.close(context);
+                  DialogService.instance.close();
                 }),
               ),
             );

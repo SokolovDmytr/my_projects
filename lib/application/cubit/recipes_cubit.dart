@@ -8,6 +8,12 @@ import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/recipe.dart';
 import 'package:fridge_yellow_team_bloc/repositories/recipe_repository.dart';
+import 'package:fridge_yellow_team_bloc/res/const.dart';
+import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
+import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/error_dialog/error_dialog.dart';
+import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/error_dialog/error_dialog_widget.dart';
+import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/loader/loader_pop_up.dart';
+import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/loader/loader_widget.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/models/base_http_response.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/network_service.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/shared/fridge_parser.dart';
@@ -27,9 +33,25 @@ class RecipesCubit extends Cubit<RecipesState> {
   Future<void> loadRecipes({required List<Ingredient> ingredients}) async {
     final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
+    DialogService.instance.show(
+      dialog: LoaderPopUp(
+        title: language.loadingText,
+        state: true,
+        loaderKey: LoaderKey.getData,
+        child: LoaderWidget(),
+      ),
+    );
+
     final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
     if (isConnection == false) {
+      DialogService.instance.close();
+
+      DialogService.instance.show(
+        dialog: ErrorDialog(
+          child: ErrorDialogWidget(),
+        ),
+      );
       return;
     }
 
@@ -76,8 +98,12 @@ class RecipesCubit extends Cubit<RecipesState> {
         );
       }
 
+      DialogService.instance.close();
+
       emit(state.copyWith(inputRecipe: resRecipes));
     } else {
+      DialogService.instance.close();
+
       PopUpService.instance.show(
         widget: ServerErrorPopUpWidget(),
       );

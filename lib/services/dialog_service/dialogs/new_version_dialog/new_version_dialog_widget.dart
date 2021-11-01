@@ -51,7 +51,7 @@ class NewVersionDialogWidget extends StatelessWidget {
                 ),
                 onTap: () {
                   onTapOk.call();
-                  DialogService.instance.close(context);
+                  DialogService.instance.close();
                 },
               ),
             ),
@@ -111,7 +111,7 @@ class NewVersionDialogWidget extends StatelessWidget {
                 shadows: AppShadows.buttonOcreShadow,
                 onTap: () {
                   onTapOk.call();
-                  DialogService.instance.close(context);
+                  DialogService.instance.close();
                 },
               ),
             )

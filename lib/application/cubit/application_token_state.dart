@@ -4,7 +4,7 @@ import 'package:fridge_yellow_team_bloc/services/user_information_service/user_i
 class ApplicationTokenState {
   final Token? token;
 
-  ApplicationTokenState({
+  const ApplicationTokenState({
     required this.token,
   });
 

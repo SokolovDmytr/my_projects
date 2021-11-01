@@ -35,7 +35,7 @@ class SettingsPageCubit extends Cubit<SettingsPageState> {
     );
     final bool isConnection = await NetworkService.instance.checkInternetConnection();
     if (isConnection == false) {
-      DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
+      DialogService.instance.close();
       DialogService.instance.show(
         dialog: ErrorDialog(
           child: ErrorDialogWidget(),
@@ -49,11 +49,11 @@ class SettingsPageCubit extends Cubit<SettingsPageState> {
     );
     if (response.error == null) {
       UserInformationService.instance.clear();
-      DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
+      DialogService.instance.close();
       RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().saveToken(AuthPageState().token);
       RouteSelectors.goToAuthPage().call();
     } else {
-      DialogService.instance.close(RouteService.instance.navigatorKey.currentContext!);
+      DialogService.instance.close();
       PopUpService.instance.show(
         widget: ServerErrorPopUpWidget(),
       );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/authentication_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
@@ -131,9 +132,7 @@ class _SignUpPageState extends State<SignUpPage> {
             shadows: AppShadows.textFieldShadow,
             height: 42.0,
             onTap: () {
-              /*
-                add google register
-                 */
+              context.read<AuthPageCubit>().registerWithGoogle();
             },
             innerPadding: const EdgeInsets.symmetric(horizontal: 60.0),
           ),

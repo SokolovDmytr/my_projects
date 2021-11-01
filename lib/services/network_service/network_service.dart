@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/internet_connection_helper.dart';
+import 'package:fridge_yellow_team_bloc/services/network_service/interfaces/i_base_http_error.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/interfaces/i_base_request.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/interfaces/i_parameter.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/models/base_http_response.dart';
@@ -68,6 +69,7 @@ class NetworkService {
 
       logger.d('Response status code ${response.statusCode}');
       if (response.statusCode >= 300) {
+        logger.e(response.body);
         return BaseHttpResponse(
           error: NoConnectionHttpError(
             error: response.body,
@@ -75,13 +77,20 @@ class NetworkService {
           ),
         );
       }
+
+      return BaseHttpResponse(
+        response: json.decode(response.body),
+      );
     } catch (error) {
       logger.e(error);
-    }
 
-    return BaseHttpResponse(
-      response: json.decode(response!.body),
-    );
+      return BaseHttpResponse(
+        error: IBaseHttpError(
+          error: error.toString(),
+          statusCode: response?.statusCode ?? noConnectionStatusCode,
+        ),
+      );
+    }
   }
 
   Future<BaseHttpResponse> requestWithParams({

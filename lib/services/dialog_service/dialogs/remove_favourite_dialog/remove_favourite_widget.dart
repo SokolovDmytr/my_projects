@@ -42,7 +42,7 @@ class RemoveFavouriteDialogWidget extends StatelessWidget {
                 color: AppColors.pastelRed,
                 size: 24.0,
               ),
-              onTap: () => DialogService.instance.close(context),
+              onTap: () => DialogService.instance.close(),
             ),
           ),
           Container(
@@ -70,7 +70,7 @@ class RemoveFavouriteDialogWidget extends StatelessWidget {
                   height: 56.0,
                   text: language.logOutPopUpButtonNoText,
                   fontText: AppFonts.normalMediumTextStyle,
-                  onTap: () => DialogService.instance.close(context),
+                  onTap: () => DialogService.instance.close(),
                   gradient: AppGradient.wheatMarigoldGradient,
                 ),
                 const SizedBox(width: 16.0),
@@ -81,7 +81,7 @@ class RemoveFavouriteDialogWidget extends StatelessWidget {
                   text: language.logOutPopUpButtonYesText,
                   fontText: AppFonts.normalMediumMariGoldTextStyle,
                   onTap: () {
-                    DialogService.instance.close(context);
+                    DialogService.instance.close();
                     onTapYes();
                   },
                   borderGradient: AppGradient.wheatMarigoldGradient,

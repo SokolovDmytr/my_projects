@@ -47,7 +47,7 @@ class DeleteDialogWidget extends StatelessWidget {
                   size: 24.0,
                 ),
                 onTap: () {
-                  DialogService.instance.close(context);
+                  DialogService.instance.close();
                 },
               ),
             ),
@@ -84,7 +84,7 @@ class DeleteDialogWidget extends StatelessWidget {
                     text: language.deletePopUpButtonCancelText,
                     fontText: AppFonts.normalMediumTextStyle,
                     onTap: () {
-                      DialogService.instance.close(context);
+                      DialogService.instance.close();
                     },
                     gradient: AppGradient.wheatMarigoldGradient,
                   ),
@@ -96,7 +96,7 @@ class DeleteDialogWidget extends StatelessWidget {
                     fontText: AppFonts.normalMediumMariGoldTextStyle,
                     onTap: () {
                       onTapDelete.call();
-                      DialogService.instance.close(context);
+                      DialogService.instance.close();
                     },
                     borderColor: AppColors.wheat,
                   ),

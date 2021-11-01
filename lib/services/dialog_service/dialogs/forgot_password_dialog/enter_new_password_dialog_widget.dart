@@ -56,7 +56,7 @@ class _EnterNewPasswordDialogWidgetState extends State<EnterNewPasswordDialogWid
                   size: 24.0,
                 ),
                 onTap: () {
-                  DialogService.instance.close(context);
+                  DialogService.instance.close();
                 },
               ),
             ),
