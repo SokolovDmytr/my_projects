@@ -61,7 +61,7 @@ class NetworkService {
 
     Response? response;
     try {
-      String url = _baseUrl! + route;
+      final String url = _baseUrl! + route;
       switch (type) {
         case HttpType.httpGet:
           response = await _dio.get(

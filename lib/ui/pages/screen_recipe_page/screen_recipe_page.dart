@@ -4,10 +4,8 @@ import 'package:fridge_yellow_team_bloc/ui/pages/screen_recipe_page/cubit/screen
 import 'package:fridge_yellow_team_bloc/ui/pages/screen_recipe_page/screen_recipe_page_view.dart';
 
 class ScreenRecipePage extends StatefulWidget {
-  final bool previousPageFavourite;
 
   const ScreenRecipePage({
-    required this.previousPageFavourite,
     Key? key,
   }) : super(key: key);
 

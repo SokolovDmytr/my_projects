@@ -36,8 +36,8 @@ class RouteManager {
     required String route,
     Object? arguments,
   }) {
-    if (_isDialogDisplayed()) ;
-    if (_routes.isNotEmpty && _routes.last == route) ;
+    if (_isDialogDisplayed()) return;
+    if (_routes.isNotEmpty && _routes.last == route) return;
 
     _routes.add(route);
 

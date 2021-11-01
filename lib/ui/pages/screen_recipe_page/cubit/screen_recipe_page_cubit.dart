@@ -4,7 +4,7 @@ import 'package:fridge_yellow_team_bloc/ui/pages/screen_recipe_page/cubit/screen
 class ScreenRecipePageCubit extends Cubit<ScreenRecipePageState> {
   ScreenRecipePageCubit() : super(ScreenRecipePageState(isFavourite: false));
 
-  void updateFavouriteStatus(bool isFavourite) {
+  void updateFavouriteStatus({required bool isFavourite}) {
     emit(state.copyWith(isFavourite: isFavourite));
   }
 }

@@ -46,7 +46,7 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
     final ScreenRecipeArguments arguments = ModalRoute.of(context)!.settings.arguments as ScreenRecipeArguments;
     final ScreenRecipeLanguage _languageScreenRecipePage = FlutterDictionary.instance.language?.screenRecipeLanguage ?? en.screenRecipeLanguage;
     final DialogLanguage _languageDialog = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
-    context.read<ScreenRecipePageCubit>().updateFavouriteStatus(arguments.recipes[arguments.index].isFavorite);
+    context.read<ScreenRecipePageCubit>().updateFavouriteStatus(isFavourite: arguments.recipes[arguments.index].isFavorite);
     return BlocBuilder<ScreenRecipePageCubit, ScreenRecipePageState>(
       builder: (context, state) => SafeArea(
         child: WillPopScope(
@@ -68,14 +68,14 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                         child: RemoveFavouriteDialogWidget(
                           onTapYes: () {
                             context.read<RecipesCubit>().removeFavourite(arguments.recipes[arguments.index]);
-                            context.read<ScreenRecipePageCubit>().updateFavouriteStatus(false);
+                            context.read<ScreenRecipePageCubit>().updateFavouriteStatus(isFavourite: false);
                           },
                         ),
                       ),
                     );
                   } else if (context.read<ScreenRecipePageCubit>().state.isFavourite == false) {
                     context.read<RecipesCubit>().addFavourite(arguments.recipes[arguments.index].i.toString());
-                    context.read<ScreenRecipePageCubit>().updateFavouriteStatus(true);
+                    context.read<ScreenRecipePageCubit>().updateFavouriteStatus(isFavourite: true);
                   }
                 },
                 child: Stack(
@@ -128,14 +128,14 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                                 child: RemoveFavouriteDialogWidget(
                                   onTapYes: () {
                                     context.read<RecipesCubit>().removeFavourite(arguments.recipes[arguments.index]);
-                                    context.read<ScreenRecipePageCubit>().updateFavouriteStatus(false);
+                                    context.read<ScreenRecipePageCubit>().updateFavouriteStatus(isFavourite: false);
                                   },
                                 ),
                               ),
                             );
                           } else if (arguments.recipes[arguments.index].isFavorite == false) {
                             context.read<RecipesCubit>().addFavourite(arguments.recipes[arguments.index].i.toString());
-                            context.read<ScreenRecipePageCubit>().updateFavouriteStatus(true);
+                            context.read<ScreenRecipePageCubit>().updateFavouriteStatus(isFavourite: true);
                             PopUpService.instance.show(
                               widget: RecipesPopUpWidget(
                                 text: _languageDialog.recipePopUpAddedText,
@@ -320,8 +320,8 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
   Widget _getParameterOfRecipeWidget({
     required String imageAssets,
     required TextStyle textStyle,
-    String? text,
     required String value,
+    String? text,
   }) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 2.0),

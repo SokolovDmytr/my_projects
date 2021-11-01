@@ -3,7 +3,6 @@ import 'package:flutter/rendering.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/screen_recipe_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
-import 'package:fridge_yellow_team_bloc/models/pages/freezed/recipe.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/models/screen_recipe_arguments.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_selectors.dart';

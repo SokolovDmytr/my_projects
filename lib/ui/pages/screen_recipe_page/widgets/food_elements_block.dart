@@ -6,7 +6,6 @@ import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/recipe.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
-import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 
 
 class FoodElementsBlock extends StatefulWidget {

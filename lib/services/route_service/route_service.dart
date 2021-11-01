@@ -65,7 +65,7 @@ class RouteService {
       case AppRoutes.screenRecipePage:
         return _defaultRoute(
           settings: settings,
-          page: ScreenRecipePage(previousPageFavourite: true,),
+          page: ScreenRecipePage(),
         );
       case AppRoutes.auth:
         return _defaultRoute(
