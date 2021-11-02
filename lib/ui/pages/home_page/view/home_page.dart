@@ -10,7 +10,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<IngredientCubit>().loadAllIngredients();
     final TextFieldLoaderWidget _textFieldLoaderWidget = TextFieldLoaderWidget();
 
     return BlocProvider(
