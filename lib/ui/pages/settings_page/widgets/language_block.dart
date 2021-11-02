@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/language_cubit.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/language_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/language_events.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/settings_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_delegate.dart';
@@ -46,8 +47,9 @@ class _LanguageBlockState extends State<LanguageBlock> {
                 child: InkWell(
                   borderRadius: BorderRadius.circular(10.0),
                   onTap: () {
-                    FlutterDictionary.instance.setNewLanguage(SupportedLocales.instance.getSupportedLocales![index].toString());
-                    context.read<LanguageCubit>().updateLanguage();
+                    // FlutterDictionary.instance.setNewLanguage(SupportedLocales.instance.getSupportedLocales![index].toString());
+                    // context.read<LanguageCubit>().updateLanguage();
+                    context.read<LanguageBloc>().add(ChangeLanguageEvent(newLanguage: SupportedLocales.instance.getSupportedLocales![index].toString()));
                   },
                   child: Container(
                     alignment: Alignment.center,

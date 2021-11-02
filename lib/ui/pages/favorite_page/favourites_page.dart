@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/language_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/language_state.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/recipes_event.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/favorite_page/favourites_page_view.dart';
@@ -25,6 +27,8 @@ class _FavouritesPageState extends State<FavouritesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return FavouritesPageView();
+    return BlocBuilder<LanguageBloc, LanguageState>(
+      builder: (BuildContext context, state) => FavouritesPageView(),
+    );
   }
 }
