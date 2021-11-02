@@ -200,7 +200,6 @@ class _HomePageViewState extends State<HomePageView> {
                                                   height: 90.0,
                                                 )
                                               : SwipeElement(
-                                                  key: UniqueKey(),
                                                   background: Container(
                                                     height: baseHeightOfIngredientElement,
                                                     color: AppColors.pastelRed,

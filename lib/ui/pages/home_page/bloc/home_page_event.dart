@@ -15,3 +15,5 @@ class LoadIngredientsWithNameEvent extends HomePageEvent {
 }
 
 class ClearIngredientsEvent extends HomePageEvent {}
+
+class UpdateListIngredientsWithNewLanguage extends HomePageEvent{}

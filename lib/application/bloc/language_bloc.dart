@@ -31,6 +31,7 @@ class LanguageBloc extends Bloc<ChangeLanguageEvent, LanguageState> {
   LanguageBloc() : super(LanguageState(currentLocale: FlutterDictionaryDelegate.getCurrentLocale)) {
     on<ChangeLanguageEvent>(
       (event, emit) async {
+        FlutterDictionary.instance.setNewLanguage(event.newLanguage);
         final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
         DialogService.instance.show(
@@ -41,9 +42,6 @@ class LanguageBloc extends Bloc<ChangeLanguageEvent, LanguageState> {
             child: LoaderWidget(),
           ),
         );
-
-        FlutterDictionary.instance.setNewLanguage(event.newLanguage);
-        emit(state.copyWith(currentLocale: event.newLanguage));
 
         final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
@@ -80,23 +78,32 @@ class LanguageBloc extends Bloc<ChangeLanguageEvent, LanguageState> {
             response: responseFavoriteRecipe,
           );
 
+          final List<Recipe> resRecipes = [];
           for (Recipe recipe in recipes) {
-            recipe = recipe.copyWith(isFavorite: true);
+            final List<Ingredient> resIngredients = [];
             for (Ingredient ingredient in recipe.ingredients) {
               for (Ingredient dataIngredient in ingredients) {
                 if (ingredient.i == dataIngredient.i) {
-                  ingredient = ingredient.copyWith(
-                    name: dataIngredient.name,
-                    image: dataIngredient.image,
+                  resIngredients.add(
+                    ingredient.copyWith(
+                      name: dataIngredient.name,
+                      image: dataIngredient.image,
+                    ),
                   );
-                  break;
                 }
               }
             }
+
+            resRecipes.add(
+              recipe.copyWith(
+                isFavorite: true,
+                ingredients: resIngredients,
+              ),
+            );
           }
 
           RouteService.instance.navigatorKey.currentState!.context.read<RecipesBloc>().add(
-                UpdateRecipesEvent(favouriteRecipes: recipes as List<Recipe>),
+                UpdateRecipesEvent(favouriteRecipes: resRecipes),
               );
 
           final List<Ingredient> oldLocaleIngredients =
@@ -112,6 +119,9 @@ class LanguageBloc extends Bloc<ChangeLanguageEvent, LanguageState> {
           }
 
           RouteService.instance.navigatorKey.currentState!.context.read<IngredientCubit>().updateIngredients(ingredients: newLocaleIngredients);
+
+          emit(state.copyWith(currentLocale: event.newLanguage));
+
           DialogService.instance.close();
         } else {
           DialogService.instance.close();

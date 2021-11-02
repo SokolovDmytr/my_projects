@@ -20,6 +20,7 @@ import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/remove_f
 import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/custom_network_image.dart';
 import 'package:fridge_yellow_team_bloc/utils/comparator.dart';
+import 'package:intl/intl.dart';
 
 class RecipeElement extends StatefulWidget {
   final Recipe recipe;
@@ -66,7 +67,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
           boxShadow: AppShadows.recipeElementShadow,
         ),
         child: Stack(
-          textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
+          textDirection: FlutterDictionary.instance.isRTL ? TextDirection.RTL : TextDirection.LTR,
           children: [
             Container(
               height: _focusNode.hasFocus ? 168.0 : 128.0,
@@ -125,6 +126,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                             crossAxisCount: 2,
                             children: _missingIngredients.map((e) {
                               return Row(
+                                key: ValueKey(e.i),
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Container(
@@ -470,7 +472,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
       height: 20.0,
       width: 80.0,
       child: Row(
-        textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
+        textDirection: FlutterDictionary.instance.isRTL ? TextDirection.RTL : TextDirection.LTR,
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(

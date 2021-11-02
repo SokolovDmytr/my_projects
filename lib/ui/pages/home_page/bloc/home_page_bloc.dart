@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
+import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
 import 'package:fridge_yellow_team_bloc/repositories/ingredient_repository.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
@@ -70,5 +71,22 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         ),
       ),
     );
+
+    on<UpdateListIngredientsWithNewLanguage>((event, emit) {
+      final List<Ingredient> allIngredients = RouteService.instance.navigatorKey.currentState!.context.read<IngredientCubit>().state.allIngredients;
+      final List<Ingredient> resIngredients = [];
+
+      for (Ingredient ingredient in state.tempIngredients) {
+        for (Ingredient ingredientWithNewLocale in allIngredients) {
+          if (ingredient.i == ingredientWithNewLocale.i) {
+            resIngredients.add(ingredientWithNewLocale);
+          }
+        }
+      }
+
+      emit(
+        state.copyWith(inputTempIngredients: resIngredients),
+      );
+    });
   }
 }
