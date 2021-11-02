@@ -1,18 +1,22 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fridge_yellow_team_bloc/application/application.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/user_information_service/user.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/notification_page/cubit/notification_page_cubit.dart';
 import 'package:fridge_yellow_team_bloc/utils/string_util.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
@@ -44,5 +48,10 @@ Future<void> main() async {
   Hive.registerAdapter(UserAdapter());
   await Hive.openBox<User>(hiveBoxNameUser);
 
-  runApp(Application());
+  runApp(
+    BlocProvider(
+      create: (_) => NotificationPageCubit(),
+      child: Application(),
+    ),
+  );
 }
