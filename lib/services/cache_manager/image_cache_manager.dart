@@ -19,6 +19,7 @@ class ImageCacheManager {
   final List<ImageWithId> _ingredientImageCache;
   final List<ImageWithId> _imageCache;
   final Completer completer;
+  DateTime? timeOfLastQuery;
 
   ImageCacheManager._()
       : _ingredientImageCache = [],
@@ -27,7 +28,9 @@ class ImageCacheManager {
 
   Image? getImageWithUrl({
     required String? url,
-  }){
+  }) {
+    timeOfLastQuery = DateTime.now();
+
     if (url == null) {
       return Image.asset(ImageAssets.chefYellow);
     }
@@ -35,8 +38,9 @@ class ImageCacheManager {
     if (_ingredientImageCache.isNotEmpty) {
       try {
         final ImageWithId image = _ingredientImageCache.firstWhere((element) => element.id == url);
+        image.lastTimeOfUsage = DateTime.now();
         return image.image;
-      } catch (_){}
+      } catch (_) {}
     }
 
     try {
@@ -49,13 +53,16 @@ class ImageCacheManager {
     }
   }
 
-  Future<Image?> loadImage({required String url,}) async{
+  Future<Image?> loadImage({
+    required String url,
+  }) async {
+    Image? image;
     try {
       final http.Response response = await http.get(
         Uri.parse(url),
       );
       if (response.statusCode == networkStatusCodeOk) {
-        final Image image = Image.memory(response.bodyBytes);
+        image = Image.memory(response.bodyBytes);
         _imageCache.add(
           ImageWithId(
             image: image,
@@ -63,12 +70,13 @@ class ImageCacheManager {
             lastTimeOfUsage: DateTime.now(),
           ),
         );
-        return image;
       }
     } catch (error) {
       logger.e(error);
     }
-    return null;
+
+    Future.delayed(AppDuration.zero, () => _clearOldImageInImageCache());
+    return image;
   }
 
   Future<void> loadImages({required List<Ingredient> ingredients}) async {
@@ -84,5 +92,16 @@ class ImageCacheManager {
 
     await Future.wait([completer.future]);
     LoaderImage.instance.stopListen();
+  }
+
+  void _clearOldImageInImageCache() {
+    for (ImageWithId imageWithId in _imageCache) {
+      if (imageWithId.lastTimeOfUsage != null &&
+          timeOfLastQuery != null &&
+          imageWithId.lastTimeOfUsage!.add(AppDuration.imageLifetime).isBefore(timeOfLastQuery!)) {
+        _imageCache.removeWhere((element) => element.id == imageWithId.id);
+        logger.i('Lifetime is end. ${imageWithId.id}');
+      }
+    }
   }
 }
