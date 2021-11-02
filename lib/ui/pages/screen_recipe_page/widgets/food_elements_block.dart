@@ -120,6 +120,7 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
                       url: missingIngredients[index].image,
                       placeholder: Image.asset(ImageAssets.chefYellow),
                       fit: BoxFit.contain,
+                      errorFit: BoxFit.contain,
                     ),
                   ),
                   Padding(
@@ -169,6 +170,7 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
                       url: availableIngredients[index].image,
                       placeholder: Image.asset(ImageAssets.chefYellow),
                       fit: BoxFit.contain,
+                      errorFit: BoxFit.contain,
                     ),
                   ),
                   Padding(

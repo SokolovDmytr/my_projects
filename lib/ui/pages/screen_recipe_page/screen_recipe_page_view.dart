@@ -55,7 +55,7 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
         child: WillPopScope(
           onWillPop: () async {
             RouteSelectors.doPop().call();
-            return true;
+            return false;
           },
           child: Scaffold(
             bottomNavigationBar: CustomNavigationBottomBar(

@@ -26,20 +26,24 @@ class Application extends StatefulWidget {
 }
 
 class _ApplicationState extends State<Application> {
+  late NotificationPageCubit _notificationPageCubit;
+
   @override
   void initState() {
     super.initState();
+
+    _notificationPageCubit = NotificationPageCubit();
 
     FirebaseMessaging.instance.getInitialMessage();
 
     FirebaseMessaging.onMessage.listen(
       (message) {
-        context.read<NotificationPageCubit>().addNotification(
-              NotificationMessage(
-                title: message.notification!.title ?? emptyString,
-                body: message.notification!.body ?? emptyString,
-              ),
-            );
+        _notificationPageCubit.addNotification(
+          NotificationMessage(
+            title: message.notification!.title ?? emptyString,
+            body: message.notification!.body ?? emptyString,
+          ),
+        );
         DialogService.instance.show(
           dialog: NewVersionDialog(
             child: NewVersionDialogWidget(
@@ -54,21 +58,32 @@ class _ApplicationState extends State<Application> {
 
     FirebaseMessaging.onMessageOpenedApp.listen(
       (message) {
-        context.read<NotificationPageCubit>().addNotification(
-              NotificationMessage(
-                title: message.notification!.title ?? emptyString,
-                body: message.notification!.body ?? emptyString,
-              ),
-            );
+        _notificationPageCubit.addNotification(
+          NotificationMessage(
+            title: message.notification!.title ?? emptyString,
+            body: message.notification!.body ?? emptyString,
+          ),
+        );
         RouteSelectors.goToNotificationPage().call();
       },
     );
   }
 
   @override
+  void dispose() {
+    if (!_notificationPageCubit.isClosed) {
+      _notificationPageCubit.close();
+    }
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider.value(
+          value: _notificationPageCubit,
+        ),
         BlocProvider(
           create: (BuildContext _) => ApplicationTokenCubit(),
         ),

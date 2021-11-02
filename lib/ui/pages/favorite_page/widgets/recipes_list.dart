@@ -49,8 +49,6 @@ class RecipesList extends StatelessWidget {
             itemBuilder: (BuildContext _, int index) {
               return InkWell(
                 onTap: () {
-                  // viewModel.saveRecipe(viewModel.recipes[index]);
-                  // viewModel.saveRecipes(viewModel.recipes, viewModel.recipes[index]);
                   RouteSelectors.goToScreenRecipePage(
                     arguments: ScreenRecipeArguments(
                       recipes: favouriteRecipes,

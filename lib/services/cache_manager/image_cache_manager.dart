@@ -19,56 +19,64 @@ class ImageCacheManager {
   final List<ImageWithId> _ingredientImageCache;
   final List<ImageWithId> _imageCache;
   final Completer completer;
+  DateTime? timeOfLastQuery;
 
   ImageCacheManager._()
       : _ingredientImageCache = [],
         _imageCache = [],
         completer = Completer();
 
-  Future<Image?> getImageWithUrl({
+  Image? getImageWithUrl({
     required String? url,
-  }) async {
+  }) {
+    timeOfLastQuery = DateTime.now();
+
     if (url == null) {
       return Image.asset(ImageAssets.chefYellow);
-    }
-
-    if (completer.isCompleted == false) {
-      await Future.wait([completer.future]);
     }
 
     if (_ingredientImageCache.isNotEmpty) {
       try {
         final ImageWithId image = _ingredientImageCache.firstWhere((element) => element.id == url);
+        image.lastTimeOfUsage = DateTime.now();
         return image.image;
-      } catch (_){}
+      } catch (_) {}
     }
 
     try {
       final ImageWithId image = _imageCache.firstWhere((element) => element.id == url);
+      image.lastTimeOfUsage = DateTime.now();
       return image.image;
     } on StateError catch (error) {
       logger.i(error);
+      return null;
+    }
+  }
 
-      try {
-        final http.Response response = await http.get(
-          Uri.parse(url),
+  Future<Image?> loadImage({
+    required String url,
+  }) async {
+    Image? image;
+    try {
+      final http.Response response = await http.get(
+        Uri.parse(url),
+      );
+      if (response.statusCode == networkStatusCodeOk) {
+        image = Image.memory(response.bodyBytes);
+        _imageCache.add(
+          ImageWithId(
+            image: image,
+            id: url,
+            lastTimeOfUsage: DateTime.now(),
+          ),
         );
-        if (response.statusCode == networkStatusCodeOk) {
-          final Image image = Image.memory(response.bodyBytes);
-          _imageCache.add(
-            ImageWithId(
-              image: image,
-              id: url,
-            ),
-          );
-          return image;
-        }
-      } catch (error) {
-        logger.e(error);
       }
+    } catch (error) {
+      logger.e(error);
     }
 
-    return null;
+    Future.delayed(AppDuration.zero, () => _clearOldImageInImageCache());
+    return image;
   }
 
   Future<void> loadImages({required List<Ingredient> ingredients}) async {
@@ -84,5 +92,16 @@ class ImageCacheManager {
 
     await Future.wait([completer.future]);
     LoaderImage.instance.stopListen();
+  }
+
+  void _clearOldImageInImageCache() {
+    for (ImageWithId imageWithId in _imageCache) {
+      if (imageWithId.lastTimeOfUsage != null &&
+          timeOfLastQuery != null &&
+          imageWithId.lastTimeOfUsage!.add(AppDuration.imageLifetime).isBefore(timeOfLastQuery!)) {
+        _imageCache.removeWhere((element) => element.id == imageWithId.id);
+        logger.i('Lifetime is end. ${imageWithId.id}');
+      }
+    }
   }
 }

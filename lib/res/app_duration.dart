@@ -9,4 +9,7 @@ class AppDuration {
   static const Duration oneMinuteDuration = Duration(minutes: 1);
   static const Duration timeValidOfToken = Duration(minutes: 59);
   static const Duration delayOfSendRequestToServer = Duration(milliseconds: 500);
+  static const Duration durationForImageAnimation = Duration(milliseconds: 400);
+  static const Duration imageLifetime = Duration(minutes: 5);
+  static const Duration zero = Duration();
 }
