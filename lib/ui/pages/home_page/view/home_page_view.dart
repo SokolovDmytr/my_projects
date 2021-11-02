@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_event.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_state.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/recipes_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/main_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
@@ -273,7 +274,9 @@ class _HomePageViewState extends State<HomePageView> {
                                         gradient: AppGradient.wheatMarigoldGradient,
                                         onTap: () {
                                           RouteSelectors.goToRecipesPage().call();
-                                          context.read<RecipesCubit>().loadRecipes(ingredients: existIngredients);
+                                          context.read<RecipesBloc>().add(
+                                                LoadRecipesEvent(ingredients: existIngredients),
+                                              );
                                         }),
                                   ),
                                 ),

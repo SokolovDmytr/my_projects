@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_state.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/recipes_cubit.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/recipes_state.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/recipes_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
@@ -26,7 +26,7 @@ class RecipesPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     final RecipesPageLanguage language = FlutterDictionary.instance.language?.recipesPageLanguage ?? en.recipesPageLanguage;
     final List<Ingredient> ingredients = BlocProvider.of<IngredientCubit>(context).state.ingredients;
-    return BlocSelector<RecipesCubit, RecipesState, List<Recipe>>(
+    return BlocSelector<RecipesBloc, RecipesState, List<Recipe>>(
       selector: (RecipesState state) {
         return state.recipes;
       },
