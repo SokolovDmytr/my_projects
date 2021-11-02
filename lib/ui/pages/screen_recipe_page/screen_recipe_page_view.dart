@@ -52,8 +52,8 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
       builder: (context, state) => SafeArea(
         child: WillPopScope(
           onWillPop: () async {
-            RouteSelectors.doPop();
-            return false;
+            RouteSelectors.doPop().call();
+            return true;
           },
           child: Scaffold(
             bottomNavigationBar: CustomNavigationBottomBar(

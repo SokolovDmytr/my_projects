@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/language_cubit.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/language_state.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/settings_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
@@ -66,27 +63,25 @@ class MainLayout extends StatelessWidget {
             return true;
           }
         },
-        child: BlocBuilder<LanguageCubit, LanguageState>(
-          builder: (BuildContext context, state) => Scaffold(
-            backgroundColor: AppColors.white,
-            resizeToAvoidBottomInset: false,
-            appBar: CustomAppBar(
-              preferredSize: size,
-              isMainStyleAppBar: isMainStyleAppBar!,
-              color: color,
-              title: title,
-              gradient: gradient,
-              textButton: _language.back,
-              key: key,
-              onTapBack: onTapBack,
-            ),
-            bottomNavigationBar: CustomNavigationBottomBar(
-              currentPage: currentPage ?? emptyString,
-            ),
-            body: Padding(
-              padding: needPaddings! ? const EdgeInsets.symmetric(horizontal: 15.0) : const EdgeInsets.symmetric(),
-              child: body,
-            ),
+        child: Scaffold(
+          backgroundColor: AppColors.white,
+          resizeToAvoidBottomInset: false,
+          appBar: CustomAppBar(
+            preferredSize: size,
+            isMainStyleAppBar: isMainStyleAppBar!,
+            color: color,
+            title: title,
+            gradient: gradient,
+            textButton: _language.back,
+            key: key,
+            onTapBack: onTapBack,
+          ),
+          bottomNavigationBar: CustomNavigationBottomBar(
+            currentPage: currentPage ?? emptyString,
+          ),
+          body: Padding(
+            padding: needPaddings! ? const EdgeInsets.symmetric(horizontal: 15.0) : const EdgeInsets.symmetric(),
+            child: body,
           ),
         ),
       ),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/language_cubit.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/language_state.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/settings_page/cubit/settings_page_cubit.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/settings_page/cubit/settings_page_state.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/settings_page/settings_view.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -12,8 +11,9 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => SettingsPageCubit(),
-      child: BlocBuilder<LanguageCubit, LanguageState>(
-      builder: (BuildContext context, state) => SettingsView()),
+      child: BlocBuilder<SettingsPageCubit, SettingsPageState>(
+        builder: (BuildContext context, state) => SettingsView(),
+      ),
     );
   }
 }
