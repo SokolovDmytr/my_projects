@@ -1,4 +1,6 @@
-class HomePageEvent {}
+class HomePageEvent {
+  const HomePageEvent();
+}
 
 class RunLoaderEvent extends HomePageEvent {}
 
@@ -7,7 +9,7 @@ class StopLoaderEvent extends HomePageEvent {}
 class LoadIngredientsWithNameEvent extends HomePageEvent {
   final String str;
 
-  LoadIngredientsWithNameEvent({
+  const LoadIngredientsWithNameEvent({
     required this.str,
   });
 }

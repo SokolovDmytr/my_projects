@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/recipes_cubit.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/recipes_state.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_state.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/favorites_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
@@ -25,7 +25,7 @@ class _FavouritesPageViewState extends State<FavouritesPageView> {
   @override
   Widget build(BuildContext context) {
     final FavouritesPageLanguage _language = FlutterDictionary.instance.language?.favouritesPageLanguage ?? en.favouritesPageLanguage;
-    return BlocSelector<RecipesCubit, RecipesState, List<Recipe>>(
+    return BlocSelector<RecipesBloc, RecipesState, List<Recipe>>(
       selector: (RecipesState state) {
         return state.favoriteRecipes;
       },

@@ -2,7 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/recipes_cubit.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_event.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/screen_recipe_language.dart';
@@ -31,6 +32,7 @@ import 'package:provider/src/provider.dart';
 
 class ScreenRecipePageView extends StatefulWidget {
   final ScreenRecipeArguments arguments;
+
   const ScreenRecipePageView({
     required this.arguments,
     Key? key,
@@ -68,14 +70,22 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                       dialog: RemoveFavouriteDialog(
                         child: RemoveFavouriteDialogWidget(
                           onTapYes: () {
-                            context.read<RecipesCubit>().removeFavourite(recipeToRemove: widget.arguments.recipes[widget.arguments.index]);
+                            context.read<RecipesBloc>().add(
+                                  RemoveFavouriteRecipeEvent(
+                                    recipe: widget.arguments.recipes[widget.arguments.index],
+                                  ),
+                                );
                             context.read<ScreenRecipePageCubit>().updateFavouriteStatus(isFavourite: false);
                           },
                         ),
                       ),
                     );
                   } else if (context.read<ScreenRecipePageCubit>().state.isFavourite == false) {
-                    context.read<RecipesCubit>().addFavourite(widget.arguments.recipes[widget.arguments.index]);
+                    context.read<RecipesBloc>().add(
+                          AddFavouritesRecipeEvent(
+                            recipe: widget.arguments.recipes[widget.arguments.index],
+                          ),
+                        );
                     context.read<ScreenRecipePageCubit>().updateFavouriteStatus(isFavourite: true);
                   }
                 },
@@ -128,14 +138,22 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                               dialog: RemoveFavouriteDialog(
                                 child: RemoveFavouriteDialogWidget(
                                   onTapYes: () {
-                                    context.read<RecipesCubit>().removeFavourite(recipeToRemove: widget.arguments.recipes[widget.arguments.index]);
+                                    context.read<RecipesBloc>().add(
+                                          RemoveFavouriteRecipeEvent(
+                                            recipe: widget.arguments.recipes[widget.arguments.index],
+                                          ),
+                                        );
                                     context.read<ScreenRecipePageCubit>().updateFavouriteStatus(isFavourite: false);
                                   },
                                 ),
                               ),
                             );
                           } else if (widget.arguments.recipes[widget.arguments.index].isFavorite == false) {
-                            context.read<RecipesCubit>().addFavourite(widget.arguments.recipes[widget.arguments.index]);
+                            context.read<RecipesBloc>().add(
+                                  AddFavouritesRecipeEvent(
+                                    recipe: widget.arguments.recipes[widget.arguments.index],
+                                  ),
+                                );
                             context.read<ScreenRecipePageCubit>().updateFavouriteStatus(isFavourite: true);
                             PopUpService.instance.show(
                               widget: RecipesPopUpWidget(

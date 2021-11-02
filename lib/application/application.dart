@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/language_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/language_state.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/recipes_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_delegate.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/models/notification_message.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
@@ -78,7 +78,7 @@ class _ApplicationState extends State<Application> {
           create: (BuildContext _) => IngredientCubit()..loadAllIngredients(),
         ),
         BlocProvider(
-          create: (BuildContext _) => RecipesCubit(),
+          create: (BuildContext _) => RecipesBloc(),
         ),
         BlocProvider(
           create: (BuildContext _) => LanguageBloc(),

@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_event.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/recipes_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/favorites_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
@@ -217,8 +218,10 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                                             dialog: RemoveFavouriteDialog(
                                               child: RemoveFavouriteDialogWidget(
                                                 onTapYes: () {
-                                                  context.read<RecipesCubit>().removeFavourite(
-                                                        recipeToRemove: widget.recipe,
+                                                  context.read<RecipesBloc>().add(
+                                                        RemoveFavouriteRecipeEvent(
+                                                          recipe: widget.recipe,
+                                                        ),
                                                       );
                                                 },
                                               ),
