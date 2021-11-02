@@ -30,3 +30,11 @@ class RemoveFavouriteRecipeEvent extends RecipesEvent {
     required this.recipe,
   });
 }
+
+class UpdateRecipesEvent extends RecipesEvent {
+  final List<Recipe> favouriteRecipes;
+
+  const UpdateRecipesEvent({
+    required this.favouriteRecipes,
+  });
+}

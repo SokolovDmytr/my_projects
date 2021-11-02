@@ -2,15 +2,14 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/language_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/language_state.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_delegate.dart';
+import 'package:fridge_yellow_team_bloc/dictionary/models/supported_locales.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/models/notification_message.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/res/keys.dart';
-import 'package:fridge_yellow_team_bloc/res/locales.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/new_version_dialog/new_version_dialog.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/new_version_dialog/new_version_dialog_widget.dart';
@@ -84,24 +83,22 @@ class _ApplicationState extends State<Application> {
           create: (BuildContext _) => LanguageBloc(),
         ),
       ],
-      child: BlocBuilder<LanguageBloc, LanguageState>(
-        builder: (BuildContext context, state) => MaterialApp(
-            debugShowCheckedModeBanner: false,
-            home: SplashScreen(),
-            onGenerateRoute: RouteService.instance.onGenerateRoute,
-            navigatorKey: RouteService.instance.navigatorKey,
-            locale: Locale(Locales.base),
-            supportedLocales: FlutterDictionaryDelegate.getSupportedLocales!,
-            localizationsDelegates: FlutterDictionaryDelegate.getLocalizationDelegates,
-            builder: (context, child) {
-              return MediaQuery(
-                data: MediaQuery.of(context).copyWith(
-                  textScaleFactor: 1.0,
-                ),
-                child: child ?? const SizedBox(),
-              );
-            },
-          ),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: SplashScreen(),
+        onGenerateRoute: RouteService.instance.onGenerateRoute,
+        navigatorKey: RouteService.instance.navigatorKey,
+        locale: Locale(SupportedLocales.instance.getCurrentLocale),
+        supportedLocales: FlutterDictionaryDelegate.getSupportedLocales!,
+        localizationsDelegates: FlutterDictionaryDelegate.getLocalizationDelegates,
+        builder: (context, child) {
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaleFactor: 1.0,
+            ),
+            child: child ?? const SizedBox(),
+          );
+        },
       ),
     );
   }

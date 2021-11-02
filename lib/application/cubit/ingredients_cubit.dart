@@ -102,4 +102,12 @@ class IngredientCubit extends Cubit<IngredientState> {
   }
 
   bool ingredientsIsEmpty() => state.ingredients.isEmpty;
+
+  void updateIngredients({required List<Ingredient> ingredients}) {
+    emit(state.copyWith(inputIngredients: ingredients));
+  }
+
+  void updateAllIngredients({required List<Ingredient> ingredients}) {
+    emit(state.copyWith(inputAllIngredients: ingredients));
+  }
 }
