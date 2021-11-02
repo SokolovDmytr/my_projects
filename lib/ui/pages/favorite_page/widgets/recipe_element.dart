@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
+import 'package:fridge_yellow_team_bloc/application/cubit/recipes_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/favorites_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
@@ -12,13 +14,12 @@ import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_shadows.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
-import 'package:fridge_yellow_team_bloc/services/cache_manager/image_cache_manager.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/remove_favourite_dialog/remove_favourite_dialog.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/remove_favourite_dialog/remove_favourite_widget.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
+import 'package:fridge_yellow_team_bloc/ui/global_widgets/custom_network_image.dart';
 import 'package:fridge_yellow_team_bloc/utils/comparator.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RecipeElement extends StatefulWidget {
   final Recipe recipe;
@@ -65,6 +66,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
           boxShadow: AppShadows.recipeElementShadow,
         ),
         child: Stack(
+          textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
           children: [
             Container(
               height: _focusNode.hasFocus ? 168.0 : 128.0,
@@ -126,23 +128,17 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Container(
-                                      height: 32.0,
-                                      width: 32.0,
-                                      margin: const EdgeInsets.symmetric(horizontal: 3.0),
-                                      child: ImageCacheManager.instance.getImageWithIdIngredient(ingredient: e) ??
-                                          CachedNetworkImage(
-                                            imageUrl: e.image!,
-                                            imageBuilder: (BuildContext _, ImageProvider imageProvider) {
-                                              return Image(image: imageProvider);
-                                            },
-                                            placeholder: (context, url) => SizedBox(
-                                              width: baseHeightOfIngredientElement,
-                                              child: Image.asset(ImageAssets.chefYellow),
-                                            ),
-                                            errorWidget: (context, url, error) {
-                                              return Image.asset(ImageAssets.chefYellow);
-                                            },
-                                          )),
+                                    height: 32.0,
+                                    width: 32.0,
+                                    margin: const EdgeInsets.symmetric(horizontal: 3.0),
+                                    child: CustomNetworkImage(
+                                      url: e.image,
+                                      placeholder: Image.asset(
+                                        ImageAssets.chefYellow,
+                                      ),
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
                                   Flexible(
                                     child: RichText(
                                       overflow: TextOverflow.ellipsis,
@@ -221,10 +217,9 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                                             dialog: RemoveFavouriteDialog(
                                               child: RemoveFavouriteDialogWidget(
                                                 onTapYes: () {
-                                                  /*FavoritePageSelector.removeFromFavorite(
-                                                    store: StoreProvider.of<AppState>(context),
-                                                    recipeId: widget.recipe.i,
-                                                  );*/
+                                                  context.read<RecipesCubit>().removeFavourite(
+                                                        recipeToRemove: widget.recipe,
+                                                      );
                                                 },
                                               ),
                                             ),
@@ -370,7 +365,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                         ),
                       ),
                       onTap: () => setState(() {
-                        if (FocusManager.instance.primaryFocus != null) FocusManager.instance.primaryFocus!.unfocus();
+                        FocusManager.instance.primaryFocus!.unfocus();
                       }),
                     ),
                   )
@@ -402,20 +397,11 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                         height: 32.0,
                         width: 32.0,
                         margin: const EdgeInsets.symmetric(horizontal: 3.0),
-                        child: ImageCacheManager.instance.getImageWithIdIngredient(ingredient: e) ??
-                            CachedNetworkImage(
-                              imageUrl: e.image!,
-                              imageBuilder: (BuildContext _, ImageProvider imageProvider) {
-                                return Image(image: imageProvider);
-                              },
-                              placeholder: (context, url) => SizedBox(
-                                width: baseHeightOfIngredientElement,
-                                child: Image.asset(ImageAssets.chefYellow),
-                              ),
-                              errorWidget: (context, url, error) {
-                                return Image.asset(ImageAssets.chefYellow);
-                              },
-                            ),
+                        child: CustomNetworkImage(
+                          url: e.image,
+                          placeholder: Image.asset(ImageAssets.chefYellow),
+                          fit: BoxFit.contain,
+                        ),
                       );
                     }).toList(),
                   ),

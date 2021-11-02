@@ -30,7 +30,9 @@ import 'package:fridge_yellow_team_bloc/ui/pages/screen_recipe_page/widgets/simi
 import 'package:provider/src/provider.dart';
 
 class ScreenRecipePageView extends StatefulWidget {
+  final ScreenRecipeArguments arguments;
   const ScreenRecipePageView({
+    required this.arguments,
     Key? key,
   }) : super(key: key);
 
@@ -43,10 +45,9 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
 
   @override
   Widget build(BuildContext context) {
-    final ScreenRecipeArguments arguments = ModalRoute.of(context)!.settings.arguments as ScreenRecipeArguments;
     final ScreenRecipeLanguage _languageScreenRecipePage = FlutterDictionary.instance.language?.screenRecipeLanguage ?? en.screenRecipeLanguage;
     final DialogLanguage _languageDialog = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
-    context.read<ScreenRecipePageCubit>().updateFavouriteStatus(isFavourite: arguments.recipes[arguments.index].isFavorite);
+
     return BlocBuilder<ScreenRecipePageCubit, ScreenRecipePageState>(
       builder: (context, state) => SafeArea(
         child: WillPopScope(
@@ -67,14 +68,14 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                       dialog: RemoveFavouriteDialog(
                         child: RemoveFavouriteDialogWidget(
                           onTapYes: () {
-                            context.read<RecipesCubit>().removeFavourite(arguments.recipes[arguments.index]);
+                            context.read<RecipesCubit>().removeFavourite(recipeToRemove: widget.arguments.recipes[widget.arguments.index]);
                             context.read<ScreenRecipePageCubit>().updateFavouriteStatus(isFavourite: false);
                           },
                         ),
                       ),
                     );
                   } else if (context.read<ScreenRecipePageCubit>().state.isFavourite == false) {
-                    context.read<RecipesCubit>().addFavourite(arguments.recipes[arguments.index]);
+                    context.read<RecipesCubit>().addFavourite(widget.arguments.recipes[widget.arguments.index]);
                     context.read<ScreenRecipePageCubit>().updateFavouriteStatus(isFavourite: true);
                   }
                 },
@@ -122,19 +123,19 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                           : Offset(MediaQuery.of(context).size.width / 2 - 46.0, -20.0),
                       child: InkWell(
                         onTap: () {
-                          if (arguments.recipes[arguments.index].isFavorite) {
+                          if (widget.arguments.recipes[widget.arguments.index].isFavorite) {
                             DialogService.instance.show(
                               dialog: RemoveFavouriteDialog(
                                 child: RemoveFavouriteDialogWidget(
                                   onTapYes: () {
-                                    context.read<RecipesCubit>().removeFavourite(arguments.recipes[arguments.index]);
+                                    context.read<RecipesCubit>().removeFavourite(recipeToRemove: widget.arguments.recipes[widget.arguments.index]);
                                     context.read<ScreenRecipePageCubit>().updateFavouriteStatus(isFavourite: false);
                                   },
                                 ),
                               ),
                             );
-                          } else if (arguments.recipes[arguments.index].isFavorite == false) {
-                            context.read<RecipesCubit>().addFavourite(arguments.recipes[arguments.index]);
+                          } else if (widget.arguments.recipes[widget.arguments.index].isFavorite == false) {
+                            context.read<RecipesCubit>().addFavourite(widget.arguments.recipes[widget.arguments.index]);
                             context.read<ScreenRecipePageCubit>().updateFavouriteStatus(isFavourite: true);
                             PopUpService.instance.show(
                               widget: RecipesPopUpWidget(
@@ -161,13 +162,13 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                             decoration: BoxDecoration(
                               gradient: height == 80.0 ? AppGradient.transparent : AppGradient.black30black0,
                               image: DecorationImage(
-                                image: arguments.recipes[arguments.index].image == null
+                                image: widget.arguments.recipes[widget.arguments.index].image == null
                                     ? AssetImage(ImageAssets.chefYellow)
-                                    : NetworkImage(arguments.recipes[arguments.index].image!) as ImageProvider,
+                                    : NetworkImage(widget.arguments.recipes[widget.arguments.index].image!) as ImageProvider,
                                 fit: BoxFit.cover,
                                 colorFilter: ColorFilter.mode(
                                   AppColors.transparent,
-                                  arguments.recipes[arguments.index].image == null ? BlendMode.clear : BlendMode.color,
+                                  widget.arguments.recipes[widget.arguments.index].image == null ? BlendMode.clear : BlendMode.color,
                                 ),
                               ),
                             ),
@@ -254,7 +255,7 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                                     bottom: 25.0,
                                   ),
                                   child: Text(
-                                    arguments.recipes[arguments.index].name,
+                                    widget.arguments.recipes[widget.arguments.index].name,
                                     style: AppFonts.normalBlackHeight30ShadowTextStyle,
                                   ),
                                 ),
@@ -264,36 +265,36 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                                     children: [
                                       _getParameterOfRecipeWidget(
                                         imageAssets: ImageAssets.timeIcon,
-                                        value: arguments.recipes[arguments.index].time.toString(),
+                                        value: widget.arguments.recipes[widget.arguments.index].time.toString(),
                                         text: _languageScreenRecipePage.min,
                                         textStyle: AppFonts.smallTextStyle,
                                       ),
                                       _getParameterOfRecipeWidget(
                                         imageAssets: ImageAssets.caloriesIcon,
-                                        value: arguments.recipes[arguments.index].calories.toStringAsFixed(1),
+                                        value: widget.arguments.recipes[widget.arguments.index].calories.toStringAsFixed(1),
                                         text: _languageScreenRecipePage.cal,
                                         textStyle: AppFonts.smallTextStyle,
                                       ),
-                                      arguments.recipes[arguments.index].level == null
+                                      widget.arguments.recipes[widget.arguments.index].level == null
                                           ? const SizedBox()
                                           : _getParameterOfRecipeWidget(
                                               imageAssets: ImageAssets.difficultyIcon,
-                                              value: arguments.recipes[arguments.index].level!,
+                                              value: widget.arguments.recipes[widget.arguments.index].level!,
                                               textStyle: AppFonts.smallTextStyle,
                                             ),
                                     ],
                                   ),
                                 ),
                                 FoodElementsBlock(
-                                  recipe: arguments.recipes[arguments.index],
-                                  ingredientsStored: arguments.ingredients,
+                                  recipe: widget.arguments.recipes[widget.arguments.index],
+                                  ingredientsStored: widget.arguments.ingredients,
                                 ),
-                                CookingBlock(recipe: arguments.recipes[arguments.index]),
+                                CookingBlock(recipe: widget.arguments.recipes[widget.arguments.index]),
                                 CongratulationBlock(),
                               ],
                             ),
                           ),
-                          _similarRecipesBlock(arguments),
+                          _similarRecipesBlock(widget.arguments),
                         ],
                       ),
                     ),

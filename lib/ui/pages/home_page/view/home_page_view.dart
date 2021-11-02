@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +15,6 @@ import 'package:fridge_yellow_team_bloc/res/app_styles/app_gradient.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_shadows.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
-import 'package:fridge_yellow_team_bloc/services/cache_manager/image_cache_manager.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/swipe_tutorial_dialog/swipe_tutorial_dialog.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/swipe_tutorial_dialog/swipe_tutorial_widget.dart';
@@ -24,11 +22,13 @@ import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/text_fie
 import 'package:fridge_yellow_team_bloc/services/route_service/app_routes.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_selectors.dart';
 import 'package:fridge_yellow_team_bloc/services/user_information_service/user_information_service.dart';
+import 'package:fridge_yellow_team_bloc/ui/global_widgets/custom_network_image.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_button.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_textfield.dart';
 import 'package:fridge_yellow_team_bloc/ui/layouts/main_layout/main_layout.dart';
-import 'package:fridge_yellow_team_bloc/ui/pages/home_page/cubit/home_page_cubit.dart';
-import 'package:fridge_yellow_team_bloc/ui/pages/home_page/cubit/home_page_state.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/home_page/bloc/home_page_bloc.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/home_page/bloc/home_page_event.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/home_page/bloc/home_page_state.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/home_page/widgets/clip_shadow_painter.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/home_page/widgets/overlay_container_clipper.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/home_page/widgets/swipe_element.dart';
@@ -124,11 +124,17 @@ class _HomePageViewState extends State<HomePageView> {
                         _textFromSearchTextField = text.trim();
                         if (_textFromSearchTextField.isNotEmpty) {
                           _functionDelay.run(() {
-                            ctx.read<HomePageCubit>().getIngredientsWithString(str: _textFromSearchTextField);
+                            ctx.read<HomePageBloc>().add(
+                                  LoadIngredientsWithNameEvent(
+                                    str: _textFromSearchTextField,
+                                  ),
+                                );
                           });
                         } else {
-                          if (ctx.read<HomePageCubit>().state.tempIngredients.isNotEmpty) {
-                            ctx.read<HomePageCubit>().clearTempIngredients();
+                          if (ctx.read<HomePageBloc>().state.tempIngredients.isNotEmpty) {
+                            ctx.read<HomePageBloc>().add(
+                                  ClearIngredientsEvent(),
+                                );
                           }
                         }
                       },
@@ -140,153 +146,139 @@ class _HomePageViewState extends State<HomePageView> {
                 child: BlocSelector<IngredientCubit, IngredientState, List<Ingredient>>(
                     selector: (IngredientState state) => state.ingredients,
                     builder: (
-                      BuildContext _,
+                      BuildContext blocSelectorContext,
                       List<Ingredient> existIngredients,
                     ) {
-                      return BlocBuilder<HomePageCubit, HomePageState>(
-                        builder: (
-                          BuildContext blocBuilderContext,
-                          HomePageState state,
-                        ) {
-                          final MainPageLanguage language = FlutterDictionary.instance.language?.mainPageLanguage ?? en.mainPageLanguage;
-                          final double stackWidth = MediaQuery.of(blocBuilderContext).size.width;
+                      final MainPageLanguage language = FlutterDictionary.instance.language?.mainPageLanguage ?? en.mainPageLanguage;
+                      final double stackWidth = MediaQuery.of(blocSelectorContext).size.width;
 
-                          return existIngredients.isEmpty
-                              ? Container(
-                                  margin: const EdgeInsets.fromLTRB(
-                                    52.0,
-                                    30.0,
-                                    52.0,
-                                    80.0,
-                                  ),
-                                  child: Image.asset(ImageAssets.favoriteChefArrow),
-                                )
-                              : Stack(
-                                  alignment: Alignment.topCenter,
-                                  fit: StackFit.passthrough,
+                      return existIngredients.isEmpty
+                          ? Container(
+                              margin: const EdgeInsets.fromLTRB(
+                                52.0,
+                                30.0,
+                                52.0,
+                                80.0,
+                              ),
+                              child: Image.asset(ImageAssets.favoriteChefArrow),
+                            )
+                          : Stack(
+                              alignment: Alignment.topCenter,
+                              fit: StackFit.passthrough,
+                              children: [
+                                Column(
                                   children: [
-                                    Column(
-                                      children: [
-                                        Container(
-                                          margin: const EdgeInsets.only(top: 25.0, bottom: 4.0),
-                                          alignment: FlutterDictionary.instance.isRTL ? Alignment.centerLeft : Alignment.centerRight,
-                                          child: InkWell(
-                                              borderRadius: BorderRadius.circular(10.0),
-                                              child: Text(
-                                                language.clearAll,
-                                                style: AppFonts.smallPaselRedTextStyle,
-                                              ),
-                                              onTap: () {
-                                                blocBuilderContext.read<IngredientCubit>().clearIngredients();
-                                              }),
-                                        ),
-                                        Flexible(
-                                          child: ListView.separated(
-                                            itemCount: existIngredients.length + 1,
-                                            separatorBuilder: (BuildContext _, int index) {
-                                              return Container(
-                                                margin: const EdgeInsets.symmetric(vertical: 1.0),
-                                                child: Divider(
-                                                  color: AppColors.black.withOpacity(0.5),
-                                                  height: 0.5,
-                                                ),
-                                              );
-                                            },
-                                            itemBuilder: (BuildContext _, int index) {
-                                              return index == existIngredients.length
-                                                  ? const SizedBox(
-                                                      height: 90.0,
-                                                    )
-                                                  : SwipeElement(
-                                                      key: UniqueKey(),
-                                                      background: Container(
-                                                        height: baseHeightOfIngredientElement,
-                                                        color: AppColors.pastelRed,
-                                                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                                                        alignment: FlutterDictionary.instance.isRTL ? Alignment.centerRight : Alignment.centerLeft,
-                                                        child: GlobalButton(
-                                                          key: UniqueKey(),
-                                                          width: 70.0,
-                                                          height: 45.0,
-                                                          color: AppColors.pastelRed,
-                                                          text: language.buttonDelete,
-                                                          fontText: AppFonts.medium16Height24WhiteTextStyle,
-                                                          onTap: () {
-                                                            context.read<IngredientCubit>().deleteIngredient(id: existIngredients[index].i);
-                                                          },
-                                                        ),
-                                                      ),
-                                                      child: SizedBox(
-                                                        height: baseHeightOfIngredientElement,
-                                                        child: Row(
-                                                          children: [
-                                                            Container(
-                                                              width: 57.0,
-                                                              margin: const EdgeInsets.all(4.0),
-                                                              child: ImageCacheManager.instance
-                                                                      .getImageWithIdIngredient(ingredient: existIngredients[index]) ??
-                                                                  CachedNetworkImage(
-                                                                    imageUrl: existIngredients[index].image!,
-                                                                    placeholder: (_, __) => SizedBox(
-                                                                      width: baseHeightOfIngredientElement,
-                                                                      child: Image.asset(ImageAssets.chefYellow),
-                                                                    ),
-                                                                    errorWidget: (_, __, ___) {
-                                                                      return Image.asset(ImageAssets.chefYellow);
-                                                                    },
-                                                                  ),
-                                                            ),
-                                                            Flexible(
-                                                              child: Text(
-                                                                existIngredients[index].name ?? 'No name',
-                                                                style: AppFonts.mediumBlack70ShadowTextStyle,
-                                                                maxLines: 1,
-                                                                overflow: TextOverflow.ellipsis,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    );
-                                            },
+                                    Container(
+                                      margin: const EdgeInsets.only(top: 25.0, bottom: 4.0),
+                                      alignment: FlutterDictionary.instance.isRTL ? Alignment.centerLeft : Alignment.centerRight,
+                                      child: InkWell(
+                                          borderRadius: BorderRadius.circular(10.0),
+                                          child: Text(
+                                            language.clearAll,
+                                            style: AppFonts.smallPaselRedTextStyle,
                                           ),
-                                        ),
-                                      ],
+                                          onTap: () {
+                                            context.read<IngredientCubit>().clearIngredients();
+                                          }),
                                     ),
-                                    Positioned(
-                                      bottom: 20.0,
-                                      left: 22.0,
-                                      right: 22.0,
-                                      child: Container(
-                                        height: 56.0,
-                                        decoration: BoxDecoration(boxShadow: AppShadows.containerOcreShadow),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      bottom: 0.0,
-                                      child: Container(
-                                        width: stackWidth,
-                                        padding: const EdgeInsets.only(
-                                          bottom: 32.0,
-                                          left: 22.0,
-                                          right: 22.0,
-                                        ),
-                                        child: GlobalButton(
-                                            key: UniqueKey(),
-                                            height: 56.0,
-                                            text: language.buttonWatchRecipes,
-                                            fontText: AppFonts.normalMediumTextStyle,
-                                            gradient: AppGradient.wheatMarigoldGradient,
-                                            onTap: () {
-                                              RouteSelectors.goToRecipesPage().call();
-                                              context.read<RecipesCubit>().loadRecipes(ingredients: existIngredients);
-                                            }),
+                                    Flexible(
+                                      child: ListView.separated(
+                                        itemCount: existIngredients.length + 1,
+                                        separatorBuilder: (BuildContext _, int index) {
+                                          return Container(
+                                            margin: const EdgeInsets.symmetric(vertical: 1.0),
+                                            child: Divider(
+                                              color: AppColors.black.withOpacity(0.5),
+                                              height: 0.5,
+                                            ),
+                                          );
+                                        },
+                                        itemBuilder: (BuildContext _, int index) {
+                                          return index == existIngredients.length
+                                              ? const SizedBox(
+                                                  height: 90.0,
+                                                )
+                                              : SwipeElement(
+                                                  key: UniqueKey(),
+                                                  background: Container(
+                                                    height: baseHeightOfIngredientElement,
+                                                    color: AppColors.pastelRed,
+                                                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                                    alignment: FlutterDictionary.instance.isRTL ? Alignment.centerRight : Alignment.centerLeft,
+                                                    child: GlobalButton(
+                                                      key: UniqueKey(),
+                                                      width: 70.0,
+                                                      height: 45.0,
+                                                      color: AppColors.pastelRed,
+                                                      text: language.buttonDelete,
+                                                      fontText: AppFonts.medium16Height24WhiteTextStyle,
+                                                      onTap: () {
+                                                        context.read<IngredientCubit>().deleteIngredient(id: existIngredients[index].i);
+                                                      },
+                                                    ),
+                                                  ),
+                                                  child: SizedBox(
+                                                    height: baseHeightOfIngredientElement,
+                                                    child: Row(
+                                                      children: [
+                                                        Container(
+                                                          width: 57.0,
+                                                          margin: const EdgeInsets.all(4.0),
+                                                          child: CustomNetworkImage(
+                                                            url: existIngredients[index].image,
+                                                            placeholder: Image.asset(ImageAssets.chefYellow),
+                                                            fit: BoxFit.contain,
+                                                          ),
+                                                        ),
+                                                        Flexible(
+                                                          child: Text(
+                                                            existIngredients[index].name ?? 'No name',
+                                                            style: AppFonts.mediumBlack70ShadowTextStyle,
+                                                            maxLines: 1,
+                                                            overflow: TextOverflow.ellipsis,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                        },
                                       ),
                                     ),
                                   ],
-                                );
-                        },
-                      );
+                                ),
+                                Positioned(
+                                  bottom: 20.0,
+                                  left: 22.0,
+                                  right: 22.0,
+                                  child: Container(
+                                    height: 56.0,
+                                    decoration: BoxDecoration(boxShadow: AppShadows.containerOcreShadow),
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 0.0,
+                                  child: Container(
+                                    width: stackWidth,
+                                    padding: const EdgeInsets.only(
+                                      bottom: 32.0,
+                                      left: 22.0,
+                                      right: 22.0,
+                                    ),
+                                    child: GlobalButton(
+                                        key: UniqueKey(),
+                                        height: 56.0,
+                                        text: language.buttonWatchRecipes,
+                                        fontText: AppFonts.normalMediumTextStyle,
+                                        gradient: AppGradient.wheatMarigoldGradient,
+                                        onTap: () {
+                                          RouteSelectors.goToRecipesPage().call();
+                                          context.read<RecipesCubit>().loadRecipes(ingredients: existIngredients);
+                                        }),
+                                  ),
+                                ),
+                              ],
+                            );
                     }),
               ),
             ],
@@ -309,7 +301,7 @@ class _HomePageViewState extends State<HomePageView> {
         left: offset.dx,
         top: offset.dy + size.height,
         width: size.width,
-        child: BlocSelector<HomePageCubit, HomePageState, List<Ingredient>>(
+        child: BlocSelector<HomePageBloc, HomePageState, List<Ingredient>>(
           bloc: context.read(),
           selector: (HomePageState state) {
             existIngredients = context.read<IngredientCubit>().state.ingredients;
@@ -375,32 +367,26 @@ class _HomePageViewState extends State<HomePageView> {
                                     );
                                   },
                                   itemBuilder: (BuildContext _, int index) {
-                                    return InkWell(
-                                      child: SizedBox(
-                                        height: baseHeightOfIngredientElement,
+                                    return SizedBox(
+                                      height: baseHeightOfIngredientElement,
+                                      width: size.width,
+                                      child: InkWell(
                                         child: Row(
                                           children: [
                                             Container(
+                                              width: 57.0,
+                                              height: 44.0,
                                               margin: const EdgeInsets.fromLTRB(
                                                 22.0,
                                                 5.0,
                                                 4.0,
                                                 5.0,
                                               ),
-                                              child: ImageCacheManager.instance.getImageWithIdIngredient(ingredient: tempIngredients[index]) ??
-                                                  CachedNetworkImage(
-                                                    imageUrl: tempIngredients[index].image!,
-                                                    imageBuilder: (BuildContext _, ImageProvider imageProvider) {
-                                                      return Image(image: imageProvider);
-                                                    },
-                                                    placeholder: (context, url) => SizedBox(
-                                                      width: baseHeightOfIngredientElement,
-                                                      child: Image.asset(ImageAssets.chefYellow),
-                                                    ),
-                                                    errorWidget: (context, url, error) {
-                                                      return Image.asset(ImageAssets.chefYellow);
-                                                    },
-                                                  ),
+                                              child: CustomNetworkImage(
+                                                url: tempIngredients[index].image,
+                                                placeholder: Image.asset(ImageAssets.chefYellow),
+                                                fit: BoxFit.contain,
+                                              ),
                                             ),
                                             Flexible(
                                               child: Text(
@@ -412,11 +398,11 @@ class _HomePageViewState extends State<HomePageView> {
                                             ),
                                           ],
                                         ),
+                                        onTap: () {
+                                          context.read<IngredientCubit>().addIngredient(ingredient: tempIngredients[index]);
+                                          FocusManager.instance.primaryFocus!.unfocus();
+                                        },
                                       ),
-                                      onTap: () {
-                                        context.read<IngredientCubit>().addIngredient(ingredient: tempIngredients[index]);
-                                        FocusManager.instance.primaryFocus!.unfocus();
-                                      },
                                     );
                                   },
                                 ),
