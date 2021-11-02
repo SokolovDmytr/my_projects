@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
@@ -138,6 +137,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                                         ImageAssets.chefYellow,
                                       ),
                                       fit: BoxFit.contain,
+                                      errorFit: BoxFit.contain,
                                     ),
                                   ),
                                   Flexible(
@@ -263,31 +263,12 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
           children: [
             Container(
               color: AppColors.white,
-              child: widget.recipe.image == null
-                  ? FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: Image.asset(
-                        ImageAssets.recipeElementMan,
-                      ),
-                    )
-                  : CachedNetworkImage(
-                      imageUrl: widget.recipe.image!,
-                      fit: _focusNode.hasFocus ? BoxFit.fitWidth : BoxFit.fitHeight,
-                      imageBuilder: (BuildContext _, ImageProvider imageProvider) {
-                        return Image(
-                          image: imageProvider,
-                          fit: _focusNode.hasFocus ? BoxFit.fitWidth : BoxFit.fitHeight,
-                        );
-                      },
-                      placeholder: (context, url) => SizedBox(
-                        child: Image.asset(ImageAssets.chefYellow),
-                      ),
-                      errorWidget: (context, url, error) {
-                        return Image.asset(
-                          ImageAssets.recipeElementMan,
-                        );
-                      },
-                    ),
+              child: CustomNetworkImage(
+                url: widget.recipe.image,
+                placeholder: Image.asset(ImageAssets.chefYellow),
+                fit: _focusNode.hasFocus ? BoxFit.fitWidth : BoxFit.fitHeight,
+                errorFit: BoxFit.contain,
+              ),
             ),
             _focusNode.hasFocus
                 ? Positioned(
@@ -404,6 +385,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                           url: e.image,
                           placeholder: Image.asset(ImageAssets.chefYellow),
                           fit: BoxFit.contain,
+                          errorFit: BoxFit.contain,
                         ),
                       );
                     }).toList(),

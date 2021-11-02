@@ -30,3 +30,5 @@ class RemoveFavouriteRecipeEvent extends RecipesEvent {
     required this.recipe,
   });
 }
+
+class ClearAllListRecipesEvent extends RecipesEvent {}

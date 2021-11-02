@@ -229,6 +229,7 @@ class _HomePageViewState extends State<HomePageView> {
                                                             url: existIngredients[index].image,
                                                             placeholder: Image.asset(ImageAssets.chefYellow),
                                                             fit: BoxFit.contain,
+                                                            errorFit: BoxFit.contain,
                                                           ),
                                                         ),
                                                         Flexible(
@@ -332,7 +333,7 @@ class _HomePageViewState extends State<HomePageView> {
                 ? 195.0
                 : tempIngredients.isEmpty
                     ? baseHeightOfIngredientElement
-                    : baseHeightOfIngredientElement * tempIngredients.length * 1.25;
+                    : baseHeightOfIngredientElement * tempIngredients.length + 15.0;
             final OverlayContainerClipper clipper = OverlayContainerClipper(
               borderRadius: 8.0,
               triangleHeight: 15.0,
@@ -371,6 +372,7 @@ class _HomePageViewState extends State<HomePageView> {
                                   },
                                   itemBuilder: (BuildContext _, int index) {
                                     return SizedBox(
+                                      key: ValueKey(tempIngredients[index].i),
                                       height: baseHeightOfIngredientElement,
                                       width: size.width,
                                       child: InkWell(
@@ -389,6 +391,7 @@ class _HomePageViewState extends State<HomePageView> {
                                                 url: tempIngredients[index].image,
                                                 placeholder: Image.asset(ImageAssets.chefYellow),
                                                 fit: BoxFit.contain,
+                                                errorFit: BoxFit.contain,
                                               ),
                                             ),
                                             Flexible(

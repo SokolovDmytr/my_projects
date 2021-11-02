@@ -25,15 +25,11 @@ class ImageCacheManager {
         _imageCache = [],
         completer = Completer();
 
-  Future<Image?> getImageWithUrl({
+  Image? getImageWithUrl({
     required String? url,
-  }) async {
+  }){
     if (url == null) {
       return Image.asset(ImageAssets.chefYellow);
-    }
-
-    if (completer.isCompleted == false) {
-      await Future.wait([completer.future]);
     }
 
     if (_ingredientImageCache.isNotEmpty) {
@@ -45,29 +41,33 @@ class ImageCacheManager {
 
     try {
       final ImageWithId image = _imageCache.firstWhere((element) => element.id == url);
+      image.lastTimeOfUsage = DateTime.now();
       return image.image;
     } on StateError catch (error) {
       logger.i(error);
-
-      try {
-        final http.Response response = await http.get(
-          Uri.parse(url),
-        );
-        if (response.statusCode == networkStatusCodeOk) {
-          final Image image = Image.memory(response.bodyBytes);
-          _imageCache.add(
-            ImageWithId(
-              image: image,
-              id: url,
-            ),
-          );
-          return image;
-        }
-      } catch (error) {
-        logger.e(error);
-      }
+      return null;
     }
+  }
 
+  Future<Image?> loadImage({required String url,}) async{
+    try {
+      final http.Response response = await http.get(
+        Uri.parse(url),
+      );
+      if (response.statusCode == networkStatusCodeOk) {
+        final Image image = Image.memory(response.bodyBytes);
+        _imageCache.add(
+          ImageWithId(
+            image: image,
+            id: url,
+            lastTimeOfUsage: DateTime.now(),
+          ),
+        );
+        return image;
+      }
+    } catch (error) {
+      logger.e(error);
+    }
     return null;
   }
 

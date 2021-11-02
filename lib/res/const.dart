@@ -86,7 +86,7 @@ enum AppBarType {
   screenRecipe,
 }
 
-const double baseHeightOfIngredientElement = 55.0;
+const double baseHeightOfIngredientElement = 60.0;
 const double minSwipeDistance = 40.0;
 
 const String hiveBoxNameUser = 'hiveBoxNameUser';

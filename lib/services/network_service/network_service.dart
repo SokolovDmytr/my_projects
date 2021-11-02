@@ -49,6 +49,22 @@ class NetworkService {
     _baseUrl = baseUrl;
   }
 
+  Future<bool> checkInternetConnection() async {
+    return await InternetConnectionHelper.hasInternetConnection();
+  }
+
+  Future<BaseHttpResponse> requestWithParams({
+    required HttpType type,
+    required String route,
+    required IParameter parameter,
+  }) {
+    return _request(
+      type: type,
+      route: route,
+      params: parameter.getParams(),
+    );
+  }
+
   Future<BaseHttpResponse> _request({
     required HttpType type,
     required String route,
@@ -60,6 +76,7 @@ class NetworkService {
     }
 
     Response? response;
+    final Options options = _getDefaultOptions();
     try {
       final String url = _baseUrl! + route;
       switch (type) {
@@ -67,12 +84,14 @@ class NetworkService {
           response = await _dio.get(
             url,
             queryParameters: params,
+            options: options,
           );
           break;
         case HttpType.httpPost:
           response = await _dio.post(
             url,
             queryParameters: params,
+            options: options,
           );
           break;
       }
@@ -103,19 +122,12 @@ class NetworkService {
     }
   }
 
-  Future<BaseHttpResponse> requestWithParams({
-    required HttpType type,
-    required String route,
-    required IParameter parameter,
-  }) {
-    return _request(
-      type: type,
-      route: route,
-      params: parameter.getParams(),
+  Options _getDefaultOptions() {
+    return Options(
+      headers: {
+        accept: contentTypeValue,
+        contentTypeKey: contentTypeValue,
+      },
     );
-  }
-
-  Future<bool> checkInternetConnection() async {
-    return await InternetConnectionHelper.hasInternetConnection();
   }
 }

@@ -1,4 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fridge_yellow_team_bloc/res/const.dart';
+import 'package:fridge_yellow_team_bloc/services/user_information_service/user.dart';
+import 'package:fridge_yellow_team_bloc/utils/string_util.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 
 class LocalStorageService {
   static const tag = '[StorageService]';
@@ -46,6 +53,27 @@ class LocalStorageService {
       key: key.toString(),
       value: value,
     );
+  }
+
+  Future<void> initializeStorage() async {
+    final Directory directory = await path_provider.getApplicationDocumentsDirectory();
+    final FlutterSecureStorage storage = FlutterSecureStorage();
+    final String? value = await storage.read(key: secureNameKey);
+
+    Hive.init(directory.path);
+    List<int> secureKey;
+    if (value == null) {
+      secureKey = Hive.generateSecureKey();
+      await storage.write(
+        key: secureNameKey,
+        value: secureKey.toString(),
+      );
+    } else {
+      secureKey = StringUtil.parseString(string: value);
+    }
+
+    Hive.registerAdapter(UserAdapter());
+    await Hive.openBox<User>(hiveBoxNameUser);
   }
 }
 

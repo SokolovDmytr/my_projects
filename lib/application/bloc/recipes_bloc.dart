@@ -19,6 +19,7 @@ import 'package:fridge_yellow_team_bloc/services/network_service/models/base_htt
 import 'package:fridge_yellow_team_bloc/services/network_service/network_service.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/shared/fridge_parser.dart';
 import 'package:fridge_yellow_team_bloc/services/pop_up_service/pop_up_service.dart';
+import 'package:fridge_yellow_team_bloc/services/pop_up_service/recipes_pop_up_widget.dart';
 import 'package:fridge_yellow_team_bloc/services/pop_up_service/server_error_pop_up_widget.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
 
@@ -210,10 +211,25 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
     on<AddFavouritesRecipeEvent>(
       (event, emit) async {
         final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+        final List<Recipe> favouritesRecipe = List.of(state.favoriteRecipes);
+        favouritesRecipe.add(
+          event.recipe.copyWith(isFavorite: true),
+        );
+        emit(
+          state.copyWith(inputFavoriteRecipes: favouritesRecipe),
+        );
 
         final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
         if (isConnection == false) {
+          favouritesRecipe.removeWhere((element) => element.i == event.recipe.i);
+          emit(
+            state.copyWith(inputFavoriteRecipes: favouritesRecipe),
+          );
+
+          PopUpService.instance.show(
+            widget: ServerErrorPopUpWidget(),
+          );
           return;
         }
 
@@ -221,10 +237,17 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
         final BaseHttpResponse response = await RecipeRepository.instance.addToFavorite(token: token, recipeId: event.recipe.i.toString());
 
         if (response.error == null) {
-          final List<Recipe> favouritesList = state.favoriteRecipes;
-          favouritesList.add(state.recipes.where((element) => element.i == event.recipe.i).first);
-          emit(state.copyWith(inputFavoriteRecipes: favouritesList));
+          PopUpService.instance.show(
+            widget: RecipesPopUpWidget(
+              text: language.recipePopUpAddedText,
+            ),
+          );
         } else {
+          favouritesRecipe.removeWhere((element) => element.i == event.recipe.i);
+          emit(
+            state.copyWith(inputFavoriteRecipes: favouritesRecipe),
+          );
+
           PopUpService.instance.show(
             widget: ServerErrorPopUpWidget(),
           );
@@ -235,9 +258,22 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
     on<RemoveFavouriteRecipeEvent>((event, emit) async {
       final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
+      final List<Recipe> favouriteRecipe = List.of(state.favoriteRecipes);
+      favouriteRecipe.removeWhere((element) => element.i == event.recipe.i);
+      emit(
+        state.copyWith(inputFavoriteRecipes: favouriteRecipe),
+      );
+
       final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
       if (isConnection == false) {
+        favouriteRecipe.add(event.recipe);
+        emit(
+          state.copyWith(inputFavoriteRecipes: favouriteRecipe),
+        );
+        PopUpService.instance.show(
+          widget: ServerErrorPopUpWidget(),
+        );
         return;
       }
 
@@ -245,14 +281,30 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
       final BaseHttpResponse response = await RecipeRepository.instance.removeFromFavorite(token: token, recipeId: event.recipe.i.toString());
 
       if (response.error == null) {
-        final List<Recipe> favouritesList = List.of(state.favoriteRecipes);
-        favouritesList.removeWhere((element) => element.i == event.recipe.i);
-        emit(state.copyWith(inputFavoriteRecipes: favouritesList));
+        PopUpService.instance.show(
+          widget: RecipesPopUpWidget(
+            text: language.favoritesRemovedPopUpText,
+          ),
+        );
       } else {
+        favouriteRecipe.add(event.recipe);
+        emit(
+          state.copyWith(inputFavoriteRecipes: favouriteRecipe),
+        );
+
         PopUpService.instance.show(
           widget: ServerErrorPopUpWidget(),
         );
       }
     });
+
+    on<ClearAllListRecipesEvent>(
+      (event, emit) => emit(
+        RecipesState(
+          recipes: [],
+          favoriteRecipes: [],
+        ),
+      ),
+    );
   }
 }

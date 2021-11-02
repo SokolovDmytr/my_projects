@@ -23,8 +23,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     on<LoadIngredientsWithNameEvent>(
       (event, emit) async {
         state.loader.rebuild!(true);
-        final bool isConnection =
-            await NetworkService.instance.checkInternetConnection();
+        final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
         if (isConnection == false) {
           DialogService.instance.show(
@@ -36,14 +35,10 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           return;
         }
 
-        final String token = await RouteService
-            .instance.navigatorKey.currentState!.context
-            .read<ApplicationTokenCubit>()
-            .getToken();
+        final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
 
         NetworkService.instance.init(baseUrl: baseUrl);
-        final BaseHttpResponse response =
-            await IngredientRepository.instance.fetchIngredientData(
+        final BaseHttpResponse response = await IngredientRepository.instance.fetchIngredientData(
           token: token,
           ingredientName: event.str,
         );
