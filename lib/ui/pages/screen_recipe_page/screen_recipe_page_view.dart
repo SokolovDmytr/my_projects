@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
@@ -175,22 +176,66 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                       height = constraints.biggest.height;
                       return Stack(
                         children: [
-                          const SizedBox(height: 312.0),
                           Container(
+                            height: 312.0,
                             decoration: BoxDecoration(
                               gradient: height == 80.0 ? AppGradient.transparent : AppGradient.black30black0,
-                              image: DecorationImage(
-                                image: widget.arguments.recipes[widget.arguments.index].image == null
-                                    ? AssetImage(ImageAssets.chefYellow)
-                                    : NetworkImage(widget.arguments.recipes[widget.arguments.index].image!) as ImageProvider,
-                                fit: BoxFit.cover,
-                                colorFilter: ColorFilter.mode(
-                                  AppColors.transparent,
-                                  widget.arguments.recipes[widget.arguments.index].image == null ? BlendMode.clear : BlendMode.color,
-                                ),
-                              ),
                             ),
                           ),
+                          widget.arguments.recipes[widget.arguments.index].image == null
+                              ? height == 80.0
+                                  ? const SizedBox()
+                                  : Center(
+                                      child: Image.asset(ImageAssets.chefYellow),
+                                    )
+                              : CachedNetworkImage(
+                                  imageUrl: widget.arguments.recipes[widget.arguments.index].image!,
+                                  imageBuilder: (
+                                    BuildContext _,
+                                    ImageProvider image,
+                                  ) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: image,
+                                          fit: BoxFit.cover,
+                                          colorFilter: ColorFilter.mode(
+                                            AppColors.transparent,
+                                            widget.arguments.recipes[widget.arguments.index].image == null ? BlendMode.clear : BlendMode.color,
+                                          ),
+                                        ),
+                                      ),
+                                      child: FlexibleSpaceBar(
+                                        background: Image.network(
+                                          widget.arguments.recipes[widget.arguments.index].image ?? ImageAssets.chefYellow,
+                                          fit: BoxFit.fill,
+                                          errorBuilder: (
+                                            BuildContext _,
+                                            Object __,
+                                            StackTrace? ___,
+                                          ) {
+                                            return Image.asset(
+                                              ImageAssets.chefYellow,
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  errorWidget: (
+                                    BuildContext context,
+                                    String url,
+                                    dynamic error,
+                                  ) {
+                                    return height == 80.0
+                                        ? const SizedBox()
+                                        : Center(
+                                            child: Image.asset(
+                                              ImageAssets.chefYellow,
+                                            ),
+                                          );
+                                  },
+                                ),
                           Positioned(
                             bottom: 0.0,
                             child: Container(
@@ -211,7 +256,6 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                             child: Padding(
                               padding: const EdgeInsets.only(left: 16.0),
                               child: Row(
-                                mainAxisSize: MainAxisSize.min,
                                 textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
                                 children: [
                                   Container(
@@ -238,6 +282,7 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                                     width: 80.0,
                                     child: Text(
                                       _languageScreenRecipePage.back,
+                                      textAlign: FlutterDictionary.instance.isRTL ? TextAlign.right : TextAlign.left,
                                       style: AppFonts.medium16Height24WhiteTextStyle,
                                     ),
                                   ),
@@ -267,19 +312,28 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 20.0,
-                                    bottom: 25.0,
-                                  ),
-                                  child: Text(
-                                    widget.arguments.recipes[widget.arguments.index].name,
-                                    style: AppFonts.normalBlackHeight30ShadowTextStyle,
-                                  ),
+                                Row(
+                                  textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
+                                  children: [
+                                    Flexible(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          top: 20.0,
+                                          bottom: 25.0,
+                                        ),
+                                        child: Text(
+                                          widget.arguments.recipes[widget.arguments.index].name,
+                                          style: AppFonts.normalBlackHeight30ShadowTextStyle,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 35.0),
                                   child: Row(
+                                    textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
                                     children: [
                                       _getParameterOfRecipeWidget(
                                         imageAssets: ImageAssets.timeIcon,
@@ -305,7 +359,6 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                                 ),
                                 FoodElementsBlock(
                                   recipe: widget.arguments.recipes[widget.arguments.index],
-                                  ingredientsStored: widget.arguments.ingredients,
                                 ),
                                 CookingBlock(recipe: widget.arguments.recipes[widget.arguments.index]),
                                 CongratulationBlock(),
@@ -344,27 +397,20 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
   }) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 2.0),
-      height: 20.0,
-      width: 80.0,
       child: Row(
         textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
-        mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
             imageAssets,
           ),
-          Flexible(
-            child: Container(
-              margin: const EdgeInsets.only(
-                left: 4.0,
-                right: 4.0,
-              ),
-              child: Text(
-                value,
-                style: textStyle,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
+          Container(
+            margin: const EdgeInsets.only(
+              left: 4.0,
+              right: 4.0,
+            ),
+            child: Text(
+              value,
+              style: textStyle,
             ),
           ),
           text == null

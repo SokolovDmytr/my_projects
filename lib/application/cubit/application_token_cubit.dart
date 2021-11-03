@@ -56,4 +56,17 @@ class ApplicationTokenCubit extends Cubit<ApplicationTokenState> {
       }
     }
   }
+
+  void clearToken() {
+    emit(
+      state.copyWith(
+        token: Token(
+          token: emptyString,
+          refreshToken: emptyString,
+          ttlToken: emptyString,
+          createDate: DateTime.now(),
+        ),
+      ),
+    );
+  }
 }

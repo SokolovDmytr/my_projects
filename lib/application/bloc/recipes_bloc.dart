@@ -307,6 +307,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
         ),
       ),
     );
+
     on<UpdateRecipesEvent>((event, emit) {
       emit(
         state.copyWith(inputFavoriteRecipes: event.favouriteRecipes),

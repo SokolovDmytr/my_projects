@@ -30,6 +30,7 @@ class CookingBlock extends StatelessWidget {
     final ScreenRecipeLanguage _language = FlutterDictionary.instance.language?.screenRecipeLanguage ?? en.screenRecipeLanguage;
     final List<Widget> steps = [
       Row(
+        textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
         children: [
           Image.asset(
             ImageAssets.pot,
@@ -51,6 +52,7 @@ class CookingBlock extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 19.0),
           child: Row(
+            textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -76,6 +78,7 @@ class CookingBlock extends StatelessWidget {
                   '${recipe.steps[index]}',
                   style: AppFonts.medium16Height24TextStyle,
                   overflow: TextOverflow.visible,
+                  textAlign: FlutterDictionary.instance.isRTL ? TextAlign.right : TextAlign.left,
                 ),
               ),
             ],

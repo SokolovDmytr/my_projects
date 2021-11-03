@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 
 class GlobalButton extends StatefulWidget {
@@ -76,8 +75,7 @@ class _GlobalButtonState extends State<GlobalButton> {
                       width: 20.0,
                       height: 20.0,
                       margin: EdgeInsets.only(
-                        right: FlutterDictionary.instance.isRTL ? 0.0 : 50.0,
-                        left: FlutterDictionary.instance.isRTL ? 50.0 : 0.0,
+                        right: 50.0,
                       ),
                       child: widget.icon,
                     ),

@@ -20,7 +20,6 @@ class RecipesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Recipe> favouriteRecipes = BlocProvider.of<RecipesBloc>(context).state.favoriteRecipes;
-    final List<Ingredient> ingredients = BlocProvider.of<IngredientsBloc>(context).state.ingredients;
     final FavouritesPageLanguage language = FlutterDictionary.instance.language?.favouritesPageLanguage ?? en.favouritesPageLanguage;
     return favouriteRecipes.isEmpty
         ? Center(
@@ -53,7 +52,6 @@ class RecipesList extends StatelessWidget {
                     arguments: ScreenRecipeArguments(
                       recipes: favouriteRecipes,
                       index: index,
-                      ingredients: ingredients,
                     ),
                   ).call();
                 },

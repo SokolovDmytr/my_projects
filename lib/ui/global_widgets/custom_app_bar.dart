@@ -91,7 +91,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                                 child: Text(
                                   textButton!,
                                   style: AppFonts.medium16Height24TextStyle,
-                                  maxLines: 1,
+                                  textAlign: FlutterDictionary.instance.isRTL ? TextAlign.right : TextAlign.left,
                                 ),
                               ),
                             ],
