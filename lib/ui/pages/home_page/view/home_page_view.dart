@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_event.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_state.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/recipes_event.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_state.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/main_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
@@ -69,7 +70,7 @@ class _HomePageViewState extends State<HomePageView> {
         } else {
           _overlayEntry.remove();
 
-          if (UserInformationService.instance.isFirstSeeSwipeTutorial() == false && context.read<IngredientCubit>().ingredientsIsEmpty() == false) {
+          if (UserInformationService.instance.isFirstSeeSwipeTutorial() == false && context.read<IngredientsBloc>().state.ingredients.isNotEmpty) {
             DialogService.instance.show(
               dialog: SwipeTutorialDialog(
                 child: SwipeTutorialWidget(onTapOk: () {
@@ -108,49 +109,49 @@ class _HomePageViewState extends State<HomePageView> {
             children: [
               Container(
                 margin: const EdgeInsets.only(top: 11.0),
-                child: Builder(
-                  builder: (BuildContext ctx) {
-                    _textFieldContext = ctx;
-
-                    return GlobalTextField(
-                      showInPut: true,
-                      focusNode: _textFieldFocusNode,
-                      needSuffix: true,
-                      loader: widget.loader,
-                      needPrefix: true,
-                      needShowButton: false,
-                      hintText: language.chooseTextField,
-                      hintStyle: AppFonts.medium16Height24TextStyle,
-                      onChanged: (String text) {
-                        _textFromSearchTextField = text.trim();
-                        if (_textFromSearchTextField.isNotEmpty) {
-                          _functionDelay.run(() {
+                child: Builder(builder: (
+                  BuildContext ctx,
+                ) {
+                  _textFieldContext = ctx;
+                  return GlobalTextField(
+                    showInPut: true,
+                    focusNode: _textFieldFocusNode,
+                    needSuffix: true,
+                    loader: widget.loader,
+                    needPrefix: true,
+                    needShowButton: false,
+                    hintText: language.chooseTextField,
+                    hintStyle: AppFonts.medium16Height24TextStyle,
+                    onChanged: (String text) {
+                      _textFromSearchTextField = text.trim();
+                      if (_textFromSearchTextField.isNotEmpty) {
+                        _functionDelay.run(
+                          () {
                             ctx.read<HomePageBloc>().add(
                                   LoadIngredientsWithNameEvent(
                                     str: _textFromSearchTextField,
                                   ),
                                 );
-                          });
-                        } else {
-                          if (ctx.read<HomePageBloc>().state.tempIngredients.isNotEmpty) {
-                            ctx.read<HomePageBloc>().add(
-                                  ClearIngredientsEvent(),
-                                );
-                          }
+                          },
+                        );
+                      } else {
+                        if (ctx.read<HomePageBloc>().state.tempIngredients.isNotEmpty) {
+                          ctx.read<HomePageBloc>().add(
+                                ClearTempIngredientsEvent(),
+                              );
                         }
-                      },
-                    );
-                  },
-                ),
+                      }
+                    },
+                  );
+                }),
               ),
               Expanded(
-                child: BlocSelector<IngredientCubit, IngredientState, List<Ingredient>>(
-                    selector: (IngredientState state) => state.ingredients,
+                child: BlocSelector<IngredientsBloc, IngredientsState, List<Ingredient>>(
+                    selector: (IngredientsState state) => state.ingredients,
                     builder: (
                       BuildContext blocSelectorContext,
                       List<Ingredient> existIngredients,
                     ) {
-                      final MainPageLanguage language = FlutterDictionary.instance.language?.mainPageLanguage ?? en.mainPageLanguage;
                       final double stackWidth = MediaQuery.of(blocSelectorContext).size.width;
 
                       return existIngredients.isEmpty
@@ -179,7 +180,7 @@ class _HomePageViewState extends State<HomePageView> {
                                             style: AppFonts.smallPaselRedTextStyle,
                                           ),
                                           onTap: () {
-                                            context.read<IngredientCubit>().clearIngredients();
+                                            context.read<IngredientsBloc>().add(ClearIngredientsEvent(),);
                                           }),
                                     ),
                                     Flexible(
@@ -213,13 +214,18 @@ class _HomePageViewState extends State<HomePageView> {
                                                       text: language.buttonDelete,
                                                       fontText: AppFonts.medium16Height24WhiteTextStyle,
                                                       onTap: () {
-                                                        context.read<IngredientCubit>().deleteIngredient(id: existIngredients[index].i);
+                                                        context.read<IngredientsBloc>().add(
+                                                              DeleteIngredientEvent(
+                                                                ingredientId: existIngredients[index].i,
+                                                              ),
+                                                            );
                                                       },
                                                     ),
                                                   ),
                                                   child: SizedBox(
                                                     height: baseHeightOfIngredientElement,
                                                     child: Row(
+                                                      textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
                                                       children: [
                                                         Container(
                                                           width: 57.0,
@@ -307,7 +313,7 @@ class _HomePageViewState extends State<HomePageView> {
         child: BlocSelector<HomePageBloc, HomePageState, List<Ingredient>>(
           bloc: context.read(),
           selector: (HomePageState state) {
-            existIngredients = context.read<IngredientCubit>().state.ingredients;
+            existIngredients = context.read<IngredientsBloc>().state.ingredients;
             return state.tempIngredients;
           },
           builder: (
@@ -404,7 +410,11 @@ class _HomePageViewState extends State<HomePageView> {
                                           ],
                                         ),
                                         onTap: () {
-                                          context.read<IngredientCubit>().addIngredient(ingredient: tempIngredients[index]);
+                                          context.read<IngredientsBloc>().add(
+                                                AddIngredientEvent(
+                                                  ingredient: tempIngredients[index],
+                                                ),
+                                              );
                                           FocusManager.instance.primaryFocus!.unfocus();
                                         },
                                       ),

@@ -11,5 +11,6 @@ class AppDuration {
   static const Duration delayOfSendRequestToServer = Duration(milliseconds: 500);
   static const Duration durationForImageAnimation = Duration(milliseconds: 400);
   static const Duration imageLifetime = Duration(minutes: 5);
+  static const Duration fourSecond = Duration(seconds: 4);
   static const Duration zero = Duration();
 }

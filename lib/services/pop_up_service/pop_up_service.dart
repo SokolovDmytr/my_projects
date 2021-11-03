@@ -14,7 +14,7 @@ class PopUpService {
   void show({
     required Widget widget,
   }) {
-    BuildContext ctx = RouteService.instance.navigatorKey.currentState!.context;
+    final BuildContext ctx = RouteService.instance.navigatorKey.currentState!.context;
     showDialog(
       context: ctx,
       barrierDismissible: true,

@@ -1,10 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_event.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/language_events.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/language_state.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/recipes_event.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_delegate.dart';
@@ -69,9 +70,11 @@ class LanguageBloc extends Bloc<ChangeLanguageEvent, LanguageState> {
             response: responseWithIngredient,
           );
 
-          RouteService.instance.navigatorKey.currentState!.context
-              .read<IngredientCubit>()
-              .updateAllIngredients(ingredients: ingredients as List<Ingredient>);
+          RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().add(
+                UpdateAllIngredientsEvent(
+                  ingredients: ingredients as List<Ingredient>,
+                ),
+              );
 
           final recipes = FridgeParser.instance.parseList(
             exampleObject: Recipe,
@@ -107,7 +110,7 @@ class LanguageBloc extends Bloc<ChangeLanguageEvent, LanguageState> {
               );
 
           final List<Ingredient> oldLocaleIngredients =
-              RouteService.instance.navigatorKey.currentState!.context.read<IngredientCubit>().state.ingredients;
+              RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().state.ingredients;
           final List<Ingredient> newLocaleIngredients = [];
           for (Ingredient oldLocaleIngredient in oldLocaleIngredients) {
             for (Ingredient newLocaleIngredient in ingredients) {
@@ -118,7 +121,11 @@ class LanguageBloc extends Bloc<ChangeLanguageEvent, LanguageState> {
             }
           }
 
-          RouteService.instance.navigatorKey.currentState!.context.read<IngredientCubit>().updateIngredients(ingredients: newLocaleIngredients);
+          RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().add(
+                UpdateIngredientsEvent(
+                  ingredients: newLocaleIngredients,
+                ),
+              );
 
           emit(state.copyWith(currentLocale: event.newLanguage));
 

@@ -1,8 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_event.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/recipes_event.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
@@ -53,7 +54,9 @@ class SettingsPageCubit extends Cubit<SettingsPageState> {
     if (response.error == null) {
       UserInformationService.instance.clear();
       DialogService.instance.close();
-      RouteService.instance.navigatorKey.currentState!.context.read<IngredientCubit>().clearIngredients();
+      RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().add(
+            ClearIngredientsEvent(),
+          );
       RouteService.instance.navigatorKey.currentState!.context.read<RecipesBloc>().add(
             ClearAllListRecipesEvent(),
           );

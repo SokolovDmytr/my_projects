@@ -43,14 +43,18 @@ class _CustomNetworkImageState extends State<CustomNetworkImage> with TickerProv
   @override
   Widget build(BuildContext context) {
     final Image? image = ImageCacheManager.instance.getImageWithUrl(url: widget.url);
-    if (image != null) {
-      return FittedBox(
-        fit: widget.fit,
-        child: image,
-      );
-    } else {
-      return LayoutBuilder(
-        builder: (BuildContext _, BoxConstraints constrains) {
+    return LayoutBuilder(
+      builder: (BuildContext _, BoxConstraints constrains) {
+        if (image != null) {
+          return SizedBox(
+            width: constrains.maxWidth,
+            height: constrains.maxHeight,
+            child: FittedBox(
+              fit: widget.fit,
+              child: image,
+            ),
+          );
+        } else {
           return FutureBuilder(
             future: ImageCacheManager.instance.loadImage(url: widget.url!),
             builder: (BuildContext context, AsyncSnapshot<Image?> snapshot) {
@@ -98,8 +102,8 @@ class _CustomNetworkImageState extends State<CustomNetworkImage> with TickerProv
               );
             },
           );
-        },
-      );
-    }
+        }
+      },
+    );
   }
 }

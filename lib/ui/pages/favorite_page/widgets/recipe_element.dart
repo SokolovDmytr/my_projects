@@ -1,8 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/language_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/language_state.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/recipes_event.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/favorites_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
@@ -20,7 +24,6 @@ import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/remove_f
 import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/custom_network_image.dart';
 import 'package:fridge_yellow_team_bloc/utils/comparator.dart';
-import 'package:intl/intl.dart';
 
 class RecipeElement extends StatefulWidget {
   final Recipe recipe;
@@ -40,8 +43,9 @@ class RecipeElement extends StatefulWidget {
 
 class _RecipeElementState extends State<RecipeElement> with TickerProviderStateMixin {
   final FocusNode _focusNode = FocusNode();
-  late List<Ingredient> _missingIngredients;
-  FavouritesPageLanguage? language;
+  List<Ingredient>? _missingIngredients;
+  FavouritesPageLanguage? _language;
+  bool _needUpdateMissingIngredients = true;
 
   @override
   void initState() {
@@ -51,197 +55,209 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
         setState(() {});
       }
     });
-    _missingIngredients = CustomComparator.getMissingIngredients(
-      recipe: widget.recipe,
-      ingredients: context.read<IngredientCubit>().state.ingredients,
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    language = FlutterDictionary.instance.language?.favouritesPageLanguage ?? en.favouritesPageLanguage;
-    return AnimatedSize(
-      duration: AppDuration.recipeOpenDuration,
-      child: Container(
-        decoration: BoxDecoration(
-          boxShadow: AppShadows.recipeElementShadow,
-        ),
-        child: Stack(
-          textDirection: FlutterDictionary.instance.isRTL ? TextDirection.RTL : TextDirection.LTR,
-          children: [
-            Container(
-              height: _focusNode.hasFocus ? 168.0 : 128.0,
-              margin: EdgeInsets.fromLTRB(
-                FlutterDictionary.instance.isRTL
-                    ? 0.0
-                    : _focusNode.hasFocus
-                        ? 0.0
-                        : 118.0,
-                _focusNode.hasFocus ? 126.0 : 0.0,
-                FlutterDictionary.instance.isRTL
-                    ? _focusNode.hasFocus
-                        ? 0.0
-                        : 118.0
-                    : 0.0,
-                0.0,
-              ),
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: _focusNode.hasFocus
-                    ? BorderRadius.only(
-                        bottomLeft: Radius.circular(10.0),
-                        bottomRight: Radius.circular(10.0),
-                      )
-                    : FlutterDictionary.instance.isRTL
-                        ? BorderRadius.only(
-                            topLeft: Radius.circular(10.0),
-                            bottomLeft: Radius.circular(10.0),
-                          )
-                        : BorderRadius.only(
-                            topRight: Radius.circular(10.0),
-                            bottomRight: Radius.circular(10.0),
-                          ),
-                border: Border.all(
-                  color: _missingIngredients.isEmpty ? AppColors.white : AppColors.pastelRed,
+    if(_needUpdateMissingIngredients){
+      _missingIngredients = CustomComparator.getMissingIngredients(
+        recipe: widget.recipe,
+        ingredients: context.read<IngredientsBloc>().state.ingredients,
+      );
+      _needUpdateMissingIngredients = false;
+    }
+    _language = FlutterDictionary.instance.language?.favouritesPageLanguage ?? en.favouritesPageLanguage;
+    return BlocListener<LanguageBloc, LanguageState>(
+      listener: (BuildContext _, LanguageState __,) {
+        _needUpdateMissingIngredients = true;
+      },
+      child: AnimatedSize(
+        duration: AppDuration.recipeOpenDuration,
+        child: Container(
+          decoration: BoxDecoration(
+            boxShadow: AppShadows.recipeElementShadow,
+          ),
+          child: Stack(
+            textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
+            children: [
+              Container(
+                height: _focusNode.hasFocus ? 168.0 : 128.0,
+                margin: EdgeInsets.fromLTRB(
+                  FlutterDictionary.instance.isRTL
+                      ? 0.0
+                      : _focusNode.hasFocus
+                          ? 0.0
+                          : 118.0,
+                  _focusNode.hasFocus ? 126.0 : 0.0,
+                  FlutterDictionary.instance.isRTL
+                      ? _focusNode.hasFocus
+                          ? 0.0
+                          : 118.0
+                      : 0.0,
+                  0.0,
                 ),
-              ),
-              child: _focusNode.hasFocus
-                  ? Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.all(10.0),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            language!.youDoNotHave,
-                            style: AppFonts.smallPaselRed16TextStyle,
-                          ),
-                        ),
-                        Expanded(
-                          child: GridView.count(
-                            primary: false,
-                            padding: const EdgeInsets.all(10.0),
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            childAspectRatio: 4.0,
-                            crossAxisCount: 2,
-                            children: _missingIngredients.map((e) {
-                              return Row(
-                                key: ValueKey(e.i),
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    height: 32.0,
-                                    width: 32.0,
-                                    margin: const EdgeInsets.symmetric(horizontal: 3.0),
-                                    child: CustomNetworkImage(
-                                      url: e.image,
-                                      placeholder: Image.asset(
-                                        ImageAssets.chefYellow,
-                                      ),
-                                      fit: BoxFit.contain,
-                                      errorFit: BoxFit.contain,
-                                    ),
-                                  ),
-                                  Flexible(
-                                    child: RichText(
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 2,
-                                      text: TextSpan(
-                                        text: e.name,
-                                        style: AppFonts.smallBoldBlackTwoTextStyle,
-                                        children: [
-                                          TextSpan(
-                                            text: colonString,
-                                            style: AppFonts.smallBoldBlackTwoTextStyle,
-                                          ),
-                                          TextSpan(
-                                            text: spaceString,
-                                            style: AppFonts.smallTextStyle,
-                                          ),
-                                          TextSpan(
-                                            text: e.description,
-                                            style: AppFonts.smallTextStyle,
-                                          ),
-                                          TextSpan(
-                                            text: spaceString,
-                                            style: AppFonts.smallTextStyle,
-                                          ),
-                                          TextSpan(
-                                            text: e.count,
-                                            style: AppFonts.smallTextStyle,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ],
-                    )
-                  : Container(
-                      margin: const EdgeInsets.fromLTRB(
-                        26.0,
-                        12.0,
-                        16.0,
-                        9.0,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: _focusNode.hasFocus
+                      ? BorderRadius.only(
+                          bottomLeft: Radius.circular(10.0),
+                          bottomRight: Radius.circular(10.0),
+                        )
+                      : FlutterDictionary.instance.isRTL
+                          ? BorderRadius.only(
+                              topLeft: Radius.circular(10.0),
+                              bottomLeft: Radius.circular(10.0),
+                            )
+                          : BorderRadius.only(
+                              topRight: Radius.circular(10.0),
+                              bottomRight: Radius.circular(10.0),
+                            ),
+                  border: Border.all(
+                    color: _missingIngredients!.isEmpty ? AppColors.white : AppColors.pastelRed,
+                  ),
+                ),
+                child: _focusNode.hasFocus
+                    ? Column(
                         children: [
-                          SizedBox(
-                            height: 54.0,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: RichText(
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                    text: TextSpan(
-                                      text: widget.recipe.name,
-                                      style: AppFonts.mediumShadowBlackTextStyle,
-                                    ),
-                                  ),
-                                ),
-                                (widget.recipe.isFavorite && widget.needFavoriteIcon)
-                                    ? InkWell(
-                                        child: Icon(
-                                          Icons.favorite,
-                                          color: AppColors.pastelRed,
-                                          size: 22.0,
-                                        ),
-                                        onTap: () {
-                                          DialogService.instance.show(
-                                            dialog: RemoveFavouriteDialog(
-                                              child: RemoveFavouriteDialogWidget(
-                                                onTapYes: () {
-                                                  context.read<RecipesBloc>().add(
-                                                        RemoveFavouriteRecipeEvent(
-                                                          recipe: widget.recipe,
-                                                        ),
-                                                      );
-                                                },
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      )
-                                    : const SizedBox(),
-                              ],
+                          Container(
+                            margin: const EdgeInsets.all(10.0),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              _language!.youDoNotHave,
+                              style: AppFonts.smallPaselRed16TextStyle,
                             ),
                           ),
-                          _missingIngredients.isEmpty ? _getParameterOfRecipeWidgetBlock() : _geMissingIngredientsBock(),
+                          Expanded(
+                            child: GridView.count(
+                              primary: false,
+                              padding: const EdgeInsets.all(10.0),
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10,
+                              childAspectRatio: 4.0,
+                              crossAxisCount: 2,
+                              children: _missingIngredients!.map((e) {
+                                return Row(
+                                  key: ValueKey(e.i),
+                                  textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      height: 32.0,
+                                      width: 32.0,
+                                      margin: const EdgeInsets.symmetric(horizontal: 3.0),
+                                      child: CustomNetworkImage(
+                                        url: e.image,
+                                        placeholder: Image.asset(
+                                          ImageAssets.chefYellow,
+                                        ),
+                                        fit: BoxFit.contain,
+                                        errorFit: BoxFit.contain,
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: RichText(
+                                        overflow: TextOverflow.ellipsis,
+                                        textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
+                                        maxLines: 2,
+                                        text: TextSpan(
+                                          text: e.name,
+                                          style: AppFonts.smallBoldBlackTwoTextStyle,
+                                          children: [
+                                            TextSpan(
+                                              text: colonString,
+                                              style: AppFonts.smallBoldBlackTwoTextStyle,
+                                            ),
+                                            TextSpan(
+                                              text: spaceString,
+                                              style: AppFonts.smallTextStyle,
+                                            ),
+                                            TextSpan(
+                                              text: e.count,
+                                              style: AppFonts.smallTextStyle,
+                                            ),
+                                            TextSpan(
+                                              text: spaceString,
+                                              style: AppFonts.smallTextStyle,
+                                            ),
+                                            TextSpan(
+                                              text: e.description,
+                                              style: AppFonts.smallTextStyle,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }).toList(),
+                            ),
+                          ),
                         ],
+                      )
+                    : Container(
+                        margin: EdgeInsets.fromLTRB(
+                          FlutterDictionary.instance.isRTL ? 16.0 : 26.0,
+                          12.0,
+                          FlutterDictionary.instance.isRTL ? 26.0 : 16.0,
+                          9.0,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 54.0,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
+                                children: [
+                                  Expanded(
+                                    child: RichText(
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: FlutterDictionary.instance.isRTL ? TextAlign.right : TextAlign.left,
+                                      maxLines: 2,
+                                      text: TextSpan(
+                                        text: widget.recipe.name,
+                                        style: AppFonts.mediumShadowBlackTextStyle,
+                                      ),
+                                    ),
+                                  ),
+                                  (widget.recipe.isFavorite && widget.needFavoriteIcon)
+                                      ? InkWell(
+                                          child: Icon(
+                                            Icons.favorite,
+                                            color: AppColors.pastelRed,
+                                            size: 22.0,
+                                          ),
+                                          onTap: () {
+                                            DialogService.instance.show(
+                                              dialog: RemoveFavouriteDialog(
+                                                child: RemoveFavouriteDialogWidget(
+                                                  onTapYes: () {
+                                                    context.read<RecipesBloc>().add(
+                                                          RemoveFavouriteRecipeEvent(
+                                                            recipe: widget.recipe,
+                                                          ),
+                                                        );
+                                                  },
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        )
+                                      : const SizedBox(),
+                                ],
+                              ),
+                            ),
+                            _missingIngredients!.isEmpty ? _getParameterOfRecipeWidgetBlock() : _geMissingIngredientsBock(),
+                          ],
+                        ),
                       ),
-                    ),
-            ),
-            _getImage(),
-          ],
+              ),
+              _getImage(),
+            ],
+          ),
         ),
       ),
     );
@@ -279,6 +295,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                     child: Container(
                       width: widthScreen - 25.0,
                       padding: const EdgeInsets.all(10.0),
+                      alignment: FlutterDictionary.instance.isRTL ? Alignment.centerRight : Alignment.centerLeft,
                       child: Text(
                         widget.recipe.name,
                         style: AppFonts.mediumWhiteTextStyle,
@@ -297,13 +314,13 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                           _getParameterOfRecipeWidget(
                             imageAssets: ImageAssets.timeIcon,
                             value: widget.recipe.time.toString(),
-                            text: language!.min,
+                            text: _language!.min,
                             textStyle: AppFonts.smallWhiteTextStyle,
                           ),
                           _getParameterOfRecipeWidget(
                             imageAssets: ImageAssets.caloriesIcon,
                             value: widget.recipe.calories.toStringAsFixed(1),
-                            text: language!.cal,
+                            text: _language!.cal,
                             textStyle: AppFonts.smallWhiteTextStyle,
                           ),
                           widget.recipe.level == null
@@ -317,7 +334,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                       ),
                     ),
                   )
-                : _missingIngredients.isEmpty
+                : _missingIngredients!.isEmpty
                     ? const SizedBox()
                     : Positioned(
                         bottom: 0.0,
@@ -326,7 +343,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                           child: _getParameterOfRecipeWidget(
                             imageAssets: ImageAssets.timeIcon,
                             value: widget.recipe.time.toString(),
-                            text: language!.min,
+                            text: _language!.min,
                             textStyle: AppFonts.smallWhiteTextStyle,
                           ),
                         ),
@@ -365,20 +382,21 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
   Widget _geMissingIngredientsBock() {
     return Expanded(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: FlutterDictionary.instance.isRTL ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Text(
-            language!.youDoNotHave,
+            _language!.youDoNotHave,
             style: AppFonts.smallPaselRed16TextStyle,
           ),
           SizedBox(
             height: 35.0,
             child: Row(
+              textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
               children: [
                 Flexible(
                   child: ListView(
                     scrollDirection: Axis.horizontal,
-                    children: _missingIngredients.map((e) {
+                    children: _missingIngredients!.map((e) {
                       return Container(
                         height: 32.0,
                         width: 32.0,
@@ -429,14 +447,14 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
           _getParameterOfRecipeWidget(
             imageAssets: ImageAssets.caloriesIcon,
             value: widget.recipe.calories.toStringAsFixed(1),
-            text: language!.cal,
+            text: _language!.cal,
             textStyle: AppFonts.smallTextStyle,
           ),
           widget.recipe.level == null
               ? _getParameterOfRecipeWidget(
                   imageAssets: ImageAssets.timeIcon,
                   value: widget.recipe.time.toString(),
-                  text: language!.min,
+                  text: _language!.min,
                   textStyle: AppFonts.smallTextStyle,
                 )
               : Expanded(
@@ -445,7 +463,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                       _getParameterOfRecipeWidget(
                         imageAssets: ImageAssets.timeIcon,
                         value: widget.recipe.time.toString(),
-                        text: language!.min,
+                        text: _language!.min,
                         textStyle: AppFonts.smallTextStyle,
                       ),
                       _getParameterOfRecipeWidget(
@@ -472,7 +490,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
       height: 20.0,
       width: 80.0,
       child: Row(
-        textDirection: FlutterDictionary.instance.isRTL ? TextDirection.RTL : TextDirection.LTR,
+        textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(

@@ -1,10 +1,11 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_event.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/language_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_delegate.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/models/supported_locales.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/models/notification_message.dart';
@@ -89,7 +90,10 @@ class _ApplicationState extends State<Application> {
         ),
         BlocProvider(
           lazy: false,
-          create: (BuildContext _) => IngredientCubit()..loadAllIngredients(),
+          create: (BuildContext _) => IngredientsBloc()
+            ..add(
+              LoadAllIngredientsEvent(),
+            ),
         ),
         BlocProvider(
           create: (BuildContext _) => RecipesBloc(),

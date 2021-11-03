@@ -18,18 +18,20 @@ class ImageCacheManager {
 
   final List<ImageWithId> _ingredientImageCache;
   final List<ImageWithId> _imageCache;
-  final Completer completer;
-  DateTime? timeOfLastQuery;
+  final Completer _completer;
+  final FunctionDelay _delay;
+  DateTime? _timeOfLastQuery;
 
   ImageCacheManager._()
       : _ingredientImageCache = [],
         _imageCache = [],
-        completer = Completer();
+        _completer = Completer(),
+  _delay = FunctionDelay(duration: AppDuration.oneMinuteDuration);
 
   Image? getImageWithUrl({
     required String? url,
   }) {
-    timeOfLastQuery = DateTime.now();
+    _timeOfLastQuery = DateTime.now();
 
     if (url == null) {
       return Image.asset(ImageAssets.chefYellow);
@@ -75,7 +77,7 @@ class ImageCacheManager {
       logger.e(error);
     }
 
-    Future.delayed(AppDuration.zero, () => _clearOldImageInImageCache());
+    _delay.run(_clearOldImageInImageCache);
     return image;
   }
 
@@ -86,19 +88,19 @@ class ImageCacheManager {
       _ingredientImageCache.add(image);
 
       delay.run(() {
-        completer.complete();
+        _completer.complete();
       });
     });
 
-    await Future.wait([completer.future]);
+    await Future.wait([_completer.future]);
     LoaderImage.instance.stopListen();
   }
 
   void _clearOldImageInImageCache() {
     for (ImageWithId imageWithId in _imageCache) {
       if (imageWithId.lastTimeOfUsage != null &&
-          timeOfLastQuery != null &&
-          imageWithId.lastTimeOfUsage!.add(AppDuration.imageLifetime).isBefore(timeOfLastQuery!)) {
+          _timeOfLastQuery != null &&
+          imageWithId.lastTimeOfUsage!.add(AppDuration.imageLifetime).isBefore(_timeOfLastQuery!)) {
         _imageCache.removeWhere((element) => element.id == imageWithId.id);
         logger.i('Lifetime is end. ${imageWithId.id}');
       }

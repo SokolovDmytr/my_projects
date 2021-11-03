@@ -22,13 +22,13 @@ class SwipeElement extends StatefulWidget {
 class _SwipeElementState extends State<SwipeElement> with TickerProviderStateMixin {
   late AnimationController _closeController;
   late Animation<double> _closeAnimation;
+  bool _needAnimation = false;
   double _valueOfMove = 0.0;
   bool _isSwiped = false;
   bool _localPositionMoreThenWidgetHeight = false;
-  bool _needAnimation = false;
-  double? _width;
   double? _startPosition;
   double? _startPositionY;
+  double? _width;
 
   @override
   void initState() {

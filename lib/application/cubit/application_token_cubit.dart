@@ -23,11 +23,11 @@ class ApplicationTokenCubit extends Cubit<ApplicationTokenState> {
             )) {
       return state.token!.token;
     } else {
+      logger.d('Update token');
+
       if (state.token == null) {
         return emptyString;
       }
-
-      logger.d('Update token');
 
       NetworkService.instance.init(baseUrl: baseUrl);
       final BaseHttpResponse response = await NetworkService.instance.requestWithParams(
@@ -48,6 +48,7 @@ class ApplicationTokenCubit extends Cubit<ApplicationTokenState> {
         );
 
         UserInformationService.instance.saveInformation(authToken);
+        await Future.delayed(AppDuration.fourSecond);
         return authToken.token;
       } else {
         logger.e('Update token error: ${response.error!.error}');

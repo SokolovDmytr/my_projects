@@ -1,12 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_event.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_state.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
 import 'package:fridge_yellow_team_bloc/repositories/ingredient_repository.dart';
+import 'package:fridge_yellow_team_bloc/res/const.dart';
+import 'package:fridge_yellow_team_bloc/services/cache_manager/image_cache_manager.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/error_dialog/error_dialog.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/error_dialog/error_dialog_widget.dart';
-import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/text_field_loader/text_field_loader_widget.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/models/base_http_response.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/network_service.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/res/consts.dart';
@@ -14,16 +18,21 @@ import 'package:fridge_yellow_team_bloc/services/network_service/shared/fridge_p
 import 'package:fridge_yellow_team_bloc/services/pop_up_service/pop_up_service.dart';
 import 'package:fridge_yellow_team_bloc/services/pop_up_service/server_error_pop_up_widget.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
-import 'package:fridge_yellow_team_bloc/ui/pages/home_page/bloc/home_page_event.dart';
-import 'package:fridge_yellow_team_bloc/ui/pages/home_page/bloc/home_page_state.dart';
 
-class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
-  HomePageBloc({
-    required TextFieldLoaderWidget loader,
-  }) : super(HomePageState(tempIngredients: [], loader: loader)) {
-    on<LoadIngredientsWithNameEvent>(
+class IngredientsBloc extends Bloc<IngredientsEvent, IngredientsState> {
+  IngredientsBloc()
+      : super(
+          const IngredientsState(
+            allIngredients: [],
+            ingredients: [],
+          ),
+        ) {
+    on<LoadAllIngredientsEvent>(
       (event, emit) async {
-        state.loader.rebuild!(true);
+        if (state.allIngredients.isNotEmpty) {
+          return;
+        }
+
         final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
         if (isConnection == false) {
@@ -32,16 +41,18 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
               child: ErrorDialogWidget(),
             ),
           );
-          state.loader.rebuild!(false);
           return;
         }
 
         final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
 
+        if (token == emptyString) {
+          return;
+        }
+
         NetworkService.instance.init(baseUrl: baseUrl);
-        final BaseHttpResponse response = await IngredientRepository.instance.fetchIngredientData(
+        final BaseHttpResponse response = await IngredientRepository.instance.fetchAllIngredientData(
           token: token,
-          ingredientName: event.str,
         );
 
         if (response.error == null) {
@@ -51,12 +62,13 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           ) as List<Ingredient>;
 
           emit(
-            state.copyWith(inputTempIngredients: ingredients),
+            state.copyWith(inputAllIngredients: ingredients),
           );
 
-          state.loader.rebuild!(false);
+          unawaited(
+            ImageCacheManager.instance.loadImages(ingredients: ingredients),
+          );
         } else {
-          state.loader.rebuild!(false);
           PopUpService.instance.show(
             widget: ServerErrorPopUpWidget(),
           );
@@ -64,29 +76,53 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       },
     );
 
-    on<ClearTempIngredientsEvent>(
-      (event, emit) => emit(
-        state.copyWith(
-          inputTempIngredients: [],
-        ),
-      ),
+    on<AddIngredientEvent>(
+      (event, emit) {
+        final List<Ingredient> resIngredients = List.from(state.ingredients);
+        resIngredients.add(event.ingredient);
+
+        emit(
+          state.copyWith(
+            inputIngredients: resIngredients,
+          ),
+        );
+      },
     );
 
-    on<UpdateListIngredientsWithNewLanguage>((event, emit) {
-      final List<Ingredient> allIngredients = RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().state.allIngredients;
-      final List<Ingredient> resIngredients = [];
+    on<ClearIngredientsEvent>(
+      (event, emit) {
+        emit(
+          state.copyWith(
+            inputIngredients: [],
+          ),
+        );
+      },
+    );
 
-      for (Ingredient ingredient in state.tempIngredients) {
-        for (Ingredient ingredientWithNewLocale in allIngredients) {
-          if (ingredient.i == ingredientWithNewLocale.i) {
-            resIngredients.add(ingredientWithNewLocale);
-          }
-        }
-      }
+    on<DeleteIngredientEvent>(
+      (event, emit) {
+        final List<Ingredient> resIngredients = List.from(state.ingredients);
+        resIngredients.removeWhere((element) => element.i == event.ingredientId);
+        emit(
+          state.copyWith(inputIngredients: resIngredients),
+        );
+      },
+    );
 
-      emit(
-        state.copyWith(inputTempIngredients: resIngredients),
-      );
-    });
+    on<UpdateIngredientsEvent>(
+      (event, emit) {
+        emit(
+          state.copyWith(inputIngredients: event.ingredients),
+        );
+      },
+    );
+
+    on<UpdateAllIngredientsEvent>(
+      (event, emit) {
+        emit(
+          state.copyWith(inputAllIngredients: event.ingredients),
+        );
+      },
+    );
   }
 }

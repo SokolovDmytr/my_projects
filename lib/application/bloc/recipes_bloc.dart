@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/recipes_event.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/recipes_state.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
-import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
@@ -26,7 +26,7 @@ import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dar
 class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
   RecipesBloc()
       : super(
-          RecipesState(
+          const RecipesState(
             recipes: [],
             favoriteRecipes: [],
           ),
@@ -86,7 +86,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
             response: response,
           ) as List<Recipe>;
 
-          final List<Ingredient> ingredients = RouteService.instance.navigatorKey.currentState!.context.read<IngredientCubit>().state.allIngredients;
+          final List<Ingredient> ingredients = RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().state.allIngredients;
 
           final List<Recipe> resRecipes = [];
           for (Recipe recipe in recipes) {
@@ -169,13 +169,14 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
             response: response,
           ) as List<Recipe>;
 
-          final List<Ingredient> ingredients = RouteService.instance.navigatorKey.currentState!.context.read<IngredientCubit>().state.allIngredients;
+          final List<Ingredient> allIngredients =
+              RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().state.allIngredients;
 
           final List<Recipe> resRecipes = [];
           for (Recipe recipe in recipes) {
             final List<Ingredient> resIngredients = [];
             for (Ingredient ingredient in recipe.ingredients) {
-              for (Ingredient dataIngredient in ingredients) {
+              for (Ingredient dataIngredient in allIngredients) {
                 if (ingredient.i == dataIngredient.i) {
                   resIngredients.add(
                     ingredient.copyWith(

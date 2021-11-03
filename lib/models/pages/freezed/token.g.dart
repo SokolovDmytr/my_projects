@@ -7,7 +7,7 @@ part of 'token.dart';
 // **************************************************************************
 
 _$_Token _$$_TokenFromJson(Map<String, dynamic> json) => _$_Token(
-      token: json['token'] as String? ?? json['authToken'] as String,
+      token: json['token'] == null ?  json['authToken'] as String : json['token'] as String,
       refreshToken: json['refreshToken'] as String,
       ttlToken: json['ttlToken'] as String,
       createDate: json['createDate'] == null

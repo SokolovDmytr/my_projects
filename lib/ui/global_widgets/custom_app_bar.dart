@@ -64,6 +64,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         color: AppColors.transparent,
                         child: InkWell(
                           borderRadius: BorderRadius.circular(4.0),
+                          onTap: onTapBack,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
@@ -95,7 +96,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                               ),
                             ],
                           ),
-                          onTap: onTapBack,
                         ),
                       ),
                     ),
@@ -127,8 +127,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 Transform.rotate(
                   angle: math.pi,
                   child: CustomPaint(
-                    child: Container(),
                     painter: AppBarCurvePainter(),
+                    child: Container(),
                   ),
                 ),
               ],

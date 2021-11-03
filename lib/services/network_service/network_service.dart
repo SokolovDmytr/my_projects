@@ -77,8 +77,9 @@ class NetworkService {
 
     Response? response;
     final Options options = _getDefaultOptions();
+    final String url = _baseUrl! + route;
+
     try {
-      final String url = _baseUrl! + route;
       switch (type) {
         case HttpType.httpGet:
           response = await _dio.get(
@@ -96,7 +97,7 @@ class NetworkService {
           break;
       }
 
-      logger.d('Response status code ${response.statusCode}');
+      logger.d('Response status code ${response.statusCode} for request to $url');
       if (response.statusCode == null || response.statusCode! >= 300) {
         logger.e(response.data);
         return BaseHttpResponse(
@@ -111,7 +112,7 @@ class NetworkService {
         response: json.decode(response.data),
       );
     } on DioError catch (error) {
-      logger.e(error);
+      logger.e('$error\nFor request to $url\n');
 
       return BaseHttpResponse(
         error: IBaseHttpError(

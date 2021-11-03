@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_event.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/on_boarding_screen_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
@@ -14,6 +16,7 @@ import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_selectors.dart';
 import 'package:fridge_yellow_team_bloc/services/user_information_service/user_information_service.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_button.dart';
+import 'package:provider/src/provider.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   OnBoardingScreen() : super(key: UniqueKey());
@@ -25,6 +28,13 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   int _currentIndexDots = 0;
   final CarouselController _buttonCarouselController = CarouselController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    context.read<IngredientsBloc>().add(LoadAllIngredientsEvent(),);
+  }
 
   @override
   Widget build(BuildContext context) {
