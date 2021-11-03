@@ -67,63 +67,66 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
         borderRadius: BorderRadius.circular(10.0),
         border: Border.all(color: widget.errorColor ?? AppColors.transparent),
       ),
-      child: TextFormField(
-        key: widget.key,
-        obscureText: passwordVisible,
-        onFieldSubmitted: widget.onSubmitted,
-        controller: widget.controller,
-        focusNode: widget.focusNode ?? FocusNode(),
-        onChanged: widget.onChanged,
-        textAlignVertical: TextAlignVertical.center,
-        style: AppFonts.medium16Height24TextStyle,
-        decoration: InputDecoration(
-          isDense: true,
-          prefixIconConstraints: BoxConstraints(
-            maxHeight: widget.needPrefix ? 18.0 : 0.0,
-            minWidth: 16.0,
-          ),
-          contentPadding: const EdgeInsets.only(
-            top: 15.0,
-            bottom: 8.0,
-          ),
-          prefixIcon: widget.needPrefix
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 9.0,
-                  ),
-                  child: Icon(
-                    Icons.search_sharp,
-                    color: AppColors.black36,
-                  ),
-                )
-              : const SizedBox(),
-          suffixIcon: widget.needSuffix
-              ? widget.loader != null
-                  ? widget.loader
-                  : widget.needShowButton
-                      ? Padding(
-                          padding: const EdgeInsets.only(right: 16.0, top: 10.0, left: 16.0),
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                passwordVisible = !passwordVisible;
-                              });
-                            },
-                            child: Text(
-                              _language.buttonShow,
-                              style: AppFonts.size16RegMarigold,
+      child: Directionality(
+        textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
+        child: TextFormField(
+          key: widget.key,
+          obscureText: passwordVisible,
+          onFieldSubmitted: widget.onSubmitted,
+          controller: widget.controller,
+          focusNode: widget.focusNode ?? FocusNode(),
+          onChanged: widget.onChanged,
+          textAlignVertical: TextAlignVertical.center,
+          style: AppFonts.medium16Height24TextStyle,
+          decoration: InputDecoration(
+            isDense: true,
+            prefixIconConstraints: BoxConstraints(
+              maxHeight: widget.needPrefix ? 18.0 : 0.0,
+              minWidth: 16.0,
+            ),
+            contentPadding: const EdgeInsets.only(
+              top: 15.0,
+              bottom: 8.0,
+            ),
+            prefixIcon: widget.needPrefix
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 9.0,
+                    ),
+                    child: Icon(
+                      Icons.search_sharp,
+                      color: AppColors.black36,
+                    ),
+                  )
+                : const SizedBox(),
+            suffixIcon: widget.needSuffix
+                ? widget.loader != null
+                    ? widget.loader
+                    : widget.needShowButton
+                        ? Padding(
+                            padding: const EdgeInsets.only(right: 16.0, top: 10.0, left: 16.0),
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  passwordVisible = !passwordVisible;
+                                });
+                              },
+                              child: Text(
+                                _language.buttonShow,
+                                style: AppFonts.size16RegMarigold,
+                              ),
                             ),
-                          ),
-                        )
-                      : const SizedBox()
-              : const SizedBox(),
-          hintText: widget.hintText,
-          hintStyle: widget.hintStyle,
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.transparent),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.transparent),
+                          )
+                        : const SizedBox()
+                : const SizedBox(),
+            hintText: widget.hintText,
+            hintStyle: widget.hintStyle,
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.transparent),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.transparent),
+            ),
           ),
         ),
       ),

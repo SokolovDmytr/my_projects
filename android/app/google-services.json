@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "150747223185-j35cn3bf7c1mru76b1sq8feeo73g0mlr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appvesto.fridge_yellow_team",
+            "certificate_hash": "12f8fc47d5120dda955c025eff471e3248c0dddc"
+          }
+        },
+        {
           "client_id": "150747223185-rf7hutfkih64h5jbl46l9chqufm3cqit.apps.googleusercontent.com",
           "client_type": 3
         }
