@@ -20,7 +20,6 @@ import 'package:fridge_yellow_team_bloc/services/pop_up_service/server_error_pop
 import 'package:fridge_yellow_team_bloc/services/route_service/route_selectors.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
 import 'package:fridge_yellow_team_bloc/services/user_information_service/user_information_service.dart';
-import 'package:fridge_yellow_team_bloc/ui/pages/auth_page/cubit/auth_page_state.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/settings_page/cubit/settings_page_state.dart';
 
 class SettingsPageCubit extends Cubit<SettingsPageState> {
@@ -54,11 +53,9 @@ class SettingsPageCubit extends Cubit<SettingsPageState> {
       UserInformationService.instance.clear();
       DialogService.instance.close();
       RouteService.instance.navigatorKey.currentState!.context.read<IngredientCubit>().clearIngredients();
-      RouteService.instance.navigatorKey.currentState!.context.read<RecipesBloc>().add(
-            ClearAllListRecipesEvent(),
-          );
+      RouteService.instance.navigatorKey.currentState!.context.read<RecipesBloc>().add(ClearAllListRecipesEvent());
+      RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().clearToken();
 
-      RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().saveToken(AuthPageState().token);
       RouteSelectors.goToAuthPage().call();
     } else {
       DialogService.instance.close();

@@ -29,18 +29,19 @@ class _SimilarRecipesBlockState extends State<SimilarRecipesBlock> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: FlutterDictionary.instance.isRTL
-              ? const EdgeInsets.only(
-                  top: 40.0,
-                  right: 20.0,
-                )
-              : const EdgeInsets.only(
-                  top: 40.0,
-                  left: 20.0,
-                ),
-          child: Text(
-            _language.similarRecipes,
-            style: AppFonts.normalBlackTextStyle,
+          padding: const EdgeInsets.only(
+            top: 40.0,
+            left: 20.0,
+            right: 20.0,
+          ),
+          child: Row(
+            mainAxisAlignment: FlutterDictionary.instance.isRTL ? MainAxisAlignment.end : MainAxisAlignment.start,
+            children: [
+              Text(
+                _language.similarRecipes,
+                style: AppFonts.normalBlackTextStyle,
+              ),
+            ],
           ),
         ),
         SizedBox(
@@ -49,43 +50,33 @@ class _SimilarRecipesBlockState extends State<SimilarRecipesBlock> {
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: widget.arguments.recipes.length,
-            itemBuilder: (context, index) =>
-            widget.arguments.index == index ? const SizedBox():
-            Container(
-              height: 125.0,
-              width: 350.0,
-              margin: FlutterDictionary.instance.isRTL
-                  ? const EdgeInsets.only(right: 20.0, bottom: 10.0)
-                  : const EdgeInsets.only(left: 20.0, bottom: 10.0),
-              child: InkWell(
-                onTap: () {
-                  // if (vm.isPreviousFavourite) {
-                  //   vm.saveRecipe(vm.recipes[index]);
-                  //   vm.saveRecipes(vm.allFavouritesRecipesList, vm.recipes[index]);
-                  // } else {
-                  //   vm.saveRecipe(vm.recipes[index]);
-                  //   vm.saveRecipes(vm.allRecipesList, vm.recipes[index]);
-                  // }
-                  RouteSelectors.goToScreenRecipePageReplace(
-                    arguments: ScreenRecipeArguments(
-                      ingredients: widget.arguments.ingredients,
-                      index: index,
-                      recipes: widget.arguments.recipes,
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            itemBuilder: (context, index) => widget.arguments.index == index
+                ? const SizedBox()
+                : SizedBox(
+                    height: 125.0,
+                    width: 350.0,
+                    child: InkWell(
+                      onTap: () {
+                        RouteSelectors.goToScreenRecipePageReplace(
+                          arguments: ScreenRecipeArguments(
+                            index: index,
+                            recipes: widget.arguments.recipes,
+                          ),
+                        ).call();
+                      },
+                      child: Padding(
+                        padding: index == widget.arguments.recipes.length - 1
+                            ? const EdgeInsets.only(top: 20.0, bottom: 24.0)
+                            : const EdgeInsets.only(top: 20.0, bottom: 24.0, right: 20.0),
+                        child: RecipeElement(
+                          needOpenFunction: false,
+                          recipe: widget.arguments.recipes[index],
+                          needFavoriteIcon: false,
+                        ),
+                      ),
                     ),
-                  ).call();
-                },
-                child: Padding(
-                  padding: index == widget.arguments.recipes.length - 1
-                      ? const EdgeInsets.only(top: 20.0, bottom: 24.0, right: 20.0)
-                      : const EdgeInsets.only(top: 20.0, bottom: 24.0),
-                  child: RecipeElement(
-                    needOpenFunction: false,
-                    recipe: widget.arguments.recipes[index],
-                    needFavoriteIcon: false,
                   ),
-                ),
-              ),
-            ),
           ),
         ),
       ],

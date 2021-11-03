@@ -25,7 +25,6 @@ class RecipesPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RecipesPageLanguage language = FlutterDictionary.instance.language?.recipesPageLanguage ?? en.recipesPageLanguage;
-    final List<Ingredient> ingredients = BlocProvider.of<IngredientCubit>(context).state.ingredients;
     return BlocSelector<RecipesBloc, RecipesState, List<Recipe>>(
       selector: (RecipesState state) {
         return state.recipes;
@@ -71,7 +70,6 @@ class RecipesPageView extends StatelessWidget {
                           arguments: ScreenRecipeArguments(
                             recipes: recipes,
                             index: index,
-                            ingredients: ingredients,
                           ),
                         ).call();
                       },

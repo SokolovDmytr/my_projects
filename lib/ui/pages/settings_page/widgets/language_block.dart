@@ -27,7 +27,7 @@ class _LanguageBlockState extends State<LanguageBlock> {
       padding: const EdgeInsets.only(bottom: 30.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: FlutterDictionary.instance.isRTL ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 16.0),
@@ -47,9 +47,11 @@ class _LanguageBlockState extends State<LanguageBlock> {
                 child: InkWell(
                   borderRadius: BorderRadius.circular(10.0),
                   onTap: () {
-                    // FlutterDictionary.instance.setNewLanguage(SupportedLocales.instance.getSupportedLocales![index].toString());
-                    // context.read<LanguageCubit>().updateLanguage();
-                    context.read<LanguageBloc>().add(ChangeLanguageEvent(newLanguage: SupportedLocales.instance.getSupportedLocales![index].toString()));
+                    context.read<LanguageBloc>().add(
+                          ChangeLanguageEvent(
+                            newLanguage: SupportedLocales.instance.getSupportedLocales![index].toString(),
+                          ),
+                        );
                   },
                   child: Container(
                     alignment: Alignment.center,

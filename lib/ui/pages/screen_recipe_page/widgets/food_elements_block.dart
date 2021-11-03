@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fridge_yellow_team_bloc/application/cubit/ingredients_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/screen_recipe_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
@@ -8,13 +9,12 @@ import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/custom_network_image.dart';
+import 'package:provider/src/provider.dart';
 
 class FoodElementsBlock extends StatefulWidget {
-  final List<Ingredient> ingredientsStored;
   final Recipe recipe;
 
   const FoodElementsBlock({
-    required this.ingredientsStored,
     required this.recipe,
     Key? key,
   }) : super(key: key);
@@ -40,7 +40,7 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
     _createAvailableWidgetsList();
     _createMissingWidgetsList();
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: FlutterDictionary.instance.isRTL ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
@@ -73,7 +73,7 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
 
   void _createMissingAvailableLists() {
     final List<Ingredient> tempList = [];
-    if (widget.ingredientsStored.isEmpty) {
+    if (context.read<IngredientCubit>().state.ingredients.isEmpty) {
       for (int indexRecipe = 0; indexRecipe < widget.recipe.ingredients.length; indexRecipe++) {
         missingIngredients.add(widget.recipe.ingredients[indexRecipe]);
       }
@@ -81,8 +81,8 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
     }
     for (int indexRecipe = 0; indexRecipe < widget.recipe.ingredients.length; indexRecipe++) {
       tempList.clear();
-      for (int indexStored = 0; indexStored < widget.ingredientsStored.length; indexStored++) {
-        if (widget.recipe.ingredients[indexRecipe].name == widget.ingredientsStored[indexStored].name) {
+      for (int indexStored = 0; indexStored < context.read<IngredientCubit>().state.ingredients.length; indexStored++) {
+        if (widget.recipe.ingredients[indexRecipe].name == context.read<IngredientCubit>().state.ingredients[indexStored].name) {
           tempList.add(widget.recipe.ingredients[indexRecipe]);
           availableIngredients.addAll(tempList);
         }
@@ -107,10 +107,12 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
       missingWidgets.add(
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Row(
+                textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
                 children: [
                   SizedBox(
                     key: ValueKey(missingIngredients[index].i),
@@ -161,6 +163,7 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Row(
+                textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
                 children: [
                   SizedBox(
                     key: ValueKey(availableIngredients[index].i),

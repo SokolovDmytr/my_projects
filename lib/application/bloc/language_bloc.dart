@@ -80,23 +80,31 @@ class LanguageBloc extends Bloc<ChangeLanguageEvent, LanguageState> {
             response: responseFavoriteRecipe,
           );
 
+          final List<Recipe> resRecipes = [];
           for (Recipe recipe in recipes) {
-            recipe = recipe.copyWith(isFavorite: true);
+            final List<Ingredient> resIngredients = [];
             for (Ingredient ingredient in recipe.ingredients) {
               for (Ingredient dataIngredient in ingredients) {
                 if (ingredient.i == dataIngredient.i) {
-                  ingredient = ingredient.copyWith(
-                    name: dataIngredient.name,
-                    image: dataIngredient.image,
+                  resIngredients.add(
+                    ingredient.copyWith(
+                      name: dataIngredient.name,
+                      image: dataIngredient.image,
+                    ),
                   );
-                  break;
                 }
               }
             }
+            resRecipes.add(
+              recipe.copyWith(
+                isFavorite: true,
+                ingredients: resIngredients,
+              ),
+            );
           }
 
           RouteService.instance.navigatorKey.currentState!.context.read<RecipesBloc>().add(
-                UpdateRecipesEvent(favouriteRecipes: recipes as List<Recipe>),
+                UpdateRecipesEvent(favouriteRecipes: resRecipes),
               );
 
           final List<Ingredient> oldLocaleIngredients =

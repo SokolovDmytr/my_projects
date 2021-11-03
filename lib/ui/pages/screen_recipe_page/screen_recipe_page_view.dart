@@ -211,7 +211,6 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                             child: Padding(
                               padding: const EdgeInsets.only(left: 16.0),
                               child: Row(
-                                mainAxisSize: MainAxisSize.min,
                                 textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
                                 children: [
                                   Container(
@@ -267,19 +266,25 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 20.0,
-                                    bottom: 25.0,
-                                  ),
-                                  child: Text(
-                                    widget.arguments.recipes[widget.arguments.index].name,
-                                    style: AppFonts.normalBlackHeight30ShadowTextStyle,
-                                  ),
+                                Row(
+                                  textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: 20.0,
+                                        bottom: 25.0,
+                                      ),
+                                      child: Text(
+                                        widget.arguments.recipes[widget.arguments.index].name,
+                                        style: AppFonts.normalBlackHeight30ShadowTextStyle,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 35.0),
                                   child: Row(
+                                    textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
                                     children: [
                                       _getParameterOfRecipeWidget(
                                         imageAssets: ImageAssets.timeIcon,
@@ -305,7 +310,6 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                                 ),
                                 FoodElementsBlock(
                                   recipe: widget.arguments.recipes[widget.arguments.index],
-                                  ingredientsStored: widget.arguments.ingredients,
                                 ),
                                 CookingBlock(recipe: widget.arguments.recipes[widget.arguments.index]),
                                 CongratulationBlock(),
@@ -344,17 +348,13 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
   }) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 2.0),
-      height: 20.0,
-      width: 80.0,
       child: Row(
         textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
-        mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
             imageAssets,
           ),
-          Flexible(
-            child: Container(
+          Container(
               margin: const EdgeInsets.only(
                 left: 4.0,
                 right: 4.0,
@@ -362,11 +362,8 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
               child: Text(
                 value,
                 style: textStyle,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
               ),
             ),
-          ),
           text == null
               ? const SizedBox()
               : Text(
