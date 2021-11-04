@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
 
 class IngredientsEvent {
@@ -37,5 +39,21 @@ class UpdateAllIngredientsEvent extends IngredientsEvent {
 
   const UpdateAllIngredientsEvent({
     required this.ingredients,
+  });
+}
+
+class QuientlyFetchAllIngredientsEvent extends IngredientsEvent {
+  final Completer completer;
+
+  const QuientlyFetchAllIngredientsEvent({
+    required this.completer,
+  });
+}
+
+class RollbackToPrevIngredientsStateEvent extends IngredientsEvent {
+  final List<Ingredient> allIngredients;
+
+  const RollbackToPrevIngredientsStateEvent({
+    required this.allIngredients,
   });
 }

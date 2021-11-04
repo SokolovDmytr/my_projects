@@ -127,5 +127,61 @@ class IngredientsBloc extends Bloc<IngredientsEvent, IngredientsState> {
         );
       },
     );
+
+    on<QuientlyFetchAllIngredientsEvent>((event, emit) async {
+      final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
+
+      final BaseHttpResponse responseWithIngredient = await repository.fetchAllIngredientData(token: token);
+
+      if (responseWithIngredient.error == null) {
+        final List<dynamic> ingredients = FridgeParser.instance.parseList(
+          exampleObject: Ingredient,
+          response: responseWithIngredient,
+        );
+
+        final List<Ingredient> oldLocaleIngredients = state.ingredients;
+        final List<Ingredient> newLocaleIngredients = [];
+        for (Ingredient oldLocaleIngredient in oldLocaleIngredients) {
+          for (Ingredient newLocaleIngredient in ingredients) {
+            if (oldLocaleIngredient.id == newLocaleIngredient.id) {
+              newLocaleIngredients.add(newLocaleIngredient);
+              break;
+            }
+          }
+        }
+
+        emit(
+          state.copyWith(
+            inputAllIngredients: ingredients as List<Ingredient>,
+            inputIngredients: newLocaleIngredients,
+          ),
+        );
+        event.completer.complete(true);
+      }else{
+        event.completer.complete(false);
+      }
+    });
+
+    on<RollbackToPrevIngredientsStateEvent>(
+        (event, emit){
+          final List<Ingredient> oldLocaleIngredients = state.ingredients;
+          final List<Ingredient> newLocaleIngredients = [];
+          for (Ingredient oldLocaleIngredient in oldLocaleIngredients) {
+            for (Ingredient newLocaleIngredient in event.allIngredients) {
+              if (oldLocaleIngredient.id == newLocaleIngredient.id) {
+                newLocaleIngredients.add(newLocaleIngredient);
+                break;
+              }
+            }
+          }
+
+          emit(
+            state.copyWith(
+              inputAllIngredients: event.allIngredients,
+              inputIngredients: newLocaleIngredients,
+            ),
+          );
+        }
+    );
   }
 }

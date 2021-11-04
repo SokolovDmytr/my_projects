@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/recipe.dart';
 
@@ -38,5 +40,13 @@ class UpdateRecipesEvent extends RecipesEvent {
 
   const UpdateRecipesEvent({
     required this.favouriteRecipes,
+  });
+}
+
+class QuientlyFetchFavoritesRecipeEvent extends RecipesEvent {
+  final Completer completer;
+
+  const QuientlyFetchFavoritesRecipeEvent({
+    required this.completer,
   });
 }

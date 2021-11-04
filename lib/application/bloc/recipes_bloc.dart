@@ -316,5 +316,48 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
         state.copyWith(inputFavoriteRecipes: event.favouriteRecipes),
       );
     });
+
+    on<QuientlyFetchFavoritesRecipeEvent>((event, emit) async {
+      final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
+      final BaseHttpResponse responseFavoriteRecipe = await repository.fetchFavoriteRecipeData(token: token);
+
+      if (responseFavoriteRecipe.error == null) {
+        final List<dynamic> recipes = FridgeParser.instance.parseList(
+          exampleObject: Recipe,
+          response: responseFavoriteRecipe,
+        );
+        final List<Ingredient> ingredients = RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().state.allIngredients;
+
+        final List<Recipe> resRecipes = [];
+
+        for (Recipe recipe in recipes) {
+          final List<Ingredient> resIngredients = [];
+          for (Ingredient ingredient in recipe.ingredients) {
+            for (Ingredient dataIngredient in ingredients) {
+              if (ingredient.i == dataIngredient.i) {
+                resIngredients.add(
+                  ingredient.copyWith(
+                    name: dataIngredient.name,
+                    image: dataIngredient.image,
+                  ),
+                );
+              }
+            }
+          }
+
+          resRecipes.add(
+            recipe.copyWith(
+              isFavorite: true,
+              ingredients: resIngredients,
+            ),
+          );
+        }
+
+        emit(state.copyWith(inputFavoriteRecipes: resRecipes),);
+        event.completer.complete(true);
+      }else{
+        event.completer.complete(false);
+      }
+    });
   }
 }

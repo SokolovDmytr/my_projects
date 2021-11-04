@@ -178,15 +178,16 @@ class AuthPageCubit extends Cubit<AuthPageState> {
             DialogService.instance.close();
 
             UserInformationService.instance.isFirstVisitApp() ? RouteSelectors.goToOnBoardingPage().call() : RouteSelectors.goToHomePage().call();
-          } else {
-            DialogService.instance.close();
-
-            PopUpService.instance.show(
-              widget: ServerErrorPopUpWidget(),
-            );
+            return;
           }
         }
       }
+
+      DialogService.instance.close();
+
+      PopUpService.instance.show(
+        widget: ServerErrorPopUpWidget(),
+      );
     } catch (error) {
       DialogService.instance.close();
       logger.e(error);
@@ -249,15 +250,16 @@ class AuthPageCubit extends Cubit<AuthPageState> {
             DialogService.instance.close();
 
             UserInformationService.instance.isFirstVisitApp() ? RouteSelectors.goToOnBoardingPage().call() : RouteSelectors.goToHomePage().call();
-          } else {
-            DialogService.instance.close();
-
-            PopUpService.instance.show(
-              widget: ServerErrorPopUpWidget(),
-            );
+            return;
           }
         }
       }
+
+      DialogService.instance.close();
+
+      PopUpService.instance.show(
+        widget: ServerErrorPopUpWidget(),
+      );
     } catch (error) {
       DialogService.instance.close();
       logger.e(error);

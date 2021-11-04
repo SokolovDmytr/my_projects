@@ -75,7 +75,7 @@ class LoaderImage {
       },
       onDone: () => _completer!.complete(),
     );
-    await Future.wait([_completer!.future]);
+    await _completer!.future;
 
     isolate.kill();
     return images;
