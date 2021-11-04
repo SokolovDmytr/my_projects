@@ -9,6 +9,7 @@ import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubi
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_delegate.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/models/supported_locales.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/models/notification_message.dart';
+import 'package:fridge_yellow_team_bloc/repositories/auth_repository.dart';
 import 'package:fridge_yellow_team_bloc/repositories/ingredient_repository.dart';
 import 'package:fridge_yellow_team_bloc/repositories/recipe_repository.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
@@ -88,12 +89,15 @@ class _ApplicationState extends State<Application> {
           value: _notificationPageCubit,
         ),
         BlocProvider(
-          create: (BuildContext _) => ApplicationTokenCubit(),
+          create: (BuildContext _) => ApplicationTokenCubit(
+            repository: AuthRepository.instance,
+          ),
         ),
         BlocProvider(
           lazy: false,
-          create: (BuildContext _) => IngredientsBloc(repository: IngredientRepository.instance,)
-            ..add(
+          create: (BuildContext _) => IngredientsBloc(
+            repository: IngredientRepository.instance,
+          )..add(
               LoadAllIngredientsEvent(),
             ),
         ),
