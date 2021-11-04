@@ -58,8 +58,14 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
   }
 
   @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if(_needUpdateMissingIngredients){
+    if (_needUpdateMissingIngredients) {
       _missingIngredients = CustomComparator.getMissingIngredients(
         recipe: widget.recipe,
         ingredients: context.read<IngredientsBloc>().state.ingredients,
@@ -68,7 +74,10 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
     }
     _language = FlutterDictionary.instance.language?.favouritesPageLanguage ?? en.favouritesPageLanguage;
     return BlocListener<LanguageBloc, LanguageState>(
-      listener: (BuildContext _, LanguageState __,) {
+      listener: (
+        BuildContext _,
+        LanguageState __,
+      ) {
         _needUpdateMissingIngredients = true;
       },
       child: AnimatedSize(

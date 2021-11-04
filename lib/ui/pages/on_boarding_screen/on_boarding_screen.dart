@@ -33,7 +33,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   void initState() {
     super.initState();
 
-    context.read<IngredientsBloc>().add(LoadAllIngredientsEvent(),);
+    context.read<IngredientsBloc>().add(
+          LoadAllIngredientsEvent(),
+        );
   }
 
   @override
