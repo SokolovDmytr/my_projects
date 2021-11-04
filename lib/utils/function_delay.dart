@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 
 class FunctionDelay {
   final Duration duration;
-  Timer? timer;
+  Timer? _timer;
 
   FunctionDelay({
     required this.duration,
   });
 
   void run(VoidCallback action) {
-    if (timer != null) {
-      timer!.cancel();
+    if (_timer != null) {
+      _timer!.cancel();
     }
-    timer = Timer(
+    _timer = Timer(
       duration,
       action,
     );

@@ -1,6 +1,7 @@
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/recipe.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/token.dart';
+import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/models/base_http_response.dart';
 
 class FridgeParser {
@@ -16,8 +17,12 @@ class FridgeParser {
   }) {
     if (exampleObject == Recipe) {
       final List<Recipe> result = [];
-      for (var item in response.response) {
-        result.add(Recipe.fromJson(item));
+      try {
+        for (var item in response.response) {
+          result.add(Recipe.fromJson(item));
+        }
+      }catch(error){
+        logger.e('Try parse $exampleObject: $error');
       }
 
       return result;
@@ -25,10 +30,14 @@ class FridgeParser {
 
     if (exampleObject == Ingredient) {
       final List<Ingredient> result = [];
-      for (var item in response.response) {
-        result.add(
-          Ingredient.fromJson(item),
-        );
+      try {
+        for (var item in response.response) {
+          result.add(
+            Ingredient.fromJson(item),
+          );
+        }
+      }catch(error){
+        logger.e('Try parse $exampleObject: $error');
       }
 
       return result;

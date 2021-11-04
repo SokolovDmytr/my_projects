@@ -72,13 +72,15 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
           ids: ids,
         );
 
-        List<Recipe>? favoriteRecipes;
+        List<Recipe> favoriteRecipes = [];
         if (state.favoriteRecipes.isEmpty) {
           final BaseHttpResponse responseWithFavoriteRecipe = await repository.fetchFavoriteRecipeData(token: token);
-          favoriteRecipes = FridgeParser.instance.parseList(
-            exampleObject: Recipe,
-            response: responseWithFavoriteRecipe,
-          ) as List<Recipe>;
+          if (responseWithFavoriteRecipe.error == null) {
+            favoriteRecipes = FridgeParser.instance.parseList(
+              exampleObject: Recipe,
+              response: responseWithFavoriteRecipe,
+            ) as List<Recipe>;
+          }
         } else {
           favoriteRecipes = state.favoriteRecipes;
         }
@@ -353,9 +355,11 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
           );
         }
 
-        emit(state.copyWith(inputFavoriteRecipes: resRecipes),);
+        emit(
+          state.copyWith(inputFavoriteRecipes: resRecipes),
+        );
         event.completer.complete(true);
-      }else{
+      } else {
         event.completer.complete(false);
       }
     });
