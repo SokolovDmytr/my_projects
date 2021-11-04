@@ -1,3 +1,4 @@
+import 'package:fridge_yellow_team_bloc/repositories/repositories_interface/i_auth_repository.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/models/base_http_response.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/network_service.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/res/consts.dart';
@@ -10,13 +11,14 @@ import 'package:fridge_yellow_team_bloc/services/network_service/res/request_par
 import 'package:fridge_yellow_team_bloc/services/network_service/res/request_params/registration_google_params.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/res/request_params/registration_params.dart';
 
-class AuthRepository {
+class AuthRepository implements IAuthRepository{
   static final AuthRepository _instance = AuthRepository._();
 
   static AuthRepository get instance => _instance;
 
   AuthRepository._();
 
+  @override
   Future<BaseHttpResponse> register({
     required String email,
     required String firstName,
@@ -35,6 +37,7 @@ class AuthRepository {
     );
   }
 
+  @override
   Future<BaseHttpResponse> logIn({
     required String email,
     required String password,
@@ -51,6 +54,7 @@ class AuthRepository {
     );
   }
 
+  @override
   Future<BaseHttpResponse> logOut({
     required String token,
   }) async {
@@ -65,6 +69,7 @@ class AuthRepository {
     );
   }
 
+  @override
   Future<BaseHttpResponse> signInWithGoogle({
     required String email,
     required String googleToken,
@@ -81,6 +86,7 @@ class AuthRepository {
     );
   }
 
+  @override
   Future<BaseHttpResponse> registerWithGoogle({
     required String email,
     required String googleToken,
@@ -97,6 +103,7 @@ class AuthRepository {
     );
   }
 
+  @override
   Future<BaseHttpResponse> sendEmail({
     required String email,
   }) async {
@@ -111,6 +118,7 @@ class AuthRepository {
     );
   }
 
+  @override
   Future<BaseHttpResponse> sendCode({
     required String email,
     required String code,
@@ -127,6 +135,7 @@ class AuthRepository {
     );
   }
 
+  @override
   Future<BaseHttpResponse> saveNewPassword({
     required String email,
     required String password,

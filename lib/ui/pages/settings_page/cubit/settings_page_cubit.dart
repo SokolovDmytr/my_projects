@@ -7,7 +7,7 @@ import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubi
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
-import 'package:fridge_yellow_team_bloc/repositories/auth_repository.dart';
+import 'package:fridge_yellow_team_bloc/repositories/repositories_interface/i_auth_repository.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/error_dialog/error_dialog.dart';
@@ -24,7 +24,11 @@ import 'package:fridge_yellow_team_bloc/services/user_information_service/user_i
 import 'package:fridge_yellow_team_bloc/ui/pages/settings_page/cubit/settings_page_state.dart';
 
 class SettingsPageCubit extends Cubit<SettingsPageState> {
-  SettingsPageCubit() : super(SettingsPageState());
+  IAuthRepository repository;
+
+  SettingsPageCubit({
+    required this.repository,
+  }) : super(SettingsPageState());
 
   Future<void> logOut() async {
     final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
@@ -47,7 +51,7 @@ class SettingsPageCubit extends Cubit<SettingsPageState> {
       return;
     }
 
-    final BaseHttpResponse response = await AuthRepository.instance.logOut(
+    final BaseHttpResponse response = await repository.logOut(
       token: RouteService.instance.navigatorKey.currentContext!.read<ApplicationTokenCubit>().state.token!.token,
     );
     if (response.error == null) {

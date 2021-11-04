@@ -4,7 +4,7 @@ import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/token.dart';
-import 'package:fridge_yellow_team_bloc/repositories/auth_repository.dart';
+import 'package:fridge_yellow_team_bloc/repositories/repositories_interface/i_auth_repository.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/error_dialog/error_dialog.dart';
@@ -26,7 +26,11 @@ import 'package:fridge_yellow_team_bloc/ui/pages/auth_page/cubit/auth_page_state
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthPageCubit extends Cubit<AuthPageState> {
-  AuthPageCubit() : super(AuthPageState.init());
+  final IAuthRepository repository;
+
+  AuthPageCubit({
+    required this.repository,
+  }) : super(AuthPageState.init());
 
   Future<void> logIn(String email, String password) async {
     final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
@@ -50,7 +54,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
       return;
     }
 
-    final BaseHttpResponse response = await AuthRepository.instance.logIn(
+    final BaseHttpResponse response = await repository.logIn(
       email: email,
       password: password,
     );
@@ -95,7 +99,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
       return;
     }
 
-    final BaseHttpResponse response = await AuthRepository.instance.register(
+    final BaseHttpResponse response = await repository.register(
       email: email,
       firstName: firstName,
       password: password,
@@ -157,7 +161,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
         final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
 
         if (googleSignInAuthentication.accessToken != null) {
-          final BaseHttpResponse response = await AuthRepository.instance.signInWithGoogle(
+          final BaseHttpResponse response = await repository.signInWithGoogle(
             email: googleSignInAccount.email,
             googleToken: googleSignInAuthentication.accessToken!,
           );
@@ -228,7 +232,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
         final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
 
         if (googleSignInAuthentication.accessToken != null) {
-          final BaseHttpResponse response = await AuthRepository.instance.registerWithGoogle(
+          final BaseHttpResponse response = await repository.registerWithGoogle(
             email: googleSignInAccount.email,
             googleToken: googleSignInAuthentication.accessToken!,
           );
@@ -273,7 +277,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
       return;
     }
 
-    final BaseHttpResponse response = await AuthRepository.instance.sendEmail(email: email);
+    final BaseHttpResponse response = await repository.sendEmail(email: email);
     if (response.error == null) {
       DialogService.instance.close();
 
@@ -298,86 +302,86 @@ class AuthPageCubit extends Cubit<AuthPageState> {
       );
     }
   }
-}
 
-Future<void> sendCode({
-  required String code,
-  required String email,
-}) async {
-  final bool isConnection = await NetworkService.instance.checkInternetConnection();
+  Future<void> sendCode({
+    required String code,
+    required String email,
+  }) async {
+    final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
-  if (isConnection == false) {
-    DialogService.instance.close();
+    if (isConnection == false) {
+      DialogService.instance.close();
 
-    DialogService.instance.show(
-      dialog: ErrorDialog(
-        child: ErrorDialogWidget(),
-      ),
-    );
-    return;
-  }
-
-  final BaseHttpResponse response = await AuthRepository.instance.sendCode(
-    email: email,
-    code: code,
-  );
-
-  if (response.error == null) {
-    DialogService.instance.close();
-
-    DialogService.instance.show(
-      dialog: ForgotPasswordDialog(
-        child: EnterCodeDialogWidget(
-          onTapSend: (String? password) {
-            if (password != null) {
-              saveNewPassword(
-                email: email,
-                password: password,
-              );
-            }
-          },
+      DialogService.instance.show(
+        dialog: ErrorDialog(
+          child: ErrorDialogWidget(),
         ),
-      ),
-    );
-  } else {
-    DialogService.instance.close();
+      );
+      return;
+    }
 
-    DialogService.instance.show(
-      dialog: ErrorDialog(
-        child: ErrorDialogWidget(
-          text: response.error!.error,
+    final BaseHttpResponse response = await repository.sendCode(
+      email: email,
+      code: code,
+    );
+
+    if (response.error == null) {
+      DialogService.instance.close();
+
+      DialogService.instance.show(
+        dialog: ForgotPasswordDialog(
+          child: EnterCodeDialogWidget(
+            onTapSend: (String? password) {
+              if (password != null) {
+                saveNewPassword(
+                  email: email,
+                  password: password,
+                );
+              }
+            },
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      DialogService.instance.close();
+
+      DialogService.instance.show(
+        dialog: ErrorDialog(
+          child: ErrorDialogWidget(
+            text: response.error!.error,
+          ),
+        ),
+      );
+    }
   }
-}
 
-Future<void> saveNewPassword({
-  required String email,
-  required String password,
-}) async {
-  final bool isConnection = await NetworkService.instance.checkInternetConnection();
+  Future<void> saveNewPassword({
+    required String email,
+    required String password,
+  }) async {
+    final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
-  if (isConnection == false) {
+    if (isConnection == false) {
+      DialogService.instance.close();
+
+      DialogService.instance.show(
+        dialog: ErrorDialog(
+          child: ErrorDialogWidget(),
+        ),
+      );
+      return;
+    }
+
+    final BaseHttpResponse response = await repository.saveNewPassword(
+      email: email,
+      password: password,
+    );
+
     DialogService.instance.close();
-
-    DialogService.instance.show(
-      dialog: ErrorDialog(
-        child: ErrorDialogWidget(),
-      ),
-    );
-    return;
-  }
-
-  final BaseHttpResponse response = await AuthRepository.instance.saveNewPassword(
-    email: email,
-    password: password,
-  );
-
-  DialogService.instance.close();
-  if (response.error != null) {
-    PopUpService.instance.show(
-      widget: ServerErrorPopUpWidget(),
-    );
+    if (response.error != null) {
+      PopUpService.instance.show(
+        widget: ServerErrorPopUpWidget(),
+      );
+    }
   }
 }

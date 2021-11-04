@@ -5,7 +5,7 @@ import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_event.dart'
 import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_state.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
-import 'package:fridge_yellow_team_bloc/repositories/ingredient_repository.dart';
+import 'package:fridge_yellow_team_bloc/repositories/repositories_interface/i_ingredient_repository.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/cache_manager/image_cache_manager.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
@@ -20,8 +20,11 @@ import 'package:fridge_yellow_team_bloc/services/pop_up_service/server_error_pop
 import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
 
 class IngredientsBloc extends Bloc<IngredientsEvent, IngredientsState> {
-  IngredientsBloc()
-      : super(
+  IIngredientRepository repository;
+
+  IngredientsBloc({
+    required this.repository,
+  }) : super(
           const IngredientsState(
             allIngredients: [],
             ingredients: [],
@@ -51,7 +54,7 @@ class IngredientsBloc extends Bloc<IngredientsEvent, IngredientsState> {
         }
 
         NetworkService.instance.init(baseUrl: baseUrl);
-        final BaseHttpResponse response = await IngredientRepository.instance.fetchAllIngredientData(
+        final BaseHttpResponse response = await repository.fetchAllIngredientData(
           token: token,
         );
 

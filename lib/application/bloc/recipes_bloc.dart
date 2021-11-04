@@ -8,7 +8,7 @@ import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_lan
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/recipe.dart';
-import 'package:fridge_yellow_team_bloc/repositories/recipe_repository.dart';
+import 'package:fridge_yellow_team_bloc/repositories/repositories_interface/i_recipe_repository.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/error_dialog/error_dialog.dart';
@@ -24,8 +24,11 @@ import 'package:fridge_yellow_team_bloc/services/pop_up_service/server_error_pop
 import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
 
 class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
-  RecipesBloc()
-      : super(
+  final IRecipeRepository repository;
+
+  RecipesBloc({
+    required this.repository,
+  }) : super(
           const RecipesState(
             recipes: [],
             favoriteRecipes: [],
@@ -64,14 +67,14 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
           ids.add(ingredient.i);
         }
 
-        final BaseHttpResponse response = await RecipeRepository.instance.fetchRecipesDataWithIds(
+        final BaseHttpResponse response = await repository.fetchRecipesDataWithIds(
           token: token,
           ids: ids,
         );
 
         List<Recipe>? favoriteRecipes;
         if (state.favoriteRecipes.isEmpty) {
-          final BaseHttpResponse responseWithFavoriteRecipe = await RecipeRepository.instance.fetchFavoriteRecipeData(token: token);
+          final BaseHttpResponse responseWithFavoriteRecipe = await repository.fetchFavoriteRecipeData(token: token);
           favoriteRecipes = FridgeParser.instance.parseList(
             exampleObject: Recipe,
             response: responseWithFavoriteRecipe,
@@ -161,7 +164,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
         }
 
         final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
-        final BaseHttpResponse response = await RecipeRepository.instance.fetchFavoriteRecipeData(token: token);
+        final BaseHttpResponse response = await repository.fetchFavoriteRecipeData(token: token);
 
         if (response.error == null) {
           final List<Recipe> recipes = FridgeParser.instance.parseList(
@@ -235,7 +238,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
         }
 
         final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
-        final BaseHttpResponse response = await RecipeRepository.instance.addToFavorite(token: token, recipeId: event.recipe.i.toString());
+        final BaseHttpResponse response = await repository.addToFavorite(token: token, recipeId: event.recipe.i.toString());
 
         if (response.error == null) {
           PopUpService.instance.show(
@@ -279,7 +282,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
       }
 
       final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
-      final BaseHttpResponse response = await RecipeRepository.instance.removeFromFavorite(token: token, recipeId: event.recipe.i.toString());
+      final BaseHttpResponse response = await repository.removeFromFavorite(token: token, recipeId: event.recipe.i.toString());
 
       if (response.error == null) {
         PopUpService.instance.show(

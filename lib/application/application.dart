@@ -9,6 +9,8 @@ import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubi
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_delegate.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/models/supported_locales.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/models/notification_message.dart';
+import 'package:fridge_yellow_team_bloc/repositories/ingredient_repository.dart';
+import 'package:fridge_yellow_team_bloc/repositories/recipe_repository.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/res/keys.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
@@ -90,13 +92,15 @@ class _ApplicationState extends State<Application> {
         ),
         BlocProvider(
           lazy: false,
-          create: (BuildContext _) => IngredientsBloc()
+          create: (BuildContext _) => IngredientsBloc(repository: IngredientRepository.instance,)
             ..add(
               LoadAllIngredientsEvent(),
             ),
         ),
         BlocProvider(
-          create: (BuildContext _) => RecipesBloc(),
+          create: (BuildContext _) => RecipesBloc(
+            repository: RecipeRepository.instance,
+          ),
         ),
         BlocProvider(
           create: (BuildContext _) => LanguageBloc(),

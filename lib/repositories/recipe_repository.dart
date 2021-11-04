@@ -1,4 +1,5 @@
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_delegate.dart';
+import 'package:fridge_yellow_team_bloc/repositories/repositories_interface/i_recipe_repository.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/models/base_http_response.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/network_service.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/res/consts.dart';
@@ -7,13 +8,14 @@ import 'package:fridge_yellow_team_bloc/services/network_service/res/request_par
 import 'package:fridge_yellow_team_bloc/services/network_service/res/request_params/get_recipe_params.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/res/request_params/remove_favorite_params.dart';
 
-class RecipeRepository {
+class RecipeRepository implements IRecipeRepository {
   static final RecipeRepository _instance = RecipeRepository._();
 
   static RecipeRepository get instance => _instance;
 
   RecipeRepository._();
 
+  @override
   Future<BaseHttpResponse> fetchRecipesDataWithIds({
     required String token,
     required List<String> ids,
@@ -31,6 +33,7 @@ class RecipeRepository {
     );
   }
 
+  @override
   Future<BaseHttpResponse> fetchFavoriteRecipeData({
     required String token,
   }) async {
@@ -46,6 +49,7 @@ class RecipeRepository {
     );
   }
 
+  @override
   Future<BaseHttpResponse> addToFavorite({
     required String token,
     required String recipeId,
@@ -61,6 +65,7 @@ class RecipeRepository {
     );
   }
 
+  @override
   Future<BaseHttpResponse> removeFromFavorite({
     required String token,
     required String recipeId,

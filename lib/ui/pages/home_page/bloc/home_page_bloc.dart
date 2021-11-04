@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
-import 'package:fridge_yellow_team_bloc/repositories/ingredient_repository.dart';
+import 'package:fridge_yellow_team_bloc/repositories/repositories_interface/i_ingredient_repository.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/error_dialog/error_dialog.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/error_dialog/error_dialog_widget.dart';
@@ -18,8 +18,11 @@ import 'package:fridge_yellow_team_bloc/ui/pages/home_page/bloc/home_page_event.
 import 'package:fridge_yellow_team_bloc/ui/pages/home_page/bloc/home_page_state.dart';
 
 class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
+  IIngredientRepository repository;
+
   HomePageBloc({
     required TextFieldLoaderWidget loader,
+    required this.repository,
   }) : super(HomePageState(tempIngredients: [], loader: loader)) {
     on<LoadIngredientsWithNameEvent>(
       (event, emit) async {
@@ -39,7 +42,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
 
         NetworkService.instance.init(baseUrl: baseUrl);
-        final BaseHttpResponse response = await IngredientRepository.instance.fetchIngredientData(
+        final BaseHttpResponse response = await repository.fetchIngredientData(
           token: token,
           ingredientName: event.str,
         );
