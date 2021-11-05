@@ -66,9 +66,7 @@ class _SimilarRecipesBlockState extends State<SimilarRecipesBlock> {
                         ).call();
                       },
                       child: Padding(
-                        padding: index == widget.arguments.recipes.length - 1
-                            ? const EdgeInsets.only(top: 20.0, bottom: 24.0)
-                            : const EdgeInsets.only(top: 20.0, bottom: 24.0, right: 20.0),
+                        padding: const EdgeInsets.only(top: 20.0, bottom: 24.0, right: 10.0, left: 10.0),
                         child: RecipeElement(
                           needOpenFunction: false,
                           recipe: widget.arguments.recipes[index],

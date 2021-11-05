@@ -219,7 +219,6 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
                                 children: [
                                   Expanded(
                                     child: RichText(
@@ -391,7 +390,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
   Widget _geMissingIngredientsBock() {
     return Expanded(
       child: Column(
-        crossAxisAlignment: FlutterDictionary.instance.isRTL ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             _language!.youDoNotHave,
@@ -400,7 +399,6 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
           SizedBox(
             height: 35.0,
             child: Row(
-              textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
               children: [
                 Flexible(
                   child: ListView(
@@ -499,7 +497,6 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
       height: 20.0,
       width: 80.0,
       child: Row(
-        textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(

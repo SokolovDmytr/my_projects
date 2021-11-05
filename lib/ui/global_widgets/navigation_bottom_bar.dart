@@ -30,7 +30,6 @@ class CustomNavigationBottomBar extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 6.0),
             child: Row(
-              textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _getBottomBarElement(

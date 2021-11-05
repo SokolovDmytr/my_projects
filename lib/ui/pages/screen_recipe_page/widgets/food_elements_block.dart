@@ -40,7 +40,7 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
     _createAvailableWidgetsList();
     _createMissingWidgetsList();
     return Column(
-      crossAxisAlignment: FlutterDictionary.instance.isRTL ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.only(bottom: 16.0),

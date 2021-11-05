@@ -71,20 +71,20 @@ class LanguageBloc extends Bloc<ChangeLanguageEvent, LanguageState> {
               );
 
           final bool loadNewFavoriteRecipes = await completerForRecipe.future;
-          if (loadNewFavoriteRecipes) {
-            emit(
-              state.copyWith(currentLocale: event.newLanguage),
-            );
-            DialogService.instance.close();
-            return;
-          } else {
-            RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().add(
-                  RollbackToPrevIngredientsStateEvent(allIngredients: oldLocaleAllIngredients),
-                );
-          }
+          // if (loadNewFavoriteRecipes) {
+          emit(
+            state.copyWith(currentLocale: event.newLanguage),
+          );
+          //   DialogService.instance.close();
+          //   return;
+          // } else {
+          //   RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().add(
+          //         RollbackToPrevIngredientsStateEvent(allIngredients: oldLocaleAllIngredients),
+          //       );
+          // }
         }
 
-        FlutterDictionary.instance.setNewLanguage(locCode);
+        // FlutterDictionary.instance.setNewLanguage(locCode);
         DialogService.instance.close();
 
         PopUpService.instance.show(

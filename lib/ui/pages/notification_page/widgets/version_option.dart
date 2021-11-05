@@ -57,7 +57,6 @@ class _VersionOptionState extends State<VersionOption> with SingleTickerProvider
             padding: const EdgeInsets.only(bottom: 20.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
               children: [
                 Text(
                   widget.title,

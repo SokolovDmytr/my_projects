@@ -256,7 +256,6 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                             child: Padding(
                               padding: const EdgeInsets.only(left: 16.0),
                               child: Row(
-                                textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
                                 children: [
                                   Container(
                                     margin: FlutterDictionary.instance.isRTL
@@ -282,7 +281,6 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                                     width: 80.0,
                                     child: Text(
                                       _languageScreenRecipePage.back,
-                                      textAlign: FlutterDictionary.instance.isRTL ? TextAlign.right : TextAlign.left,
                                       style: AppFonts.medium16Height24WhiteTextStyle,
                                     ),
                                   ),
@@ -313,7 +311,6 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
                                   children: [
                                     Flexible(
                                       child: Padding(
@@ -333,7 +330,6 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 35.0),
                                   child: Row(
-                                    textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
                                     children: [
                                       _getParameterOfRecipeWidget(
                                         imageAssets: ImageAssets.timeIcon,
@@ -398,7 +394,6 @@ class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with Single
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 2.0),
       child: Row(
-        textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
         children: [
           Image.asset(
             imageAssets,

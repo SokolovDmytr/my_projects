@@ -12,7 +12,7 @@ class DescriptionBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     final SettingsPageLanguage _language = FlutterDictionary.instance.language?.settingsPageLanguage ?? en.settingsPageLanguage;
     return Column(
-      crossAxisAlignment: FlutterDictionary.instance.isRTL ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           _language.aboutCompany,
@@ -30,10 +30,12 @@ class DescriptionBlock extends StatelessWidget {
             ),
           ),
         ),
-        Text(
-          _language.description,
-          style: AppFonts.medium16Height24TextStyle,
-          textAlign: FlutterDictionary.instance.isRTL ? TextAlign.right : TextAlign.left,
+        Align(
+          alignment: FlutterDictionary.instance.isRTL ? Alignment.centerRight : Alignment.centerLeft,
+          child: Text(
+            _language.description,
+            style: AppFonts.medium16Height24TextStyle,
+          ),
         ),
       ],
     );

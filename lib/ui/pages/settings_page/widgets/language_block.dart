@@ -27,13 +27,15 @@ class _LanguageBlockState extends State<LanguageBlock> {
       padding: const EdgeInsets.only(bottom: 30.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: FlutterDictionary.instance.isRTL ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16.0),
-            child: Text(
-              _language.language,
-              style: AppFonts.mediumTextStyleBlackTwo,
+          Align(
+            alignment: FlutterDictionary.instance.isRTL ? Alignment.centerRight : Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: Text(
+                _language.language,
+                style: AppFonts.mediumTextStyleBlackTwo,
+              ),
             ),
           ),
           Container(
