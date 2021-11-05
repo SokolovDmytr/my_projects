@@ -86,6 +86,12 @@ class _HomePageViewState extends State<HomePageView> {
   }
 
   @override
+  void dispose() {
+    _textFieldFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final MainPageLanguage language = FlutterDictionary.instance.language?.mainPageLanguage ?? en.mainPageLanguage;
 

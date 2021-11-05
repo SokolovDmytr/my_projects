@@ -33,6 +33,13 @@ class _VersionOptionState extends State<VersionOption> with SingleTickerProvider
   }
 
   @override
+  void dispose() {
+    _focusNode.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final TextPainter textPainterMainTitle = TextPainter(
       text: TextSpan(

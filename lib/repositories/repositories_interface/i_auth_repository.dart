@@ -39,4 +39,8 @@ abstract class IAuthRepository {
     required String email,
     required String password,
   });
+
+  Future<BaseHttpResponse> updateToken({
+    required String refreshToken,
+  });
 }

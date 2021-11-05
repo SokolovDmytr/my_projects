@@ -8,6 +8,7 @@ import 'package:fridge_yellow_team_bloc/services/network_service/res/request_par
 import 'package:fridge_yellow_team_bloc/services/network_service/res/request_params/login_params.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/res/request_params/logout_params.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/res/request_params/recover_params.dart';
+import 'package:fridge_yellow_team_bloc/services/network_service/res/request_params/refresh_token_params.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/res/request_params/registration_google_params.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/res/request_params/registration_params.dart';
 
@@ -148,6 +149,21 @@ class AuthRepository implements IAuthRepository{
       parameter: ChangePasswordParams(
         email: email,
         password: password,
+      ),
+    );
+  }
+
+  @override
+  Future<BaseHttpResponse> updateToken({
+    required String refreshToken,
+  }) async {
+    NetworkService.instance.init(baseUrl: baseUrl);
+
+    return await NetworkService.instance.requestWithParams(
+      type: HttpType.httpGet,
+      route: HttpRoute.updateToken,
+      parameter: RefreshTokenParams(
+        refreshToken: refreshToken,
       ),
     );
   }
