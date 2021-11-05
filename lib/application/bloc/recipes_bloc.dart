@@ -29,13 +29,13 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
   RecipesBloc({
     required this.repository,
   }) : super(
-          const RecipesState(
-            recipes: [],
-            favoriteRecipes: [],
-          ),
-        ) {
+    const RecipesState(
+      recipes: [],
+      favoriteRecipes: [],
+    ),
+  ) {
     on<LoadRecipesEvent>(
-      (event, emit) async {
+          (event, emit) async {
         final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
         DialogService.instance.show(
@@ -72,13 +72,15 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
           ids: ids,
         );
 
-        List<Recipe>? favoriteRecipes;
+        List<Recipe> favoriteRecipes = [];
         if (state.favoriteRecipes.isEmpty) {
           final BaseHttpResponse responseWithFavoriteRecipe = await repository.fetchFavoriteRecipeData(token: token);
-          favoriteRecipes = FridgeParser.instance.parseList(
-            exampleObject: Recipe,
-            response: responseWithFavoriteRecipe,
-          ) as List<Recipe>;
+          if (responseWithFavoriteRecipe.error == null) {
+            favoriteRecipes = FridgeParser.instance.parseList(
+              exampleObject: Recipe,
+              response: responseWithFavoriteRecipe,
+            ) as List<Recipe>;
+          }
         } else {
           favoriteRecipes = state.favoriteRecipes;
         }
@@ -138,7 +140,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
     );
 
     on<LoadFavoriteRecipesEvent>(
-      (event, emit) async {
+          (event, emit) async {
         final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
         DialogService.instance.show(
@@ -213,7 +215,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
     );
 
     on<AddFavouritesRecipeEvent>(
-      (event, emit) async {
+          (event, emit) async {
         final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
         final List<Recipe> favouritesRecipe = List.of(state.favoriteRecipes);
         favouritesRecipe.add(
@@ -303,7 +305,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
     });
 
     on<ClearAllListRecipesEvent>(
-      (event, emit) => emit(
+          (event, emit) => emit(
         RecipesState(
           recipes: [],
           favoriteRecipes: [],
@@ -353,9 +355,11 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
           );
         }
 
-        emit(state.copyWith(inputFavoriteRecipes: resRecipes),);
+        emit(
+          state.copyWith(inputFavoriteRecipes: resRecipes),
+        );
         event.completer.complete(true);
-      }else{
+      } else {
         event.completer.complete(false);
       }
     });
