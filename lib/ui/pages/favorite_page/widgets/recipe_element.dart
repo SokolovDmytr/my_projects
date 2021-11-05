@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/language_bloc.dart';
@@ -91,19 +92,11 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
             children: [
               Container(
                 height: _focusNode.hasFocus ? 168.0 : 128.0,
-                margin: EdgeInsets.fromLTRB(
-                  FlutterDictionary.instance.isRTL
+                margin: EdgeInsetsDirectional.only(
+                  start: _focusNode.hasFocus
                       ? 0.0
-                      : _focusNode.hasFocus
-                          ? 0.0
-                          : 118.0,
-                  _focusNode.hasFocus ? 126.0 : 0.0,
-                  FlutterDictionary.instance.isRTL
-                      ? _focusNode.hasFocus
-                          ? 0.0
-                          : 118.0
-                      : 0.0,
-                  0.0,
+                      : 118.0,
+                  top:  _focusNode.hasFocus ? 126.0 : 0.0,
                 ),
                 decoration: BoxDecoration(
                   color: AppColors.white,
@@ -130,7 +123,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                         children: [
                           Container(
                             margin: const EdgeInsets.all(10.0),
-                            alignment: Alignment.centerLeft,
+                            alignment: FlutterDictionary.instance.isRTL ? Alignment.centerRight : Alignment.centerLeft,
                             child: Text(
                               _language!.youDoNotHave,
                               style: AppFonts.smallPaselRed16TextStyle,
@@ -147,7 +140,6 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                               children: _missingIngredients!.map((e) {
                                 return Row(
                                   key: ValueKey(e.i),
-                                  textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Container(
@@ -204,11 +196,11 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                         ],
                       )
                     : Container(
-                        margin: EdgeInsets.fromLTRB(
-                          FlutterDictionary.instance.isRTL ? 16.0 : 26.0,
-                          12.0,
-                          FlutterDictionary.instance.isRTL ? 26.0 : 16.0,
-                          9.0,
+                        margin: EdgeInsetsDirectional.only(
+                          start: 26.0,
+                          end: 16.0,
+                          bottom: 9.0,
+                          top: 12.0,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -258,7 +250,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                                 ],
                               ),
                             ),
-                            _missingIngredients!.isEmpty ? _getParameterOfRecipeWidgetBlock() : _geMissingIngredientsBock(),
+                            _missingIngredients!.isEmpty ? _getParameterOfRecipeWidgetBlock() : _getMissingIngredientsBlock(),
                           ],
                         ),
                       ),
@@ -387,62 +379,59 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
     );
   }
 
-  Widget _geMissingIngredientsBock() {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            _language!.youDoNotHave,
-            style: AppFonts.smallPaselRed16TextStyle,
-          ),
-          SizedBox(
-            height: 35.0,
-            child: Row(
-              children: [
-                Flexible(
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: _missingIngredients!.map((e) {
-                      return Container(
-                        height: 32.0,
-                        width: 32.0,
-                        margin: const EdgeInsets.symmetric(horizontal: 3.0),
-                        child: CustomNetworkImage(
-                          url: e.image,
-                          placeholder: Image.asset(ImageAssets.chefYellow),
-                          fit: BoxFit.contain,
-                          errorFit: BoxFit.contain,
-                        ),
-                      );
-                    }).toList(),
-                  ),
+  Widget _getMissingIngredientsBlock() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          _language!.youDoNotHave,
+          style: AppFonts.smallPaselRed16TextStyle,
+        ),
+        SizedBox(
+          height: 35.0,
+          child: Row(
+            children: [
+              Flexible(
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: _missingIngredients!.map((e) {
+                    return Container(
+                      height: 32.0,
+                      width: 32.0,
+                      margin: const EdgeInsets.symmetric(horizontal: 3.0),
+                      child: CustomNetworkImage(
+                        url: e.image,
+                        placeholder: Image.asset(ImageAssets.chefYellow),
+                        fit: BoxFit.contain,
+                        errorFit: BoxFit.contain,
+                      ),
+                    );
+                  }).toList(),
                 ),
-                widget.needOpenFunction
-                    ? Container(
-                        margin: EdgeInsets.only(
-                          left: FlutterDictionary.instance.isRTL ? 0.0 : 10.0,
-                          right: FlutterDictionary.instance.isRTL ? 10.0 : 0.0,
-                          bottom: 10.0,
+              ),
+              widget.needOpenFunction
+                  ? Container(
+                      margin: EdgeInsetsDirectional.only(
+                        start: 10.0,
+                        bottom: 10.0,
+                      ),
+                      child: InkWell(
+                        child: Icon(
+                          Icons.keyboard_arrow_down,
+                          size: 24.0,
                         ),
-                        child: InkWell(
-                          child: Icon(
-                            Icons.keyboard_arrow_down,
-                            size: 24.0,
-                          ),
-                          onTap: () {
-                            setState(() {
-                              FocusScope.of(RouteService.instance.navigatorKey.currentState!.context).requestFocus(_focusNode);
-                            });
-                          },
-                        ),
-                      )
-                    : const SizedBox(),
-              ],
-            ),
+                        onTap: () {
+                          setState(() {
+                            FocusScope.of(RouteService.instance.navigatorKey.currentState!.context).requestFocus(_focusNode);
+                          });
+                        },
+                      ),
+                    )
+                  : const SizedBox(),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

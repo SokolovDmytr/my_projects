@@ -35,7 +35,6 @@ class _SimilarRecipesBlockState extends State<SimilarRecipesBlock> {
             right: 20.0,
           ),
           child: Row(
-            mainAxisAlignment: FlutterDictionary.instance.isRTL ? MainAxisAlignment.end : MainAxisAlignment.start,
             children: [
               Text(
                 _language.similarRecipes,

@@ -61,7 +61,6 @@ class RemoveFavouriteDialogWidget extends StatelessWidget {
           Container(
             margin: const EdgeInsets.only(bottom: 50.0),
             child: Row(
-              textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GlobalButton(

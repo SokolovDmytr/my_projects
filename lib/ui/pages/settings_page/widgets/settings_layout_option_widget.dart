@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 
@@ -31,15 +30,12 @@ class SettingsLayoutOptionWidget extends StatelessWidget {
                   title,
                   style: AppFonts.mediumTextStyleBlackTwo,
                 ),
-                RotatedBox(
-                  quarterTurns: FlutterDictionary.instance.isRTL ? 2 : 4,
-                  child: InkWell(
-                    onTap: onTap,
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: Icon(
-                      icon,
-                      color: AppColors.marigold,
-                    ),
+                InkWell(
+                  onTap: onTap,
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Icon(
+                    icon,
+                    color: AppColors.marigold,
                   ),
                 ),
               ],

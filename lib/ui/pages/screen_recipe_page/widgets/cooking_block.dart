@@ -30,7 +30,6 @@ class CookingBlock extends StatelessWidget {
     final ScreenRecipeLanguage _language = FlutterDictionary.instance.language?.screenRecipeLanguage ?? en.screenRecipeLanguage;
     final List<Widget> steps = [
       Row(
-        textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
         children: [
           Image.asset(
             ImageAssets.pot,

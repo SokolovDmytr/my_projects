@@ -113,14 +113,13 @@ class _ApplicationState extends State<Application> {
           value: _languageBloc,
         ),
       ],
-      child: BlocConsumer<LanguageBloc, LanguageState>(
-        listener: (context, state) {},
-        builder: (context, languageState) => MaterialApp(
+      child: BlocBuilder<LanguageBloc, LanguageState>(
+        builder: (BuildContext context, state) => MaterialApp(
           debugShowCheckedModeBanner: false,
           home: SplashScreen(),
           onGenerateRoute: RouteService.instance.onGenerateRoute,
           navigatorKey: RouteService.instance.navigatorKey,
-          locale: Locale(languageState.currentLocale),
+          locale: Locale(state.currentLocale),
           supportedLocales: FlutterDictionaryDelegate.getSupportedLocales!,
           localizationsDelegates: FlutterDictionaryDelegate.getLocalizationDelegates,
           builder: (context, child) {

@@ -3,7 +3,7 @@ import 'package:fridge_yellow_team_bloc/models/pages/models/notification_message
 class NotificationPageState {
   final List<NotificationMessage> messages;
 
-  NotificationPageState({
+  const NotificationPageState({
     required this.messages,
   });
 

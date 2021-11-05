@@ -67,7 +67,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                           onTap: onTapBack,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
-                            textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
                             children: [
                               Container(
                                 margin: FlutterDictionary.instance.isRTL ? const EdgeInsets.only(left: 8.0) : const EdgeInsets.only(right: 8.0),

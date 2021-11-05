@@ -107,12 +107,10 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
       missingWidgets.add(
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Row(
-                textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
                 children: [
                   SizedBox(
                     key: ValueKey(missingIngredients[index].i),
@@ -163,7 +161,6 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Row(
-                textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
                 children: [
                   SizedBox(
                     key: ValueKey(availableIngredients[index].i),

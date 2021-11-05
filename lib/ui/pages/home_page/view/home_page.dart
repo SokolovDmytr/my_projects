@@ -20,15 +20,17 @@ class HomePage extends StatelessWidget {
         loader: _textFieldLoaderWidget,
         repository: IngredientRepository.instance,
       ),
-      child: BlocBuilder<LanguageBloc, LanguageState>(builder: (BuildContext blocListenerContext, LanguageState __) {
-        blocListenerContext.read<HomePageBloc>().add(
-              UpdateListIngredientsWithNewLanguage(),
-            );
+      child: BlocBuilder<LanguageBloc, LanguageState>(
+        builder: (BuildContext blocListenerContext, LanguageState __) {
+          blocListenerContext.read<HomePageBloc>().add(
+                UpdateListIngredientsWithNewLanguage(),
+              );
 
-        return HomePageView(
-          loader: _textFieldLoaderWidget,
-        );
-      }),
+          return HomePageView(
+            loader: _textFieldLoaderWidget,
+          );
+        },
+      ),
     );
   }
 }

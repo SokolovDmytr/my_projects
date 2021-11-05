@@ -74,7 +74,6 @@ class DeleteDialogWidget extends StatelessWidget {
                 50.0,
               ),
               child: Row(
-                textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GlobalButton(
