@@ -11,6 +11,8 @@ import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_delegate.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
+import 'package:fridge_yellow_team_bloc/models/exception/no_internet_connection_exception.dart';
+import 'package:fridge_yellow_team_bloc/models/exception/server_error_exception.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
@@ -40,10 +42,44 @@ class LanguageBloc extends Bloc<ChangeLanguageEvent, LanguageState> {
             child: LoaderWidget(),
           ),
         );
+        try {
+          final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
-        final bool isConnection = await NetworkService.instance.checkInternetConnection();
+          if (isConnection == false) {
+            throw NoInternetConnectionException();
+          }
 
-        if (isConnection == false) {
+          final Completer completerForIngredient = Completer();
+          final Completer completerForRecipe = Completer();
+
+          final List<Ingredient> oldLocaleAllIngredients =
+              RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().state.allIngredients;
+
+          RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().add(
+                QuientlyFetchAllIngredientsEvent(completer: completerForIngredient),
+              );
+
+          final bool loadNewIngredients = await completerForIngredient.future;
+          if (loadNewIngredients) {
+            RouteService.instance.navigatorKey.currentState!.context.read<RecipesBloc>().add(
+                  QuientlyFetchFavoritesRecipeEvent(completer: completerForRecipe),
+                );
+
+            final bool loadNewFavoriteRecipes = await completerForRecipe.future;
+            if (loadNewFavoriteRecipes) {
+              emit(
+                state.copyWith(currentLocale: event.newLanguage),
+              );
+              DialogService.instance.close();
+              return;
+            } else {
+              RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().add(
+                    RollbackToPrevIngredientsStateEvent(allIngredients: oldLocaleAllIngredients),
+                  );
+            }
+          }
+          throw ServerErrorException();
+        } on NoInternetConnectionException {
           DialogService.instance.close();
 
           DialogService.instance.show(
@@ -52,44 +88,14 @@ class LanguageBloc extends Bloc<ChangeLanguageEvent, LanguageState> {
             ),
           );
           return;
+        } on ServerErrorException {
+          FlutterDictionary.instance.setNewLanguage(locCode);
+          DialogService.instance.close();
+
+          PopUpService.instance.show(
+            widget: ServerErrorPopUpWidget(),
+          );
         }
-
-        final Completer completerForIngredient = Completer();
-        final Completer completerForRecipe = Completer();
-
-        final List<Ingredient> oldLocaleAllIngredients =
-            RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().state.allIngredients;
-
-        RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().add(
-              QuientlyFetchAllIngredientsEvent(completer: completerForIngredient),
-            );
-
-        final bool loadNewIngredients = await completerForIngredient.future;
-        if (loadNewIngredients) {
-          RouteService.instance.navigatorKey.currentState!.context.read<RecipesBloc>().add(
-                QuientlyFetchFavoritesRecipeEvent(completer: completerForRecipe),
-              );
-
-          final bool loadNewFavoriteRecipes = await completerForRecipe.future;
-          if (loadNewFavoriteRecipes) {
-            emit(
-              state.copyWith(currentLocale: event.newLanguage),
-            );
-            DialogService.instance.close();
-            return;
-          } else {
-            RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().add(
-                  RollbackToPrevIngredientsStateEvent(allIngredients: oldLocaleAllIngredients),
-                );
-          }
-        }
-
-        FlutterDictionary.instance.setNewLanguage(locCode);
-        DialogService.instance.close();
-
-        PopUpService.instance.show(
-          widget: ServerErrorPopUpWidget(),
-        );
       },
     );
   }

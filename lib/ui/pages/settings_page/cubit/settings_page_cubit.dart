@@ -7,6 +7,8 @@ import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubi
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
+import 'package:fridge_yellow_team_bloc/models/exception/no_internet_connection_exception.dart';
+import 'package:fridge_yellow_team_bloc/models/exception/server_error_exception.dart';
 import 'package:fridge_yellow_team_bloc/repositories/repositories_interface/i_auth_repository.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
@@ -40,8 +42,31 @@ class SettingsPageCubit extends Cubit<SettingsPageState> {
         child: LoaderWidget(),
       ),
     );
-    final bool isConnection = await NetworkService.instance.checkInternetConnection();
-    if (isConnection == false) {
+
+    try {
+      final bool isConnection = await NetworkService.instance.checkInternetConnection();
+      if (isConnection == false) {
+        throw NoInternetConnectionException();
+      }
+
+      final BaseHttpResponse response = await repository.logOut(
+        token: RouteService.instance.navigatorKey.currentContext!.read<ApplicationTokenCubit>().state.token!.token,
+      );
+      if (response.response == null) {
+        throw ServerErrorException();
+      } else {
+        UserInformationService.instance.clear();
+        DialogService.instance.close();
+        RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().clearToken();
+        RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().add(
+              ClearIngredientsEvent(),
+            );
+        RouteService.instance.navigatorKey.currentState!.context.read<RecipesBloc>().add(
+              ClearAllListRecipesEvent(),
+            );
+        RouteSelectors.goToAuthPage().call();
+      }
+    } on NoInternetConnectionException {
       DialogService.instance.close();
       DialogService.instance.show(
         dialog: ErrorDialog(
@@ -49,23 +74,7 @@ class SettingsPageCubit extends Cubit<SettingsPageState> {
         ),
       );
       return;
-    }
-
-    final BaseHttpResponse response = await repository.logOut(
-      token: RouteService.instance.navigatorKey.currentContext!.read<ApplicationTokenCubit>().state.token!.token,
-    );
-    if (response.error == null) {
-      UserInformationService.instance.clear();
-      DialogService.instance.close();
-      RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().clearToken();
-      RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().add(
-            ClearIngredientsEvent(),
-          );
-      RouteService.instance.navigatorKey.currentState!.context.read<RecipesBloc>().add(
-            ClearAllListRecipesEvent(),
-          );
-      RouteSelectors.goToAuthPage().call();
-    } else {
+    } on ServerErrorException {
       DialogService.instance.close();
       PopUpService.instance.show(
         widget: ServerErrorPopUpWidget(),

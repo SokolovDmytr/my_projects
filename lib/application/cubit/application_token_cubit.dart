@@ -1,13 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_state.dart';
+import 'package:fridge_yellow_team_bloc/models/exception/server_error_exception.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/token.dart';
 import 'package:fridge_yellow_team_bloc/repositories/repositories_interface/i_auth_repository.dart';
 import 'package:fridge_yellow_team_bloc/res/app_duration.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/models/base_http_response.dart';
-import 'package:fridge_yellow_team_bloc/services/network_service/network_service.dart';
-import 'package:fridge_yellow_team_bloc/services/network_service/res/consts.dart';
 import 'package:fridge_yellow_team_bloc/services/network_service/shared/fridge_parser.dart';
+import 'package:fridge_yellow_team_bloc/services/pop_up_service/pop_up_service.dart';
+import 'package:fridge_yellow_team_bloc/services/pop_up_service/server_error_pop_up_widget.dart';
 import 'package:fridge_yellow_team_bloc/services/user_information_service/user_information_service.dart';
 
 class ApplicationTokenCubit extends Cubit<ApplicationTokenState> {
@@ -33,23 +34,29 @@ class ApplicationTokenCubit extends Cubit<ApplicationTokenState> {
         return emptyString;
       }
 
-      NetworkService.instance.init(baseUrl: baseUrl);
-      final BaseHttpResponse response = await repository.updateToken(refreshToken: state.token!.refreshToken);
+      try {
+        final BaseHttpResponse response = await repository.updateToken(refreshToken: state.token!.refreshToken);
 
-      if (response.error == null) {
-        final Token authToken = FridgeParser.instance.parseEntity(
-          exampleObject: Token,
-          response: response,
-        );
-        emit(
-          state.copyWith(token: authToken),
-        );
+        if (response.response == null) {
+          throw ServerErrorException(message: response.error!.error);
+        } else {
+          final Token authToken = FridgeParser.instance.parseEntity(
+            exampleObject: Token,
+            response: response,
+          );
+          emit(
+            state.copyWith(token: authToken),
+          );
 
-        UserInformationService.instance.saveInformation(authToken);
-        await Future.delayed(AppDuration.fourSecond);
-        return authToken.token;
-      } else {
-        logger.e('Update token error: ${response.error!.error}');
+          UserInformationService.instance.saveInformation(authToken);
+          await Future.delayed(AppDuration.fourSecond);
+          return authToken.token;
+        }
+      } on ServerErrorException catch (error) {
+        PopUpService.instance.show(
+          widget: ServerErrorPopUpWidget(),
+        );
+        logger.e('Update token error: ${error.message}');
         return state.token!.token;
       }
     }

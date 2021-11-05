@@ -6,6 +6,8 @@ import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubi
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
+import 'package:fridge_yellow_team_bloc/models/exception/no_internet_connection_exception.dart';
+import 'package:fridge_yellow_team_bloc/models/exception/server_error_exception.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/recipe.dart';
 import 'package:fridge_yellow_team_bloc/repositories/repositories_interface/i_recipe_repository.dart';
@@ -47,9 +49,89 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
           ),
         );
 
-        final bool isConnection = await NetworkService.instance.checkInternetConnection();
+        try {
+          final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
-        if (isConnection == false) {
+          if (isConnection == false) {
+            throw NoInternetConnectionException();
+          }
+
+          final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
+
+          final List<String> ids = [];
+          for (Ingredient ingredient in event.ingredients) {
+            ids.add(ingredient.i);
+          }
+
+          final BaseHttpResponse response = await repository.fetchRecipesDataWithIds(
+            token: token,
+            ids: ids,
+          );
+
+          List<Recipe> favoriteRecipes = [];
+          if (state.favoriteRecipes.isEmpty) {
+            final BaseHttpResponse responseWithFavoriteRecipe = await repository.fetchFavoriteRecipeData(token: token);
+            if (responseWithFavoriteRecipe.response == null) {
+              throw ServerErrorException();
+            } else {
+              favoriteRecipes = FridgeParser.instance.parseList(
+                exampleObject: Recipe,
+                response: responseWithFavoriteRecipe,
+              ) as List<Recipe>;
+            }
+          } else {
+            favoriteRecipes = state.favoriteRecipes;
+          }
+
+          if (response.response == null) {
+            throw ServerErrorException();
+          } else {
+            final List<Recipe> recipes = FridgeParser.instance.parseList(
+              exampleObject: Recipe,
+              response: response,
+            ) as List<Recipe>;
+
+            final List<Ingredient> ingredients =
+                RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().state.allIngredients;
+
+            final List<Recipe> resRecipes = [];
+            for (Recipe recipe in recipes) {
+              bool isFavoriteRecipe = false;
+
+              for (Recipe favoriteRecipe in favoriteRecipes) {
+                if (recipe.i == favoriteRecipe.i) {
+                  isFavoriteRecipe = true;
+                  break;
+                }
+              }
+
+              final List<Ingredient> resIngredients = [];
+              for (Ingredient ingredient in recipe.ingredients) {
+                for (Ingredient dataIngredient in ingredients) {
+                  if (ingredient.i == dataIngredient.i) {
+                    resIngredients.add(
+                      ingredient.copyWith(
+                        name: dataIngredient.name,
+                        image: dataIngredient.image,
+                      ),
+                    );
+                  }
+                }
+              }
+
+              resRecipes.add(
+                recipe.copyWith(
+                  ingredients: resIngredients,
+                  isFavorite: isFavoriteRecipe,
+                ),
+              );
+            }
+
+            DialogService.instance.close();
+
+            emit(state.copyWith(inputRecipe: resRecipes));
+          }
+        } on NoInternetConnectionException {
           DialogService.instance.close();
 
           DialogService.instance.show(
@@ -58,78 +140,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
             ),
           );
           return;
-        }
-
-        final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
-
-        final List<String> ids = [];
-        for (Ingredient ingredient in event.ingredients) {
-          ids.add(ingredient.i);
-        }
-
-        final BaseHttpResponse response = await repository.fetchRecipesDataWithIds(
-          token: token,
-          ids: ids,
-        );
-
-        List<Recipe> favoriteRecipes = [];
-        if (state.favoriteRecipes.isEmpty) {
-          final BaseHttpResponse responseWithFavoriteRecipe = await repository.fetchFavoriteRecipeData(token: token);
-          if (responseWithFavoriteRecipe.error == null) {
-            favoriteRecipes = FridgeParser.instance.parseList(
-              exampleObject: Recipe,
-              response: responseWithFavoriteRecipe,
-            ) as List<Recipe>;
-          }
-        } else {
-          favoriteRecipes = state.favoriteRecipes;
-        }
-
-        if (response.error == null) {
-          final List<Recipe> recipes = FridgeParser.instance.parseList(
-            exampleObject: Recipe,
-            response: response,
-          ) as List<Recipe>;
-
-          final List<Ingredient> ingredients = RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().state.allIngredients;
-
-          final List<Recipe> resRecipes = [];
-          for (Recipe recipe in recipes) {
-            bool isFavoriteRecipe = false;
-
-            for (Recipe favoriteRecipe in favoriteRecipes) {
-              if (recipe.i == favoriteRecipe.i) {
-                isFavoriteRecipe = true;
-                break;
-              }
-            }
-
-            final List<Ingredient> resIngredients = [];
-            for (Ingredient ingredient in recipe.ingredients) {
-              for (Ingredient dataIngredient in ingredients) {
-                if (ingredient.i == dataIngredient.i) {
-                  resIngredients.add(
-                    ingredient.copyWith(
-                      name: dataIngredient.name,
-                      image: dataIngredient.image,
-                    ),
-                  );
-                }
-              }
-            }
-
-            resRecipes.add(
-              recipe.copyWith(
-                ingredients: resIngredients,
-                isFavorite: isFavoriteRecipe,
-              ),
-            );
-          }
-
-          DialogService.instance.close();
-
-          emit(state.copyWith(inputRecipe: resRecipes));
-        } else {
+        } on ServerErrorException {
           DialogService.instance.close();
 
           PopUpService.instance.show(
@@ -152,9 +163,56 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
           ),
         );
 
-        final bool isConnection = await NetworkService.instance.checkInternetConnection();
+        try {
+          final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
-        if (isConnection == false) {
+          if (isConnection == false) {
+            throw NoInternetConnectionException();
+          }
+
+          final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
+          final BaseHttpResponse response = await repository.fetchFavoriteRecipeData(token: token);
+
+          if (response.response == null) {
+            throw ServerErrorException();
+          } else {
+            final List<Recipe> recipes = FridgeParser.instance.parseList(
+              exampleObject: Recipe,
+              response: response,
+            ) as List<Recipe>;
+
+            final List<Ingredient> allIngredients =
+                RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().state.allIngredients;
+
+            final List<Recipe> resRecipes = [];
+            for (Recipe recipe in recipes) {
+              final List<Ingredient> resIngredients = [];
+              for (Ingredient ingredient in recipe.ingredients) {
+                for (Ingredient dataIngredient in allIngredients) {
+                  if (ingredient.i == dataIngredient.i) {
+                    resIngredients.add(
+                      ingredient.copyWith(
+                        name: dataIngredient.name,
+                        image: dataIngredient.image,
+                      ),
+                    );
+                  }
+                }
+              }
+
+              resRecipes.add(
+                recipe.copyWith(
+                  isFavorite: true,
+                  ingredients: resIngredients,
+                ),
+              );
+            }
+
+            emit(state.copyWith(inputFavoriteRecipes: resRecipes));
+
+            DialogService.instance.close();
+          }
+        } on NoInternetConnectionException {
           DialogService.instance.close();
 
           DialogService.instance.show(
@@ -163,48 +221,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
             ),
           );
           return;
-        }
-
-        final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
-        final BaseHttpResponse response = await repository.fetchFavoriteRecipeData(token: token);
-
-        if (response.error == null) {
-          final List<Recipe> recipes = FridgeParser.instance.parseList(
-            exampleObject: Recipe,
-            response: response,
-          ) as List<Recipe>;
-
-          final List<Ingredient> allIngredients =
-              RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().state.allIngredients;
-
-          final List<Recipe> resRecipes = [];
-          for (Recipe recipe in recipes) {
-            final List<Ingredient> resIngredients = [];
-            for (Ingredient ingredient in recipe.ingredients) {
-              for (Ingredient dataIngredient in allIngredients) {
-                if (ingredient.i == dataIngredient.i) {
-                  resIngredients.add(
-                    ingredient.copyWith(
-                      name: dataIngredient.name,
-                      image: dataIngredient.image,
-                    ),
-                  );
-                }
-              }
-            }
-
-            resRecipes.add(
-              recipe.copyWith(
-                isFavorite: true,
-                ingredients: resIngredients,
-              ),
-            );
-          }
-
-          emit(state.copyWith(inputFavoriteRecipes: resRecipes));
-
-          DialogService.instance.close();
-        } else {
+        } on ServerErrorException {
           DialogService.instance.close();
 
           PopUpService.instance.show(
@@ -225,9 +242,26 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
           state.copyWith(inputFavoriteRecipes: favouritesRecipe),
         );
 
-        final bool isConnection = await NetworkService.instance.checkInternetConnection();
+        try {
+          final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
-        if (isConnection == false) {
+          if (isConnection == false) {
+            throw NoInternetConnectionException();
+          }
+
+          final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
+          final BaseHttpResponse response = await repository.addToFavorite(token: token, recipeId: event.recipe.i.toString());
+
+          if (response.response == null) {
+            throw ServerErrorException();
+          } else {
+            PopUpService.instance.show(
+              widget: RecipesPopUpWidget(
+                text: language.recipePopUpAddedText,
+              ),
+            );
+          }
+        } on NoInternetConnectionException {
           favouritesRecipe.removeWhere((element) => element.i == event.recipe.i);
           emit(
             state.copyWith(inputFavoriteRecipes: favouritesRecipe),
@@ -237,18 +271,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
             widget: ServerErrorPopUpWidget(),
           );
           return;
-        }
-
-        final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
-        final BaseHttpResponse response = await repository.addToFavorite(token: token, recipeId: event.recipe.i.toString());
-
-        if (response.error == null) {
-          PopUpService.instance.show(
-            widget: RecipesPopUpWidget(
-              text: language.recipePopUpAddedText,
-            ),
-          );
-        } else {
+        } on ServerErrorException {
           favouritesRecipe.removeWhere((element) => element.i == event.recipe.i);
           emit(
             state.copyWith(inputFavoriteRecipes: favouritesRecipe),
@@ -261,48 +284,56 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
       },
     );
 
-    on<RemoveFavouriteRecipeEvent>((event, emit) async {
-      final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+    on<RemoveFavouriteRecipeEvent>(
+      (event, emit) async {
+        final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
-      final List<Recipe> favouriteRecipe = List.of(state.favoriteRecipes);
-      favouriteRecipe.removeWhere((element) => element.i == event.recipe.i);
-      emit(
-        state.copyWith(inputFavoriteRecipes: favouriteRecipe),
-      );
-
-      final bool isConnection = await NetworkService.instance.checkInternetConnection();
-
-      if (isConnection == false) {
-        favouriteRecipe.add(event.recipe);
-        emit(
-          state.copyWith(inputFavoriteRecipes: favouriteRecipe),
-        );
-        PopUpService.instance.show(
-          widget: ServerErrorPopUpWidget(),
-        );
-        return;
-      }
-
-      final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
-      final BaseHttpResponse response = await repository.removeFromFavorite(token: token, recipeId: event.recipe.i.toString());
-
-      if (response.error == null) {
-        PopUpService.instance.show(
-          widget: RecipesPopUpWidget(
-            text: language.favoritesRemovedPopUpText,
-          ),
-        );
-      } else {
-        favouriteRecipe.add(event.recipe);
+        final List<Recipe> favouriteRecipe = List.of(state.favoriteRecipes);
+        favouriteRecipe.removeWhere((element) => element.i == event.recipe.i);
         emit(
           state.copyWith(inputFavoriteRecipes: favouriteRecipe),
         );
 
-        PopUpService.instance.show(
-          widget: ServerErrorPopUpWidget(),
-        );
-      }
-    });
+        try {
+          final bool isConnection = await NetworkService.instance.checkInternetConnection();
+
+          if (isConnection == false) {
+            throw NoInternetConnectionException();
+          }
+
+          final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
+          final BaseHttpResponse response = await repository.removeFromFavorite(token: token, recipeId: event.recipe.i.toString());
+
+          if (response.response == null) {
+            throw ServerErrorException();
+          } else {
+            PopUpService.instance.show(
+              widget: RecipesPopUpWidget(
+                text: language.favoritesRemovedPopUpText,
+              ),
+            );
+          }
+        } on NoInternetConnectionException {
+          favouriteRecipe.add(event.recipe);
+          emit(
+            state.copyWith(inputFavoriteRecipes: favouriteRecipe),
+          );
+          PopUpService.instance.show(
+            widget: ServerErrorPopUpWidget(),
+          );
+          return;
+        } on ServerErrorException {
+          favouriteRecipe.add(event.recipe);
+          emit(
+            state.copyWith(inputFavoriteRecipes: favouriteRecipe),
+          );
+
+          PopUpService.instance.show(
+            widget: ServerErrorPopUpWidget(),
+          );
+        }
+      },
+    );
 
     on<ClearAllListRecipesEvent>(
       (event, emit) => emit(
