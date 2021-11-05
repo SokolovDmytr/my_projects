@@ -3,6 +3,8 @@ import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubi
 import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
+import 'package:fridge_yellow_team_bloc/models/exception/no_internet_connection_exception.dart';
+import 'package:fridge_yellow_team_bloc/models/exception/server_error_exception.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/token.dart';
 import 'package:fridge_yellow_team_bloc/repositories/repositories_interface/i_auth_repository.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
@@ -43,36 +45,47 @@ class AuthPageCubit extends Cubit<AuthPageState> {
       ),
     );
 
-    final bool isConnection = await NetworkService.instance.checkInternetConnection();
-    if (isConnection == false) {
+    try {
+      final bool isConnection = await NetworkService.instance.checkInternetConnection();
+
+      if (isConnection == false) {
+        throw NoInternetConnectionException();
+      }
+
+      final BaseHttpResponse response = await repository.logIn(
+        email: email,
+        password: password,
+      );
+
+      if (response.response == null) {
+        throw ServerErrorException();
+      } else {
+        final Token token = FridgeParser.instance.parseEntity(
+          exampleObject: Token,
+          response: response,
+        );
+        RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().saveToken(token);
+        UserInformationService.instance.saveInformation(token);
+
+        DialogService.instance.close();
+        UserInformationService.instance.isFirstVisitApp() ? RouteSelectors.goToOnBoardingPage().call() : RouteSelectors.goToHomePage().call();
+      }
+    } on NoInternetConnectionException {
       DialogService.instance.close();
+
       DialogService.instance.show(
         dialog: ErrorDialog(
           child: ErrorDialogWidget(),
         ),
       );
       return;
-    }
-
-    final BaseHttpResponse response = await repository.logIn(
-      email: email,
-      password: password,
-    );
-    if (response.error == null) {
-      final Token token = FridgeParser.instance.parseEntity(
-        exampleObject: Token,
-        response: response,
-      );
-      RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().saveToken(token);
-      UserInformationService.instance.saveInformation(token);
-
+    } on ServerErrorException {
       DialogService.instance.close();
-      UserInformationService.instance.isFirstVisitApp() ? RouteSelectors.goToOnBoardingPage().call() : RouteSelectors.goToHomePage().call();
-    } else {
-      DialogService.instance.close();
+
       PopUpService.instance.show(
         widget: ServerErrorPopUpWidget(),
       );
+      return;
     }
   }
 
@@ -87,39 +100,48 @@ class AuthPageCubit extends Cubit<AuthPageState> {
       ),
     );
 
-    final bool isConnection = await NetworkService.instance.checkInternetConnection();
+    try {
+      final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
-    if (isConnection == false) {
+      if (isConnection == false) {
+        throw NoInternetConnectionException();
+      }
+
+      final BaseHttpResponse response = await repository.register(
+        email: email,
+        firstName: firstName,
+        password: password,
+      );
+
+      if (response.response == null) {
+        throw ServerErrorException();
+      } else {
+        final Token token = FridgeParser.instance.parseEntity(
+          exampleObject: Token,
+          response: response,
+        );
+        RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().saveToken(token);
+        UserInformationService.instance.saveInformation(token);
+
+        DialogService.instance.close();
+        UserInformationService.instance.isFirstVisitApp() ? RouteSelectors.goToOnBoardingPage().call() : RouteSelectors.goToHomePage().call();
+      }
+    } on NoInternetConnectionException {
       DialogService.instance.close();
+
       DialogService.instance.show(
         dialog: ErrorDialog(
           child: ErrorDialogWidget(),
         ),
       );
       return;
-    }
-
-    final BaseHttpResponse response = await repository.register(
-      email: email,
-      firstName: firstName,
-      password: password,
-    );
-
-    if (response.error == null) {
-      final Token token = FridgeParser.instance.parseEntity(
-        exampleObject: Token,
-        response: response,
-      );
-      RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().saveToken(token);
-      UserInformationService.instance.saveInformation(token);
-
+    } on ServerErrorException {
       DialogService.instance.close();
-      UserInformationService.instance.isFirstVisitApp() ? RouteSelectors.goToOnBoardingPage().call() : RouteSelectors.goToHomePage().call();
-    } else {
-      DialogService.instance.close();
+
       PopUpService.instance.show(
         widget: ServerErrorPopUpWidget(),
       );
+      return;
     }
   }
 
@@ -135,27 +157,20 @@ class AuthPageCubit extends Cubit<AuthPageState> {
       ),
     );
 
-    final bool isConnection = await NetworkService.instance.checkInternetConnection();
-
-    if (isConnection == false) {
-      DialogService.instance.close();
-
-      DialogService.instance.show(
-        dialog: ErrorDialog(
-          child: ErrorDialogWidget(),
-        ),
-      );
-      return;
-    }
-
-    final GoogleSignIn _googleSignIn = GoogleSignIn(
-      scopes: [
-        googleAccountEmail,
-        googleLink,
-      ],
-    );
-
     try {
+      final bool isConnection = await NetworkService.instance.checkInternetConnection();
+
+      if (isConnection == false) {
+        throw NoInternetConnectionException();
+      }
+
+      final GoogleSignIn _googleSignIn = GoogleSignIn(
+        scopes: [
+          googleAccountEmail,
+          googleLink,
+        ],
+      );
+
       final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
       if (googleSignInAccount != null) {
         final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
@@ -166,7 +181,9 @@ class AuthPageCubit extends Cubit<AuthPageState> {
             googleToken: googleSignInAuthentication.accessToken!,
           );
 
-          if (response.error == null) {
+          if (response.response == null) {
+            throw ServerErrorException();
+          } else {
             final Token token = FridgeParser.instance.parseEntity(
               exampleObject: Token,
               response: response,
@@ -178,16 +195,26 @@ class AuthPageCubit extends Cubit<AuthPageState> {
             DialogService.instance.close();
 
             UserInformationService.instance.isFirstVisitApp() ? RouteSelectors.goToOnBoardingPage().call() : RouteSelectors.goToHomePage().call();
-            return;
+            DialogService.instance.close();
           }
         }
       }
+    } on NoInternetConnectionException {
+      DialogService.instance.close();
 
+      DialogService.instance.show(
+        dialog: ErrorDialog(
+          child: ErrorDialogWidget(),
+        ),
+      );
+      return;
+    } on ServerErrorException {
       DialogService.instance.close();
 
       PopUpService.instance.show(
         widget: ServerErrorPopUpWidget(),
       );
+      return;
     } catch (error) {
       DialogService.instance.close();
       logger.e(error);
@@ -206,20 +233,13 @@ class AuthPageCubit extends Cubit<AuthPageState> {
       ),
     );
 
-    final bool isConnection = await NetworkService.instance.checkInternetConnection();
-
-    if (isConnection == false) {
-      DialogService.instance.close();
-
-      DialogService.instance.show(
-        dialog: ErrorDialog(
-          child: ErrorDialogWidget(),
-        ),
-      );
-      return;
-    }
-
     try {
+      final bool isConnection = await NetworkService.instance.checkInternetConnection();
+
+      if (isConnection == false) {
+        throw NoInternetConnectionException();
+      }
+
       final GoogleSignIn _googleSignIn = GoogleSignIn(
         scopes: [
           googleAccountEmail,
@@ -238,7 +258,9 @@ class AuthPageCubit extends Cubit<AuthPageState> {
             googleToken: googleSignInAuthentication.accessToken!,
           );
 
-          if (response.error == null) {
+          if (response.response == null) {
+            throw ServerErrorException();
+          } else {
             final Token token = FridgeParser.instance.parseEntity(
               exampleObject: Token,
               response: response,
@@ -260,15 +282,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
       PopUpService.instance.show(
         widget: ServerErrorPopUpWidget(),
       );
-    } catch (error) {
-      DialogService.instance.close();
-      logger.e(error);
-    }
-  }
-
-  Future<void> sendEmail({required String email}) async {
-    final bool isConnection = await NetworkService.instance.checkInternetConnection();
-    if (isConnection == false) {
+    } on NoInternetConnectionException {
       DialogService.instance.close();
 
       DialogService.instance.show(
@@ -277,29 +291,58 @@ class AuthPageCubit extends Cubit<AuthPageState> {
         ),
       );
       return;
-    }
+    } on ServerErrorException {
+      DialogService.instance.close();
 
-    final BaseHttpResponse response = await repository.sendEmail(email: email);
-    if (response.error == null) {
+      PopUpService.instance.show(
+        widget: ServerErrorPopUpWidget(),
+      );
+    } catch (error) {
+      DialogService.instance.close();
+      logger.e(error);
+    }
+  }
+
+  Future<void> sendEmail({required String email}) async {
+    try {
+      final bool isConnection = await NetworkService.instance.checkInternetConnection();
+      if (isConnection == false) {
+        throw NoInternetConnectionException();
+      }
+
+      final BaseHttpResponse response = await repository.sendEmail(email: email);
+      if (response.response == null) {
+        throw ServerErrorException(message: response.error!.error);
+      } else {
+        DialogService.instance.close();
+
+        DialogService.instance.show(
+          dialog: ForgotPasswordDialog(
+            child: EnterCodeDialogWidget(
+              onTapSend: (String? code) {
+                if (code != null) {
+                  sendCode(code: code, email: email);
+                }
+              },
+            ),
+          ),
+        );
+      }
+    } on NoInternetConnectionException {
       DialogService.instance.close();
 
       DialogService.instance.show(
-        dialog: ForgotPasswordDialog(
-          child: EnterCodeDialogWidget(
-            onTapSend: (String? code) {
-              if (code != null) {
-                sendCode(code: code, email: email);
-              }
-            },
-          ),
+        dialog: ErrorDialog(
+          child: ErrorDialogWidget(),
         ),
       );
-    } else {
+      return;
+    } on ServerErrorException catch (error) {
       DialogService.instance.close();
 
       PopUpService.instance.show(
         widget: ServerErrorPopUpWidget(
-          text: response.error!.error,
+          text: error.message,
         ),
       );
     }
@@ -309,9 +352,39 @@ class AuthPageCubit extends Cubit<AuthPageState> {
     required String code,
     required String email,
   }) async {
-    final bool isConnection = await NetworkService.instance.checkInternetConnection();
+    try {
+      final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
-    if (isConnection == false) {
+      if (isConnection == false) {
+        throw NoInternetConnectionException();
+      }
+
+      final BaseHttpResponse response = await repository.sendCode(
+        email: email,
+        code: code,
+      );
+
+      if (response.response == null) {
+        throw ServerErrorException(message: response.error!.error);
+      } else {
+        DialogService.instance.close();
+
+        DialogService.instance.show(
+          dialog: ForgotPasswordDialog(
+            child: EnterCodeDialogWidget(
+              onTapSend: (String? password) {
+                if (password != null) {
+                  saveNewPassword(
+                    email: email,
+                    password: password,
+                  );
+                }
+              },
+            ),
+          ),
+        );
+      }
+    } on NoInternetConnectionException {
       DialogService.instance.close();
 
       DialogService.instance.show(
@@ -320,37 +393,13 @@ class AuthPageCubit extends Cubit<AuthPageState> {
         ),
       );
       return;
-    }
-
-    final BaseHttpResponse response = await repository.sendCode(
-      email: email,
-      code: code,
-    );
-
-    if (response.error == null) {
-      DialogService.instance.close();
-
-      DialogService.instance.show(
-        dialog: ForgotPasswordDialog(
-          child: EnterCodeDialogWidget(
-            onTapSend: (String? password) {
-              if (password != null) {
-                saveNewPassword(
-                  email: email,
-                  password: password,
-                );
-              }
-            },
-          ),
-        ),
-      );
-    } else {
+    } on ServerErrorException catch (error) {
       DialogService.instance.close();
 
       DialogService.instance.show(
         dialog: ErrorDialog(
           child: ErrorDialogWidget(
-            text: response.error!.error,
+            text: error.message,
           ),
         ),
       );
@@ -361,9 +410,23 @@ class AuthPageCubit extends Cubit<AuthPageState> {
     required String email,
     required String password,
   }) async {
-    final bool isConnection = await NetworkService.instance.checkInternetConnection();
+    try {
+      final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
-    if (isConnection == false) {
+      if (isConnection == false) {
+        throw NoInternetConnectionException();
+      }
+
+      final BaseHttpResponse response = await repository.saveNewPassword(
+        email: email,
+        password: password,
+      );
+
+      DialogService.instance.close();
+      if (response.response == null) {
+        throw ServerErrorException();
+      }
+    } on NoInternetConnectionException {
       DialogService.instance.close();
 
       DialogService.instance.show(
@@ -372,15 +435,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
         ),
       );
       return;
-    }
-
-    final BaseHttpResponse response = await repository.saveNewPassword(
-      email: email,
-      password: password,
-    );
-
-    DialogService.instance.close();
-    if (response.error != null) {
+    } on ServerErrorException {
       PopUpService.instance.show(
         widget: ServerErrorPopUpWidget(),
       );

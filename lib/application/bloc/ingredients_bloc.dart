@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_event.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_state.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
+import 'package:fridge_yellow_team_bloc/models/exception/no_internet_connection_exception.dart';
+import 'package:fridge_yellow_team_bloc/models/exception/server_error_exception.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
 import 'package:fridge_yellow_team_bloc/repositories/repositories_interface/i_ingredient_repository.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
@@ -36,42 +38,48 @@ class IngredientsBloc extends Bloc<IngredientsEvent, IngredientsState> {
           return;
         }
 
-        final bool isConnection = await NetworkService.instance.checkInternetConnection();
+        try {
+          final bool isConnection = await NetworkService.instance.checkInternetConnection();
 
-        if (isConnection == false) {
+          if (isConnection == false) {
+            throw NoInternetConnectionException();
+          }
+
+          final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
+
+          if (token == emptyString) {
+            return;
+          }
+
+          NetworkService.instance.init(baseUrl: baseUrl);
+          final BaseHttpResponse response = await repository.fetchAllIngredientData(
+            token: token,
+          );
+
+          if (response.response == null) {
+            throw ServerErrorException();
+          } else {
+            final List<Ingredient> ingredients = FridgeParser.instance.parseList(
+              exampleObject: Ingredient,
+              response: response,
+            ) as List<Ingredient>;
+
+            emit(
+              state.copyWith(inputAllIngredients: ingredients),
+            );
+
+            unawaited(
+              ImageCacheManager.instance.loadImages(ingredients: ingredients),
+            );
+          }
+        } on NoInternetConnectionException {
           DialogService.instance.show(
             dialog: ErrorDialog(
               child: ErrorDialogWidget(),
             ),
           );
           return;
-        }
-
-        final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
-
-        if (token == emptyString) {
-          return;
-        }
-
-        NetworkService.instance.init(baseUrl: baseUrl);
-        final BaseHttpResponse response = await repository.fetchAllIngredientData(
-          token: token,
-        );
-
-        if (response.error == null) {
-          final List<Ingredient> ingredients = FridgeParser.instance.parseList(
-            exampleObject: Ingredient,
-            response: response,
-          ) as List<Ingredient>;
-
-          emit(
-            state.copyWith(inputAllIngredients: ingredients),
-          );
-
-          unawaited(
-            ImageCacheManager.instance.loadImages(ingredients: ingredients),
-          );
-        } else {
+        } on ServerErrorException {
           PopUpService.instance.show(
             widget: ServerErrorPopUpWidget(),
           );
@@ -128,46 +136,22 @@ class IngredientsBloc extends Bloc<IngredientsEvent, IngredientsState> {
       },
     );
 
-    on<QuientlyFetchAllIngredientsEvent>((event, emit) async {
-      final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
+    on<QuientlyFetchAllIngredientsEvent>(
+      (event, emit) async {
+        final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
 
-      final BaseHttpResponse responseWithIngredient = await repository.fetchAllIngredientData(token: token);
+        final BaseHttpResponse responseWithIngredient = await repository.fetchAllIngredientData(token: token);
 
-      if (responseWithIngredient.error == null) {
-        final List<dynamic> ingredients = FridgeParser.instance.parseList(
-          exampleObject: Ingredient,
-          response: responseWithIngredient,
-        );
+        if (responseWithIngredient.error == null) {
+          final List<dynamic> ingredients = FridgeParser.instance.parseList(
+            exampleObject: Ingredient,
+            response: responseWithIngredient,
+          );
 
-        final List<Ingredient> oldLocaleIngredients = state.ingredients;
-        final List<Ingredient> newLocaleIngredients = [];
-        for (Ingredient oldLocaleIngredient in oldLocaleIngredients) {
-          for (Ingredient newLocaleIngredient in ingredients) {
-            if (oldLocaleIngredient.id == newLocaleIngredient.id) {
-              newLocaleIngredients.add(newLocaleIngredient);
-              break;
-            }
-          }
-        }
-
-        emit(
-          state.copyWith(
-            inputAllIngredients: ingredients as List<Ingredient>,
-            inputIngredients: newLocaleIngredients,
-          ),
-        );
-        event.completer.complete(true);
-      }else{
-        event.completer.complete(false);
-      }
-    });
-
-    on<RollbackToPrevIngredientsStateEvent>(
-        (event, emit){
           final List<Ingredient> oldLocaleIngredients = state.ingredients;
           final List<Ingredient> newLocaleIngredients = [];
           for (Ingredient oldLocaleIngredient in oldLocaleIngredients) {
-            for (Ingredient newLocaleIngredient in event.allIngredients) {
+            for (Ingredient newLocaleIngredient in ingredients) {
               if (oldLocaleIngredient.id == newLocaleIngredient.id) {
                 newLocaleIngredients.add(newLocaleIngredient);
                 break;
@@ -177,11 +161,37 @@ class IngredientsBloc extends Bloc<IngredientsEvent, IngredientsState> {
 
           emit(
             state.copyWith(
-              inputAllIngredients: event.allIngredients,
+              inputAllIngredients: ingredients as List<Ingredient>,
               inputIngredients: newLocaleIngredients,
             ),
           );
+          event.completer.complete(true);
+        } else {
+          event.completer.complete(false);
         }
+      },
+    );
+
+    on<RollbackToPrevIngredientsStateEvent>(
+      (event, emit) {
+        final List<Ingredient> oldLocaleIngredients = state.ingredients;
+        final List<Ingredient> newLocaleIngredients = [];
+        for (Ingredient oldLocaleIngredient in oldLocaleIngredients) {
+          for (Ingredient newLocaleIngredient in event.allIngredients) {
+            if (oldLocaleIngredient.id == newLocaleIngredient.id) {
+              newLocaleIngredients.add(newLocaleIngredient);
+              break;
+            }
+          }
+        }
+
+        emit(
+          state.copyWith(
+            inputAllIngredients: event.allIngredients,
+            inputIngredients: newLocaleIngredients,
+          ),
+        );
+      },
     );
   }
 }
