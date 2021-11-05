@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_event.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/language_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/language_state.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_delegate.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/models/supported_locales.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/models/notification_message.dart';
 import 'package:fridge_yellow_team_bloc/repositories/auth_repository.dart';
 import 'package:fridge_yellow_team_bloc/repositories/ingredient_repository.dart';
@@ -31,12 +31,14 @@ class Application extends StatefulWidget {
 
 class _ApplicationState extends State<Application> {
   late NotificationPageCubit _notificationPageCubit;
+  late LanguageBloc _languageBloc;
 
   @override
   void initState() {
     super.initState();
 
     _notificationPageCubit = NotificationPageCubit();
+    _languageBloc = LanguageBloc();
 
     FirebaseMessaging.instance.getInitialMessage();
 
@@ -77,6 +79,7 @@ class _ApplicationState extends State<Application> {
   void dispose() {
     if (!_notificationPageCubit.isClosed) {
       _notificationPageCubit.close();
+      _languageBloc.close();
     }
     super.dispose();
   }
@@ -106,26 +109,29 @@ class _ApplicationState extends State<Application> {
             repository: RecipeRepository.instance,
           ),
         ),
-        BlocProvider(
-          create: (BuildContext _) => LanguageBloc(),
+        BlocProvider.value(
+          value: _languageBloc,
         ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
-        onGenerateRoute: RouteService.instance.onGenerateRoute,
-        navigatorKey: RouteService.instance.navigatorKey,
-        locale: Locale(SupportedLocales.instance.getCurrentLocale),
-        supportedLocales: FlutterDictionaryDelegate.getSupportedLocales!,
-        localizationsDelegates: FlutterDictionaryDelegate.getLocalizationDelegates,
-        builder: (context, child) {
-          return MediaQuery(
-            data: MediaQuery.of(context).copyWith(
-              textScaleFactor: 1.0,
-            ),
-            child: child ?? const SizedBox(),
-          );
-        },
+      child: BlocConsumer<LanguageBloc, LanguageState>(
+        listener: (context, state) {},
+        builder: (context, languageState) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: SplashScreen(),
+          onGenerateRoute: RouteService.instance.onGenerateRoute,
+          navigatorKey: RouteService.instance.navigatorKey,
+          locale: Locale(languageState.currentLocale),
+          supportedLocales: FlutterDictionaryDelegate.getSupportedLocales!,
+          localizationsDelegates: FlutterDictionaryDelegate.getLocalizationDelegates,
+          builder: (context, child) {
+            return MediaQuery(
+              data: MediaQuery.of(context).copyWith(
+                textScaleFactor: 1.0,
+              ),
+              child: child ?? const SizedBox(),
+            );
+          },
+        ),
       ),
     );
   }

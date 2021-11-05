@@ -73,10 +73,12 @@ class _HomePageViewState extends State<HomePageView> {
           if (UserInformationService.instance.isFirstSeeSwipeTutorial() == false && context.read<IngredientsBloc>().state.ingredients.isNotEmpty) {
             DialogService.instance.show(
               dialog: SwipeTutorialDialog(
-                child: SwipeTutorialWidget(onTapOk: () {
-                  UserInformationService.instance.seeSwipeTutorial();
-                  DialogService.instance.close();
-                }),
+                child: SwipeTutorialWidget(
+                  onTapOk: () {
+                    UserInformationService.instance.seeSwipeTutorial();
+                    DialogService.instance.close();
+                  },
+                ),
               ),
             );
           }
@@ -115,9 +117,7 @@ class _HomePageViewState extends State<HomePageView> {
             children: [
               Container(
                 margin: const EdgeInsets.only(top: 11.0),
-                child: Builder(builder: (
-                  BuildContext ctx,
-                ) {
+                child: Builder(builder: (BuildContext ctx) {
                   _textFieldContext = ctx;
                   return GlobalTextField(
                     showInPut: true,
@@ -153,148 +153,149 @@ class _HomePageViewState extends State<HomePageView> {
               ),
               Expanded(
                 child: BlocSelector<IngredientsBloc, IngredientsState, List<Ingredient>>(
-                    selector: (IngredientsState state) => state.ingredients,
-                    builder: (
-                      BuildContext blocSelectorContext,
-                      List<Ingredient> existIngredients,
-                    ) {
-                      final double stackWidth = MediaQuery.of(blocSelectorContext).size.width;
-
-                      return existIngredients.isEmpty
-                          ? Container(
-                              margin: const EdgeInsets.fromLTRB(
-                                52.0,
-                                30.0,
-                                52.0,
-                                80.0,
-                              ),
-                              child: Image.asset(ImageAssets.favoriteChefArrow),
-                            )
-                          : Stack(
-                              alignment: Alignment.topCenter,
-                              fit: StackFit.passthrough,
-                              children: [
-                                Column(
-                                  children: [
-                                    Container(
-                                      margin: const EdgeInsets.only(top: 25.0, bottom: 4.0),
-                                      alignment: FlutterDictionary.instance.isRTL ? Alignment.centerLeft : Alignment.centerRight,
-                                      child: InkWell(
-                                          borderRadius: BorderRadius.circular(10.0),
-                                          child: Text(
-                                            language.clearAll,
-                                            style: AppFonts.smallPaselRedTextStyle,
-                                          ),
-                                          onTap: () {
-                                            context.read<IngredientsBloc>().add(ClearIngredientsEvent(),);
-                                          }),
-                                    ),
-                                    Flexible(
-                                      child: ListView.separated(
-                                        itemCount: existIngredients.length + 1,
-                                        separatorBuilder: (BuildContext _, int index) {
-                                          return Container(
-                                            margin: const EdgeInsets.symmetric(vertical: 1.0),
-                                            child: Divider(
-                                              color: AppColors.black.withOpacity(0.5),
-                                              height: 0.5,
-                                            ),
-                                          );
-                                        },
-                                        itemBuilder: (BuildContext _, int index) {
-                                          return index == existIngredients.length
-                                              ? const SizedBox(
-                                                  height: 90.0,
-                                                )
-                                              : SwipeElement(
-                                                  background: Container(
-                                                    height: baseHeightOfIngredientElement,
-                                                    color: AppColors.pastelRed,
-                                                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                                                    alignment: FlutterDictionary.instance.isRTL ? Alignment.centerRight : Alignment.centerLeft,
-                                                    child: GlobalButton(
-                                                      key: UniqueKey(),
-                                                      width: 70.0,
-                                                      height: 45.0,
-                                                      color: AppColors.pastelRed,
-                                                      text: language.buttonDelete,
-                                                      fontText: AppFonts.medium16Height24WhiteTextStyle,
-                                                      onTap: () {
-                                                        context.read<IngredientsBloc>().add(
-                                                              DeleteIngredientEvent(
-                                                                ingredientId: existIngredients[index].i,
-                                                              ),
-                                                            );
-                                                      },
-                                                    ),
-                                                  ),
-                                                  child: SizedBox(
-                                                    height: baseHeightOfIngredientElement,
-                                                    child: Row(
-                                                      textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
-                                                      children: [
-                                                        Container(
-                                                          width: 57.0,
-                                                          margin: const EdgeInsets.all(4.0),
-                                                          child: CustomNetworkImage(
-                                                            url: existIngredients[index].image,
-                                                            placeholder: Image.asset(ImageAssets.chefYellow),
-                                                            fit: BoxFit.contain,
-                                                            errorFit: BoxFit.contain,
-                                                          ),
-                                                        ),
-                                                        Flexible(
-                                                          child: Text(
-                                                            existIngredients[index].name ?? 'No name',
-                                                            style: AppFonts.mediumBlack70ShadowTextStyle,
-                                                            maxLines: 1,
-                                                            overflow: TextOverflow.ellipsis,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                );
-                                        },
+                  selector: (IngredientsState state) => state.ingredients,
+                  builder: (
+                    BuildContext blocSelectorContext,
+                    List<Ingredient> existIngredients,
+                  ) {
+                    final double stackWidth = MediaQuery.of(blocSelectorContext).size.width;
+                    return existIngredients.isEmpty
+                        ? Container(
+                            margin: const EdgeInsets.fromLTRB(
+                              52.0,
+                              30.0,
+                              52.0,
+                              80.0,
+                            ),
+                            child: Image.asset(ImageAssets.favoriteChefArrow),
+                          )
+                        : Stack(
+                            alignment: Alignment.topCenter,
+                            fit: StackFit.passthrough,
+                            children: [
+                              Column(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 25.0, bottom: 4.0),
+                                    alignment: FlutterDictionary.instance.isRTL ? Alignment.centerLeft : Alignment.centerRight,
+                                    child: InkWell(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      child: Text(
+                                        language.clearAll,
+                                        style: AppFonts.smallPaselRedTextStyle,
                                       ),
+                                      onTap: () {
+                                        context.read<IngredientsBloc>().add(ClearIngredientsEvent());
+                                      },
                                     ),
-                                  ],
-                                ),
-                                Positioned(
-                                  bottom: 20.0,
-                                  left: 22.0,
-                                  right: 22.0,
-                                  child: Container(
-                                    height: 56.0,
-                                    decoration: BoxDecoration(boxShadow: AppShadows.containerOcreShadow),
                                   ),
-                                ),
-                                Positioned(
-                                  bottom: 0.0,
-                                  child: Container(
-                                    width: stackWidth,
-                                    padding: const EdgeInsets.only(
-                                      bottom: 32.0,
-                                      left: 22.0,
-                                      right: 22.0,
-                                    ),
-                                    child: GlobalButton(
-                                        key: UniqueKey(),
-                                        height: 56.0,
-                                        text: language.buttonWatchRecipes,
-                                        fontText: AppFonts.normalMediumTextStyle,
-                                        gradient: AppGradient.wheatMarigoldGradient,
-                                        onTap: () {
-                                          RouteSelectors.goToRecipesPage().call();
-                                          context.read<RecipesBloc>().add(
-                                                LoadRecipesEvent(ingredients: existIngredients),
+                                  Flexible(
+                                    child: ListView.separated(
+                                      itemCount: existIngredients.length + 1,
+                                      separatorBuilder: (BuildContext _, int index) {
+                                        return Container(
+                                          margin: const EdgeInsets.symmetric(vertical: 1.0),
+                                          child: Divider(
+                                            color: AppColors.black.withOpacity(0.5),
+                                            height: 0.5,
+                                          ),
+                                        );
+                                      },
+                                      itemBuilder: (BuildContext _, int index) {
+                                        return index == existIngredients.length
+                                            ? const SizedBox(
+                                                height: 90.0,
+                                              )
+                                            : SwipeElement(
+                                                background: Container(
+                                                  height: baseHeightOfIngredientElement,
+                                                  color: AppColors.pastelRed,
+                                                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                                                  alignment: FlutterDictionary.instance.isRTL ? Alignment.centerRight : Alignment.centerLeft,
+                                                  child: GlobalButton(
+                                                    key: UniqueKey(),
+                                                    width: 70.0,
+                                                    height: 45.0,
+                                                    color: AppColors.pastelRed,
+                                                    text: language.buttonDelete,
+                                                    fontText: AppFonts.medium16Height24WhiteTextStyle,
+                                                    onTap: () {
+                                                      context.read<IngredientsBloc>().add(
+                                                            DeleteIngredientEvent(
+                                                              ingredientId: existIngredients[index].i,
+                                                            ),
+                                                          );
+                                                    },
+                                                  ),
+                                                ),
+                                                child: SizedBox(
+                                                  height: baseHeightOfIngredientElement,
+                                                  child: Row(
+                                                    children: [
+                                                      Container(
+                                                        width: 57.0,
+                                                        margin: const EdgeInsets.all(4.0),
+                                                        child: CustomNetworkImage(
+                                                          url: existIngredients[index].image,
+                                                          placeholder: Image.asset(ImageAssets.chefYellow),
+                                                          fit: BoxFit.contain,
+                                                          errorFit: BoxFit.contain,
+                                                        ),
+                                                      ),
+                                                      Flexible(
+                                                        child: Text(
+                                                          existIngredients[index].name ?? 'No name',
+                                                          style: AppFonts.mediumBlack70ShadowTextStyle,
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow.ellipsis,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
                                               );
-                                        }),
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Positioned(
+                                bottom: 20.0,
+                                left: 22.0,
+                                right: 22.0,
+                                child: Container(
+                                  height: 56.0,
+                                  decoration: BoxDecoration(boxShadow: AppShadows.containerOcreShadow),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 0.0,
+                                child: Container(
+                                  width: stackWidth,
+                                  padding: const EdgeInsets.only(
+                                    bottom: 32.0,
+                                    left: 22.0,
+                                    right: 22.0,
+                                  ),
+                                  child: GlobalButton(
+                                    key: UniqueKey(),
+                                    height: 56.0,
+                                    text: language.buttonWatchRecipes,
+                                    fontText: AppFonts.normalMediumTextStyle,
+                                    gradient: AppGradient.wheatMarigoldGradient,
+                                    onTap: () {
+                                      RouteSelectors.goToRecipesPage().call();
+                                      context.read<RecipesBloc>().add(
+                                            LoadRecipesEvent(ingredients: existIngredients),
+                                          );
+                                    },
                                   ),
                                 ),
-                              ],
-                            );
-                    }),
+                              ),
+                            ],
+                          );
+                  },
+                ),
               ),
             ],
           ),

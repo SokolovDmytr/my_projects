@@ -31,13 +31,13 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
   RecipesBloc({
     required this.repository,
   }) : super(
-          const RecipesState(
-            recipes: [],
-            favoriteRecipes: [],
-          ),
-        ) {
+    const RecipesState(
+      recipes: [],
+      favoriteRecipes: [],
+    ),
+  ) {
     on<LoadRecipesEvent>(
-      (event, emit) async {
+          (event, emit) async {
         final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
         DialogService.instance.show(
@@ -151,7 +151,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
     );
 
     on<LoadFavoriteRecipesEvent>(
-      (event, emit) async {
+          (event, emit) async {
         final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
 
         DialogService.instance.show(
@@ -232,7 +232,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
     );
 
     on<AddFavouritesRecipeEvent>(
-      (event, emit) async {
+          (event, emit) async {
         final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
         final List<Recipe> favouritesRecipe = List.of(state.favoriteRecipes);
         favouritesRecipe.add(
@@ -336,7 +336,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
     );
 
     on<ClearAllListRecipesEvent>(
-      (event, emit) => emit(
+          (event, emit) => emit(
         RecipesState(
           recipes: [],
           favoriteRecipes: [],

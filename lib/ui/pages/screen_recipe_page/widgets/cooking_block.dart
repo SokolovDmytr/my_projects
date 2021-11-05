@@ -52,7 +52,6 @@ class CookingBlock extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 19.0),
           child: Row(
-            textDirection: FlutterDictionary.instance.isRTL ? TextDirection.rtl : TextDirection.ltr,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
