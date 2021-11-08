@@ -14,7 +14,6 @@ dependencies:
     sdk: flutter
 
   intl: ^0.17.0
-  http: 0.13.4
   dio: ^4.0.1
   logger: ^1.1.0
   google_fonts: ^2.1.0
@@ -28,7 +27,7 @@ dependencies:
   overlay_support: ^1.2.1
 
   cached_network_image: ^3.1.0
-  url_launcher: ^6.0.12
+  url_launcher: ^6.0.10
   photo_view: 0.13.0
   share: ^2.0.4
   device_info: ^2.0.2
@@ -36,27 +35,27 @@ dependencies:
   cupertino_icons: ^1.0.3
   flutter_screenutil: ^5.0.0+2
 
-  sliver_fab: ^1.0.0
   confetti: ^0.6.0
   visibility_detector: ^0.2.2
   hive: ^2.0.4
-  path_provider: ^2.0.6
-  google_sign_in: ^5.2.0
+  path_provider: ^2.0.4
+  google_sign_in: ^5.1.0
   stream_transform: ^2.0.0
   flutter_notification_channel: ^2.0.0
-  freezed_annotation: ^0.15.0
-  json_annotation: ^4.3.0
+  freezed_annotation: ^0.14.2
+  json_annotation: ^4.0.0
   flutter_bloc: ^7.3.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  analyzer: ^2.7.0
+
+  analyzer: ^1.5.0
   build_resolvers: ^2.0.4
-  json_serializable: ^6.0.1
-  build_runner: ^2.1.4
+  json_serializable: ^4.1.0
+  build_runner: ^2.1.2
   flutter_launcher_icons: ^0.9.2
-  freezed: ^0.15.0+1
+  freezed: ^0.14.0
 
 flutter_icons:
   android: true

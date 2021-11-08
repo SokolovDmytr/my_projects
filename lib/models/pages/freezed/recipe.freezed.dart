@@ -292,9 +292,6 @@ class _$_Recipe implements _Recipe {
             (identical(other.isFavorite, isFavorite) || other.isFavorite == isFavorite));
   }
 
-  @override
-  int get hashCode => Object.hash(runtimeType, i, name, time, calories, const DeepCollectionEquality().hash(ingredients),
-      const DeepCollectionEquality().hash(steps), level, image, isFavorite);
 
   @JsonKey(ignore: true)
   @override

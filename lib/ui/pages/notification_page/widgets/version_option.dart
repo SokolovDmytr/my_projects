@@ -83,6 +83,7 @@ class _VersionOptionState extends State<VersionOption> with SingleTickerProvider
             ),
           ),
           AnimatedSize(
+            vsync: this,
             duration: AppDuration.notificationPageOpenBlockDuration,
             child: Container(
               alignment: FlutterDictionary.instance.isRTL ? Alignment.topRight : Alignment.topLeft,

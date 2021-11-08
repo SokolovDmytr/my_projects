@@ -190,10 +190,6 @@ class _$_Token implements _Token {
                 other.createDate == createDate));
   }
 
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, token, refreshToken, ttlToken, createDate);
-
   @JsonKey(ignore: true)
   @override
   _$TokenCopyWith<_Token> get copyWith =>

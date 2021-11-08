@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_event.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_state.dart';
@@ -68,9 +66,7 @@ class IngredientsBloc extends Bloc<IngredientsEvent, IngredientsState> {
               state.copyWith(inputAllIngredients: ingredients),
             );
 
-            unawaited(
-              ImageCacheManager.instance.loadImages(ingredients: ingredients),
-            );
+            ImageCacheManager.instance.loadImages(ingredients: ingredients); // ignore: unawaited_futures
           }
         } on NoInternetConnectionException {
           DialogService.instance.show(

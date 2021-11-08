@@ -230,9 +230,7 @@ class _$_Ingredient implements _Ingredient {
             (identical(other.image, image) || other.image == image));
   }
 
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, i, id, count, description, name, image);
+
 
   @JsonKey(ignore: true)
   @override

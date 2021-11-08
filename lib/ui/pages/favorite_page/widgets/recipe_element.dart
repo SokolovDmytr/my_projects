@@ -83,6 +83,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
       },
       child: AnimatedSize(
         duration: AppDuration.recipeOpenDuration,
+        vsync: this,
         child: Container(
           decoration: BoxDecoration(
             boxShadow: AppShadows.recipeElementShadow,
