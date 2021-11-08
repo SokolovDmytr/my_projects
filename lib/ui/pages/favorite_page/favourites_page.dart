@@ -6,7 +6,7 @@ import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/bloc/recipes_event.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/favorite_page/favourites_page_view.dart';
 
-class FavouritesPage extends StatefulWidget {
+class FavouritesPage extends StatefulWidget { // TODO(Kolya): ??? check naming of the folder and files
   const FavouritesPage({Key? key}) : super(key: key);
 
   @override

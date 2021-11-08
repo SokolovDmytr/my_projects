@@ -42,7 +42,7 @@ class UpdateAllIngredientsEvent extends IngredientsEvent {
   });
 }
 
-class QuientlyFetchAllIngredientsEvent extends IngredientsEvent {
+class QuientlyFetchAllIngredientsEvent extends IngredientsEvent { // TODO(Kolya): ??? english
   final Completer completer;
 
   const QuientlyFetchAllIngredientsEvent({

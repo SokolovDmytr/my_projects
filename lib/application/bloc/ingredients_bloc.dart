@@ -21,7 +21,7 @@ import 'package:fridge_yellow_team_bloc/services/pop_up_service/pop_up_service.d
 import 'package:fridge_yellow_team_bloc/services/pop_up_service/server_error_pop_up_widget.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
 
-class IngredientsBloc extends Bloc<IngredientsEvent, IngredientsState> {
+class IngredientsBloc extends Bloc<IngredientsEvent, IngredientsState> { // TODO(Kolya): ??? you should make different folders for block... ingredient block and ....
   IIngredientRepository repository;
 
   IngredientsBloc({
@@ -79,7 +79,7 @@ class IngredientsBloc extends Bloc<IngredientsEvent, IngredientsState> {
             ),
           );
           return;
-        } on ServerErrorException {
+        } on ServerErrorException { // TODO(Kolya): ???
           PopUpService.instance.show(
             widget: ServerErrorPopUpWidget(),
           );

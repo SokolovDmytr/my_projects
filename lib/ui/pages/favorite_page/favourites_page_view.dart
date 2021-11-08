@@ -24,7 +24,7 @@ class FavouritesPageView extends StatefulWidget {
 class _FavouritesPageViewState extends State<FavouritesPageView> {
   @override
   Widget build(BuildContext context) {
-    final FavouritesPageLanguage _language = FlutterDictionary.instance.language?.favouritesPageLanguage ?? en.favouritesPageLanguage;
+    final FavouritesPageLanguage _language = FlutterDictionary.instance.language?.favouritesPageLanguage ?? en.favouritesPageLanguage; // TODO(Kolya): out of the builder and without null check, check it everywhere
     return BlocSelector<RecipesBloc, RecipesState, List<Recipe>>(
       selector: (RecipesState state) {
         return state.favoriteRecipes;
