@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
@@ -8,11 +7,10 @@ import 'package:fridge_yellow_team_bloc/res/app_styles/app_gradient.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
 import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_button.dart';
 
-
 class DeleteDialogWidget extends StatelessWidget {
   final String text;
   final Function onTapDelete;
-  final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+  final DialogLanguage language = FlutterDictionary.instance.language.dialogLanguage;
 
   DeleteDialogWidget({
     required this.text,
@@ -41,14 +39,14 @@ class DeleteDialogWidget extends StatelessWidget {
               ),
               child: InkWell(
                 borderRadius: BorderRadius.circular(10.0),
+                onTap: () {
+                  DialogService.instance.close();
+                },
                 child: Icon(
                   Icons.clear,
                   color: AppColors.pastelRed,
                   size: 24.0,
                 ),
-                onTap: () {
-                  DialogService.instance.close();
-                },
               ),
             ),
             Container(
@@ -59,7 +57,7 @@ class DeleteDialogWidget extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: Text(
-                '${language.deletePopUpTitle} ${text}?',
+                '${language.deletePopUpTitle} $text?',
                 style: AppFonts.normalBlackTwoTextStyle,
                 softWrap: true,
                 maxLines: 2,

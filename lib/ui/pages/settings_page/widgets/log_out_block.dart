@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/settings_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
@@ -11,7 +10,7 @@ import 'package:fridge_yellow_team_bloc/ui/pages/settings_page/widgets/settings_
 
 class LogOutBlock extends StatelessWidget {
   LogOutBlock() : super(key: UniqueKey());
-  final SettingsPageLanguage _language = FlutterDictionary.instance.language?.settingsPageLanguage ?? en.settingsPageLanguage;
+  final SettingsPageLanguage _language = FlutterDictionary.instance.language.settingsPageLanguage;
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/authentication_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
@@ -9,7 +8,7 @@ import 'package:fridge_yellow_team_bloc/res/app_styles/app_shadows.dart';
 class GlobalTextField extends StatefulWidget {
   final TextStyle? hintStyle;
   final String? hintText;
-  final bool needShowButton;
+  final bool isPasswordTextField;
   final Widget? loader;
   final bool needPrefix;
   final bool needSuffix;
@@ -24,7 +23,7 @@ class GlobalTextField extends StatefulWidget {
   const GlobalTextField({
     required this.needSuffix,
     required this.needPrefix,
-    required this.needShowButton,
+    required this.isPasswordTextField,
     required this.showInPut,
     this.onSubmitted,
     this.loader,
@@ -43,11 +42,12 @@ class GlobalTextField extends StatefulWidget {
 }
 
 class _GlobalTextFieldState extends State<GlobalTextField> {
+  final AuthenticationPageLanguage _language = FlutterDictionary.instance.language.authenticationPageLanguage;
   late bool passwordVisible;
 
   @override
   void initState() {
-    if (widget.needShowButton) { // TODO(Kolya): ?? needShowButton for password is visible , bad naming
+    if (widget.isPasswordTextField) {
       passwordVisible = true;
     } else {
       passwordVisible = false;
@@ -57,10 +57,9 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
 
   @override
   Widget build(BuildContext context) {
-    final AuthenticationPageLanguage _language = FlutterDictionary.instance.language?.authenticationPageLanguage ?? en.authenticationPageLanguage;
     return Container(
       height: 44.0,
-      margin: widget.padding ?? const EdgeInsets.all(0.0), // TODO(Kolya): try EdgeInsets.zero
+      margin: widget.padding ?? EdgeInsets.zero,
       decoration: BoxDecoration(
         color: AppColors.white,
         boxShadow: AppShadows.textFieldShadow,
@@ -102,7 +101,7 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
             suffixIcon: widget.needSuffix
                 ? widget.loader != null
                     ? widget.loader
-                    : widget.needShowButton
+                    : widget.isPasswordTextField
                         ? Padding(
                             padding: const EdgeInsets.only(right: 16.0, top: 10.0, left: 16.0),
                             child: InkWell(

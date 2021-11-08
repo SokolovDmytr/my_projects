@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/authentication_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_colors.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
-
 
 class CustomSwitch extends StatefulWidget {
   final bool value;
@@ -41,7 +39,7 @@ class _CustomSwitchState extends State<CustomSwitch> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    final AuthenticationPageLanguage _language = FlutterDictionary.instance.language?.authenticationPageLanguage ?? en.authenticationPageLanguage;
+    final AuthenticationPageLanguage _language = FlutterDictionary.instance.language.authenticationPageLanguage;
     return AnimatedBuilder(
       animation: _animationController,
       builder: (context, child) {

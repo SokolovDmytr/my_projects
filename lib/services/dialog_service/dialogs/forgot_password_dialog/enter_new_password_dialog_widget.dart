@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
@@ -24,7 +23,7 @@ class EnterNewPasswordDialogWidget extends StatefulWidget {
 }
 
 class _EnterNewPasswordDialogWidgetState extends State<EnterNewPasswordDialogWidget> {
-  final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+  final DialogLanguage language = FlutterDictionary.instance.language.dialogLanguage;
   final FocusNode _passwordTextFieldFocusNode = FocusNode();
   final FocusNode _confirmPasswordTextFieldFocusNode = FocusNode();
   String? _password;
@@ -50,14 +49,14 @@ class _EnterNewPasswordDialogWidgetState extends State<EnterNewPasswordDialogWid
               ),
               child: InkWell(
                 borderRadius: BorderRadius.circular(10.0),
+                onTap: () {
+                  DialogService.instance.close();
+                },
                 child: Icon(
                   Icons.clear,
                   color: AppColors.pastelRed,
                   size: 24.0,
                 ),
-                onTap: () {
-                  DialogService.instance.close();
-                },
               ),
             ),
             Container(
@@ -81,7 +80,7 @@ class _EnterNewPasswordDialogWidgetState extends State<EnterNewPasswordDialogWid
               needSuffix: false,
               hintText: language.forgotPasswordPasswordHint,
               hintStyle: AppFonts.medium16Height24pinkishGreyTextStyle,
-              needShowButton: false,
+              isPasswordTextField: false,
               onChanged: (String text) => _password = text,
               onSubmitted: (String str) {
                 FocusScope.of(context).requestFocus(_confirmPasswordTextFieldFocusNode);
@@ -94,7 +93,7 @@ class _EnterNewPasswordDialogWidgetState extends State<EnterNewPasswordDialogWid
               needSuffix: false,
               hintText: language.forgotPasswordConfirmPasswordHint,
               hintStyle: AppFonts.medium16Height24pinkishGreyTextStyle,
-              needShowButton: false,
+              isPasswordTextField: false,
               onChanged: (String text) => _confirmPassword = text,
             ),
             Container(

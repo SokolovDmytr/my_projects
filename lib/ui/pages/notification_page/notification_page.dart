@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/notification_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_gradient.dart';
@@ -19,9 +18,10 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
+  final NotificationPageLanguage _language = FlutterDictionary.instance.language.notificationPageLanguage;
+
   @override
   Widget build(BuildContext context) {
-    final NotificationPageLanguage _language = FlutterDictionary.instance.language?.notificationPageLanguage ?? en.notificationPageLanguage;
     return BlocBuilder<NotificationPageCubit, NotificationPageState>(
       builder: (BuildContext context, state) => MainLayout(
         appBarType: AppBarType.simple,

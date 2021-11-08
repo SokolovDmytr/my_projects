@@ -1,9 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_event.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingridients_bloc/ingredients_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingridients_bloc/ingredients_event.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/on_boarding_screen_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/res/app_data.dart';
@@ -28,19 +27,16 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   int _currentIndexDots = 0;
   final CarouselController _buttonCarouselController = CarouselController();
+  final OnBoardingScreenLanguage _language = FlutterDictionary.instance.language.onBoardingScreenLanguage;
 
   @override
   void initState() {
     super.initState();
-
-    context.read<IngredientsBloc>().add(
-          LoadAllIngredientsEvent(),
-        );
+    context.read<IngredientsBloc>().add(LoadAllIngredientsEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    final OnBoardingScreenLanguage _language = FlutterDictionary.instance.language?.onBoardingScreenLanguage ?? en.onBoardingScreenLanguage;
     return AnnotatedRegion(
       value: SystemUiOverlayStyle(
         statusBarColor: AppColors.transparent,

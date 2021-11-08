@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingridients_bloc/ingredients_bloc.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/screen_recipe_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
@@ -28,7 +27,7 @@ class _FoodElementsBlockState extends State<FoodElementsBlock> {
   List<Ingredient> missingIngredients = [];
   List<Widget> missingWidgets = [];
   List<Widget> availableWidgets = [];
-  final ScreenRecipeLanguage _language = FlutterDictionary.instance.language?.screenRecipeLanguage ?? en.screenRecipeLanguage;
+  final ScreenRecipeLanguage _language = FlutterDictionary.instance.language.screenRecipeLanguage;
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
@@ -11,7 +10,7 @@ import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_button.dart';
 
 class RemoveFavouriteDialogWidget extends StatelessWidget {
   final void Function() onTapYes;
-  final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+  final DialogLanguage language = FlutterDictionary.instance.language.dialogLanguage;
 
   RemoveFavouriteDialogWidget({
     required this.onTapYes,
@@ -37,12 +36,12 @@ class RemoveFavouriteDialogWidget extends StatelessWidget {
             ),
             child: InkWell(
               borderRadius: BorderRadius.circular(10.0),
+              onTap: () => DialogService.instance.close(),
               child: Icon(
                 Icons.clear,
                 color: AppColors.pastelRed,
                 size: 24.0,
               ),
-              onTap: () => DialogService.instance.close(),
             ),
           ),
           Container(

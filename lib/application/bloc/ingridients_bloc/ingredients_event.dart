@@ -42,10 +42,10 @@ class UpdateAllIngredientsEvent extends IngredientsEvent {
   });
 }
 
-class QuientlyFetchAllIngredientsEvent extends IngredientsEvent { // TODO(Kolya): ??? english
+class QuietlyFetchAllIngredientsEvent extends IngredientsEvent {
   final Completer completer;
 
-  const QuientlyFetchAllIngredientsEvent({
+  const QuietlyFetchAllIngredientsEvent({
     required this.completer,
   });
 }

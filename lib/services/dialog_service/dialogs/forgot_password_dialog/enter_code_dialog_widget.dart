@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
@@ -23,7 +22,7 @@ class EnterCodeDialogWidget extends StatefulWidget {
 }
 
 class _EnterCodeDialogWidgetState extends State<EnterCodeDialogWidget> {
-  final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+  final DialogLanguage language = FlutterDictionary.instance.language.dialogLanguage;
   String? _text;
 
   @override
@@ -46,14 +45,14 @@ class _EnterCodeDialogWidgetState extends State<EnterCodeDialogWidget> {
               ),
               child: InkWell(
                 borderRadius: BorderRadius.circular(10.0),
+                onTap: () {
+                  DialogService.instance.close();
+                },
                 child: Icon(
                   Icons.clear,
                   color: AppColors.pastelRed,
                   size: 24.0,
                 ),
-                onTap: () {
-                  DialogService.instance.close();
-                },
               ),
             ),
             Container(
@@ -78,7 +77,7 @@ class _EnterCodeDialogWidgetState extends State<EnterCodeDialogWidget> {
               needSuffix: false,
               hintText: language.forgotPasswordCodeHint,
               hintStyle: AppFonts.medium16Height24pinkishGreyTextStyle,
-              needShowButton: false,
+              isPasswordTextField: false,
               onChanged: (String text) => _text = text,
             ),
             Container(

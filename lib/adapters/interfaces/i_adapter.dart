@@ -1,7 +1,7 @@
 import 'package:fridge_yellow_team_bloc/network/shared/i_request.dart';
 
 /// Interface for adapters for http requests.
-abstract class IAdapter<T> { // TODO(Kolya): delete it if you dont use it
+abstract class IAdapter<T> {
   final IRequest request;
 
   const IAdapter({

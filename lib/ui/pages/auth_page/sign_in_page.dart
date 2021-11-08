@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/authentication_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
@@ -24,6 +23,7 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  final AuthenticationPageLanguage _language = FlutterDictionary.instance.language.authenticationPageLanguage;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final FocusNode emailFocus = FocusNode();
@@ -51,7 +51,6 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    final AuthenticationPageLanguage _language = FlutterDictionary.instance.language?.authenticationPageLanguage ?? en.authenticationPageLanguage;
     return Column(
       children: [
         Text(
@@ -66,7 +65,7 @@ class _SignInPageState extends State<SignInPage> {
           hintStyle: AppFonts.size16RegPinkishGrey,
           needSuffix: false,
           needPrefix: false,
-          needShowButton: false,
+          isPasswordTextField: false,
           controller: emailController,
           focusNode: emailFocus,
           errorColor: emailColor,
@@ -84,7 +83,7 @@ class _SignInPageState extends State<SignInPage> {
           hintStyle: AppFonts.size16RegPinkishGrey,
           needSuffix: true,
           needPrefix: false,
-          needShowButton: true,
+          isPasswordTextField: true,
           controller: passwordController,
           focusNode: passwordFocus,
           errorColor: passwordColor,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/app_routes.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/auth_page/auth_page.dart';
-import 'package:fridge_yellow_team_bloc/ui/pages/favorite_page/favourites_page.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/favorites_page/favourites_page.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/home_page/view/home_page.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/notification_page/notification_page.dart';
 import 'package:fridge_yellow_team_bloc/ui/pages/on_boarding_screen/on_boarding_screen.dart';

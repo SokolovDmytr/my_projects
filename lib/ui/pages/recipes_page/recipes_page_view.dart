@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/recipes_state.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc/recipes_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc/recipes_state.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/recipes_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/recipe.dart';
@@ -15,14 +14,15 @@ import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/app_routes.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_selectors.dart';
 import 'package:fridge_yellow_team_bloc/ui/layouts/main_layout/main_layout.dart';
-import 'package:fridge_yellow_team_bloc/ui/pages/favorite_page/widgets/recipe_element.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/favorites_page/widgets/recipe_element.dart';
 
 class RecipesPageView extends StatelessWidget {
-  const RecipesPageView({Key? key}) : super(key: key);
+  RecipesPageView({Key? key}) : super(key: key);
+
+  final RecipesPageLanguage language = FlutterDictionary.instance.language.recipesPageLanguage;
 
   @override
   Widget build(BuildContext context) {
-    final RecipesPageLanguage language = FlutterDictionary.instance.language?.recipesPageLanguage ?? en.recipesPageLanguage;
     return BlocSelector<RecipesBloc, RecipesState, List<Recipe>>(
       selector: (RecipesState state) {
         return state.recipes;

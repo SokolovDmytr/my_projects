@@ -67,7 +67,6 @@ class _CustomNetworkImageState extends State<CustomNetworkImage> with TickerProv
 
               return AnimatedBuilder(
                 animation: _controller,
-                child: widget.placeholder,
                 builder: (
                   BuildContext _,
                   Widget? child,
@@ -99,6 +98,7 @@ class _CustomNetworkImageState extends State<CustomNetworkImage> with TickerProv
                     ],
                   );
                 },
+                child: widget.placeholder,
               );
             },
           );

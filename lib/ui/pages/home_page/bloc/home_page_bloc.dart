@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingridients_bloc/ingredients_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
 import 'package:fridge_yellow_team_bloc/models/exception/no_internet_connection_exception.dart';
 import 'package:fridge_yellow_team_bloc/models/exception/server_error_exception.dart';
@@ -43,7 +43,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           );
 
           if (response.response == null) {
-            throw ServerErrorException();
+            throw ServerError();
           } else {
             final List<Ingredient> ingredients = FridgeParser.instance.parseList(
               exampleObject: Ingredient,
@@ -64,7 +64,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
           );
           state.loader.rebuild!(false);
           return;
-        }on ServerErrorException{
+        }on ServerError{
           state.loader.rebuild!(false);
           PopUpService.instance.show(
             widget: ServerErrorPopUpWidget(),

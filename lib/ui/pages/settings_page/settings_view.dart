@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/settings_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/res/app_styles/app_gradient.dart';
@@ -20,9 +19,10 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
+  final SettingsPageLanguage _language = FlutterDictionary.instance.language.settingsPageLanguage;
+
   @override
   Widget build(BuildContext context) {
-    final SettingsPageLanguage _language = FlutterDictionary.instance.language?.settingsPageLanguage ?? en.settingsPageLanguage;
     return MainLayout(
       appBarType: AppBarType.simple,
       isMainStyleAppBar: true,

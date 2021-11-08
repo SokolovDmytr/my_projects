@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/main_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
@@ -11,7 +10,7 @@ import 'package:fridge_yellow_team_bloc/ui/global_widgets/global_button.dart';
 
 class SwipeTutorialWidget extends StatelessWidget {
   final void Function() onTapOk;
-  final MainPageLanguage language = FlutterDictionary.instance.language?.mainPageLanguage ?? en.mainPageLanguage;
+  final MainPageLanguage language = FlutterDictionary.instance.language.mainPageLanguage;
 
   SwipeTutorialWidget({
     required this.onTapOk,

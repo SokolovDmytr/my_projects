@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_event.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_state.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingridients_bloc/ingredients_event.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingridients_bloc/ingredients_state.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
 import 'package:fridge_yellow_team_bloc/models/exception/no_internet_connection_exception.dart';
 import 'package:fridge_yellow_team_bloc/models/exception/server_error_exception.dart';
@@ -19,7 +19,7 @@ import 'package:fridge_yellow_team_bloc/services/pop_up_service/pop_up_service.d
 import 'package:fridge_yellow_team_bloc/services/pop_up_service/server_error_pop_up_widget.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_service.dart';
 
-class IngredientsBloc extends Bloc<IngredientsEvent, IngredientsState> { // TODO(Kolya): ??? you should make different folders for block... ingredient block and ....
+class IngredientsBloc extends Bloc<IngredientsEvent, IngredientsState> {
   IIngredientRepository repository;
 
   IngredientsBloc({
@@ -55,7 +55,7 @@ class IngredientsBloc extends Bloc<IngredientsEvent, IngredientsState> { // TODO
           );
 
           if (response.response == null) {
-            throw ServerErrorException();
+            throw ServerError();
           } else {
             final List<Ingredient> ingredients = FridgeParser.instance.parseList(
               exampleObject: Ingredient,
@@ -75,7 +75,7 @@ class IngredientsBloc extends Bloc<IngredientsEvent, IngredientsState> { // TODO
             ),
           );
           return;
-        } on ServerErrorException { // TODO(Kolya): ???
+        } on ServerError {
           PopUpService.instance.show(
             widget: ServerErrorPopUpWidget(),
           );
@@ -132,7 +132,7 @@ class IngredientsBloc extends Bloc<IngredientsEvent, IngredientsState> { // TODO
       },
     );
 
-    on<QuientlyFetchAllIngredientsEvent>(
+    on<QuietlyFetchAllIngredientsEvent>(
       (event, emit) async {
         final String token = await RouteService.instance.navigatorKey.currentState!.context.read<ApplicationTokenCubit>().getToken();
 

@@ -1,9 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/recipes_event.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/recipes_state.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingridients_bloc/ingredients_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc/recipes_event.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc/recipes_state.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/models/exception/no_internet_connection_exception.dart';
@@ -38,7 +37,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
   ) {
     on<LoadRecipesEvent>(
           (event, emit) async {
-        final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+        final DialogLanguage language = FlutterDictionary.instance.language.dialogLanguage;
 
         DialogService.instance.show(
           dialog: LoaderPopUp(
@@ -72,7 +71,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
           if (state.favoriteRecipes.isEmpty) {
             final BaseHttpResponse responseWithFavoriteRecipe = await repository.fetchFavoriteRecipeData(token: token);
             if (responseWithFavoriteRecipe.response == null) {
-              throw ServerErrorException();
+              throw ServerError();
             } else {
               favoriteRecipes = FridgeParser.instance.parseList(
                 exampleObject: Recipe,
@@ -84,7 +83,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
           }
 
           if (response.response == null) {
-            throw ServerErrorException();
+            throw ServerError();
           } else {
             final List<Recipe> recipes = FridgeParser.instance.parseList(
               exampleObject: Recipe,
@@ -140,7 +139,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
             ),
           );
           return;
-        } on ServerErrorException {
+        } on ServerError {
           DialogService.instance.close();
 
           PopUpService.instance.show(
@@ -152,7 +151,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
 
     on<LoadFavoriteRecipesEvent>(
           (event, emit) async {
-        final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+        final DialogLanguage language = FlutterDictionary.instance.language.dialogLanguage;
 
         DialogService.instance.show(
           dialog: LoaderPopUp(
@@ -174,7 +173,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
           final BaseHttpResponse response = await repository.fetchFavoriteRecipeData(token: token);
 
           if (response.response == null) {
-            throw ServerErrorException();
+            throw ServerError();
           } else {
             final List<Recipe> recipes = FridgeParser.instance.parseList(
               exampleObject: Recipe,
@@ -221,7 +220,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
             ),
           );
           return;
-        } on ServerErrorException {
+        } on ServerError {
           DialogService.instance.close();
 
           PopUpService.instance.show(
@@ -233,7 +232,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
 
     on<AddFavouritesRecipeEvent>(
           (event, emit) async {
-        final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+        final DialogLanguage language = FlutterDictionary.instance.language.dialogLanguage;
         final List<Recipe> favouritesRecipe = List.of(state.favoriteRecipes);
         favouritesRecipe.add(
           event.recipe.copyWith(isFavorite: true),
@@ -253,7 +252,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
           final BaseHttpResponse response = await repository.addToFavorite(token: token, recipeId: event.recipe.i.toString());
 
           if (response.response == null) {
-            throw ServerErrorException();
+            throw ServerError();
           } else {
             PopUpService.instance.show(
               widget: RecipesPopUpWidget(
@@ -271,7 +270,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
             widget: ServerErrorPopUpWidget(),
           );
           return;
-        } on ServerErrorException {
+        } on ServerError {
           favouritesRecipe.removeWhere((element) => element.i == event.recipe.i);
           emit(
             state.copyWith(inputFavoriteRecipes: favouritesRecipe),
@@ -286,7 +285,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
 
     on<RemoveFavouriteRecipeEvent>(
       (event, emit) async {
-        final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+        final DialogLanguage language = FlutterDictionary.instance.language.dialogLanguage;
 
         final List<Recipe> favouriteRecipe = List.of(state.favoriteRecipes);
         favouriteRecipe.removeWhere((element) => element.i == event.recipe.i);
@@ -305,7 +304,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
           final BaseHttpResponse response = await repository.removeFromFavorite(token: token, recipeId: event.recipe.i.toString());
 
           if (response.response == null) {
-            throw ServerErrorException();
+            throw ServerError();
           } else {
             PopUpService.instance.show(
               widget: RecipesPopUpWidget(
@@ -322,7 +321,7 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
             widget: ServerErrorPopUpWidget(),
           );
           return;
-        } on ServerErrorException {
+        } on ServerError {
           favouriteRecipe.add(event.recipe);
           emit(
             state.copyWith(inputFavoriteRecipes: favouriteRecipe),

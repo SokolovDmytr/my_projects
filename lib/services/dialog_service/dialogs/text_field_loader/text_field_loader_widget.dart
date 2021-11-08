@@ -4,10 +4,7 @@ import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 class TextFieldLoaderWidget extends StatefulWidget {
   late Function(bool value)? rebuild;
 
-  TextFieldLoaderWidget()
-      : super(
-          key: UniqueKey(),
-        );
+  TextFieldLoaderWidget() : super(key: UniqueKey());
 
   @override
   _TextFieldLoaderWidgetState createState() => _TextFieldLoaderWidgetState();

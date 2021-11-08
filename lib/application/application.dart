@@ -1,19 +1,21 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_event.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/language_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/language_state.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingridients_bloc/ingredients_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingridients_bloc/ingredients_event.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/language_bloc/language_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/language_bloc/language_state.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc/recipes_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_delegate.dart';
+import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/models/notification_message.dart';
 import 'package:fridge_yellow_team_bloc/repositories/auth_repository.dart';
 import 'package:fridge_yellow_team_bloc/repositories/ingredient_repository.dart';
 import 'package:fridge_yellow_team_bloc/repositories/recipe_repository.dart';
 import 'package:fridge_yellow_team_bloc/res/const.dart';
 import 'package:fridge_yellow_team_bloc/res/keys.dart';
+import 'package:fridge_yellow_team_bloc/res/locales.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialog_service.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/new_version_dialog/new_version_dialog.dart';
 import 'package:fridge_yellow_team_bloc/services/dialog_service/dialogs/new_version_dialog/new_version_dialog_widget.dart';
@@ -36,9 +38,10 @@ class _ApplicationState extends State<Application> {
   @override
   void initState() {
     super.initState();
-
+    FlutterDictionary.instance.setNewLanguage(Locales.base);
     _notificationPageCubit = NotificationPageCubit();
     _languageBloc = LanguageBloc();
+    _languageBloc.state.copyWith(currentLocale: Locales.base);
 
     FirebaseMessaging.instance.getInitialMessage();
 

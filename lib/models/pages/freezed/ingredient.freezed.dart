@@ -241,6 +241,10 @@ class _$_Ingredient implements _Ingredient {
   Map<String, dynamic> toJson() {
     return _$$_IngredientToJson(this);
   }
+
+  @override
+  int get hashCode => super.hashCode;
+
 }
 
 abstract class _Ingredient implements Ingredient {

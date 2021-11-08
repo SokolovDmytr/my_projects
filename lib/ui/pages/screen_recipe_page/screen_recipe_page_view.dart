@@ -3,9 +3,8 @@ import 'dart:math' as math;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/recipes_event.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc/recipes_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc/recipes_event.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/screen_recipe_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
@@ -45,12 +44,11 @@ class ScreenRecipePageView extends StatefulWidget {
 
 class _ScreenRecipePageViewState extends State<ScreenRecipePageView> with SingleTickerProviderStateMixin {
   double height = 312.0;
+  final ScreenRecipeLanguage _languageScreenRecipePage = FlutterDictionary.instance.language.screenRecipeLanguage;
+  final DialogLanguage _languageDialog = FlutterDictionary.instance.language.dialogLanguage;
 
   @override
   Widget build(BuildContext context) {
-    final ScreenRecipeLanguage _languageScreenRecipePage = FlutterDictionary.instance.language?.screenRecipeLanguage ?? en.screenRecipeLanguage;
-    final DialogLanguage _languageDialog = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
-
     return BlocBuilder<ScreenRecipePageCubit, ScreenRecipePageState>(
       builder: (context, state) => SafeArea(
         child: WillPopScope(

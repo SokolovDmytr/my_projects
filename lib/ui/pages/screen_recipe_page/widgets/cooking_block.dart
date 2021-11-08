@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/screen_recipe_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/recipe.dart';
@@ -11,10 +10,12 @@ import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 class CookingBlock extends StatelessWidget {
   final Recipe recipe;
 
-  const CookingBlock({
+  CookingBlock({
     required this.recipe,
     Key? key,
   }) : super(key: key);
+
+  final ScreenRecipeLanguage _language = FlutterDictionary.instance.language.screenRecipeLanguage;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,6 @@ class CookingBlock extends StatelessWidget {
   }
 
   List<Widget> _buildSteps() {
-    final ScreenRecipeLanguage _language = FlutterDictionary.instance.language?.screenRecipeLanguage ?? en.screenRecipeLanguage;
     final List<Widget> steps = [
       Row(
         children: [

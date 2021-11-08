@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/models/exception/no_internet_connection_exception.dart';
@@ -35,7 +34,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
   }) : super(AuthPageState.init());
 
   Future<void> logIn(String email, String password) async {
-    final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+    final DialogLanguage language = FlutterDictionary.instance.language.dialogLanguage;
     DialogService.instance.show(
       dialog: LoaderPopUp(
         title: language.loadingText,
@@ -58,7 +57,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
       );
 
       if (response.response == null) {
-        throw ServerErrorException();
+        throw ServerError();
       } else {
         final Token token = FridgeParser.instance.parseEntity(
           exampleObject: Token,
@@ -79,7 +78,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
         ),
       );
       return;
-    } on ServerErrorException {
+    } on ServerError {
       DialogService.instance.close();
 
       PopUpService.instance.show(
@@ -90,7 +89,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
   }
 
   Future<void> register(String email, String firstName, String password) async {
-    final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+    final DialogLanguage language = FlutterDictionary.instance.language.dialogLanguage;
     DialogService.instance.show(
       dialog: LoaderPopUp(
         title: language.loadingText,
@@ -114,7 +113,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
       );
 
       if (response.response == null) {
-        throw ServerErrorException();
+        throw ServerError();
       } else {
         final Token token = FridgeParser.instance.parseEntity(
           exampleObject: Token,
@@ -135,7 +134,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
         ),
       );
       return;
-    } on ServerErrorException {
+    } on ServerError {
       DialogService.instance.close();
 
       PopUpService.instance.show(
@@ -146,7 +145,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
   }
 
   Future<void> signInWithGoogle() async {
-    final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+    final DialogLanguage language = FlutterDictionary.instance.language.dialogLanguage;
 
     DialogService.instance.show(
       dialog: LoaderPopUp(
@@ -182,7 +181,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
           );
 
           if (response.response == null) {
-            throw ServerErrorException();
+            throw ServerError();
           } else {
             final Token token = FridgeParser.instance.parseEntity(
               exampleObject: Token,
@@ -208,7 +207,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
         ),
       );
       return;
-    } on ServerErrorException {
+    } on ServerError {
       DialogService.instance.close();
 
       PopUpService.instance.show(
@@ -222,7 +221,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
   }
 
   Future<void> registerWithGoogle() async {
-    final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+    final DialogLanguage language = FlutterDictionary.instance.language.dialogLanguage;
 
     DialogService.instance.show(
       dialog: LoaderPopUp(
@@ -259,7 +258,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
           );
 
           if (response.response == null) {
-            throw ServerErrorException();
+            throw ServerError();
           } else {
             final Token token = FridgeParser.instance.parseEntity(
               exampleObject: Token,
@@ -291,7 +290,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
         ),
       );
       return;
-    } on ServerErrorException {
+    } on ServerError {
       DialogService.instance.close();
 
       PopUpService.instance.show(
@@ -312,7 +311,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
 
       final BaseHttpResponse response = await repository.sendEmail(email: email);
       if (response.response == null) {
-        throw ServerErrorException(message: response.error!.error);
+        throw ServerError(message: response.error!.error);
       } else {
         DialogService.instance.close();
 
@@ -337,7 +336,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
         ),
       );
       return;
-    } on ServerErrorException catch (error) {
+    } on ServerError catch (error) {
       DialogService.instance.close();
 
       PopUpService.instance.show(
@@ -365,7 +364,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
       );
 
       if (response.response == null) {
-        throw ServerErrorException(message: response.error!.error);
+        throw ServerError(message: response.error!.error);
       } else {
         DialogService.instance.close();
 
@@ -393,7 +392,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
         ),
       );
       return;
-    } on ServerErrorException catch (error) {
+    } on ServerError catch (error) {
       DialogService.instance.close();
 
       DialogService.instance.show(
@@ -424,7 +423,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
 
       DialogService.instance.close();
       if (response.response == null) {
-        throw ServerErrorException();
+        throw ServerError();
       }
     } on NoInternetConnectionException {
       DialogService.instance.close();
@@ -435,7 +434,7 @@ class AuthPageCubit extends Cubit<AuthPageState> {
         ),
       );
       return;
-    } on ServerErrorException {
+    } on ServerError {
       PopUpService.instance.show(
         widget: ServerErrorPopUpWidget(),
       );

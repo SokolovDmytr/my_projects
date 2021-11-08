@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/bottom_navigation_bar_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
@@ -16,9 +15,10 @@ class CustomNavigationBottomBar extends StatelessWidget {
     required this.currentPage,
   }) : super(key: UniqueKey());
 
+  final BottomNavigationBarLanguage _language = FlutterDictionary.instance.language.bottomNavigationBarLanguage;
+
   @override
   Widget build(BuildContext context) {
-    final BottomNavigationBarLanguage _language = FlutterDictionary.instance.language?.bottomNavigationBarLanguage ?? en.bottomNavigationBarLanguage;
     return SizedBox(
       height: 65.0,
       child: Column(

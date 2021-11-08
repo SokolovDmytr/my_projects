@@ -199,6 +199,10 @@ class _$_Token implements _Token {
   Map<String, dynamic> toJson() {
     return _$$_TokenToJson(this);
   }
+
+  @override
+  int get hashCode => super.hashCode;
+
 }
 
 abstract class _Token implements Token {

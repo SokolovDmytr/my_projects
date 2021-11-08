@@ -38,7 +38,7 @@ class ApplicationTokenCubit extends Cubit<ApplicationTokenState> {
         final BaseHttpResponse response = await repository.updateToken(refreshToken: state.token!.refreshToken);
 
         if (response.response == null) {
-          throw ServerErrorException(message: response.error!.error);
+          throw ServerError(message: response.error!.error);
         } else {
           final Token authToken = FridgeParser.instance.parseEntity(
             exampleObject: Token,
@@ -52,7 +52,7 @@ class ApplicationTokenCubit extends Cubit<ApplicationTokenState> {
           await Future.delayed(AppDuration.fourSecond);
           return authToken.token;
         }
-      } on ServerErrorException catch (error) {
+      } on ServerError catch (error) {
         PopUpService.instance.show(
           widget: ServerErrorPopUpWidget(),
         );

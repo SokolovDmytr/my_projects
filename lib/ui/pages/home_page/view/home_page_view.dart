@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_event.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_state.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/recipes_event.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingridients_bloc/ingredients_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingridients_bloc/ingredients_event.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingridients_bloc/ingredients_state.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc/recipes_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc/recipes_event.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/main_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
@@ -49,6 +48,7 @@ class HomePageView extends StatefulWidget {
 }
 
 class _HomePageViewState extends State<HomePageView> {
+  final MainPageLanguage language = FlutterDictionary.instance.language.mainPageLanguage;
   final _functionDelay = FunctionDelay(
     duration: AppDuration.delayOfSendRequestToServer,
   );
@@ -95,8 +95,6 @@ class _HomePageViewState extends State<HomePageView> {
 
   @override
   Widget build(BuildContext context) {
-    final MainPageLanguage language = FlutterDictionary.instance.language?.mainPageLanguage ?? en.mainPageLanguage;
-
     return AnnotatedRegion(
       value: SystemUiOverlayStyle(
         statusBarColor: AppColors.transparent,
@@ -125,7 +123,7 @@ class _HomePageViewState extends State<HomePageView> {
                     needSuffix: true,
                     loader: widget.loader,
                     needPrefix: true,
-                    needShowButton: false,
+                    isPasswordTextField: false,
                     hintText: language.chooseTextField,
                     hintStyle: AppFonts.medium16Height24TextStyle,
                     onChanged: (String text) {
@@ -180,13 +178,13 @@ class _HomePageViewState extends State<HomePageView> {
                                     alignment: FlutterDictionary.instance.isRTL ? Alignment.centerLeft : Alignment.centerRight,
                                     child: InkWell(
                                       borderRadius: BorderRadius.circular(10.0),
+                                      onTap: () {
+                                        context.read<IngredientsBloc>().add(ClearIngredientsEvent());
+                                      },
                                       child: Text(
                                         language.clearAll,
                                         style: AppFonts.smallPaselRedTextStyle,
                                       ),
-                                      onTap: () {
-                                        context.read<IngredientsBloc>().add(ClearIngredientsEvent());
-                                      },
                                     ),
                                   ),
                                   Flexible(
@@ -305,8 +303,7 @@ class _HomePageViewState extends State<HomePageView> {
   }
 
   OverlayEntry _createOverlayList() {
-    final MainPageLanguage language = FlutterDictionary.instance.language?.mainPageLanguage ?? en.mainPageLanguage;
-
+    final MainPageLanguage language = FlutterDictionary.instance.language.mainPageLanguage;
     final RenderBox renderBox = _textFieldContext!.findRenderObject() as RenderBox;
     final Size size = renderBox.size;
     final Offset offset = renderBox.localToGlobal(Offset.zero);
@@ -388,6 +385,14 @@ class _HomePageViewState extends State<HomePageView> {
                                       height: baseHeightOfIngredientElement,
                                       width: size.width,
                                       child: InkWell(
+                                        onTap: () {
+                                          context.read<IngredientsBloc>().add(
+                                                AddIngredientEvent(
+                                                  ingredient: tempIngredients[index],
+                                                ),
+                                              );
+                                          FocusManager.instance.primaryFocus!.unfocus();
+                                        },
                                         child: Row(
                                           children: [
                                             Container(
@@ -416,14 +421,6 @@ class _HomePageViewState extends State<HomePageView> {
                                             ),
                                           ],
                                         ),
-                                        onTap: () {
-                                          context.read<IngredientsBloc>().add(
-                                                AddIngredientEvent(
-                                                  ingredient: tempIngredients[index],
-                                                ),
-                                              );
-                                          FocusManager.instance.primaryFocus!.unfocus();
-                                        },
                                       ),
                                     );
                                   },

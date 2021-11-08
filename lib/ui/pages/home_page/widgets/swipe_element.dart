@@ -58,32 +58,8 @@ class _SwipeElementState extends State<SwipeElement> with TickerProviderStateMix
       builder: (BuildContext ctx, BoxConstraints constrains) {
         return AnimatedBuilder(
           animation: _closeAnimation,
-          child: widget.child,
           builder: (BuildContext ctx, Widget? child) {
             return Listener(
-              child: Stack(
-                fit: StackFit.passthrough,
-                children: [
-                  widget.background,
-                  Positioned(
-                    left: FlutterDictionary.instance.isRTL
-                        ? _isSwiped
-                        ? -maxSwipeDistance - _valueOfMove
-                        : -_valueOfMove
-                        : _isSwiped
-                        ? maxSwipeDistance + _valueOfMove
-                        : _valueOfMove,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        borderRadius: _needAnimation ? BorderRadius.circular(8.0) : BorderRadius.circular(0.0),
-                      ),
-                      width: constrains.minWidth,
-                      child: child,
-                    ),
-                  ),
-                ],
-              ),
               onPointerDown: (position) {
                 _startPosition = position.position.dx;
                 _startPositionY = position.position.dy;
@@ -132,8 +108,32 @@ class _SwipeElementState extends State<SwipeElement> with TickerProviderStateMix
                   }
                 }
               },
+              child: Stack(
+                fit: StackFit.passthrough,
+                children: [
+                  widget.background,
+                  Positioned(
+                    left: FlutterDictionary.instance.isRTL
+                        ? _isSwiped
+                        ? -maxSwipeDistance - _valueOfMove
+                        : -_valueOfMove
+                        : _isSwiped
+                        ? maxSwipeDistance + _valueOfMove
+                        : _valueOfMove,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: _needAnimation ? BorderRadius.circular(8.0) : BorderRadius.circular(0.0),
+                      ),
+                      width: constrains.minWidth,
+                      child: child,
+                    ),
+                  ),
+                ],
+              ),
             );
           },
+          child: widget.child,
         );
       },
     );

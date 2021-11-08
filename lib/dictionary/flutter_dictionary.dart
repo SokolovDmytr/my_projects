@@ -15,7 +15,7 @@ class FlutterDictionary {
   static FlutterDictionary get instance => _instance;
 
   final Locale? locale;
-  Language? language;
+  late Language language;
 
   FlutterDictionary(this.locale);
 

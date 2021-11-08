@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc/recipes_bloc.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/favorites_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/recipe.dart';
@@ -10,15 +9,16 @@ import 'package:fridge_yellow_team_bloc/models/pages/models/screen_recipe_argume
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
 import 'package:fridge_yellow_team_bloc/res/image_assets.dart';
 import 'package:fridge_yellow_team_bloc/services/route_service/route_selectors.dart';
-import 'package:fridge_yellow_team_bloc/ui/pages/favorite_page/widgets/recipe_element.dart';
+import 'package:fridge_yellow_team_bloc/ui/pages/favorites_page/widgets/recipe_element.dart';
 
 class RecipesList extends StatelessWidget {
-  const RecipesList({Key? key}) : super(key: key);
+  RecipesList({Key? key}) : super(key: key);
+
+  final FavouritesPageLanguage language = FlutterDictionary.instance.language.favouritesPageLanguage;
 
   @override
   Widget build(BuildContext context) {
     final List<Recipe> favouriteRecipes = BlocProvider.of<RecipesBloc>(context).state.favoriteRecipes;
-    final FavouritesPageLanguage language = FlutterDictionary.instance.language?.favouritesPageLanguage ?? en.favouritesPageLanguage;
     return favouriteRecipes.isEmpty
         ? Center(
             child: Column(

@@ -22,7 +22,5 @@ Future<void> main() async {
 
   await LocalStorageService.instance.initializeStorage();
 
-  runApp(
-    Application(),
-  );
+  runApp(Application());
 }

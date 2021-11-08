@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
@@ -25,7 +24,7 @@ class EnterEmailDialogWidget extends StatefulWidget {
 }
 
 class _EnterEmailDialogWidgetState extends State<EnterEmailDialogWidget> {
-  final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+  final DialogLanguage language = FlutterDictionary.instance.language.dialogLanguage;
   Color? _emailColor;
   String _text = emptyString;
 
@@ -49,14 +48,14 @@ class _EnterEmailDialogWidgetState extends State<EnterEmailDialogWidget> {
               ),
               child: InkWell(
                 borderRadius: BorderRadius.circular(10.0),
+                onTap: () {
+                  DialogService.instance.close();
+                },
                 child: Icon(
                   Icons.clear,
                   color: AppColors.pastelRed,
                   size: 24.0,
                 ),
-                onTap: () {
-                  DialogService.instance.close();
-                },
               ),
             ),
             Container(
@@ -81,7 +80,7 @@ class _EnterEmailDialogWidgetState extends State<EnterEmailDialogWidget> {
                 needSuffix: false,
                 hintText: language.forgotPasswordEmailHint,
                 hintStyle: AppFonts.medium16Height24pinkishGreyTextStyle,
-                needShowButton: false,
+                isPasswordTextField: false,
                 onChanged: (String text) => _text = text,
                 errorColor: _emailColor,
               ),

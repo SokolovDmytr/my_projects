@@ -1,13 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_event.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/language_events.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/language_state.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/recipes_event.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingridients_bloc/ingredients_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingridients_bloc/ingredients_event.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/language_bloc/language_events.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/language_bloc/language_state.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc/recipes_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc/recipes_event.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_delegate.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
@@ -32,7 +31,7 @@ class LanguageBloc extends Bloc<ChangeLanguageEvent, LanguageState> {
         final String locCode = FlutterDictionaryDelegate.getCurrentLocale;
 
         FlutterDictionary.instance.setNewLanguage(event.newLanguage);
-        final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+        final DialogLanguage language = FlutterDictionary.instance.language.dialogLanguage;
 
         DialogService.instance.show(
           dialog: LoaderPopUp(
@@ -56,7 +55,7 @@ class LanguageBloc extends Bloc<ChangeLanguageEvent, LanguageState> {
               RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().state.allIngredients;
 
           RouteService.instance.navigatorKey.currentState!.context.read<IngredientsBloc>().add(
-                QuientlyFetchAllIngredientsEvent(completer: completerForIngredient),
+                QuietlyFetchAllIngredientsEvent(completer: completerForIngredient),
               );
 
           final bool loadNewIngredients = await completerForIngredient.future;
@@ -78,7 +77,7 @@ class LanguageBloc extends Bloc<ChangeLanguageEvent, LanguageState> {
                   );
             }
           }
-          throw ServerErrorException();
+          throw ServerError();
         } on NoInternetConnectionException {
           DialogService.instance.close();
 
@@ -88,7 +87,7 @@ class LanguageBloc extends Bloc<ChangeLanguageEvent, LanguageState> {
             ),
           );
           return;
-        } on ServerErrorException {
+        } on ServerError {
           FlutterDictionary.instance.setNewLanguage(locCode);
           DialogService.instance.close();
 

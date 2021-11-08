@@ -301,6 +301,10 @@ class _$_Recipe implements _Recipe {
   Map<String, dynamic> toJson() {
     return _$$_RecipeToJson(this);
   }
+
+  @override
+  int get hashCode => super.hashCode;
+
 }
 
 abstract class _Recipe implements Recipe {

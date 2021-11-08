@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
@@ -14,7 +13,7 @@ class NewVersionDialogWidget extends StatelessWidget {
   final Function onTapOk;
   final String title;
   final String body;
-  final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+  final DialogLanguage language = FlutterDictionary.instance.language.dialogLanguage;
 
   NewVersionDialogWidget({
     required this.onTapOk,
@@ -44,15 +43,15 @@ class NewVersionDialogWidget extends StatelessWidget {
               ),
               child: InkWell(
                 borderRadius: BorderRadius.circular(10.0),
+                onTap: () {
+                  onTapOk.call();
+                  DialogService.instance.close();
+                },
                 child: Icon(
                   Icons.clear,
                   color: AppColors.pastelRed,
                   size: 24.0,
                 ),
-                onTap: () {
-                  onTapOk.call();
-                  DialogService.instance.close();
-                },
               ),
             ),
             Container(

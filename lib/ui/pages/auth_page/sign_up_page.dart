@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/authentication_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/res/app_fonts.dart';
@@ -21,6 +20,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final AuthenticationPageLanguage _language = FlutterDictionary.instance.language.authenticationPageLanguage;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
@@ -54,7 +54,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    final AuthenticationPageLanguage _language = FlutterDictionary.instance.language?.authenticationPageLanguage ?? en.authenticationPageLanguage;
     return Column(
       children: [
         Text(
@@ -69,7 +68,7 @@ class _SignUpPageState extends State<SignUpPage> {
           hintStyle: AppFonts.size16RegPinkishGrey,
           needSuffix: false,
           needPrefix: false,
-          needShowButton: false,
+          isPasswordTextField: false,
           controller: emailController,
           focusNode: emailFocus,
           errorColor: emailColor,
@@ -89,7 +88,7 @@ class _SignUpPageState extends State<SignUpPage> {
           hintStyle: AppFonts.size16RegPinkishGrey,
           needSuffix: true,
           needPrefix: false,
-          needShowButton: true,
+          isPasswordTextField: true,
           controller: passwordController,
           focusNode: passwordFocus,
           errorColor: passwordColor,
@@ -109,7 +108,7 @@ class _SignUpPageState extends State<SignUpPage> {
           hintStyle: AppFonts.size16RegPinkishGrey,
           needSuffix: true,
           needPrefix: false,
-          needShowButton: true,
+          isPasswordTextField: true,
           controller: confirmPasswordController,
           focusNode: confirmPasswordFocus,
           errorColor: passwordColor,

@@ -1,7 +1,7 @@
-class ServerErrorException implements Exception {
+class ServerError implements Exception {
   final String? message;
 
-  const ServerErrorException({
+  const ServerError({
     this.message,
   });
 }

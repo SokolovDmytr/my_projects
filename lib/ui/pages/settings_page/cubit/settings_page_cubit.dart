@@ -1,10 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_event.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/recipes_event.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingridients_bloc/ingredients_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingridients_bloc/ingredients_event.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc/recipes_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc/recipes_event.dart';
 import 'package:fridge_yellow_team_bloc/application/cubit/application_token_cubit.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/dialog_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/models/exception/no_internet_connection_exception.dart';
@@ -33,7 +32,7 @@ class SettingsPageCubit extends Cubit<SettingsPageState> {
   }) : super(SettingsPageState());
 
   Future<void> logOut() async {
-    final DialogLanguage language = FlutterDictionary.instance.language?.dialogLanguage ?? en.dialogLanguage;
+    final DialogLanguage language = FlutterDictionary.instance.language.dialogLanguage;
     DialogService.instance.show(
       dialog: LoaderPopUp(
         title: language.loadingText,
@@ -53,7 +52,7 @@ class SettingsPageCubit extends Cubit<SettingsPageState> {
         token: RouteService.instance.navigatorKey.currentContext!.read<ApplicationTokenCubit>().state.token!.token,
       );
       if (response.response == null) {
-        throw ServerErrorException();
+        throw ServerError();
       } else {
         UserInformationService.instance.clear();
         DialogService.instance.close();
@@ -74,7 +73,7 @@ class SettingsPageCubit extends Cubit<SettingsPageState> {
         ),
       );
       return;
-    } on ServerErrorException {
+    } on ServerError {
       DialogService.instance.close();
       PopUpService.instance.show(
         widget: ServerErrorPopUpWidget(),

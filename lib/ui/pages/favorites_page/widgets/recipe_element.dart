@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/ingredients_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/language_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/language_state.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc.dart';
-import 'package:fridge_yellow_team_bloc/application/bloc/recipes_event.dart';
-import 'package:fridge_yellow_team_bloc/dictionary/data/en.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/ingridients_bloc/ingredients_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/language_bloc/language_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/language_bloc/language_state.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc/recipes_bloc.dart';
+import 'package:fridge_yellow_team_bloc/application/bloc/recipes_bloc/recipes_event.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/dictionary_classes/favorites_page_language.dart';
 import 'package:fridge_yellow_team_bloc/dictionary/flutter_dictionary.dart';
 import 'package:fridge_yellow_team_bloc/models/pages/freezed/ingredient.dart';
@@ -43,9 +42,9 @@ class RecipeElement extends StatefulWidget {
 }
 
 class _RecipeElementState extends State<RecipeElement> with TickerProviderStateMixin {
+  final FavouritesPageLanguage _language = FlutterDictionary.instance.language.favouritesPageLanguage;
   final FocusNode _focusNode = FocusNode();
   List<Ingredient>? _missingIngredients;
-  FavouritesPageLanguage? _language;
   bool _needUpdateMissingIngredients = true;
 
   @override
@@ -73,7 +72,6 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
       );
       _needUpdateMissingIngredients = false;
     }
-    _language = FlutterDictionary.instance.language?.favouritesPageLanguage ?? en.favouritesPageLanguage;
     return BlocListener<LanguageBloc, LanguageState>(
       listener: (
         BuildContext _,
@@ -94,10 +92,8 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
               Container(
                 height: _focusNode.hasFocus ? 168.0 : 128.0,
                 margin: EdgeInsetsDirectional.only(
-                  start: _focusNode.hasFocus
-                      ? 0.0
-                      : 118.0,
-                  top:  _focusNode.hasFocus ? 126.0 : 0.0,
+                  start: _focusNode.hasFocus ? 0.0 : 118.0,
+                  top: _focusNode.hasFocus ? 126.0 : 0.0,
                 ),
                 decoration: BoxDecoration(
                   color: AppColors.white,
@@ -126,7 +122,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                             margin: const EdgeInsets.all(10.0),
                             alignment: FlutterDictionary.instance.isRTL ? Alignment.centerRight : Alignment.centerLeft,
                             child: Text(
-                              _language!.youDoNotHave,
+                              _language.youDoNotHave,
                               style: AppFonts.smallPaselRed16TextStyle,
                             ),
                           ),
@@ -226,11 +222,6 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                                   ),
                                   (widget.recipe.isFavorite && widget.needFavoriteIcon)
                                       ? InkWell(
-                                          child: Icon(
-                                            Icons.favorite,
-                                            color: AppColors.pastelRed,
-                                            size: 22.0,
-                                          ),
                                           onTap: () {
                                             DialogService.instance.show(
                                               dialog: RemoveFavouriteDialog(
@@ -246,6 +237,11 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                                               ),
                                             );
                                           },
+                                          child: Icon(
+                                            Icons.favorite,
+                                            color: AppColors.pastelRed,
+                                            size: 22.0,
+                                          ),
                                         )
                                       : const SizedBox(),
                                 ],
@@ -315,13 +311,13 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                           _getParameterOfRecipeWidget(
                             imageAssets: ImageAssets.timeIcon,
                             value: widget.recipe.time.toString(),
-                            text: _language!.min,
+                            text: _language.min,
                             textStyle: AppFonts.smallWhiteTextStyle,
                           ),
                           _getParameterOfRecipeWidget(
                             imageAssets: ImageAssets.caloriesIcon,
                             value: widget.recipe.calories.toStringAsFixed(1),
-                            text: _language!.cal,
+                            text: _language.cal,
                             textStyle: AppFonts.smallWhiteTextStyle,
                           ),
                           widget.recipe.level == null
@@ -344,7 +340,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                           child: _getParameterOfRecipeWidget(
                             imageAssets: ImageAssets.timeIcon,
                             value: widget.recipe.time.toString(),
-                            text: _language!.min,
+                            text: _language.min,
                             textStyle: AppFonts.smallWhiteTextStyle,
                           ),
                         ),
@@ -355,6 +351,9 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                     left: FlutterDictionary.instance.isRTL ? 0.0 : null,
                     right: FlutterDictionary.instance.isRTL ? null : 0.0,
                     child: InkWell(
+                      onTap: () => setState(() {
+                        FocusManager.instance.primaryFocus!.unfocus();
+                      }),
                       child: Container(
                         height: 28.0,
                         width: 28.0,
@@ -368,9 +367,6 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                           size: 24.0,
                         ),
                       ),
-                      onTap: () => setState(() {
-                        FocusManager.instance.primaryFocus!.unfocus();
-                      }),
                     ),
                   )
                 : const SizedBox(),
@@ -385,7 +381,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          _language!.youDoNotHave,
+          _language.youDoNotHave,
           style: AppFonts.smallPaselRed16TextStyle,
         ),
         SizedBox(
@@ -417,15 +413,15 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                         bottom: 10.0,
                       ),
                       child: InkWell(
-                        child: Icon(
-                          Icons.keyboard_arrow_down,
-                          size: 24.0,
-                        ),
                         onTap: () {
                           setState(() {
                             FocusScope.of(RouteService.instance.navigatorKey.currentState!.context).requestFocus(_focusNode);
                           });
                         },
+                        child: Icon(
+                          Icons.keyboard_arrow_down,
+                          size: 24.0,
+                        ),
                       ),
                     )
                   : const SizedBox(),
@@ -444,14 +440,14 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
           _getParameterOfRecipeWidget(
             imageAssets: ImageAssets.caloriesIcon,
             value: widget.recipe.calories.toStringAsFixed(1),
-            text: _language!.cal,
+            text: _language.cal,
             textStyle: AppFonts.smallTextStyle,
           ),
           widget.recipe.level == null
               ? _getParameterOfRecipeWidget(
                   imageAssets: ImageAssets.timeIcon,
                   value: widget.recipe.time.toString(),
-                  text: _language!.min,
+                  text: _language.min,
                   textStyle: AppFonts.smallTextStyle,
                 )
               : Expanded(
@@ -460,7 +456,7 @@ class _RecipeElementState extends State<RecipeElement> with TickerProviderStateM
                       _getParameterOfRecipeWidget(
                         imageAssets: ImageAssets.timeIcon,
                         value: widget.recipe.time.toString(),
-                        text: _language!.min,
+                        text: _language.min,
                         textStyle: AppFonts.smallTextStyle,
                       ),
                       _getParameterOfRecipeWidget(
