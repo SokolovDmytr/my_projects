@@ -47,7 +47,7 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
 
   @override
   void initState() {
-    if (widget.needShowButton) {
+    if (widget.needShowButton) { // TODO(Kolya): ?? needShowButton for password is visible , bad naming
       passwordVisible = true;
     } else {
       passwordVisible = false;
@@ -60,7 +60,7 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
     final AuthenticationPageLanguage _language = FlutterDictionary.instance.language?.authenticationPageLanguage ?? en.authenticationPageLanguage;
     return Container(
       height: 44.0,
-      margin: widget.padding ?? const EdgeInsets.all(0.0),
+      margin: widget.padding ?? const EdgeInsets.all(0.0), // TODO(Kolya): try EdgeInsets.zero
       decoration: BoxDecoration(
         color: AppColors.white,
         boxShadow: AppShadows.textFieldShadow,
