@@ -35,8 +35,11 @@ class BoxBlock extends StatelessWidget {
             }
           },
         ),
-        ColorsList(),
-        ColorsList(),
+        ColorsList(
+          text: textController,
+          index: index,
+        ),
+        // ColorsList(),
         // GlobalTextField(
         //   controller: colorController,
         //   onChanged: (_) {
