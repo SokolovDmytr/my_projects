@@ -34,6 +34,20 @@ class CreateMemeBloc extends Bloc<CreateMemeEvents, CreateMemeState> {
           ),
         ),
       );
+      final BaseHttpResponse response = await NetworkService.instance.request(
+        type: HttpType.httpPost,
+        route: HttpRoute.captionImage,
+        parameter: CaptionImageParams(boxes: state.boxes),
+      );
+
+      if (response.response != null) {
+        print(response.response['data']['url']);
+        emit(
+          state.copyWith(
+            pictureUrl: response.response['data']['url'],
+          ),
+        );
+      }
     });
 
     on<UpdateBoxesEvent>((event, emit) async {

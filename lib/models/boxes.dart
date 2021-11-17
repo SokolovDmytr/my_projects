@@ -18,7 +18,7 @@ class Boxes {
     };
     for (int index = 0; index < boxCount; index++) {
       map.addAll({
-        'boxes[$index][text]': emptyString,
+        'boxes[$index][text]': 'Text field ${index + 1}',
         'boxes[$index][color]': emptyString,
         'boxes[$index][outline_color]': emptyString,
       });

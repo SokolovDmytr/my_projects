@@ -16,8 +16,7 @@ class BoxBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController textController = TextEditingController();
-    TextEditingController colorController = TextEditingController();
-    TextEditingController outlineColorController = TextEditingController();
+
     return Column(
       children: [
         Text('Set parameters for the text field number ${index + 1}'),

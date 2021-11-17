@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memes/application/bloc/application_bloc.dart';
 import 'package:memes/application/bloc/application_state.dart';
+import 'package:memes/res/consts.dart';
 import 'package:memes/ui/global_widgets/meme_card.dart';
 import 'package:memes/ui/main_layout/main_layout.dart';
 
@@ -17,6 +18,7 @@ class _CatalogPageState extends State<CatalogPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<ApplicationBloc, ApplicationState>(
       builder: (context, state) => MainLayout(
+        appBarType: AppBarType.titleAppBar,
         title: 'Memes templates',
         body: ListView.builder(
           itemCount: state.list.length,
