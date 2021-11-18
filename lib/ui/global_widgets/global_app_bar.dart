@@ -11,15 +11,17 @@ import 'package:memes/ui/global_widgets/global_button/global_button.dart';
 class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final AppBarType type;
+  final void Function()? downloadButtonFunction;
 
   const GlobalAppBar({
     required this.title,
     required this.type,
+    this.downloadButtonFunction,
     Key? key,
   }) : super(key: key);
 
   @override
-  Size get preferredSize => Size.fromHeight(90.0);
+  Size get preferredSize => Size.fromHeight(100.0);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
           margin: const EdgeInsets.only(top: 50.0, right: 30.0, left: 30.0, bottom: 5.0),
           decoration: BoxDecoration(
             color: AppColors.black,
-            border: Border.all(color: AppColors.neonGreen),
+            border: Border.all(color: AppColors.neonBlue),
             borderRadius: BorderRadius.circular(20.0),
             boxShadow: [
               AppShadows.neonGreenSpread1Shadow,
@@ -80,7 +82,7 @@ class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
         );
       case AppBarType.buttonsAppBar:
         return Container(
-          padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 40.0, bottom: 10.0),
+          padding: const EdgeInsets.only(left: 40.0, right: 40.0, top: 60.0, bottom: 10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -92,16 +94,16 @@ class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
                 },
                 icon: Icon(
                   Icons.home,
-                  color: AppColors.black,
-                  size: 50.0,
+                  color: AppColors.white,
+                  size: 40.0,
                 ),
               ),
               GlobalButton(
-                onTap: () {},
+                onTap: downloadButtonFunction ?? () {},
                 icon: Icon(
                   Icons.arrow_downward_sharp,
-                  color: AppColors.black,
-                  size: 50.0,
+                  color: AppColors.white,
+                  size: 40.0,
                 ),
               ),
             ],

@@ -41,7 +41,6 @@ class CreateMemeBloc extends Bloc<CreateMemeEvents, CreateMemeState> {
       );
 
       if (response.response != null) {
-        print(response.response['data']['url']);
         emit(
           state.copyWith(
             pictureUrl: response.response['data']['url'],
@@ -54,10 +53,11 @@ class CreateMemeBloc extends Bloc<CreateMemeEvents, CreateMemeState> {
       emit(
         state.copyWith(
           boxes: state.boxes.updateMap(
-            text: event.text,
+            text: event.text ?? state.boxes.map['boxes[${event.index}][text]']!,
             index: event.index,
-            outlineColor: event.outlinedColor,
-            color: event.color,
+            outlineColor: event.outlinedColor ?? state.boxes.map['boxes[${event.index}][outline_color]']!,
+            color: event.color ?? state.boxes.map['boxes[${event.index}][color]']!,
+            font: event.font ?? state.boxes.map['max_font_size']!,
           ),
         ),
       );

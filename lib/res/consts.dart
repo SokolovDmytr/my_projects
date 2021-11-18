@@ -1,12 +1,8 @@
-enum HttpType {
-  httpGet,
-  httpPost,
-}
+enum HttpType { httpGet, httpPost }
 
-enum AppBarType {
-  titleAppBar,
-  buttonsAppBar,
-}
+enum AppBarType { titleAppBar, buttonsAppBar }
+
+enum OptionsCardType { textFieldsCard, colorsCard }
 
 const String baseUrl = 'https://api.imgflip.com';
 const String accept = 'accept';

@@ -8,7 +8,7 @@ class AppGradients {
       end: Alignment.bottomCenter,
       colors: [
         AppColors.metallicBlack,
-        AppColors.metallicGrey,
+        AppColors.metallicBlue,
       ],
     );
   }
@@ -18,7 +18,7 @@ class AppGradients {
       begin: Alignment(-1.0, -0.5),
       end: Alignment(-0.95, -0.5),
       colors: [
-        AppColors.neonGreen.withOpacity(0.5),
+        AppColors.neonBlue.withOpacity(0.5),
         AppColors.transparent,
       ],
     );
@@ -29,7 +29,7 @@ class AppGradients {
       begin: Alignment(1.0, 0.5),
       end: Alignment(0.95, 0.5),
       colors: [
-        AppColors.neonGreen.withOpacity(0.5),
+        AppColors.neonBlue.withOpacity(0.5),
         AppColors.transparent,
       ],
     );
@@ -40,7 +40,7 @@ class AppGradients {
       begin: Alignment(0.0, -1.0),
       end: Alignment(0.0, -0.7),
       colors: [
-        AppColors.neonGreen.withOpacity(0.5),
+        AppColors.neonBlue.withOpacity(0.5),
         AppColors.transparent,
       ],
     );
@@ -51,7 +51,7 @@ class AppGradients {
       begin: Alignment(0.0, 1.0),
       end: Alignment(0.0, 0.7),
       colors: [
-        AppColors.neonGreen.withOpacity(0.5),
+        AppColors.neonBlue.withOpacity(0.5),
         AppColors.transparent,
       ],
     );

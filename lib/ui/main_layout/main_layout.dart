@@ -9,11 +9,13 @@ class MainLayout extends StatelessWidget {
   final Widget body;
   final String title;
   final AppBarType appBarType;
+  final void Function()? downloadButtonFunction;
 
   const MainLayout({
     required this.body,
     required this.title,
     required this.appBarType,
+    this.downloadButtonFunction,
     Key? key,
   }) : super(key: key);
 
@@ -38,6 +40,7 @@ class MainLayout extends StatelessWidget {
           appBar: GlobalAppBar(
             title: title,
             type: appBarType,
+            downloadButtonFunction: downloadButtonFunction,
           ),
           body: body,
         ),

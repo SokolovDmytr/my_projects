@@ -13,15 +13,17 @@ class CreateBoxesEvent extends CreateMemeEvents {
 }
 
 class UpdateBoxesEvent extends CreateMemeEvents {
-  final String text;
   final int index;
+  final String? text;
   final String? color;
   final String? outlinedColor;
+  final String? font;
 
   UpdateBoxesEvent({
-    required this.text,
     required this.index,
+    this.text,
     this.color,
     this.outlinedColor,
+    this.font,
   });
 }

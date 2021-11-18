@@ -16,27 +16,11 @@ class AppFonts {
     );
   }
 
-  static TextStyle get memeName {
+  static TextStyle get robotoWhite18Bold {
     return GoogleFonts.roboto(
       color: AppColors.white.withOpacity(0.65),
       fontSize: 18.0,
       fontWeight: FontWeight.w700,
-    );
-  }
-
-  static TextStyle get memeHint {
-    return GoogleFonts.roboto(
-      color: AppColors.white.withOpacity(0.65),
-      fontSize: 12.0,
-      fontWeight: FontWeight.w700,
-    );
-  }
-
-  static TextStyle get inputText {
-    return GoogleFonts.roboto(
-      color: AppColors.white.withOpacity(0.65),
-      fontSize: 18.0,
-      fontWeight: FontWeight.w500,
     );
   }
 }

@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:memes/res/app_fonts.dart';
+import 'package:memes/res/app_gradients.dart';
 import 'package:memes/res/app_styles/app_colors.dart';
+import 'package:memes/res/app_styles/app_shadows.dart';
 
 class GlobalTextField extends StatefulWidget {
   final TextEditingController controller;
   final void Function(String)? onChanged;
+  final bool? numberInput;
+  final String? hintText;
 
   const GlobalTextField({
     required this.controller,
     this.onChanged,
+    this.hintText,
+    this.numberInput = false,
     Key? key,
   }) : super(key: key);
 
@@ -20,18 +28,31 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-      height: 60.0,
+      height: 50.0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.0),
+        color: AppColors.grey,
+        boxShadow: [
+          AppShadows.greyShadow,
+          AppShadows.blackShadow,
+        ],
+        gradient: AppGradients.greyTopLeftToBottomRight,
+      ),
       child: TextFormField(
+        keyboardType: widget.numberInput! ? TextInputType.number : TextInputType.text,
+        inputFormatters: [
+          if (widget.numberInput!) LengthLimitingTextInputFormatter(2),
+        ],
         onChanged: widget.onChanged,
         controller: widget.controller,
-        style: AppFonts.inputText,
+        style: AppFonts.robotoWhite18Bold,
         decoration: InputDecoration(
+          hintText: widget.hintText,
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.purpleBlue),
+            borderSide: BorderSide(color: AppColors.transparent),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.purpleBlue),
+            borderSide: BorderSide(color: AppColors.transparent),
           ),
         ),
       ),

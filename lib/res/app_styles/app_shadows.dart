@@ -4,7 +4,7 @@ import 'package:memes/res/app_styles/app_colors.dart';
 class AppShadows {
   static BoxShadow get neonGreenSpread1Shadow {
     return BoxShadow(
-      color: AppColors.neonGreen,
+      color: AppColors.neonBlue,
       spreadRadius: 1.0,
       blurRadius: 10.0,
     );
@@ -12,7 +12,7 @@ class AppShadows {
 
   static BoxShadow get neonGreenSpread10Shadow {
     return BoxShadow(
-      color: AppColors.neonGreen,
+      color: AppColors.neonBlue,
       blurRadius: 10.0,
       spreadRadius: 10.0,
     );

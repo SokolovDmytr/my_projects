@@ -49,7 +49,7 @@ class _MyCircularLoaderState extends State<MyCircularLoader> with SingleTickerPr
             child: CircularProgressIndicator(
               value: animation.value,
               backgroundColor: AppColors.transparent,
-              color: AppColors.neonGreen,
+              color: AppColors.neonBlue,
               strokeWidth: 15.0,
             ),
           ),

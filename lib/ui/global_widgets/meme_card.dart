@@ -23,7 +23,7 @@ class _MemeCardState extends State<MemeCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 330.0,
+      height: 300.0,
       margin: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
       decoration: BoxDecoration(
         color: AppColors.black,
@@ -61,49 +61,39 @@ class _MemeCardState extends State<MemeCard> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 10.0, left: 10.0),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      widget.memeTemplate.name,
-                      style: AppFonts.memeName,
-                      overflow: TextOverflow.clip,
-                    ),
-                  ),
-                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Container(
-                      margin: const EdgeInsets.all(10.0),
-                      height: 200.0,
-                      width: 200.0,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(widget.memeTemplate.url),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          widget.memeTemplate.name,
+                          style: AppFonts.robotoWhite18Bold,
+                          overflow: TextOverflow.clip,
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.only(top: 10.0),
                       child: GlobalButton(
                         onTap: RouteSelectors.goToCreateMemePage(memeInfoDto: widget.memeTemplate),
                       ),
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    '*click to create your own "funny" and special joke',
-                    style: AppFonts.memeHint,
+                Container(
+                  height: 200.0,
+                  width: 200.0,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(widget.memeTemplate.url),
+                    ),
                   ),
                 ),
               ],

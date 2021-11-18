@@ -24,6 +24,7 @@ class _GlobalButtonState extends State<GlobalButton> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: widget.onTap,
+      borderRadius: BorderRadius.circular(100.0),
       child: widget.icon == null
           ? Stack(
               children: [
@@ -36,15 +37,17 @@ class _GlobalButtonState extends State<GlobalButton> {
                     height: 50.0,
                     width: 50.0,
                     decoration: BoxDecoration(
-                      color: AppColors.neonGreen,
+                      color: AppColors.neonBlue,
                     ),
                   ),
                 ),
               ],
             )
           : Container(
+              height: 50.0,
+              width: 50.0,
               decoration: BoxDecoration(
-                color: AppColors.neonGreen,
+                color: AppColors.neonBlue,
                 shape: BoxShape.circle,
                 boxShadow: [
                   AppShadows.neonGreenSpread1Shadow,
