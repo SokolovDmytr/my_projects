@@ -6,9 +6,9 @@ import 'package:memes/res/app_styles/app_shadows.dart';
 class AppFonts {
   static TextStyle get pixelWhite60NeonShadow {
     return TextStyle(
-      fontFamily: 'Progress',
+      fontFamily: 'Arcade',
       color: AppColors.white,
-      fontSize: 60.0,
+      fontSize: 32.0,
       letterSpacing: 2.0,
       shadows: [
         AppShadows.neonGreenSpread10Shadow,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:memes/dictionary/dictionary_classes/create_meme_page_language.dart';
+import 'package:memes/dictionary/flutter_dictionary.dart';
 import 'package:memes/res/app_fonts.dart';
 import 'package:memes/res/app_styles/app_colors.dart';
 import 'package:memes/res/app_styles/app_shadows.dart';
@@ -19,6 +21,7 @@ class ColorsList extends StatefulWidget {
 }
 
 class _ColorsListState extends State<ColorsList> {
+  final CreateMemePageLanguage createMemePageLanguage = FlutterDictionary.instance.language.createMemePageLanguage;
   List<Color> _colors = [
     AppColors.black,
     AppColors.green,
@@ -35,7 +38,7 @@ class _ColorsListState extends State<ColorsList> {
         Padding(
           padding: const EdgeInsets.only(top: 10.0, left: 10.0),
           child: Text(
-            'Text field ${widget.index} main color',
+            '${createMemePageLanguage.textField} ${widget.index + 1} ${createMemePageLanguage.mainColor}',
             style: AppFonts.robotoWhite18Bold,
           ),
         ),
@@ -74,7 +77,7 @@ class _ColorsListState extends State<ColorsList> {
         Padding(
           padding: const EdgeInsets.only(top: 10.0, left: 10.0),
           child: Text(
-            'Text field ${widget.index} main outline color',
+            '${createMemePageLanguage.textField} ${widget.index + 1} ${createMemePageLanguage.outlineColor}',
             style: AppFonts.robotoWhite18Bold,
           ),
         ),

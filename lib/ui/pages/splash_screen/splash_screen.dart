@@ -51,8 +51,8 @@ class _SplashScreenState extends State<SplashScreen> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     boxShadow: [
-                      AppShadows.greyShadow,
-                      AppShadows.blackShadow,
+                      AppShadows.greyShadowTopLeft,
+                      AppShadows.blackShadowBottomRight,
                     ],
                   ),
                   child: Image.asset(ImageAssets.dogeCoin),

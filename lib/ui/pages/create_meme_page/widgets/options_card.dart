@@ -41,8 +41,8 @@ class _OptionsCardState extends State<OptionsCard> {
               width: 2.0,
             ),
             boxShadow: [
-              AppShadows.greyShadow,
-              AppShadows.blackShadow,
+              AppShadows.greyShadowTopLeft,
+              AppShadows.blackShadowBottomRight,
             ],
           ),
           child: Column(children: listOptions),
@@ -61,8 +61,8 @@ class _OptionsCardState extends State<OptionsCard> {
               width: 2.0,
             ),
             boxShadow: [
-              AppShadows.greyShadow,
-              AppShadows.blackShadow,
+              AppShadows.greyShadowTopLeft,
+              AppShadows.blackShadowBottomRight,
             ],
           ),
           child: Column(children: listOptions),

@@ -16,11 +16,12 @@ class NetworkImageWidget extends StatelessWidget {
       height: 350.0,
       margin: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
       decoration: BoxDecoration(
+        color: AppColors.metallicBlue,
         border: Border.all(color: AppColors.black),
         borderRadius: BorderRadius.circular(20.0),
         boxShadow: [
-          AppShadows.greyShadow,
-          AppShadows.blackShadow,
+          AppShadows.greyShadowTopLeft,
+          AppShadows.blackShadowBottomRight,
         ],
         image: decorationImage,
       ),

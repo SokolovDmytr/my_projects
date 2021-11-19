@@ -30,8 +30,8 @@ class _MemeCardState extends State<MemeCard> {
         borderRadius: BorderRadius.circular(10.0),
         gradient: AppGradients.greyTopLeftToBottomRight,
         boxShadow: [
-          AppShadows.greyShadow,
-          AppShadows.blackShadow,
+          AppShadows.greyShadowTopLeft,
+          AppShadows.blackShadowBottomRight,
         ],
       ),
       child: Stack(

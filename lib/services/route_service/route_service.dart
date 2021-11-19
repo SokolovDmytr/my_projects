@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:memes/services/route_service/app_routes.dart';
 import 'package:memes/ui/pages/catalog_page/catalog_page.dart';
 import 'package:memes/ui/pages/create_meme_page/create_meme_page.dart';
-import 'package:memes/ui/pages/splash_screen/spalsh_screen.dart';
+import 'package:memes/ui/pages/splash_screen/splash_screen.dart';
 
 class RouteService {
   // region [Initialize]

@@ -15,8 +15,8 @@ class AppGradients {
 
   static LinearGradient get neonLeftToRight {
     return LinearGradient(
-      begin: Alignment(-1.0, -0.5),
-      end: Alignment(-0.95, -0.5),
+      begin: const Alignment(-1.0, -0.5),
+      end: const Alignment(-0.95, -0.5),
       colors: [
         AppColors.neonBlue.withOpacity(0.5),
         AppColors.transparent,
@@ -26,8 +26,8 @@ class AppGradients {
 
   static LinearGradient get neonRightToLeft {
     return LinearGradient(
-      begin: Alignment(1.0, 0.5),
-      end: Alignment(0.95, 0.5),
+      begin: const Alignment(1.0, 0.5),
+      end: const Alignment(0.95, 0.5),
       colors: [
         AppColors.neonBlue.withOpacity(0.5),
         AppColors.transparent,
@@ -37,8 +37,8 @@ class AppGradients {
 
   static LinearGradient get neonTopToBottom {
     return LinearGradient(
-      begin: Alignment(0.0, -1.0),
-      end: Alignment(0.0, -0.7),
+      begin: const Alignment(0.0, -1.0),
+      end: const Alignment(0.0, -0.7),
       colors: [
         AppColors.neonBlue.withOpacity(0.5),
         AppColors.transparent,
@@ -48,8 +48,8 @@ class AppGradients {
 
   static LinearGradient get neonBottomToTop {
     return LinearGradient(
-      begin: Alignment(0.0, 1.0),
-      end: Alignment(0.0, 0.7),
+      begin: const Alignment(0.0, 1.0),
+      end: const Alignment(0.0, 0.7),
       colors: [
         AppColors.neonBlue.withOpacity(0.5),
         AppColors.transparent,
@@ -59,8 +59,8 @@ class AppGradients {
 
   static LinearGradient get greyTopLeftToBottomRight {
     return LinearGradient(
-      begin: Alignment(-1.0, -1.0),
-      end: Alignment(1.0, 1.0),
+      begin: const Alignment(-1.0, -1.0),
+      end: const Alignment(1.0, 1.0),
       colors: [
         AppColors.metallicGrey,
         AppColors.metallicBlack,
@@ -70,8 +70,8 @@ class AppGradients {
 
   static LinearGradient get metallicLeftToRight {
     return LinearGradient(
-      begin: Alignment(-1.0, -0.5),
-      end: Alignment(-0.95, -0.5),
+      begin: const Alignment(-1.0, -0.5),
+      end: const Alignment(-0.95, -0.5),
       colors: [
         AppColors.metallicBlack,
         AppColors.metallicBlack.withOpacity(0.6),
@@ -87,8 +87,8 @@ class AppGradients {
 
   static LinearGradient get metallicRightToLeft {
     return LinearGradient(
-      begin: Alignment(1.0, 0.5),
-      end: Alignment(0.95, 0.5),
+      begin: const Alignment(1.0, 0.5),
+      end: const Alignment(0.95, 0.5),
       colors: [
         AppColors.metallicBlack,
         AppColors.metallicBlack.withOpacity(0.6),
@@ -103,8 +103,8 @@ class AppGradients {
 
   static LinearGradient get metallicTopToBottom {
     return LinearGradient(
-      begin: Alignment(0.0, -1.0),
-      end: Alignment(0.0, -0.7),
+      begin: const Alignment(0.0, -1.0),
+      end: const Alignment(0.0, -0.7),
       colors: [
         AppColors.metallicBlack,
         AppColors.metallicBlack.withOpacity(0.6),
@@ -119,8 +119,8 @@ class AppGradients {
 
   static LinearGradient get metallicBottomToTop {
     return LinearGradient(
-      begin: Alignment(0.0, 1.0),
-      end: Alignment(0.0, 0.7),
+      begin: const Alignment(0.0, 1.0),
+      end: const Alignment(0.0, 0.7),
       colors: [
         AppColors.metallicBlack,
         AppColors.metallicBlack.withOpacity(0.6),

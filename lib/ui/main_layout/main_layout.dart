@@ -7,15 +7,15 @@ import 'package:memes/ui/global_widgets/global_app_bar.dart';
 
 class MainLayout extends StatelessWidget {
   final Widget body;
-  final String title;
   final AppBarType appBarType;
+  final String? title;
   final void Function()? downloadButtonFunction;
 
   const MainLayout({
     required this.body,
-    required this.title,
     required this.appBarType,
     this.downloadButtonFunction,
+    this.title,
     Key? key,
   }) : super(key: key);
 
@@ -38,7 +38,7 @@ class MainLayout extends StatelessWidget {
         child: Scaffold(
           backgroundColor: AppColors.transparent,
           appBar: GlobalAppBar(
-            title: title,
+            title: title ?? emptyString,
             type: appBarType,
             downloadButtonFunction: downloadButtonFunction,
           ),

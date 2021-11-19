@@ -33,8 +33,8 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
         borderRadius: BorderRadius.circular(5.0),
         color: AppColors.grey,
         boxShadow: [
-          AppShadows.greyShadow,
-          AppShadows.blackShadow,
+          AppShadows.greyShadowTopLeft,
+          AppShadows.blackShadowBottomRight,
         ],
         gradient: AppGradients.greyTopLeftToBottomRight,
       ),
@@ -47,6 +47,7 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
         controller: widget.controller,
         style: AppFonts.robotoWhite18Bold,
         decoration: InputDecoration(
+          isDense: true,
           hintText: widget.hintText,
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: AppColors.transparent),

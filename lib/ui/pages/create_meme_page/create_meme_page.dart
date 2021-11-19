@@ -1,10 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:memes/dictionary/dictionary_classes/create_meme_page_language.dart';
+import 'package:memes/dictionary/flutter_dictionary.dart';
 import 'package:memes/models/meme_info_dto.dart';
 import 'package:memes/res/app_duration.dart';
 import 'package:memes/res/consts.dart';
 import 'package:memes/res/image_assets.dart';
+import 'package:memes/ui/global_widgets/global_text_field.dart';
 import 'package:memes/ui/main_layout/main_layout.dart';
 import 'package:memes/ui/pages/create_meme_page/bloc/create_meme_bloc.dart';
 import 'package:memes/ui/pages/create_meme_page/bloc/create_meme_events.dart';
@@ -22,6 +25,8 @@ class CreateMemePage extends StatefulWidget {
 }
 
 class _CreateMemePageState extends State<CreateMemePage> {
+  final CreateMemePageLanguage createMemePageLanguage = FlutterDictionary.instance.language.createMemePageLanguage;
+  TextEditingController font = TextEditingController();
   late CreateMemeBloc _bloc;
 
   @override
@@ -34,6 +39,7 @@ class _CreateMemePageState extends State<CreateMemePage> {
   void dispose() {
     super.dispose();
     _bloc.close();
+    font.dispose();
   }
 
   @override
@@ -46,59 +52,86 @@ class _CreateMemePageState extends State<CreateMemePage> {
         listener: (context, state) {},
         builder: (context, state) => MainLayout(
           appBarType: AppBarType.buttonsAppBar,
-          title: 'Create your own meme',
           downloadButtonFunction: () {
-            if (state.pictureUrl != emptyString) {}
+            if (state.pictureUrl != emptyString) {
+              _bloc.add(SaveImageOnDeviceEvent());
+            }
           },
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                CachedNetworkImage(
-                  imageUrl: _bloc.state.pictureUrl,
-                  placeholder: (context, url) {
-                    return NetworkImageWidget(
-                      decorationImage: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage(
-                          ImageAssets.dogeCoin,
+          body: GestureDetector(
+            onTap: () {
+              FocusManager.instance.primaryFocus!.unfocus();
+            },
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CachedNetworkImage(
+                    imageUrl: _bloc.state.pictureUrl,
+                    placeholder: (context, url) {
+                      return NetworkImageWidget(
+                        decorationImage: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage(
+                            ImageAssets.dogeCoin,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  imageBuilder: (context, image) {
-                    return NetworkImageWidget(
-                      decorationImage: DecorationImage(
-                        image: image,
-                        fit: BoxFit.fill,
-                      ),
-                    );
-                  },
-                  errorWidget: (context, url, error) {
-                    return NetworkImageWidget(
-                      decorationImage: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage(
-                          ImageAssets.dogeCoin,
+                      );
+                    },
+                    imageBuilder: (context, image) {
+                      return NetworkImageWidget(
+                        decorationImage: DecorationImage(
+                          image: image,
+                          fit: BoxFit.fill,
                         ),
+                      );
+                    },
+                    errorWidget: (context, url, error) {
+                      return NetworkImageWidget(
+                        decorationImage: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: AssetImage(
+                            ImageAssets.dogeCoin,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    width: 150.0,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20.0, left: 40.0),
+                      child: GlobalTextField(
+                        controller: font,
+                        numberInput: true,
+                        hintText: createMemePageLanguage.fontField,
+                        onChanged: (font) {
+                          context.read<CreateMemeBloc>().add(
+                                UpdateBoxesEvent(
+                                  font: this.font.text,
+                                  index: 0,
+                                ),
+                              );
+                          context.read<CreateMemeBloc>().add(CaptionImageEvent());
+                        },
                       ),
-                    );
-                  },
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: OptionsCard(
-                    meme: pickedMeme,
-                    cardType: OptionsCardType.textFieldsCard,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: OptionsCard(
-                    meme: pickedMeme,
-                    cardType: OptionsCardType.colorsCard,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    child: OptionsCard(
+                      meme: pickedMeme,
+                      cardType: OptionsCardType.textFieldsCard,
+                    ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    child: OptionsCard(
+                      meme: pickedMeme,
+                      cardType: OptionsCardType.colorsCard,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

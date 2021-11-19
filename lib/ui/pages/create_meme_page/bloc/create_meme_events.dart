@@ -27,3 +27,5 @@ class UpdateBoxesEvent extends CreateMemeEvents {
     this.font,
   });
 }
+
+class SaveImageOnDeviceEvent extends CreateMemeEvents {}

@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:memes/res/consts.dart';
+import 'package:memes/services/network_service/interfaces/i_base_http_error.dart';
 import 'package:memes/services/network_service/interfaces/i_parameter.dart';
 import 'package:memes/services/network_service/models/base_http_response.dart';
+import 'package:memes/services/network_service/models/no_connection_http_error.dart';
 
 class NetworkService {
   static final NetworkService _instance = NetworkService._privateConstructor();
@@ -14,6 +17,18 @@ class NetworkService {
 
   NetworkService._privateConstructor() {
     _dio = Dio();
+  }
+
+  Future<bool> checkInternetConnection() async {
+    try {
+      final List<InternetAddress> result = await InternetAddress.lookup(exampleUrl);
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        return true;
+      }
+    } on SocketException catch (_) {
+      return false;
+    }
+    return false;
   }
 
   Future<BaseHttpResponse> request({
@@ -28,22 +43,41 @@ class NetworkService {
       contentTypeKey: contentTypeValue,
     });
 
-    switch (type) {
-      case HttpType.httpGet:
-        response = await _dio.get(
-          requestUrl,
-          options: options,
-          queryParameters: parameter.getParams(),
+    try {
+      switch (type) {
+        case HttpType.httpGet:
+          response = await _dio.get(
+            requestUrl,
+            options: options,
+            queryParameters: parameter.getParams(),
+          );
+          break;
+        case HttpType.httpPost:
+          response = await _dio.post(
+            requestUrl,
+            options: options,
+            queryParameters: parameter.getParams(),
+          );
+          break;
+      }
+
+      if (response.statusCode == null || response.statusCode! >= 300) {
+        return BaseHttpResponse(
+          error: NoConnectionHttpError(
+            error: response.data,
+            statusCode: response.statusCode ?? noConnectionStatusCode,
+          ),
         );
-        break;
-      case HttpType.httpPost:
-        response = await _dio.post(
-          requestUrl,
-          options: options,
-          queryParameters: parameter.getParams(),
-        );
-        break;
+      }
+      return BaseHttpResponse(response: json.decode(response.toString()));
+    } on DioError catch (error) {
+      BaseHttpResponse(
+        error: IBaseHttpError(
+          statusCode: response?.statusCode ?? noConnectionStatusCode,
+          error: error.error,
+        ),
+      );
     }
-    return BaseHttpResponse(response: json.decode(response.toString()));
+    return BaseHttpResponse();
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memes/res/app_duration.dart';
+import 'package:memes/res/app_gradients.dart';
 import 'package:memes/res/app_styles/app_colors.dart';
 import 'package:memes/res/app_styles/app_shadows.dart';
 
@@ -43,7 +44,7 @@ class _MyCircularLoaderState extends State<MyCircularLoader> with SingleTickerPr
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               boxShadow: [
-                AppShadows.neonGreenSpread1Shadow,
+                AppShadows.neonGreenSpread10Shadow,
               ],
             ),
             child: CircularProgressIndicator(
@@ -62,7 +63,8 @@ class _MyCircularLoaderState extends State<MyCircularLoader> with SingleTickerPr
             width: 85,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppColors.black,
+              color: AppColors.metallicGrey,
+              gradient: AppGradients.greyTopLeftToBottomRight
             ),
           ),
         ),

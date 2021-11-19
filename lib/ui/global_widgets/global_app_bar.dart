@@ -81,7 +81,7 @@ class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         );
       case AppBarType.buttonsAppBar:
-        return Container(
+        return Padding(
           padding: const EdgeInsets.only(left: 40.0, right: 40.0, top: 60.0, bottom: 10.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -92,7 +92,7 @@ class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
                     RouteSelectors.doPop().call();
                   }
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.home,
                   color: AppColors.white,
                   size: 40.0,
@@ -100,7 +100,7 @@ class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               GlobalButton(
                 onTap: downloadButtonFunction ?? () {},
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_downward_sharp,
                   color: AppColors.white,
                   size: 40.0,
