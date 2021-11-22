@@ -39,7 +39,7 @@ class _ColorsListState extends State<ColorsList> {
           padding: const EdgeInsets.only(top: 10.0, left: 10.0),
           child: Text(
             '${createMemePageLanguage.textField} ${widget.index + 1} ${createMemePageLanguage.mainColor}',
-            style: AppFonts.robotoWhite18Bold,
+            style: AppFonts.robotoWhite18BoldOpacity065,
           ),
         ),
         SizedBox(
@@ -66,7 +66,7 @@ class _ColorsListState extends State<ColorsList> {
                     color: _colors[index],
                     borderRadius: BorderRadius.circular(10.0),
                     boxShadow: [
-                      AppShadows.neonGreenSpread1Shadow,
+                      AppShadows.whiteShadow,
                     ],
                   ),
                 ),
@@ -78,7 +78,7 @@ class _ColorsListState extends State<ColorsList> {
           padding: const EdgeInsets.only(top: 10.0, left: 10.0),
           child: Text(
             '${createMemePageLanguage.textField} ${widget.index + 1} ${createMemePageLanguage.outlineColor}',
-            style: AppFonts.robotoWhite18Bold,
+            style: AppFonts.robotoWhite18BoldOpacity065,
           ),
         ),
         SizedBox(
@@ -105,7 +105,7 @@ class _ColorsListState extends State<ColorsList> {
                     color: _colors[index],
                     borderRadius: BorderRadius.circular(10.0),
                     boxShadow: [
-                      AppShadows.neonGreenSpread1Shadow,
+                      AppShadows.whiteShadow,
                     ],
                   ),
                 ),

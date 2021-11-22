@@ -15,9 +15,7 @@ class Application extends StatelessWidget {
       create: (_) => ApplicationBloc(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          accentColor: AppColors.metallicBlue,
-        ),
+        theme: ThemeData(accentColor: AppColors.metallicBlue),
         onGenerateRoute: RouteService.instance.onGenerateRoute,
         navigatorKey: RouteService.instance.navigatorKey,
         locale: Locale(FlutterDictionaryDelegate.getCurrentLocale),

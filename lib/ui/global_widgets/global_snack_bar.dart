@@ -30,7 +30,7 @@ class _GlobalSnackBarState extends State<GlobalSnackBar> {
       child: Align(
         child: Text(
           widget.text,
-          style: AppFonts.robotoWhite18Bold,
+          style: AppFonts.robotoWhite18BoldOpacity065,
         ),
       ),
     );

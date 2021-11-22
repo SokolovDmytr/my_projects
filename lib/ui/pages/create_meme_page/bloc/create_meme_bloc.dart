@@ -16,6 +16,7 @@ import 'package:memes/services/route_service/route_service.dart';
 import 'package:memes/ui/global_widgets/global_snack_bar.dart';
 import 'package:memes/ui/pages/create_meme_page/bloc/create_meme_events.dart';
 import 'package:memes/ui/pages/create_meme_page/bloc/create_meme_state.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class CreateMemeBloc extends Bloc<CreateMemeEvents, CreateMemeState> {
   CreateMemeBloc() : super(CreateMemeState(pictureUrl: emptyString, boxes: Boxes(map: {}))) {
@@ -122,19 +123,27 @@ class CreateMemeBloc extends Bloc<CreateMemeEvents, CreateMemeState> {
         return;
       }
 
-      final ByteData imageData = await NetworkAssetBundle(Uri.parse(state.pictureUrl)).load(emptyString);
-      final Uint8List bytes = imageData.buffer.asUint8List();
-      final result = await ImageGallerySaver.saveImage(
-        bytes,
-        quality: 60,
-      );
-      print(result);
-      ScaffoldMessenger.of(RouteService.instance.navigatorKey.currentContext!).showSnackBar(
-        SnackBar(
-          content: GlobalSnackBar(text: snackBarsLanguage.saved),
-          backgroundColor: AppColors.transparent,
-        ),
-      );
+      final bool permissionStatus = await Permission.storage.isDenied;
+
+      if (permissionStatus) {
+        await Permission.storage.request();
+      }
+
+      final bool updatedStatus = await Permission.storage.isGranted;
+      if (updatedStatus) {
+        final ByteData imageData = await NetworkAssetBundle(Uri.parse(state.pictureUrl)).load(emptyString);
+        final Uint8List bytes = imageData.buffer.asUint8List();
+        await ImageGallerySaver.saveImage(
+          bytes,
+          quality: 60,
+        );
+        ScaffoldMessenger.of(RouteService.instance.navigatorKey.currentContext!).showSnackBar(
+          SnackBar(
+            content: GlobalSnackBar(text: snackBarsLanguage.saved),
+            backgroundColor: AppColors.transparent,
+          ),
+        );
+      }
     });
   }
 }

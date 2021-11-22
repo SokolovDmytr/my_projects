@@ -37,10 +37,10 @@ class AppShadows {
   }
 
   static BoxShadow get whiteShadow {
-    return const BoxShadow(
-      color: AppColors.white,
+    return BoxShadow(
+      color: AppColors.white.withOpacity(0.2),
       blurRadius: 10.0,
-      spreadRadius: 1.0,
+      spreadRadius: 5.0,
     );
   }
 }

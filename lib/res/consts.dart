@@ -13,6 +13,7 @@ final Logger logger = Logger(
   ),
 );
 
+const String arcadeFont = 'Arcade';
 const String baseUrl = 'https://api.imgflip.com';
 const String accept = 'accept';
 const String contentTypeKey = 'Content-Type';

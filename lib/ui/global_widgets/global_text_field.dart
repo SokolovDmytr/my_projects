@@ -45,10 +45,11 @@ class _GlobalTextFieldState extends State<GlobalTextField> {
         ],
         onChanged: widget.onChanged,
         controller: widget.controller,
-        style: AppFonts.robotoWhite18Bold,
+        style: AppFonts.robotoWhite18BoldOpacity065,
         decoration: InputDecoration(
           isDense: true,
           hintText: widget.hintText,
+          hintStyle: AppFonts.robotoWhite18BoldOpacity03,
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: AppColors.transparent),
           ),

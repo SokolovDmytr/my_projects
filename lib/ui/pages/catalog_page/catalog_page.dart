@@ -37,35 +37,11 @@ class _CatalogPageState extends State<CatalogPage> {
         child: MainLayout(
           appBarType: AppBarType.titleAppBar,
           title: catalogPageLanguage.memesTemplates,
-          body: ListView.builder(
-            itemCount: state.searchedList.length + 1,
-            itemBuilder: (context, index) {
-              if (state.searchedList.isEmpty) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: GlobalTextField(
-                        controller: memeSearch,
-                        hintText: catalogPageLanguage.searchField,
-                        onChanged: (name) {
-                          context.read<ApplicationBloc>().add(SearchTemplatesEvent(searchText: memeSearch.text));
-                        },
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 40.0, right: 20.0),
-                      child: Image.asset(ImageAssets.sadCryingCat),
-                    ),
-                    Text(
-                      catalogPageLanguage.notFound,
-                      style: AppFonts.robotoWhite18Bold,
-                    ),
-                  ],
-                );
-              } else if (index == 0) {
-                return Padding(
+          body: SingleChildScrollView(
+            physics: ScrollPhysics(),
+            child: Column(
+              children: [
+                Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: GlobalTextField(
                     controller: memeSearch,
@@ -74,13 +50,38 @@ class _CatalogPageState extends State<CatalogPage> {
                       context.read<ApplicationBloc>().add(SearchTemplatesEvent(searchText: memeSearch.text));
                     },
                   ),
-                );
-              } else {
-                return MemeCard(
-                  memeTemplate: state.searchedList[index - 1],
-                );
-              }
-            },
+                ),
+                ListView.builder(
+                  itemCount: state.searchedList.length + 1,
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    if (state.searchedList.isEmpty) {
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 40.0, right: 20.0, bottom: 50.0, top: 40.0),
+                            child: Image.asset(ImageAssets.sadCryingCat),
+                          ),
+                          Text(
+                            catalogPageLanguage.notFound,
+                            style: AppFonts.robotoWhite18BoldOpacity065,
+                          ),
+                        ],
+                      );
+                    } else {
+                      if (index == 0) {
+                        return const SizedBox();
+                      } else {
+                        return MemeCard(
+                          memeTemplate: state.searchedList[index - 1],
+                        );
+                      }
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

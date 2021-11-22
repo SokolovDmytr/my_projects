@@ -74,7 +74,7 @@ class _MemeCardState extends State<MemeCard> {
                         alignment: Alignment.topLeft,
                         child: Text(
                           widget.memeTemplate.name,
-                          style: AppFonts.robotoWhite18Bold,
+                          style: AppFonts.robotoWhite18BoldOpacity065,
                           overflow: TextOverflow.clip,
                         ),
                       ),

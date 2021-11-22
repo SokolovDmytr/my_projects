@@ -1,12 +1,7 @@
-library clip_shadow;
-
 import 'package:flutter/widgets.dart';
 
 class _ClipShadowPainter extends CustomPainter {
-  /// If non-null, determines which clip to use.
   final CustomClipper<Path> clipper;
-
-  /// A list of shadows cast by this box behind the box.
   final List<BoxShadow> clipShadow;
 
   _ClipShadowPainter({
@@ -34,13 +29,8 @@ class _ClipShadowPainter extends CustomPainter {
 }
 
 class ClipShadow extends StatelessWidget {
-  /// A list of shadows cast by this box behind the box.
   final List<BoxShadow> boxShadow;
-
-  /// If non-null, determines which clip to use.
   final CustomClipper<Path> clipper;
-
-  /// The [Widget] below this widget in the tree.
   final Widget child;
 
   ClipShadow({
