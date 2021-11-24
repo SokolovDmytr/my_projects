@@ -6,7 +6,7 @@ class _ClipShadowPainter extends CustomPainter {
 
   _ClipShadowPainter({
     required this.clipper,
-    required this.clipShadow
+    required this.clipShadow,
   });
 
   @override
@@ -14,10 +14,7 @@ class _ClipShadowPainter extends CustomPainter {
     clipShadow.forEach((BoxShadow shadow) {
       var paint = shadow.toPaint();
       var spreadSize = Size(size.width + shadow.spreadRadius * 2, size.height + shadow.spreadRadius * 2);
-      var clipPath = clipper.getClip(spreadSize).shift(Offset(
-          shadow.offset.dx - shadow.spreadRadius,
-          shadow.offset.dy - shadow.spreadRadius
-      ));
+      var clipPath = clipper.getClip(spreadSize).shift(Offset(shadow.offset.dx - shadow.spreadRadius, shadow.offset.dy - shadow.spreadRadius));
       canvas.drawPath(clipPath, paint);
     });
   }
@@ -36,16 +33,13 @@ class ClipShadow extends StatelessWidget {
   ClipShadow({
     required this.boxShadow,
     required this.clipper,
-    required this.child
+    required this.child,
   });
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: _ClipShadowPainter(
-          clipShadow: boxShadow,
-          clipper: clipper
-      ),
+      painter: _ClipShadowPainter(clipShadow: boxShadow, clipper: clipper),
       child: ClipPath(
         clipper: clipper,
         child: child,

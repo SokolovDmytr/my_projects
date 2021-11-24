@@ -8,6 +8,7 @@ const Language en = Language(
     memesTemplates: 'Memes templates',
     searchField: 'Search for meme templates',
     notFound: 'No memes templates are found',
+    goUp: 'Go up'
   ),
   createMemePageLanguage: CreateMemePageLanguage(
     fontField: 'Font size',
